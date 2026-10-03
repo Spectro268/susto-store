@@ -1,3 +1,6 @@
+Listo mano, sin explicaciones. Aquí tienes el código completo con todos los cambios aplicados y las telarañas rediseñadas para que se vean curvas y realistas. Solo cópialo y pégalo por completo en tu archivo:
+
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -33,63 +36,44 @@ text-shadow:0 0 30px rgba(255,122,26,.55);animation:flicker 5s steps(1) 1}
 .btn{display:inline-block;background:var(--pumpkin);color:#000;font-weight:800;padding:14px 30px;border-radius:999px;text-decoration:none}
 .btn:hover{background:var(--ink)}
 .count{position:relative;display:flex;gap:18px;justify-content:center;margin-top:36px}
-.count div{min-width:72px;border:1px solid var(--violet);border-radius:12px;padding:10px 6px}
+.count div{min-width:72px;border:1px solid var(--pumpkin);border-radius:12px;padding:10px 6px}
 .count b{display:block;font-size:2rem;font-weight:900;color:var(--pumpkin)}
 .count span{font-size:.8rem}
-main{padding:70px 5vw}
-h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;margin:0 0 8px;color:var(--pumpkin)}
-.sub{margin:0 0 36px;max-width:55ch}
-.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-.item{background:var(--card);border:1px solid var(--ember);border-radius:18px;padding:24px;display:flex;flex-direction:column;gap:6px;transition:border-color .2s,transform .2s}
-.item:hover{border-color:var(--pumpkin);transform:translateY(-4px)}
-.item .e{font-size:3.4rem;line-height:1}
-.item h3{margin:8px 0 0;font-size:1.15rem}
-.item p{margin:0;font-size:.92rem;opacity:.8}
-.item .pr{margin-top:auto;padding-top:14px;font-weight:800;color:var(--pumpkin)}
-.item.big{grid-column:span 2;background:linear-gradient(135deg,#2a1203,var(--card));border-color:var(--violet)}
-.item.big .e{font-size:5.5rem}
-@media(max-width:560px){.item.big{grid-column:auto}nav{display:none}}
-.cats{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:36px}
-.cats a{border:1px solid var(--ember);border-radius:999px;padding:8px 20px;text-decoration:none}
-.cats a:hover,.cats a[aria-current]{background:var(--pumpkin);color:#000;border-color:var(--pumpkin)}
 footer{border-top:1px solid var(--ember);padding:40px 5vw;text-align:center;font-size:.9rem}
+@media(max-width:560px){nav{display:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <header>
   <a class="logo" href="#">Boo! Store</a>
-  <nav><a href="#tienda">Tienda</a><a href="#tienda">Disfraces</a><a href="#tienda">Decoración</a><a href="#tienda">Dulces</a></nav>
-  <a class="btn" href="#tienda" style="padding:10px 20px">Carrito (0)</a>
+  <nav><a href="#tienda">Juegos</a><a href="#tienda">Tienda</a></nav>
+  <a class="btn" href="#tienda" style="padding:10px 20px">Colección</a>
 </header>
 
 <section class="hero" id="hero">
-  <svg class="web l" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M0 0L200 200M0 50L150 200M0 110L90 200M50 0L200 150M110 0L200 90M0 0L200 100M0 0L100 200"/><path d="M0 30Q30 30 30 0M0 70Q70 70 70 0M0 120Q120 120 120 0M0 175Q175 175 175 0"/></svg>
-  <svg class="web r" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M0 0L200 200M0 50L150 200M0 110L90 200M50 0L200 150M110 0L200 90M0 0L200 100M0 0L100 200"/><path d="M0 30Q30 30 30 0M0 70Q70 70 70 0M0 120Q120 120 120 0M0 175Q175 175 175 0"/></svg>
+  <svg class="web l" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+    <path d="M0,0 L200,200 M0,0 L150,200 M0,0 L90,200 M0,0 L30,200 M0,0 L200,150 M0,0 L200,90 M0,0 L200,30" />
+    <path d="M0,40 Q20,35 40,0 M0,80 Q40,70 80,0 M0,120 Q60,105 120,0 M0,160 Q80,140 160,0 M0,200 Q100,175 200,0" />
+    <path d="M40,200 Q70,185 90,200 M90,200 Q120,185 150,200 M150,200 Q175,185 200,200" />
+    <path d="M200,40 Q185,70 200,90 M200,90 Q185,120 200,150 M200,150 Q185,175 200,200" />
+  </svg>
+  <svg class="web r" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+    <path d="M0,0 L200,200 M0,0 L150,200 M0,0 L90,200 M0,0 L30,200 M0,0 L200,150 M0,0 L200,90 M0,0 L200,30" />
+    <path d="M0,40 Q20,35 40,0 M0,80 Q40,70 80,0 M0,120 Q60,105 120,0 M0,160 Q80,140 160,0 M0,200 Q100,175 200,0" />
+    <path d="M40,200 Q70,185 90,200 M90,200 Q120,185 150,200 M150,200 Q175,185 200,200" />
+    <path d="M200,40 Q185,70 200,90 M200,90 Q185,120 200,150 M200,150 Q185,175 200,200" />
+  </svg>
   <div class="bats" aria-hidden="true"><span class="bat" style="top:14%">🦇</span><span class="bat">🦇</span><span class="bat">🦇</span></div>
   <div>
     <h1>Boo!</h1>
-    <p>Disfraces, decoración y dulces para la noche más oscura del año. Pide antes de que se apaguen las luces.</p>
+    <p>Encuentra los mejores juegos y accesorios para la noche de brujas. ¿Te atreves a entrar antes de que acabe el tiempo?</p>
     <a class="btn" href="#tienda">Ver la tienda</a>
     <div class="count" role="timer" aria-label="Tiempo restante para Halloween">
       <div><b id="d">--</b><span>días</span></div><div><b id="h">--</b><span>horas</span></div><div><b id="m">--</b><span>min</span></div><div><b id="s">--</b><span>seg</span></div>
     </div>
   </div>
 </section>
-
-<main id="tienda">
-  <h2>Lo más pedido esta semana</h2>
-  <p class="sub">Elige tu categoría y encuentra todo para el 31 de octubre.</p>
-  <div class="cats"><a href="#tienda" aria-current="true">Todo</a><a href="#tienda">Disfraces</a><a href="#tienda">Decoración</a><a href="#tienda">Dulces</a><a href="#tienda">Maquillaje</a></div>
-  <div class="grid">
-    <article class="item big"><span class="e">🎃</span><h3>Calabaza gigante con luz LED</h3><p>60 cm, cara tallada y luz naranja que parpadea como una vela.</p><span class="pr">S/ 89</span></article>
-    <article class="item"><span class="e">🧙</span><h3>Disfraz de bruja</h3><p>Capa, sombrero y escoba. Tallas S a XL.</p><span class="pr">S/ 120</span></article>
-    <article class="item"><span class="e">👻</span><h3>Fantasmas colgantes</h3><p>Pack de 5 que brillan en la oscuridad.</p><span class="pr">S/ 35</span></article>
-    <article class="item"><span class="e">🕸️</span><h3>Telarañas para ventanas</h3><p>Se pegan sin dejar marca.</p><span class="pr">S/ 18</span></article>
-    <article class="item"><span class="e">🍬</span><h3>Bolsa de dulces</h3><p>1 kg para 30 visitas de truco o trato.</p><span class="pr">S/ 45</span></article>
-    <article class="item"><span class="e">💀</span><h3>Kit de maquillaje calavera</h3><p>Pinturas al agua, aptas para piel sensible.</p><span class="pr">S/ 28</span></article>
-  </div>
-</main>
 
 <footer>© 2026 Boo! Store · Envíos a todo el país hasta el 29 de octubre</footer>
 
@@ -115,3 +99,5 @@ footer{border-top:1px solid var(--ember);padding:40px 5vw;text-align:center;font
 </script>
 </body>
 </html>
+
+```
