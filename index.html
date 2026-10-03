@@ -10,7 +10,9 @@
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *,*::before,*::after{box-sizing:inherit}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:Montserrat,system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
+
+/* Se aplicó el difuminado dinámico a todo el body para evitar cortes */
+body{margin:0;background-color:var(--bg);background-image:radial-gradient(circle 300px at var(--x, 50vw) var(--y, 50vh), rgba(255,122,26,.22), transparent 75%);background-attachment:fixed;color:var(--ink);font-family:Montserrat,system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
 a{color:inherit}
 :focus-visible{outline:3px solid var(--violet);outline-offset:3px}
 
@@ -31,7 +33,7 @@ nav a:hover, nav a.activo{color:var(--pumpkin);border-bottom:2px solid var(--pum
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
 /* Hero (Inicio) */
-.hero{position:relative;place-items:center;text-align:center;background:radial-gradient(circle 260px at var(--x,50%) var(--y,40%),rgba(255,122,26,.28),transparent 70%)}
+.hero{position:relative;place-items:center;text-align:center;}
 .bats{position:absolute;inset:0;pointer-events:none}
 .bat{position:absolute;color:var(--pumpkin);font-size:1.6rem;animation:fly 14s linear infinite}
 .bat:nth-child(1){top:14%}
@@ -274,11 +276,10 @@ function cambiarPagina(idPagina) {
 }
 
 (function(){
-  var hero=document.getElementById('sec-home');
-  hero.addEventListener('pointermove',function(e){
-    var r=hero.getBoundingClientRect();
-    hero.style.setProperty('--x',(e.clientX-r.left)+'px');
-    hero.style.setProperty('--y',(e.clientY-r.top)+'px');
+  // El evento de movimiento del mouse ahora rastrea en todo el documento
+  document.addEventListener('pointermove',function(e){
+    document.body.style.setProperty('--x', e.clientX + 'px');
+    document.body.style.setProperty('--y', e.clientY + 'px');
   });
   var end=new Date(2026,9,31,18,0,0).getTime();
   function pad(n){return String(n).padStart(2,'0')}
