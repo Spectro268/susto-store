@@ -2,85 +2,132 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Boo! Store</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Boo! Store - Para Greta</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;800;900&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#000;--ink:#f3e9d8;--pumpkin:#ff7a1a;--ember:#b8430a;--violet:#8a4bff;--card:#120a05;
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*,*::before,*::after{box-sizing:inherit}
+:root {
+  /* Paleta Vampiro Elegante */
+  --bg: #140505; 
+  --ink: #f8f1e6; 
+  --pumpkin: #d62828; /* Rojo carmesí brillante */
+  --ember: #7a1010; /* Vino tinto oscuro */
+  --violet: #ff4d6d; /* Rosa/Rojo suave para detalles */
+  --card: #1c0808; 
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  color-scheme: dark;
+}
+html {
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
 
-/* Se aplicó el difuminado dinámico a todo el body para evitar cortes */
-body{margin:0;background-color:var(--bg);background-image:radial-gradient(circle 300px at var(--x, 50vw) var(--y, 50vh), rgba(255,122,26,.22), transparent 75%);background-attachment:fixed;color:var(--ink);font-family:Montserrat,system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
-a{color:inherit}
-:focus-visible{outline:3px solid var(--violet);outline-offset:3px}
+/* Fondo con imagen difuminada y linterna dinámica */
+body {
+  margin: 0;
+  background-color: var(--bg);
+  background-image: 
+    radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), rgba(214, 40, 40, 0.25), transparent 80%),
+    linear-gradient(rgba(20, 5, 5, 0.88), rgba(20, 5, 5, 0.88)),
+    url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2000&auto=format&fit=crop');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  color: var(--ink);
+  font-family: Montserrat, system-ui, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden; /* Bloquea el scroll horizontal en celulares */
+  width: 100vw;
+  max-width: 100%;
+}
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; }
 
-/* Cabecera */
-header{display:flex;justify-content:space-between;align-items:center;padding:20px 5vw;border-bottom:1px solid var(--ember);background:#000;position:sticky;top:0;z-index:100}
-.logo{font-weight:900;font-size:1.5rem;color:var(--pumpkin);text-shadow:0 0 14px rgba(255,122,26,.6);text-decoration:none;cursor:pointer}
-nav{display:flex;gap:24px;font-weight:500}
-nav a{text-decoration:none;cursor:pointer;padding:5px}
-nav a:hover, nav a.activo{color:var(--pumpkin);border-bottom:2px solid var(--pumpkin)}
-.btn-col{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--pumpkin);color:var(--pumpkin);font-weight:800;padding:8px 20px;border-radius:999px;text-decoration:none;cursor:pointer;transition:all 0.2s}
-.btn-col:hover{background:var(--pumpkin);color:#000}
-.dulces-counter{font-size:1.2rem}
+/* Cabecera centrada y responsiva */
+header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 20px 5vw;
+  border-bottom: 1px solid var(--ember);
+  background: rgba(20, 5, 5, 0.95);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.logo { justify-self: start; font-weight: 900; font-size: 1.5rem; color: var(--pumpkin); text-shadow: 0 0 14px rgba(214, 40, 40, .6); text-decoration: none; cursor: pointer; }
+nav { justify-self: center; display: flex; gap: 24px; font-weight: 500; }
+nav a { text-decoration: none; cursor: pointer; padding: 5px; transition: color 0.2s; }
+nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(--pumpkin); }
+.btn-col { justify-self: end; display: flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--pumpkin); color: var(--pumpkin); font-weight: 800; padding: 8px 20px; border-radius: 999px; text-decoration: none; cursor: pointer; transition: all 0.2s; }
+.btn-col:hover { background: var(--pumpkin); color: #000; }
+.dulces-counter { font-size: 1.2rem; }
 
 /* Secciones */
-.pagina{display:none;min-height:78vh;padding:40px 5vw;animation:fadeIn 0.4s ease}
-.pagina.activa{display:block}
-#sec-home.activa{display:grid} 
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.pagina { display: none; min-height: 78vh; padding: 40px 5vw; animation: fadeIn 0.4s ease; }
+.pagina.activa { display: block; }
+#sec-home.activa { display: grid; } 
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 /* Hero (Inicio) */
-.hero{position:relative;place-items:center;text-align:center;}
-.bats{position:absolute;inset:0;pointer-events:none}
-.bat{position:absolute;color:var(--pumpkin);font-size:1.6rem;animation:fly 14s linear infinite}
-.bat:nth-child(1){top:14%}
-.bat:nth-child(2){top:62%;font-size:1rem;animation-duration:19s;animation-delay:-6s}
-.bat:nth-child(3){top:30%;font-size:2.2rem;animation-duration:24s;animation-delay:-12s}
-@keyframes fly{from{transform:translateX(-10vw)}to{transform:translateX(110vw) translateY(-40px)}}
-.hero h1{position:relative;margin:0;font-weight:900;font-size:clamp(3.4rem,13vw,9rem);line-height:.95;color:var(--pumpkin);text-shadow:0 0 30px rgba(255,122,26,.55);animation:flicker 5s steps(1) 1}
-@keyframes flicker{0%,8%,12%,20%{opacity:.15}10%,16%,30%,100%{opacity:1}}
-.hero p{position:relative;max-width:46ch;margin:22px auto 28px;font-size:1.15rem}
-.count{position:relative;display:flex;gap:18px;justify-content:center;margin-top:36px}
-.count div{min-width:72px;border:1px solid var(--pumpkin);border-radius:12px;padding:10px 6px}
-.count b{display:block;font-size:2rem;font-weight:900;color:var(--pumpkin)}
-.count span{font-size:.8rem}
+.hero { position: relative; place-items: center; text-align: center; }
+.bats { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.bat { position: absolute; color: var(--pumpkin); font-size: 1.6rem; animation: fly 14s linear infinite; }
+.bat:nth-child(1) { top: 14%; }
+.bat:nth-child(2) { top: 62%; font-size: 1rem; animation-duration: 19s; animation-delay: -6s; }
+.bat:nth-child(3) { top: 30%; font-size: 2.2rem; animation-duration: 24s; animation-delay: -12s; }
+@keyframes fly { from { transform: translateX(-10vw); } to { transform: translateX(110vw) translateY(-40px); } }
+.hero h1 { position: relative; margin: 0; font-weight: 900; font-size: clamp(3rem, 10vw, 8rem); line-height: 1; color: var(--pumpkin); text-shadow: 0 0 30px rgba(214, 40, 40, .55); animation: flicker 5s steps(1) infinite; }
+@keyframes flicker { 0%, 8%, 12%, 20% { opacity: .7; } 10%, 16%, 30%, 100% { opacity: 1; } }
+.hero p { position: relative; max-width: 50ch; margin: 22px auto 28px; font-size: 1.2rem; font-weight: 500; }
+.count { position: relative; display: flex; gap: 15px; justify-content: center; margin-top: 36px; flex-wrap: wrap; }
+.count div { min-width: 72px; border: 1px solid var(--pumpkin); background: rgba(20,5,5,0.6); border-radius: 12px; padding: 10px 6px; backdrop-filter: blur(4px); }
+.count b { display: block; font-size: 2rem; font-weight: 900; color: var(--pumpkin); }
+.count span { font-size: .8rem; text-transform: uppercase; letter-spacing: 1px; }
 
 /* Títulos de sección */
-h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;margin:0 0 8px;color:var(--pumpkin)}
-.sub{margin:0 0 36px;max-width:55ch;opacity:0.9}
+h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; color: var(--pumpkin); }
+.sub { margin: 0 0 36px; max-width: 55ch; opacity: 0.9; font-size: 1.1rem; }
 
 /* Grillas (Juegos, Tienda, Colección) */
-.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
-.item{background:var(--card);border:1px solid var(--ember);border-radius:18px;padding:24px;display:flex;flex-direction:column;gap:10px;transition:border-color .2s,transform .2s;text-align:center}
-.item:hover{border-color:var(--pumpkin);transform:translateY(-4px)}
-.item .e{font-size:3.5rem;line-height:1;margin-bottom:10px}
-.item h3{margin:0;font-size:1.2rem}
-.item p{margin:0;font-size:.92rem;opacity:.8;flex-grow:1}
-.btn-accion{display:inline-block;background:var(--pumpkin);color:#000;font-weight:800;padding:10px 20px;border-radius:8px;border:none;cursor:pointer;font-family:inherit;font-size:1rem;margin-top:10px;transition:background 0.2s}
-.btn-accion:hover{background:var(--ink)}
-.btn-jugar{background:var(--violet);color:#fff}
-.btn-jugar:hover{background:#a36dff}
-.btn-bloqueado{background:#333;color:#888;cursor:not-allowed}
-.btn-bloqueado:hover{background:#333}
+.grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+.item { background: rgba(28, 8, 8, 0.85); backdrop-filter: blur(8px); border: 1px solid var(--ember); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 10px; transition: border-color .2s, transform .2s; text-align: center; }
+.item:hover { border-color: var(--pumpkin); transform: translateY(-4px); }
+.item .e { font-size: 3.5rem; line-height: 1; margin-bottom: 10px; }
+.item h3 { margin: 0; font-size: 1.2rem; color: var(--ink); }
+.item p { margin: 0; font-size: .92rem; opacity: .8; flex-grow: 1; }
+.btn-accion { display: inline-block; background: var(--pumpkin); color: #fff; font-weight: 800; padding: 12px 20px; border-radius: 8px; border: none; cursor: pointer; font-family: inherit; font-size: 1rem; margin-top: 10px; transition: all 0.2s; }
+.btn-accion:hover { background: var(--violet); color: #fff; }
+.btn-jugar { background: var(--ember); color: #fff; }
+.btn-jugar:hover { background: var(--pumpkin); }
+.btn-bloqueado { background: #331111; color: #885555; cursor: not-allowed; }
+.btn-bloqueado:hover { background: #331111; }
 
 /* Animación de error de compra */
-.error-compra{animation:shake 0.4s;background:#ff3333 !important;color:#fff !important;pointer-events:none}
-@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.error-compra { animation: shake 0.4s; background: var(--violet) !important; color: #fff !important; pointer-events: none; }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
 
 /* Estado vacío colección */
-.vacio{grid-column:1/-1;text-align:center;padding:40px;border:1px dashed var(--ember);border-radius:18px;opacity:0.7}
+.vacio { grid-column: 1/-1; text-align: center; padding: 40px; border: 1px dashed var(--ember); background: rgba(20,5,5,0.5); border-radius: 18px; opacity: 0.8; }
 
-@media(max-width:560px){nav{display:none} .btn-col span.texto{display:none}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* Adaptación para celulares */
+@media(max-width: 768px) {
+  header { display: flex; flex-direction: column; gap: 18px; padding: 15px; }
+  .logo, nav, .btn-col { justify-self: center; width: 100%; text-align: center; justify-content: center; }
+  nav { flex-wrap: wrap; gap: 15px; }
+}
+@media(prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 </style>
 </head>
 <body>
 
 <header>
-  <a class="logo" onclick="cambiarPagina('sec-home')">Boo! Store</a>
+  <a class="logo" onclick="cambiarPagina('sec-home')">Para Greta 🦇</a>
   <nav>
     <a onclick="cambiarPagina('sec-juegos')" id="nav-juegos">Juegos</a>
     <a onclick="cambiarPagina('sec-tienda')" id="nav-tienda">Tienda</a>
@@ -88,7 +135,7 @@ h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;margin:0 0 8px;color:var(-
   </nav>
   <a class="btn-col" onclick="cambiarPagina('sec-coleccion')" id="nav-coleccion">
     <span class="dulces-counter">🍬 <span id="ui-dulces">0</span></span> 
-    <span class="texto">| Colección</span>
+    <span class="texto">| Nuestra Colección</span>
   </a>
 </header>
 
@@ -96,9 +143,9 @@ h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;margin:0 0 8px;color:var(-
 <main class="pagina activa hero" id="sec-home">
   <div class="bats" aria-hidden="true"><span class="bat">🦇</span><span class="bat">🦇</span><span class="bat">🦇</span></div>
   <div>
-    <h1>Boo!</h1>
-    <p>Encuentra los mejores juegos y accesorios para la noche de brujas. ¿Te atreves a entrar antes de que acabe el tiempo?</p>
-    <button class="btn-accion" style="border-radius:999px; padding:14px 30px" onclick="cambiarPagina('sec-juegos')">Ir a los Juegos</button>
+    <h1>Feliz<br>Halloween ❤️</h1>
+    <p>Un pequeño rincón oscuro creado solo para ti. ¿Te atreves a jugar conmigo antes de que se acabe la noche?</p>
+    <button class="btn-accion" style="border-radius:999px; padding:14px 30px; font-size:1.1rem; margin-bottom: 20px;" onclick="cambiarPagina('sec-juegos')">Comenzar la aventura</button>
     <div class="count" role="timer" aria-label="Tiempo restante para Halloween">
       <div><b id="d">--</b><span>días</span></div><div><b id="h">--</b><span>horas</span></div><div><b id="m">--</b><span>min</span></div><div><b id="s">--</b><span>seg</span></div>
     </div>
@@ -107,25 +154,25 @@ h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;margin:0 0 8px;color:var(-
 
 <!-- PÁGINA 2: JUEGOS -->
 <section class="pagina" id="sec-juegos">
-  <h2>Sala de Juegos</h2>
-  <p class="sub">Juega para ganar dulces y canjearlos por artículos exclusivos en la Tienda.</p>
+  <h2>Salón de los Hechizos</h2>
+  <p class="sub">Juega para ganar dulces mágicos y desbloquear las sorpresas que preparé para ti.</p>
   <div class="grid">
     <article class="item">
       <span class="e">👻</span>
       <h3>Cazafantasmas</h3>
-      <p>Atrapa a los fantasmas antes de que desaparezcan de la pantalla.</p>
+      <p>Atrapa a los fantasmas traviesos antes de que desaparezcan de la pantalla.</p>
       <button class="btn-accion btn-jugar" onclick="probarJuego()">Jugar (+20 🍬)</button>
     </article>
     <article class="item">
       <span class="e">🧠</span>
       <h3>Memoria Maldita</h3>
-      <p>Encuentra los pares de cartas espeluznantes.</p>
+      <p>Encuentra los pares y descubre el mensaje oculto.</p>
       <button class="btn-accion btn-bloqueado">Próximamente</button>
     </article>
     <article class="item">
-      <span class="e">🏰</span>
-      <h3>Escape del Laberinto</h3>
-      <p>Encuentra la salida antes de que la linterna se apague.</p>
+      <span class="e">🔮</span>
+      <h3>Pociones de Amor</h3>
+      <p>Mezcla los ingredientes correctos en el caldero.</p>
       <button class="btn-accion btn-bloqueado">Próximamente</button>
     </article>
   </div>
@@ -133,8 +180,8 @@ h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;margin:0 0 8px;color:var(-
 
 <!-- PÁGINA 3: TIENDA -->
 <section class="pagina" id="sec-tienda">
-  <h2>Tienda Oscura</h2>
-  <p class="sub">Usa tus dulces para comprar artículos. Lo que compres irá a tu Colección.</p>
+  <h2>Bazar de los Enamorados</h2>
+  <p class="sub">Usa tus dulces para coleccionar nuestros amuletos de la suerte.</p>
   <div class="grid" id="contenedor-tienda">
   </div>
 </section>
@@ -142,18 +189,18 @@ h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;margin:0 0 8px;color:var(-
 <!-- PÁGINA 4: COLECCIÓN -->
 <section class="pagina" id="sec-coleccion">
   <h2>Tu Colección</h2>
-  <p class="sub">Aquí se guardan todas las medallas y artículos que has conseguido.</p>
+  <p class="sub">Aquí guardaremos cada recuerdo y amuleto que consigas hoy.</p>
   <div class="grid" id="contenedor-coleccion">
   </div>
 </section>
 
 <!-- PÁGINA 5: CÓDIGOS -->
 <section class="pagina" id="sec-codigos">
-  <div style="text-align:center; max-width: 450px; margin: 40px auto; background: var(--card); padding: 40px 30px; border-radius: 18px; border: 1px solid var(--ember);">
-    <h2>Canjear Código</h2>
-    <p class="sub" style="margin: 10px auto 30px;">Ingresa un código secreto para obtener recompensas.</p>
-    <input type="text" id="input-codigo" placeholder="Escribe tu código" style="width:100%; padding: 15px; border-radius: 8px; border: 1px solid var(--pumpkin); background: #000; color: var(--ink); font-size: 1.2rem; text-transform: uppercase; margin-bottom: 20px; font-family: inherit; text-align: center;">
-    <button class="btn-accion" onclick="canjearCodigo()" style="width:100%; font-size: 1.1rem; padding: 15px;">Validar Código</button>
+  <div style="text-align:center; max-width: 450px; margin: 40px auto; background: rgba(28, 8, 8, 0.85); backdrop-filter: blur(8px); padding: 40px 30px; border-radius: 18px; border: 1px solid var(--ember);">
+    <h2>Canjear Secreto</h2>
+    <p class="sub" style="margin: 10px auto 30px;">Ingresa una palabra mágica para obtener una recompensa especial.</p>
+    <input type="text" id="input-codigo" placeholder="Escribe el código" style="width:100%; padding: 15px; border-radius: 8px; border: 1px solid var(--pumpkin); background: rgba(0,0,0,0.5); color: var(--ink); font-size: 1.2rem; text-transform: uppercase; margin-bottom: 20px; font-family: inherit; text-align: center;">
+    <button class="btn-accion" onclick="canjearCodigo()" style="width:100%; font-size: 1.1rem; padding: 15px;">Revelar Secreto</button>
     <p id="msg-codigo" style="margin-top: 20px; font-weight: bold; min-height: 24px; font-size: 1.1rem;"></p>
   </div>
 </section>
@@ -163,11 +210,11 @@ let dulces = parseInt(localStorage.getItem('boo_dulces')) || 0;
 let coleccion = JSON.parse(localStorage.getItem('boo_coleccion')) || [];
 
 const catalogo = [
-  { id: 'calabaza', icono: '🎃', nombre: 'Medalla Calabaza', precio: 30, desc: 'Brilla con una luz interna misteriosa.' },
-  { id: 'pocion', icono: '🧪', nombre: 'Poción Verde', precio: 50, desc: 'Burbujea y huele a manzana ácida.' },
-  { id: 'bruja', icono: '🧙', nombre: 'Sombrero de Bruja', precio: 100, desc: 'Te da poderes mágicos oscuros.' },
-  { id: 'gato', icono: '🐈‍⬛', nombre: 'Gato Negro', precio: 150, desc: 'Da buena suerte en la noche de Halloween.' },
-  { id: 'vampiro', icono: '🧛', nombre: 'Capa de Vampiro', precio: 300, desc: 'Vuela hacia la oscuridad absoluta.' }
+  { id: 'calabaza', icono: '🎃', nombre: 'Calabaza Protectora', precio: 30, desc: 'Para iluminar nuestras noches más oscuras.' },
+  { id: 'pocion', icono: '🍷', nombre: 'Bebida de Vampiro', precio: 50, desc: 'Una copa para brindar por nosotros.' },
+  { id: 'rosanegra', icono: '🥀', nombre: 'Rosa Eterna', precio: 100, desc: 'Nunca se marchita, como lo que siento por ti.' },
+  { id: 'gato', icono: '🐈‍⬛', nombre: 'Gatito Negro', precio: 150, desc: 'Nos traerá buena suerte a donde vayamos.' },
+  { id: 'anillo', icono: '💍', nombre: 'Anillo de Promesa', precio: 300, desc: 'Un pequeño pacto para la eternidad.' }
 ];
 
 function guardarDatos() {
@@ -179,7 +226,7 @@ function guardarDatos() {
 function probarJuego() {
   dulces += 20;
   guardarDatos();
-  alert("¡Ganaste 20 dulces por probar el juego!");
+  alert("¡Ganaste 20 dulces mágicos para la tienda!");
 }
 
 function comprar(boton, idArticulo, precio) {
@@ -193,7 +240,7 @@ function comprar(boton, idArticulo, precio) {
     boton.textContent = "¡Faltan dulces!";
     setTimeout(() => {
       boton.classList.remove('error-compra');
-      boton.textContent = "Comprar - " + precio + " 🍬";
+      boton.textContent = "Obtener - " + precio + " 🍬";
     }, 800);
   }
 }
@@ -214,7 +261,7 @@ function renderizarTiendaYColeccion() {
           <span class="e">${item.icono}</span>
           <h3>${item.nombre}</h3>
           <p>${item.desc}</p>
-          <button class="btn-accion btn-bloqueado" style="background:var(--bg)">Adquirido</button>
+          <button class="btn-accion btn-bloqueado" style="background:var(--bg)">Guardado a salvo</button>
         </article>`;
     } else {
       divTienda.innerHTML += `
@@ -222,13 +269,13 @@ function renderizarTiendaYColeccion() {
           <span class="e">${item.icono}</span>
           <h3>${item.nombre}</h3>
           <p>${item.desc}</p>
-          <button class="btn-accion" onclick="comprar(this, '${item.id}', ${item.precio})">Comprar - ${item.precio} 🍬</button>
+          <button class="btn-accion" onclick="comprar(this, '${item.id}', ${item.precio})">Obtener - ${item.precio} 🍬</button>
         </article>`;
     }
   });
 
   if (!hayColeccion) {
-    divColeccion.innerHTML = `<div class="vacio"><span style="font-size:3rem">🕸️</span><br><br>Tu colección está vacía.<br>¡Juega para conseguir dulces y compra en la tienda!</div>`;
+    divColeccion.innerHTML = `<div class="vacio"><span style="font-size:3rem">🦇</span><br><br>Aún no tenemos amuletos aquí.<br>¡Vamos a jugar para conseguir el primero!</div>`;
   }
 }
 
@@ -240,8 +287,8 @@ function canjearCodigo() {
   if (codigo === 'RESET') {
     dulces = 0;
     coleccion = [];
-    msg.style.color = "var(--pumpkin)";
-    msg.textContent = "¡Progreso reseteado por completo!";
+    msg.style.color = "var(--violet)";
+    msg.textContent = "El tiempo ha retrocedido. Todo empieza de nuevo.";
   } else if (codigo === 'GIVE') {
     dulces += 500;
     catalogo.forEach(item => {
@@ -250,10 +297,10 @@ function canjearCodigo() {
       }
     });
     msg.style.color = "#4CAF50";
-    msg.textContent = "¡Sorpresa! Recibiste +500 🍬 y toda la tienda.";
+    msg.textContent = "¡Hechizo exitoso! Recibiste +500 🍬 y toda la colección.";
   } else {
-    msg.style.color = "#ff3333";
-    msg.textContent = "El código no existe o expiró.";
+    msg.style.color = "var(--pumpkin)";
+    msg.textContent = "Esa no es la palabra mágica...";
   }
 
   input.value = '';
@@ -276,7 +323,6 @@ function cambiarPagina(idPagina) {
 }
 
 (function(){
-  // El evento de movimiento del mouse ahora rastrea en todo el documento
   document.addEventListener('pointermove',function(e){
     document.body.style.setProperty('--x', e.clientX + 'px');
     document.body.style.setProperty('--y', e.clientY + 'px');
