@@ -27,15 +27,14 @@ nav a:hover, nav a.activo{color:var(--pumpkin);border-bottom:2px solid var(--pum
 /* Secciones */
 .pagina{display:none;min-height:78vh;padding:40px 5vw;animation:fadeIn 0.4s ease}
 .pagina.activa{display:block}
-#sec-home.activa{display:grid} /* El hero usa grid */
+#sec-home.activa{display:grid} 
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
 /* Hero (Inicio) */
 .hero{position:relative;place-items:center;text-align:center;background:radial-gradient(circle 260px at var(--x,50%) var(--y,40%),rgba(255,122,26,.28),transparent 70%)}
-.web{position:absolute;width:min(34vw,300px);color:var(--pumpkin);opacity:.85;pointer-events:none}
-.web.l{top:0;left:0}.web.r{top:0;right:0;transform:scaleX(-1)}
 .bats{position:absolute;inset:0;pointer-events:none}
 .bat{position:absolute;color:var(--pumpkin);font-size:1.6rem;animation:fly 14s linear infinite}
+.bat:nth-child(1){top:14%}
 .bat:nth-child(2){top:62%;font-size:1rem;animation-duration:19s;animation-delay:-6s}
 .bat:nth-child(3){top:30%;font-size:2.2rem;animation-duration:24s;animation-delay:-12s}
 @keyframes fly{from{transform:translateX(-10vw)}to{transform:translateX(110vw) translateY(-40px)}}
@@ -72,7 +71,6 @@ h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;margin:0 0 8px;color:var(-
 /* Estado vacío colección */
 .vacio{grid-column:1/-1;text-align:center;padding:40px;border:1px dashed var(--ember);border-radius:18px;opacity:0.7}
 
-footer{border-top:1px solid var(--ember);padding:40px 5vw;text-align:center;font-size:.9rem}
 @media(max-width:560px){nav{display:none} .btn-col span.texto{display:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -84,6 +82,7 @@ footer{border-top:1px solid var(--ember);padding:40px 5vw;text-align:center;font
   <nav>
     <a onclick="cambiarPagina('sec-juegos')" id="nav-juegos">Juegos</a>
     <a onclick="cambiarPagina('sec-tienda')" id="nav-tienda">Tienda</a>
+    <a onclick="cambiarPagina('sec-codigos')" id="nav-codigos">Códigos</a>
   </nav>
   <a class="btn-col" onclick="cambiarPagina('sec-coleccion')" id="nav-coleccion">
     <span class="dulces-counter">🍬 <span id="ui-dulces">0</span></span> 
@@ -93,16 +92,7 @@ footer{border-top:1px solid var(--ember);padding:40px 5vw;text-align:center;font
 
 <!-- PÁGINA 1: INICIO -->
 <main class="pagina activa hero" id="sec-home">
-  <!-- Telarañas curvas mejoradas -->
-  <svg class="web l" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" aria-hidden="true">
-    <path d="M0 0 L100 100 M0 0 L75 100 M0 0 L45 100 M0 0 L15 100 M0 0 L100 75 M0 0 L100 45 M0 0 L100 15"/>
-    <path d="M 0 20 Q 15 20 20 0 M 0 45 Q 25 40 45 0 M 0 70 Q 40 60 70 0 M 0 95 Q 60 80 95 0 M 20 100 Q 70 85 100 20 M 50 100 Q 85 90 100 50 M 80 100 Q 95 95 100 80"/>
-  </svg>
-  <svg class="web r" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" aria-hidden="true">
-    <path d="M0 0 L100 100 M0 0 L75 100 M0 0 L45 100 M0 0 L15 100 M0 0 L100 75 M0 0 L100 45 M0 0 L100 15"/>
-    <path d="M 0 20 Q 15 20 20 0 M 0 45 Q 25 40 45 0 M 0 70 Q 40 60 70 0 M 0 95 Q 60 80 95 0 M 20 100 Q 70 85 100 20 M 50 100 Q 85 90 100 50 M 80 100 Q 95 95 100 80"/>
-  </svg>
-  <div class="bats" aria-hidden="true"><span class="bat" style="top:14%">🦇</span><span class="bat">🦇</span><span class="bat">🦇</span></div>
+  <div class="bats" aria-hidden="true"><span class="bat">🦇</span><span class="bat">🦇</span><span class="bat">🦇</span></div>
   <div>
     <h1>Boo!</h1>
     <p>Encuentra los mejores juegos y accesorios para la noche de brujas. ¿Te atreves a entrar antes de que acabe el tiempo?</p>
@@ -118,14 +108,12 @@ footer{border-top:1px solid var(--ember);padding:40px 5vw;text-align:center;font
   <h2>Sala de Juegos</h2>
   <p class="sub">Juega para ganar dulces y canjearlos por artículos exclusivos en la Tienda.</p>
   <div class="grid">
-    <!-- Juego de prueba -->
     <article class="item">
       <span class="e">👻</span>
       <h3>Cazafantasmas</h3>
       <p>Atrapa a los fantasmas antes de que desaparezcan de la pantalla.</p>
       <button class="btn-accion btn-jugar" onclick="probarJuego()">Jugar (+20 🍬)</button>
     </article>
-    <!-- Próximos juegos -->
     <article class="item">
       <span class="e">🧠</span>
       <h3>Memoria Maldita</h3>
@@ -146,7 +134,6 @@ footer{border-top:1px solid var(--ember);padding:40px 5vw;text-align:center;font
   <h2>Tienda Oscura</h2>
   <p class="sub">Usa tus dulces para comprar artículos. Lo que compres irá a tu Colección.</p>
   <div class="grid" id="contenedor-tienda">
-    <!-- Los artículos se inyectan con JavaScript -->
   </div>
 </section>
 
@@ -155,18 +142,24 @@ footer{border-top:1px solid var(--ember);padding:40px 5vw;text-align:center;font
   <h2>Tu Colección</h2>
   <p class="sub">Aquí se guardan todas las medallas y artículos que has conseguido.</p>
   <div class="grid" id="contenedor-coleccion">
-    <!-- Los artículos comprados aparecen aquí -->
   </div>
 </section>
 
-<footer>© 2026 Boo! Store · Envíos a todo el país hasta el 29 de octubre</footer>
+<!-- PÁGINA 5: CÓDIGOS -->
+<section class="pagina" id="sec-codigos">
+  <div style="text-align:center; max-width: 450px; margin: 40px auto; background: var(--card); padding: 40px 30px; border-radius: 18px; border: 1px solid var(--ember);">
+    <h2>Canjear Código</h2>
+    <p class="sub" style="margin: 10px auto 30px;">Ingresa un código secreto para obtener recompensas.</p>
+    <input type="text" id="input-codigo" placeholder="Escribe tu código" style="width:100%; padding: 15px; border-radius: 8px; border: 1px solid var(--pumpkin); background: #000; color: var(--ink); font-size: 1.2rem; text-transform: uppercase; margin-bottom: 20px; font-family: inherit; text-align: center;">
+    <button class="btn-accion" onclick="canjearCodigo()" style="width:100%; font-size: 1.1rem; padding: 15px;">Validar Código</button>
+    <p id="msg-codigo" style="margin-top: 20px; font-weight: bold; min-height: 24px; font-size: 1.1rem;"></p>
+  </div>
+</section>
 
 <script>
-// --- SISTEMA DE DATOS Y GUARDADO (LocalStorage) ---
 let dulces = parseInt(localStorage.getItem('boo_dulces')) || 0;
 let coleccion = JSON.parse(localStorage.getItem('boo_coleccion')) || [];
 
-// Catálogo de la tienda
 const catalogo = [
   { id: 'calabaza', icono: '🎃', nombre: 'Medalla Calabaza', precio: 30, desc: 'Brilla con una luz interna misteriosa.' },
   { id: 'pocion', icono: '🧪', nombre: 'Poción Verde', precio: 50, desc: 'Burbujea y huele a manzana ácida.' },
@@ -175,32 +168,25 @@ const catalogo = [
   { id: 'vampiro', icono: '🧛', nombre: 'Capa de Vampiro', precio: 300, desc: 'Vuela hacia la oscuridad absoluta.' }
 ];
 
-// --- FUNCIONES DEL SISTEMA ---
-
-// Guardar en la memoria del navegador
 function guardarDatos() {
   localStorage.setItem('boo_dulces', dulces);
   localStorage.setItem('boo_coleccion', JSON.stringify(coleccion));
   document.getElementById('ui-dulces').textContent = dulces;
 }
 
-// Botón temporal para ganar dulces probando
 function probarJuego() {
   dulces += 20;
   guardarDatos();
   alert("¡Ganaste 20 dulces por probar el juego!");
 }
 
-// Comprar un artículo
 function comprar(boton, idArticulo, precio) {
   if (dulces >= precio) {
-    // Si alcanza el dinero
     dulces -= precio;
     coleccion.push(idArticulo);
     guardarDatos();
-    renderizarTiendaYColeccion(); // Actualizar las vistas
+    renderizarTiendaYColeccion();
   } else {
-    // Si no alcanza, efecto de error
     boton.classList.add('error-compra');
     boton.textContent = "¡Faltan dulces!";
     setTimeout(() => {
@@ -210,7 +196,6 @@ function comprar(boton, idArticulo, precio) {
   }
 }
 
-// Dibujar los artículos en Tienda y Colección
 function renderizarTiendaYColeccion() {
   const divTienda = document.getElementById('contenedor-tienda');
   const divColeccion = document.getElementById('contenedor-coleccion');
@@ -220,7 +205,6 @@ function renderizarTiendaYColeccion() {
   let hayColeccion = false;
 
   catalogo.forEach(item => {
-    // Si el usuario ya lo tiene, va a la colección
     if (coleccion.includes(item.id)) {
       hayColeccion = true;
       divColeccion.innerHTML += `
@@ -231,7 +215,6 @@ function renderizarTiendaYColeccion() {
           <button class="btn-accion btn-bloqueado" style="background:var(--bg)">Adquirido</button>
         </article>`;
     } else {
-      // Si no lo tiene, aparece en la tienda
       divTienda.innerHTML += `
         <article class="item">
           <span class="e">${item.icono}</span>
@@ -247,23 +230,49 @@ function renderizarTiendaYColeccion() {
   }
 }
 
-// --- NAVEGACIÓN DE "PÁGINAS" ---
-function cambiarPagina(idPagina) {
-  // Ocultar todas las páginas
-  document.querySelectorAll('.pagina').forEach(pag => pag.classList.remove('activa'));
-  // Mostrar la página solicitada
-  document.getElementById(idPagina).classList.add('activa');
-  
-  // Quitar subrayado de los links
-  document.querySelectorAll('nav a').forEach(link => link.classList.remove('activo'));
-  // Si tocó un link del nav, subrayarlo
-  if(idPagina === 'sec-juegos') document.getElementById('nav-juegos').classList.add('activo');
-  if(idPagina === 'sec-tienda') document.getElementById('nav-tienda').classList.add('activo');
-  
-  window.scrollTo(0,0); // Subir arriba
+function canjearCodigo() {
+  const input = document.getElementById('input-codigo');
+  const msg = document.getElementById('msg-codigo');
+  const codigo = input.value.trim().toUpperCase();
+
+  if (codigo === 'RESET') {
+    dulces = 0;
+    coleccion = [];
+    msg.style.color = "var(--pumpkin)";
+    msg.textContent = "¡Progreso reseteado por completo!";
+  } else if (codigo === 'GIVE') {
+    dulces += 500;
+    catalogo.forEach(item => {
+      if (!coleccion.includes(item.id)) {
+        coleccion.push(item.id);
+      }
+    });
+    msg.style.color = "#4CAF50";
+    msg.textContent = "¡Sorpresa! Recibiste +500 🍬 y toda la tienda.";
+  } else {
+    msg.style.color = "#ff3333";
+    msg.textContent = "El código no existe o expiró.";
+  }
+
+  input.value = '';
+  guardarDatos();
+  renderizarTiendaYColeccion();
+
+  setTimeout(() => { msg.textContent = ''; }, 4000);
 }
 
-// --- CONTADOR Y LINTERNA DEL HERO ---
+function cambiarPagina(idPagina) {
+  document.querySelectorAll('.pagina').forEach(pag => pag.classList.remove('activa'));
+  document.getElementById(idPagina).classList.add('activa');
+  
+  document.querySelectorAll('nav a').forEach(link => link.classList.remove('activo'));
+  if(idPagina === 'sec-juegos') document.getElementById('nav-juegos').classList.add('activo');
+  if(idPagina === 'sec-tienda') document.getElementById('nav-tienda').classList.add('activo');
+  if(idPagina === 'sec-codigos') document.getElementById('nav-codigos').classList.add('activo');
+  
+  window.scrollTo(0,0);
+}
+
 (function(){
   var hero=document.getElementById('sec-home');
   hero.addEventListener('pointermove',function(e){
@@ -283,7 +292,6 @@ function cambiarPagina(idPagina) {
   tick();setInterval(tick,1000);
 })();
 
-// Iniciar interfaz
 guardarDatos();
 renderizarTiendaYColeccion();
 
