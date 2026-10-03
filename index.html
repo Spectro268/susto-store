@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Boo! Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000;--ink:#f3e9d8;--pumpkin:#ff7a1a;--ember:#b8430a;--violet:#8a4bff;--card:#120a05;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Montserrat,system-ui,sans-serif;line-height:1.6}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--violet);outline-offset:3px}
+header{display:flex;justify-content:space-between;align-items:center;padding:20px 5vw;border-bottom:1px solid var(--ember)}
+.logo{font-weight:900;font-size:1.5rem;color:var(--pumpkin);text-shadow:0 0 14px rgba(255,122,26,.6);text-decoration:none}
+nav{display:flex;gap:24px;font-weight:500}
+nav a{text-decoration:none}nav a:hover{color:var(--pumpkin)}
+.hero{position:relative;overflow:hidden;min-height:78vh;display:grid;place-items:center;text-align:center;padding:60px 5vw;
+background:radial-gradient(circle 260px at var(--x,50%) var(--y,40%),rgba(255,122,26,.28),transparent 70%)}
+.web{position:absolute;width:min(34vw,300px);color:var(--pumpkin);opacity:.85}
+.web.l{top:0;left:0}.web.r{top:0;right:0;transform:scaleX(-1)}
+.bats{position:absolute;inset:0;pointer-events:none}
+.bat{position:absolute;color:var(--pumpkin);font-size:1.6rem;animation:fly 14s linear infinite}
+.bat:nth-child(2){top:62%;font-size:1rem;animation-duration:19s;animation-delay:-6s}
+.bat:nth-child(3){top:30%;font-size:2.2rem;animation-duration:24s;animation-delay:-12s}
+@keyframes fly{from{transform:translateX(-10vw)}to{transform:translateX(110vw) translateY(-40px)}}
+.hero h1{position:relative;margin:0;font-weight:900;font-size:clamp(3.4rem,13vw,9rem);line-height:.95;color:var(--pumpkin);
+text-shadow:0 0 30px rgba(255,122,26,.55);animation:flicker 5s steps(1) 1}
+@keyframes flicker{0%,8%,12%,20%{opacity:.15}10%,16%,30%,100%{opacity:1}}
+.hero p{position:relative;max-width:46ch;margin:22px auto 28px;font-size:1.15rem}
+.btn{display:inline-block;background:var(--pumpkin);color:#000;font-weight:800;padding:14px 30px;border-radius:999px;text-decoration:none}
+.btn:hover{background:var(--ink)}
+.count{position:relative;display:flex;gap:18px;justify-content:center;margin-top:36px}
+.count div{min-width:72px;border:1px solid var(--violet);border-radius:12px;padding:10px 6px}
+.count b{display:block;font-size:2rem;font-weight:900;color:var(--pumpkin)}
+.count span{font-size:.8rem}
+main{padding:70px 5vw}
+h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;margin:0 0 8px;color:var(--pumpkin)}
+.sub{margin:0 0 36px;max-width:55ch}
+.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.item{background:var(--card);border:1px solid var(--ember);border-radius:18px;padding:24px;display:flex;flex-direction:column;gap:6px;transition:border-color .2s,transform .2s}
+.item:hover{border-color:var(--pumpkin);transform:translateY(-4px)}
+.item .e{font-size:3.4rem;line-height:1}
+.item h3{margin:8px 0 0;font-size:1.15rem}
+.item p{margin:0;font-size:.92rem;opacity:.8}
+.item .pr{margin-top:auto;padding-top:14px;font-weight:800;color:var(--pumpkin)}
+.item.big{grid-column:span 2;background:linear-gradient(135deg,#2a1203,var(--card));border-color:var(--violet)}
+.item.big .e{font-size:5.5rem}
+@media(max-width:560px){.item.big{grid-column:auto}nav{display:none}}
+.cats{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:36px}
+.cats a{border:1px solid var(--ember);border-radius:999px;padding:8px 20px;text-decoration:none}
+.cats a:hover,.cats a[aria-current]{background:var(--pumpkin);color:#000;border-color:var(--pumpkin)}
+footer{border-top:1px solid var(--ember);padding:40px 5vw;text-align:center;font-size:.9rem}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="#">Boo! Store</a>
+  <nav><a href="#tienda">Tienda</a><a href="#tienda">Disfraces</a><a href="#tienda">Decoración</a><a href="#tienda">Dulces</a></nav>
+  <a class="btn" href="#tienda" style="padding:10px 20px">Carrito (0)</a>
+</header>
+
+<section class="hero" id="hero">
+  <svg class="web l" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M0 0L200 200M0 50L150 200M0 110L90 200M50 0L200 150M110 0L200 90M0 0L200 100M0 0L100 200"/><path d="M0 30Q30 30 30 0M0 70Q70 70 70 0M0 120Q120 120 120 0M0 175Q175 175 175 0"/></svg>
+  <svg class="web r" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M0 0L200 200M0 50L150 200M0 110L90 200M50 0L200 150M110 0L200 90M0 0L200 100M0 0L100 200"/><path d="M0 30Q30 30 30 0M0 70Q70 70 70 0M0 120Q120 120 120 0M0 175Q175 175 175 0"/></svg>
+  <div class="bats" aria-hidden="true"><span class="bat" style="top:14%">🦇</span><span class="bat">🦇</span><span class="bat">🦇</span></div>
+  <div>
+    <h1>Boo!</h1>
+    <p>Disfraces, decoración y dulces para la noche más oscura del año. Pide antes de que se apaguen las luces.</p>
+    <a class="btn" href="#tienda">Ver la tienda</a>
+    <div class="count" role="timer" aria-label="Tiempo restante para Halloween">
+      <div><b id="d">--</b><span>días</span></div><div><b id="h">--</b><span>horas</span></div><div><b id="m">--</b><span>min</span></div><div><b id="s">--</b><span>seg</span></div>
+    </div>
+  </div>
+</section>
+
+<main id="tienda">
+  <h2>Lo más pedido esta semana</h2>
+  <p class="sub">Elige tu categoría y encuentra todo para el 31 de octubre.</p>
+  <div class="cats"><a href="#tienda" aria-current="true">Todo</a><a href="#tienda">Disfraces</a><a href="#tienda">Decoración</a><a href="#tienda">Dulces</a><a href="#tienda">Maquillaje</a></div>
+  <div class="grid">
+    <article class="item big"><span class="e">🎃</span><h3>Calabaza gigante con luz LED</h3><p>60 cm, cara tallada y luz naranja que parpadea como una vela.</p><span class="pr">S/ 89</span></article>
+    <article class="item"><span class="e">🧙</span><h3>Disfraz de bruja</h3><p>Capa, sombrero y escoba. Tallas S a XL.</p><span class="pr">S/ 120</span></article>
+    <article class="item"><span class="e">👻</span><h3>Fantasmas colgantes</h3><p>Pack de 5 que brillan en la oscuridad.</p><span class="pr">S/ 35</span></article>
+    <article class="item"><span class="e">🕸️</span><h3>Telarañas para ventanas</h3><p>Se pegan sin dejar marca.</p><span class="pr">S/ 18</span></article>
+    <article class="item"><span class="e">🍬</span><h3>Bolsa de dulces</h3><p>1 kg para 30 visitas de truco o trato.</p><span class="pr">S/ 45</span></article>
+    <article class="item"><span class="e">💀</span><h3>Kit de maquillaje calavera</h3><p>Pinturas al agua, aptas para piel sensible.</p><span class="pr">S/ 28</span></article>
+  </div>
+</main>
+
+<footer>© 2026 Boo! Store · Envíos a todo el país hasta el 29 de octubre</footer>
+
+<script>
+(function(){
+  var hero=document.getElementById('hero');
+  hero.addEventListener('pointermove',function(e){
+    var r=hero.getBoundingClientRect();
+    hero.style.setProperty('--x',(e.clientX-r.left)+'px');
+    hero.style.setProperty('--y',(e.clientY-r.top)+'px');
+  });
+  var end=new Date(2026,9,31,18,0,0).getTime();
+  function pad(n){return String(n).padStart(2,'0')}
+  function tick(){
+    var t=Math.max(0,end-Date.now()),s=Math.floor(t/1000);
+    document.getElementById('d').textContent=pad(Math.floor(s/86400));
+    document.getElementById('h').textContent=pad(Math.floor(s%86400/3600));
+    document.getElementById('m').textContent=pad(Math.floor(s%3600/60));
+    document.getElementById('s').textContent=pad(s%60);
+  }
+  tick();setInterval(tick,1000);
+})();
+</script>
+</body>
+</html>
