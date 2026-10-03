@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>Boo! Store - Para Greta</title>
+<title>Boo! Store</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -27,7 +27,7 @@ body {
   background-image: 
     radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), rgba(214, 40, 40, 0.25), transparent 80%),
     linear-gradient(rgba(20, 5, 5, 0.88), rgba(20, 5, 5, 0.88)),
-    url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2000&auto=format&fit=crop');
+    url('https://wallpapercave.com/wp/wp7805134.jpg');
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
@@ -121,7 +121,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 </head>
 <body>
 
-<!-- Audio Background -->
+<!-- Audio Background y Efectos (Debes subir estos archivos a GitHub) -->
 <audio id="audio-bg" loop>
   <source src="musica.mp3" type="audio/mpeg">
 </audio>
@@ -231,7 +231,7 @@ function guardarDatos() {
 
 // Lógica de Audio
 function toggleMusica(e) {
-  e.stopPropagation(); // Evita navegar a la colección al tocar la nota
+  e.stopPropagation(); 
   const btn = document.getElementById('btn-musica');
   if (bgMusic.paused) {
     bgMusic.play();
@@ -243,13 +243,12 @@ function toggleMusica(e) {
 }
 
 function reproducirSonido(audio) {
-  // Reinicia y reproduce el sonido de efecto
   audio.currentTime = 0;
   audio.play().catch(err => console.log('Sube tu archivo de audio para escucharlo.'));
 }
 
 function comenzarAventura() {
-  if(bgMusic.paused) toggleMusica({stopPropagation: function(){}}); // Activa la música
+  if(bgMusic.paused) toggleMusica({stopPropagation: function(){}});
   cambiarPagina('sec-juegos');
 }
 
@@ -350,7 +349,6 @@ function cambiarPagina(idPagina) {
 }
 
 (function(){
-  // El evento ahora solo responde al MOUSE, eliminando el bug táctil en celulares
   document.addEventListener('pointermove', function(e){
     if (e.pointerType === 'mouse') {
       document.body.style.setProperty('--x', e.clientX + 'px');
