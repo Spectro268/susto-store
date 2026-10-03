@@ -1,6 +1,3 @@
-Listo mano, sin explicaciones. Aquí tienes el código completo con todos los cambios aplicados y las telarañas rediseñadas para que se vean curvas y realistas. Solo cópialo y pégalo por completo en tu archivo:
-
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -13,73 +10,262 @@ Listo mano, sin explicaciones. Aquí tienes el código completo con todos los ca
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *,*::before,*::after{box-sizing:inherit}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:Montserrat,system-ui,sans-serif;line-height:1.6}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Montserrat,system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
 a{color:inherit}
 :focus-visible{outline:3px solid var(--violet);outline-offset:3px}
-header{display:flex;justify-content:space-between;align-items:center;padding:20px 5vw;border-bottom:1px solid var(--ember)}
-.logo{font-weight:900;font-size:1.5rem;color:var(--pumpkin);text-shadow:0 0 14px rgba(255,122,26,.6);text-decoration:none}
+
+/* Cabecera */
+header{display:flex;justify-content:space-between;align-items:center;padding:20px 5vw;border-bottom:1px solid var(--ember);background:#000;position:sticky;top:0;z-index:100}
+.logo{font-weight:900;font-size:1.5rem;color:var(--pumpkin);text-shadow:0 0 14px rgba(255,122,26,.6);text-decoration:none;cursor:pointer}
 nav{display:flex;gap:24px;font-weight:500}
-nav a{text-decoration:none}nav a:hover{color:var(--pumpkin)}
-.hero{position:relative;overflow:hidden;min-height:78vh;display:grid;place-items:center;text-align:center;padding:60px 5vw;
-background:radial-gradient(circle 260px at var(--x,50%) var(--y,40%),rgba(255,122,26,.28),transparent 70%)}
-.web{position:absolute;width:min(34vw,300px);color:var(--pumpkin);opacity:.85}
+nav a{text-decoration:none;cursor:pointer;padding:5px}
+nav a:hover, nav a.activo{color:var(--pumpkin);border-bottom:2px solid var(--pumpkin)}
+.btn-col{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--pumpkin);color:var(--pumpkin);font-weight:800;padding:8px 20px;border-radius:999px;text-decoration:none;cursor:pointer;transition:all 0.2s}
+.btn-col:hover{background:var(--pumpkin);color:#000}
+.dulces-counter{font-size:1.2rem}
+
+/* Secciones */
+.pagina{display:none;min-height:78vh;padding:40px 5vw;animation:fadeIn 0.4s ease}
+.pagina.activa{display:block}
+#sec-home.activa{display:grid} /* El hero usa grid */
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* Hero (Inicio) */
+.hero{position:relative;place-items:center;text-align:center;background:radial-gradient(circle 260px at var(--x,50%) var(--y,40%),rgba(255,122,26,.28),transparent 70%)}
+.web{position:absolute;width:min(34vw,300px);color:var(--pumpkin);opacity:.85;pointer-events:none}
 .web.l{top:0;left:0}.web.r{top:0;right:0;transform:scaleX(-1)}
 .bats{position:absolute;inset:0;pointer-events:none}
 .bat{position:absolute;color:var(--pumpkin);font-size:1.6rem;animation:fly 14s linear infinite}
 .bat:nth-child(2){top:62%;font-size:1rem;animation-duration:19s;animation-delay:-6s}
 .bat:nth-child(3){top:30%;font-size:2.2rem;animation-duration:24s;animation-delay:-12s}
 @keyframes fly{from{transform:translateX(-10vw)}to{transform:translateX(110vw) translateY(-40px)}}
-.hero h1{position:relative;margin:0;font-weight:900;font-size:clamp(3.4rem,13vw,9rem);line-height:.95;color:var(--pumpkin);
-text-shadow:0 0 30px rgba(255,122,26,.55);animation:flicker 5s steps(1) 1}
+.hero h1{position:relative;margin:0;font-weight:900;font-size:clamp(3.4rem,13vw,9rem);line-height:.95;color:var(--pumpkin);text-shadow:0 0 30px rgba(255,122,26,.55);animation:flicker 5s steps(1) 1}
 @keyframes flicker{0%,8%,12%,20%{opacity:.15}10%,16%,30%,100%{opacity:1}}
 .hero p{position:relative;max-width:46ch;margin:22px auto 28px;font-size:1.15rem}
-.btn{display:inline-block;background:var(--pumpkin);color:#000;font-weight:800;padding:14px 30px;border-radius:999px;text-decoration:none}
-.btn:hover{background:var(--ink)}
 .count{position:relative;display:flex;gap:18px;justify-content:center;margin-top:36px}
 .count div{min-width:72px;border:1px solid var(--pumpkin);border-radius:12px;padding:10px 6px}
 .count b{display:block;font-size:2rem;font-weight:900;color:var(--pumpkin)}
 .count span{font-size:.8rem}
+
+/* Títulos de sección */
+h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;margin:0 0 8px;color:var(--pumpkin)}
+.sub{margin:0 0 36px;max-width:55ch;opacity:0.9}
+
+/* Grillas (Juegos, Tienda, Colección) */
+.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.item{background:var(--card);border:1px solid var(--ember);border-radius:18px;padding:24px;display:flex;flex-direction:column;gap:10px;transition:border-color .2s,transform .2s;text-align:center}
+.item:hover{border-color:var(--pumpkin);transform:translateY(-4px)}
+.item .e{font-size:3.5rem;line-height:1;margin-bottom:10px}
+.item h3{margin:0;font-size:1.2rem}
+.item p{margin:0;font-size:.92rem;opacity:.8;flex-grow:1}
+.btn-accion{display:inline-block;background:var(--pumpkin);color:#000;font-weight:800;padding:10px 20px;border-radius:8px;border:none;cursor:pointer;font-family:inherit;font-size:1rem;margin-top:10px;transition:background 0.2s}
+.btn-accion:hover{background:var(--ink)}
+.btn-jugar{background:var(--violet);color:#fff}
+.btn-jugar:hover{background:#a36dff}
+.btn-bloqueado{background:#333;color:#888;cursor:not-allowed}
+.btn-bloqueado:hover{background:#333}
+
+/* Animación de error de compra */
+.error-compra{animation:shake 0.4s;background:#ff3333 !important;color:#fff !important;pointer-events:none}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+
+/* Estado vacío colección */
+.vacio{grid-column:1/-1;text-align:center;padding:40px;border:1px dashed var(--ember);border-radius:18px;opacity:0.7}
+
 footer{border-top:1px solid var(--ember);padding:40px 5vw;text-align:center;font-size:.9rem}
-@media(max-width:560px){nav{display:none}}
+@media(max-width:560px){nav{display:none} .btn-col span.texto{display:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
+
 <header>
-  <a class="logo" href="#">Boo! Store</a>
-  <nav><a href="#tienda">Juegos</a><a href="#tienda">Tienda</a></nav>
-  <a class="btn" href="#tienda" style="padding:10px 20px">Colección</a>
+  <a class="logo" onclick="cambiarPagina('sec-home')">Boo! Store</a>
+  <nav>
+    <a onclick="cambiarPagina('sec-juegos')" id="nav-juegos">Juegos</a>
+    <a onclick="cambiarPagina('sec-tienda')" id="nav-tienda">Tienda</a>
+  </nav>
+  <a class="btn-col" onclick="cambiarPagina('sec-coleccion')" id="nav-coleccion">
+    <span class="dulces-counter">🍬 <span id="ui-dulces">0</span></span> 
+    <span class="texto">| Colección</span>
+  </a>
 </header>
 
-<section class="hero" id="hero">
-  <svg class="web l" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-    <path d="M0,0 L200,200 M0,0 L150,200 M0,0 L90,200 M0,0 L30,200 M0,0 L200,150 M0,0 L200,90 M0,0 L200,30" />
-    <path d="M0,40 Q20,35 40,0 M0,80 Q40,70 80,0 M0,120 Q60,105 120,0 M0,160 Q80,140 160,0 M0,200 Q100,175 200,0" />
-    <path d="M40,200 Q70,185 90,200 M90,200 Q120,185 150,200 M150,200 Q175,185 200,200" />
-    <path d="M200,40 Q185,70 200,90 M200,90 Q185,120 200,150 M200,150 Q185,175 200,200" />
+<!-- PÁGINA 1: INICIO -->
+<main class="pagina activa hero" id="sec-home">
+  <!-- Telarañas curvas mejoradas -->
+  <svg class="web l" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" aria-hidden="true">
+    <path d="M0 0 L100 100 M0 0 L75 100 M0 0 L45 100 M0 0 L15 100 M0 0 L100 75 M0 0 L100 45 M0 0 L100 15"/>
+    <path d="M 0 20 Q 15 20 20 0 M 0 45 Q 25 40 45 0 M 0 70 Q 40 60 70 0 M 0 95 Q 60 80 95 0 M 20 100 Q 70 85 100 20 M 50 100 Q 85 90 100 50 M 80 100 Q 95 95 100 80"/>
   </svg>
-  <svg class="web r" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-    <path d="M0,0 L200,200 M0,0 L150,200 M0,0 L90,200 M0,0 L30,200 M0,0 L200,150 M0,0 L200,90 M0,0 L200,30" />
-    <path d="M0,40 Q20,35 40,0 M0,80 Q40,70 80,0 M0,120 Q60,105 120,0 M0,160 Q80,140 160,0 M0,200 Q100,175 200,0" />
-    <path d="M40,200 Q70,185 90,200 M90,200 Q120,185 150,200 M150,200 Q175,185 200,200" />
-    <path d="M200,40 Q185,70 200,90 M200,90 Q185,120 200,150 M200,150 Q185,175 200,200" />
+  <svg class="web r" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" aria-hidden="true">
+    <path d="M0 0 L100 100 M0 0 L75 100 M0 0 L45 100 M0 0 L15 100 M0 0 L100 75 M0 0 L100 45 M0 0 L100 15"/>
+    <path d="M 0 20 Q 15 20 20 0 M 0 45 Q 25 40 45 0 M 0 70 Q 40 60 70 0 M 0 95 Q 60 80 95 0 M 20 100 Q 70 85 100 20 M 50 100 Q 85 90 100 50 M 80 100 Q 95 95 100 80"/>
   </svg>
   <div class="bats" aria-hidden="true"><span class="bat" style="top:14%">🦇</span><span class="bat">🦇</span><span class="bat">🦇</span></div>
   <div>
     <h1>Boo!</h1>
     <p>Encuentra los mejores juegos y accesorios para la noche de brujas. ¿Te atreves a entrar antes de que acabe el tiempo?</p>
-    <a class="btn" href="#tienda">Ver la tienda</a>
+    <button class="btn-accion" style="border-radius:999px; padding:14px 30px" onclick="cambiarPagina('sec-juegos')">Ir a los Juegos</button>
     <div class="count" role="timer" aria-label="Tiempo restante para Halloween">
       <div><b id="d">--</b><span>días</span></div><div><b id="h">--</b><span>horas</span></div><div><b id="m">--</b><span>min</span></div><div><b id="s">--</b><span>seg</span></div>
     </div>
+  </div>
+</main>
+
+<!-- PÁGINA 2: JUEGOS -->
+<section class="pagina" id="sec-juegos">
+  <h2>Sala de Juegos</h2>
+  <p class="sub">Juega para ganar dulces y canjearlos por artículos exclusivos en la Tienda.</p>
+  <div class="grid">
+    <!-- Juego de prueba -->
+    <article class="item">
+      <span class="e">👻</span>
+      <h3>Cazafantasmas</h3>
+      <p>Atrapa a los fantasmas antes de que desaparezcan de la pantalla.</p>
+      <button class="btn-accion btn-jugar" onclick="probarJuego()">Jugar (+20 🍬)</button>
+    </article>
+    <!-- Próximos juegos -->
+    <article class="item">
+      <span class="e">🧠</span>
+      <h3>Memoria Maldita</h3>
+      <p>Encuentra los pares de cartas espeluznantes.</p>
+      <button class="btn-accion btn-bloqueado">Próximamente</button>
+    </article>
+    <article class="item">
+      <span class="e">🏰</span>
+      <h3>Escape del Laberinto</h3>
+      <p>Encuentra la salida antes de que la linterna se apague.</p>
+      <button class="btn-accion btn-bloqueado">Próximamente</button>
+    </article>
+  </div>
+</section>
+
+<!-- PÁGINA 3: TIENDA -->
+<section class="pagina" id="sec-tienda">
+  <h2>Tienda Oscura</h2>
+  <p class="sub">Usa tus dulces para comprar artículos. Lo que compres irá a tu Colección.</p>
+  <div class="grid" id="contenedor-tienda">
+    <!-- Los artículos se inyectan con JavaScript -->
+  </div>
+</section>
+
+<!-- PÁGINA 4: COLECCIÓN -->
+<section class="pagina" id="sec-coleccion">
+  <h2>Tu Colección</h2>
+  <p class="sub">Aquí se guardan todas las medallas y artículos que has conseguido.</p>
+  <div class="grid" id="contenedor-coleccion">
+    <!-- Los artículos comprados aparecen aquí -->
   </div>
 </section>
 
 <footer>© 2026 Boo! Store · Envíos a todo el país hasta el 29 de octubre</footer>
 
 <script>
+// --- SISTEMA DE DATOS Y GUARDADO (LocalStorage) ---
+let dulces = parseInt(localStorage.getItem('boo_dulces')) || 0;
+let coleccion = JSON.parse(localStorage.getItem('boo_coleccion')) || [];
+
+// Catálogo de la tienda
+const catalogo = [
+  { id: 'calabaza', icono: '🎃', nombre: 'Medalla Calabaza', precio: 30, desc: 'Brilla con una luz interna misteriosa.' },
+  { id: 'pocion', icono: '🧪', nombre: 'Poción Verde', precio: 50, desc: 'Burbujea y huele a manzana ácida.' },
+  { id: 'bruja', icono: '🧙', nombre: 'Sombrero de Bruja', precio: 100, desc: 'Te da poderes mágicos oscuros.' },
+  { id: 'gato', icono: '🐈‍⬛', nombre: 'Gato Negro', precio: 150, desc: 'Da buena suerte en la noche de Halloween.' },
+  { id: 'vampiro', icono: '🧛', nombre: 'Capa de Vampiro', precio: 300, desc: 'Vuela hacia la oscuridad absoluta.' }
+];
+
+// --- FUNCIONES DEL SISTEMA ---
+
+// Guardar en la memoria del navegador
+function guardarDatos() {
+  localStorage.setItem('boo_dulces', dulces);
+  localStorage.setItem('boo_coleccion', JSON.stringify(coleccion));
+  document.getElementById('ui-dulces').textContent = dulces;
+}
+
+// Botón temporal para ganar dulces probando
+function probarJuego() {
+  dulces += 20;
+  guardarDatos();
+  alert("¡Ganaste 20 dulces por probar el juego!");
+}
+
+// Comprar un artículo
+function comprar(boton, idArticulo, precio) {
+  if (dulces >= precio) {
+    // Si alcanza el dinero
+    dulces -= precio;
+    coleccion.push(idArticulo);
+    guardarDatos();
+    renderizarTiendaYColeccion(); // Actualizar las vistas
+  } else {
+    // Si no alcanza, efecto de error
+    boton.classList.add('error-compra');
+    boton.textContent = "¡Faltan dulces!";
+    setTimeout(() => {
+      boton.classList.remove('error-compra');
+      boton.textContent = "Comprar - " + precio + " 🍬";
+    }, 800);
+  }
+}
+
+// Dibujar los artículos en Tienda y Colección
+function renderizarTiendaYColeccion() {
+  const divTienda = document.getElementById('contenedor-tienda');
+  const divColeccion = document.getElementById('contenedor-coleccion');
+  divTienda.innerHTML = '';
+  divColeccion.innerHTML = '';
+
+  let hayColeccion = false;
+
+  catalogo.forEach(item => {
+    // Si el usuario ya lo tiene, va a la colección
+    if (coleccion.includes(item.id)) {
+      hayColeccion = true;
+      divColeccion.innerHTML += `
+        <article class="item" style="border-color: var(--violet)">
+          <span class="e">${item.icono}</span>
+          <h3>${item.nombre}</h3>
+          <p>${item.desc}</p>
+          <button class="btn-accion btn-bloqueado" style="background:var(--bg)">Adquirido</button>
+        </article>`;
+    } else {
+      // Si no lo tiene, aparece en la tienda
+      divTienda.innerHTML += `
+        <article class="item">
+          <span class="e">${item.icono}</span>
+          <h3>${item.nombre}</h3>
+          <p>${item.desc}</p>
+          <button class="btn-accion" onclick="comprar(this, '${item.id}', ${item.precio})">Comprar - ${item.precio} 🍬</button>
+        </article>`;
+    }
+  });
+
+  if (!hayColeccion) {
+    divColeccion.innerHTML = `<div class="vacio"><span style="font-size:3rem">🕸️</span><br><br>Tu colección está vacía.<br>¡Juega para conseguir dulces y compra en la tienda!</div>`;
+  }
+}
+
+// --- NAVEGACIÓN DE "PÁGINAS" ---
+function cambiarPagina(idPagina) {
+  // Ocultar todas las páginas
+  document.querySelectorAll('.pagina').forEach(pag => pag.classList.remove('activa'));
+  // Mostrar la página solicitada
+  document.getElementById(idPagina).classList.add('activa');
+  
+  // Quitar subrayado de los links
+  document.querySelectorAll('nav a').forEach(link => link.classList.remove('activo'));
+  // Si tocó un link del nav, subrayarlo
+  if(idPagina === 'sec-juegos') document.getElementById('nav-juegos').classList.add('activo');
+  if(idPagina === 'sec-tienda') document.getElementById('nav-tienda').classList.add('activo');
+  
+  window.scrollTo(0,0); // Subir arriba
+}
+
+// --- CONTADOR Y LINTERNA DEL HERO ---
 (function(){
-  var hero=document.getElementById('hero');
+  var hero=document.getElementById('sec-home');
   hero.addEventListener('pointermove',function(e){
     var r=hero.getBoundingClientRect();
     hero.style.setProperty('--x',(e.clientX-r.left)+'px');
@@ -96,8 +282,11 @@ footer{border-top:1px solid var(--ember);padding:40px 5vw;text-align:center;font
   }
   tick();setInterval(tick,1000);
 })();
+
+// Iniciar interfaz
+guardarDatos();
+renderizarTiendaYColeccion();
+
 </script>
 </body>
 </html>
-
-```
