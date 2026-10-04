@@ -3,5 +3,4 @@ self.addEventListener('install', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-  // Aquí más adelante podríamos hacer que funcione sin internet
 });
