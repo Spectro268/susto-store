@@ -1,0 +1,16 @@
+{
+  "name": "Boo! Store",
+  "short_name": "Boo!",
+  "description": "Un pequeño rincón oscuro creado solo para ti.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#140505",
+  "theme_color": "#140505",
+  "icons": [
+    {
+      "src": "icono.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
