@@ -267,4 +267,384 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
     <span class="moneda-ui">🍬 <span id="ui-dulces">0</span></span>
     <a class="btn-col" onclick="cambiarPagina('sec-coleccion')" id="nav-coleccion">Nuestra Colección</a>
     <button class="btn-ajustes" onclick="abrirAjustes()">
-      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+    </button>
+  </div>
+</header>
+
+<main class="pagina activa hero" id="sec-home">
+  <div class="bats" aria-hidden="true"><span class="bat">🦇</span><span class="bat">🦇</span><span class="bat">🦇</span></div>
+  <div>
+    <div class="title-wrapper">
+      <svg class="heart-svg heart-l" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+      <h1>Feliz<br>Halloween</h1>
+      <svg class="heart-svg heart-r" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </div>
+    <p>Un pequeño rincón oscuro creado solo para ti. ¿Te atreves a jugar conmigo antes de que se acabe la noche?</p>
+    <button class="btn-accion" style="border-radius:999px; padding:14px 30px; font-size:1.1rem; margin-bottom: 20px;" onclick="cambiarPagina('sec-juegos')">Comenzar la aventura</button>
+    <div class="count" role="timer">
+      <div><b id="d">--</b><span>días</span></div><div><b id="h">--</b><span>horas</span></div><div><b id="m">--</b><span>min</span></div><div><b id="s">--</b><span>seg</span></div>
+    </div>
+  </div>
+</main>
+
+<section class="pagina" id="sec-juegos">
+  <h2>Salón de los Hechizos</h2>
+  <p class="sub">Juega para ganar dulces mágicos y desbloquear sorpresas.</p>
+  <div class="grid">
+    <article class="item">
+      <span class="e">👻</span><h3>Catacumbas</h3>
+      <p>Atrapa a los espíritus traviesos del instituto antes de que escapen.</p>
+      <button class="btn-accion btn-jugar" onclick="probarJuego(this)">Jugar (+20 🍬)</button>
+    </article>
+    <article class="item">
+      <span class="e">📱</span><h3>Memoria Monstruosa</h3>
+      <p>Encuentra los pares secretos en los diarios de las chicas.</p>
+      <button class="btn-accion btn-bloqueado">Próximamente</button>
+    </article>
+    <article class="item">
+      <span class="e">🧪</span><h3>Biteology: Pociones</h3>
+      <p>Examen de ciencias: Mezcla los ingredientes correctos para mi amor.</p>
+      <button class="btn-accion btn-bloqueado">Próximamente</button>
+    </article>
+  </div>
+</section>
+
+<section class="pagina" id="sec-tienda">
+  <h2>Bazar de los Enamorados</h2>
+  <p class="sub">Usa tus dulces para coleccionar nuestros amuletos de la suerte.</p>
+  <div class="grid" id="contenedor-tienda"></div>
+</section>
+
+<section class="pagina" id="sec-coleccion">
+  <h2>Tu Colección</h2>
+  <p class="sub">Aquí guardaremos cada recuerdo y amuleto que consigas.</p>
+  
+  <h3 class="seccion-titulo">En el menú (Logros)</h3>
+  <div class="grid" id="contenedor-logros"></div>
+  
+  <h3 class="seccion-titulo">Amuletos (Tienda)</h3>
+  <div class="grid" id="contenedor-coleccion"></div>
+</section>
+
+<section class="pagina" id="sec-codigos">
+  <div class="icoffin-container">
+    <div class="icoffin">
+      <h2 style="color:var(--violet);">iCoffin</h2>
+      <p style="margin: 10px auto 20px; font-size:0.9rem; opacity:0.8;">Ingresa la contraseña para hackear el sistema.</p>
+      <input type="text" id="input-codigo" placeholder="CONTRASEÑA">
+      <button class="btn-accion" style="background:var(--violet); color:#140505; width:100%; font-size: 1.1rem; padding: 15px;" onclick="canjearCodigo()">Desbloquear</button>
+      <p id="msg-codigo" style="margin-top: 15px; font-weight: bold; min-height: 24px; font-size: 1rem;"></p>
+    </div>
+    
+    <div class="diario-btn" onclick="abrirDiario()">
+      <span>📖</span>
+      <strong style="color:var(--pumpkin);">Diario de Pistas</strong>
+    </div>
+  </div>
+</section>
+
+<script>
+// ========================================================
+// 1. CONFIGURACIÓN DE FIREBASE 
+// ========================================================
+const firebaseConfig = {
+  apiKey: "AIzaSyAR9cVrx1s3cMd1hfG2NySoRSBrlXHBdIk",
+  authDomain: "evento-tienda-halloween.firebaseapp.com",
+  databaseURL: "https://evento-tienda-halloween-default-rtdb.firebaseio.com",
+  projectId: "evento-tienda-halloween",
+  storageBucket: "evento-tienda-halloween.firebasestorage.app",
+  messagingSenderId: "62065058890",
+  appId: "1:62065058890:web:6f53ce3be9b2c83647f2b3"
+};
+
+let database = null;
+if(firebaseConfig.apiKey) {
+  firebase.initializeApp(firebaseConfig);
+  database = firebase.database();
+}
+
+const urlParams = new URLSearchParams(window.location.search);
+const esAdmin = urlParams.get('modo') === 'prueba';
+const rutaDB = esAdmin ? 'admin_partida' : 'greta_partida';
+
+if(esAdmin) document.getElementById('modo-txt').textContent = "⚠️ MODO ADMINISTRADOR ACTIVADO";
+
+// ========================================================
+// 2. VARIABLES DE ESTADO Y DATOS
+// ========================================================
+const bgMusic = document.getElementById('audio-bg'); bgMusic.volume = 0; bgMusic.muted = true;
+const sfxExito = new Audio('exito.mp3'); sfxExito.volume = 0; sfxExito.muted = true;
+const sfxError = new Audio('error.mp3'); sfxError.volume = 0; sfxError.muted = true;
+
+let dulces = 0; let coleccion = []; let logros = [];
+let ataudDia = 1; let ataudTiempo = 0;   
+let diarioVisto = false; let pistas = [];       
+
+const catalogo = [
+  { id: 'calabaza', icono: '🎃', nombre: 'Calabaza Protectora', precio: 30, desc: 'Para iluminar nuestras noches más oscuras.' },
+  { id: 'pocion', icono: '🍷', nombre: 'Bebida de Vampiro', precio: 50, desc: 'Una copa para brindar por nosotros.' },
+  { id: 'rosanegra', icono: '🥀', nombre: 'Rosa Eterna', precio: 100, desc: 'Nunca se marchita, como lo que siento por ti.' },
+  { id: 'gato', icono: '🐈‍⬛', nombre: 'Gatito Negro', precio: 150, desc: 'Nos traerá buena suerte a donde vayamos.' },
+  { id: 'anillo', icono: '💍', nombre: 'Anillo de Promesa', precio: 300, desc: 'Un pequeño pacto para la eternidad.' }
+];
+
+const catalogoLogros = {
+  'config': { icono: '⚙️', nombre: 'Curiosidad Monstruosa', desc: 'Abriste la configuración por primera vez.' },
+  'skull': { icono: '💀', nombre: 'Reflejos de Vampiro', desc: 'Atrapaste una Skullette rápida.' },
+  'noche': { icono: '🦇', nombre: 'Noctámbula', desc: 'Entraste a la tienda pasada la medianoche.' },
+  'ahorro': { icono: '💰', nombre: 'Bolsillos Llenos', desc: 'Lograste ahorrar 150 dulces.' },
+  'diario': { icono: '📖', nombre: 'Cazadora de Secretos', desc: 'Encontraste y abriste el Diario de Pistas.' }
+};
+
+const catalogoPistas = {
+  'pista_amor': { pistaTxt: "El sentimiento que nos une. 4 letras.", codigo: "AMOR", desc: "El amor es la chispa mágica que ilumina las catacumbas de mi corazón cuando estás cerca." }
+};
+
+// ========================================================
+// 3. SINCRONIZACIÓN FIREBASE Y UI
+// ========================================================
+if(database) {
+  database.ref(rutaDB).on('value', (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+      dulces = data.dulces || 0; coleccion = data.coleccion || []; logros = data.logros || [];
+      ataudDia = data.ataudDia || 1; ataudTiempo = data.ataudTiempo || 0;
+      diarioVisto = data.diarioVisto || false; pistas = data.pistas || [];
+    }
+    actualizarUI();
+  });
+}
+
+function guardarDatos() {
+  if (dulces >= 150) checkLogro('ahorro');
+  if(database) {
+    database.ref(rutaDB).set({ 
+      dulces: dulces, coleccion: coleccion, logros: logros, 
+      ataudDia: ataudDia, ataudTiempo: ataudTiempo, 
+      diarioVisto: diarioVisto, pistas: pistas 
+    });
+  }
+  actualizarUI();
+}
+
+function actualizarUI() {
+  document.getElementById('ui-dulces').textContent = dulces;
+  renderizarTiendaYColeccion(); actualizarEstadoAtaud(); renderizarDiario();
+}
+
+const horaActual = new Date().getHours();
+if (horaActual >= 0 && horaActual < 4) { setTimeout(() => checkLogro('noche'), 2000); }
+
+function checkLogro(id) {
+  if (!logros.includes(id)) {
+    logros.push(id); dulces += 15; mostrarToast(catalogoLogros[id].nombre, false);
+    guardarDatos(); reproducirSonido(sfxExito);
+  }
+}
+
+function mostrarToast(texto, esPista = false) {
+  const toast = document.getElementById('toast-logro');
+  if(esPista) {
+    toast.style.background = 'var(--pumpkin)'; toast.style.borderColor = 'var(--ember)';
+    document.getElementById('toast-icon').textContent = '📖'; document.getElementById('toast-sub').textContent = 'Nueva pista'; document.getElementById('toast-bonus').textContent = '';
+  } else {
+    toast.style.background = 'var(--violet)'; toast.style.borderColor = '#fff';
+    document.getElementById('toast-icon').textContent = '🏆'; document.getElementById('toast-sub').textContent = 'Logro Desbloqueado'; document.getElementById('toast-bonus').textContent = '+15 🍬';
+  }
+  document.getElementById('toast-txt').textContent = texto;
+  toast.classList.add('visible'); setTimeout(() => toast.classList.remove('visible'), 4000);
+}
+
+// ========================================================
+// 4. LÓGICA DE AUDIO
+// ========================================================
+function toggleMuteMusica() { bgMusic.muted = !bgMusic.muted; const vol = document.getElementById('vol-musica'); if(!bgMusic.muted && vol.value == 0) { vol.value = 0.5; bgMusic.volume = 0.5; } document.getElementById('btn-mute-musica').textContent = bgMusic.muted ? '🔇' : '🔊'; if(!bgMusic.muted) bgMusic.play().catch(e=>console.log(e)); }
+function cambiarVolumenMusica(valor) { if (bgMusic.muted && valor > 0) toggleMuteMusica(); bgMusic.volume = valor; if (valor > 0 && bgMusic.paused) bgMusic.play().catch(e=>console.log(e)); }
+function toggleMuteSfx() { sfxExito.muted = !sfxExito.muted; sfxError.muted = !sfxError.muted; const vol = document.getElementById('vol-sfx'); if(!sfxExito.muted && vol.value == 0) { vol.value = 0.5; sfxExito.volume = 0.5; sfxError.volume = 0.5; } document.getElementById('btn-mute-sfx').textContent = sfxExito.muted ? '🔇' : '🔊'; if(!sfxExito.muted) reproducirSonido(sfxExito); }
+function cambiarVolumenSfx(valor) { if (sfxExito.muted && valor > 0) toggleMuteSfx(); sfxExito.volume = valor; sfxError.volume = valor; }
+function reproducirSonido(audio) { if(!audio.muted && audio.volume > 0) { audio.currentTime = 0; audio.play().catch(e=>console.log(e)); } }
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") { bgMusic.pause(); } else if (!bgMusic.muted && document.getElementById('vol-musica').value > 0) { bgMusic.play().catch(e=>console.log(e)); } });
+
+// ========================================================
+// 5. ATAÚD DE RECOMPENSA 
+// ========================================================
+function actualizarEstadoAtaud() {
+  const listo = Date.now() - ataudTiempo >= 86400000; const badge = document.getElementById('badge-ataud');
+  if (ataudDia > 10) { badge.textContent = "Completado"; badge.style.background = "#555"; } 
+  else if (listo) { badge.textContent = "¡Caja Lista!"; badge.style.background = "var(--pumpkin)"; } 
+  else { badge.textContent = "En espera..."; badge.style.background = "#555"; }
+}
+function abrirAtaud() { document.getElementById('modal-ataud').classList.add('activo'); renderizarGrillaAtaud(); }
+function cerrarAtaud() { document.getElementById('modal-ataud').classList.remove('activo'); }
+function renderizarGrillaAtaud() {
+  const grid = document.getElementById('grid-ataud-cajas'); grid.innerHTML = '';
+  const listo = Date.now() - ataudTiempo >= 86400000;
+  for(let i=1; i<=10; i++) {
+    const div = document.createElement('div'); div.className = 'dia-caja';
+    div.innerHTML = `Día ${i}<br><span style="font-size:1.5rem;">${i < ataudDia ? '🦇' : '🎁'}</span>`;
+    if (i < ataudDia) { div.classList.add('reclamado'); } else if (i === ataudDia) { if (listo) { div.classList.add('actual'); div.onclick = reclamarCaja; } else { div.classList.add('bloqueado'); } } else { div.classList.add('bloqueado'); }
+    grid.appendChild(div);
+  }
+  if (ataudDia <= 10 && !listo) { actualizarTimerAtaud(); } else if (ataudDia <= 10) { document.getElementById('contador-ataud').textContent = "¡Caja Disponible Ahora!"; } else { document.getElementById('contador-ataud').textContent = "Camino Completado"; }
+}
+function reclamarCaja() { ataudTiempo = Date.now(); ataudDia++; dulces += 50; guardarDatos(); reproducirSonido(sfxExito); renderizarGrillaAtaud(); }
+function actualizarTimerAtaud() {
+  const txt = document.getElementById('contador-ataud');
+  const calc = () => { let diff = 86400000 - (Date.now() - ataudTiempo); if (diff <= 0) { renderizarGrillaAtaud(); return; } let h = Math.floor(diff / 3600000); let m = Math.floor((diff % 3600000) / 60000); let s = Math.floor((diff % 60000) / 1000); txt.textContent = `Siguiente en: ${h}h ${m}m ${s}s`; };
+  calc(); if(window.timerAtaud) clearInterval(window.timerAtaud); window.timerAtaud = setInterval(calc, 1000);
+}
+
+// ========================================================
+// 6. TIENDA Y COLECCIONES
+// ========================================================
+function comprar(boton, idArticulo, precio) {
+  if (dulces >= precio) {
+    dulces -= precio; coleccion.push(idArticulo);
+    if(idArticulo === 'calabaza' || coleccion.length === 1) { if(!pistas.includes('pista_amor')) { pistas.push('pista_amor'); mostrarToast("Ve al Diario Secreto", true); } }
+    guardarDatos(); reproducirSonido(sfxExito);
+  } else {
+    reproducirSonido(sfxError); boton.classList.add('error-compra'); boton.textContent = "¡Faltan dulces!";
+    setTimeout(() => { boton.classList.remove('error-compra'); boton.textContent = "Obtener - " + precio + " 🍬"; }, 800);
+  }
+}
+
+function renderizarTiendaYColeccion() {
+  const divTienda = document.getElementById('contenedor-tienda'); const divColeccion = document.getElementById('contenedor-coleccion'); const divLogros = document.getElementById('contenedor-logros');
+  if(!divTienda) return;
+  divTienda.innerHTML = ''; divColeccion.innerHTML = ''; let hayColeccion = false;
+  catalogo.forEach(item => {
+    if (coleccion.includes(item.id)) { hayColeccion = true; divColeccion.innerHTML += `<article class="item" style="border-color: var(--violet)"><span class="e">${item.icono}</span><h3>${item.nombre}</h3><p>${item.desc}</p><button class="btn-accion btn-bloqueado" style="background:var(--bg)">Guardado a salvo</button></article>`; } 
+    else { divTienda.innerHTML += `<article class="item"><span class="e">${item.icono}</span><h3>${item.nombre}</h3><p>${item.desc}</p><button class="btn-accion" onclick="comprar(this, '${item.id}', ${item.precio})">Obtener - ${item.precio} 🍬</button></article>`; }
+  });
+  if (!hayColeccion) divColeccion.innerHTML = `<div style="grid-column: 1/-1; text-align: center; opacity: 0.7;">Aún no tenemos amuletos...</div>`;
+  divLogros.innerHTML = '';
+  Object.keys(catalogoLogros).forEach(key => {
+    const l = catalogoLogros[key]; const ganado = logros.includes(key);
+    divLogros.innerHTML += `<article class="item" style="padding:15px; flex-direction:row; align-items:center; text-align:left; ${ganado ? 'border-color:var(--pumpkin); background:rgba(214,40,40,0.1);' : 'opacity:0.6; filter:grayscale(1);'}">
+        <span style="font-size:2rem; min-width:40px;">${l.icono}</span>
+        <div><h3 style="font-size:1rem; margin-bottom:3px;">${ganado ? l.nombre : '???'}</h3><p style="font-size:0.8rem; margin:0;">${ganado ? l.desc : 'Secreto...'}</p></div>
+      </article>`;
+  });
+}
+
+// ========================================================
+// 7. DIARIO Y CÓDIGOS
+// ========================================================
+function abrirDiario() {
+  const volSlider = parseFloat(document.getElementById('vol-musica').value);
+  if(!bgMusic.muted && volSlider > 0) {
+    bgMusic.volume = volSlider * 0.3;
+  }
+
+  if (!diarioVisto) {
+    const overlay = document.getElementById('overlay-diario');
+    overlay.style.display = 'flex'; 
+    setTimeout(() => { overlay.style.opacity = '1'; }, 100);
+    
+    setTimeout(() => { 
+      overlay.style.opacity = '0'; 
+      setTimeout(() => { 
+        overlay.style.display = 'none'; 
+        document.getElementById('modal-diario').classList.add('activo');
+        checkLogro('diario');
+      }, 1500); 
+    }, 5500); 
+    
+    diarioVisto = true; 
+    guardarDatos();
+  } else { 
+    document.getElementById('modal-diario').classList.add('activo'); 
+    checkLogro('diario');
+  }
+}
+
+function esconderDiario() {
+  document.getElementById('modal-diario').classList.remove('activo');
+  const volSlider = parseFloat(document.getElementById('vol-musica').value);
+  if(!bgMusic.muted && volSlider > 0) {
+    bgMusic.volume = volSlider;
+  }
+}
+
+function renderizarDiario() {
+  const container = document.getElementById('lista-pistas'); if(!container) return; container.innerHTML = '';
+  Object.keys(catalogoPistas).forEach((key, index) => {
+    const p = catalogoPistas[key]; const desbloqueada = pistas.includes(key);
+    if (desbloqueada) { container.innerHTML += `<div class="pista-box"><strong>Pista #${index+1}:</strong> ${p.pistaTxt}</div>`; } else { container.innerHTML += `<div class="pista-box pista-blur"><strong>🔒 Pista #${index+1}:</strong> Para leer esto, primero debes ayudarme a iluminar nuestras noches...</div>`; }
+  });
+}
+
+function canjearCodigo() {
+  const input = document.getElementById('input-codigo'); const msg = document.getElementById('msg-codigo'); const codigo = input.value.trim().toUpperCase(); let msjRespuesta = ""; colorRespuesta = "#4CAF50";
+  switch(codigo) {
+    case 'AMOR': msjRespuesta = catalogoPistas['pista_amor'].desc; colorRespuesta = "var(--violet)"; reproducirSonido(sfxExito); break;
+    case 'RESET': dulces = 0; coleccion = []; logros = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; msjRespuesta = "[ADMIN] Borrón y cuenta total."; colorRespuesta = "var(--pumpkin)"; break;
+    case 'RESETCARAMELOS': dulces = 0; msjRespuesta = "[ADMIN] Caramelos a 0."; break;
+    case 'RESETLOGROS': logros = []; msjRespuesta = "[ADMIN] Logros bloqueados."; break;
+    case 'RESETCOLECCTION': coleccion = []; pistas = []; msjRespuesta = "[ADMIN] Colección vaciada."; break;
+    case 'RESETATAUD': ataudDia = 1; ataudTiempo = 0; msjRespuesta = "[ADMIN] Ataúd al Día 1."; break;
+    case '24H': ataudTiempo = Date.now() - 86400000; msjRespuesta = "[ADMIN] Reloj adelantado 24h."; break;
+    default: msjRespuesta = "Contraseña incorrecta..."; colorRespuesta = "var(--pumpkin)"; reproducirSonido(sfxError);
+  }
+  msg.style.color = colorRespuesta; msg.textContent = msjRespuesta; input.value = ''; guardarDatos(); if(codigo !== 'AMOR') setTimeout(() => { msg.textContent = ''; }, 4000);
+}
+
+// ========================================================
+// 8. NAVEGACIÓN Y EXTRAS
+// ========================================================
+function abrirAjustes() { checkLogro('config'); document.getElementById('modal-ajustes').classList.add('activo'); }
+function cerrarAjustes() { document.getElementById('modal-ajustes').classList.remove('activo'); }
+
+setInterval(() => {
+  const enJuegos = document.getElementById('sec-juegos').classList.contains('activa');
+  if(!enJuegos && Math.random() > 0.7) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'skullette-wrapper';
+    wrapper.style.top = Math.random() * 80 + 'vh'; 
+    wrapper.style.left = (Math.random() > 0.5 ? '-50px' : '105vw');
+    wrapper.style.opacity = '0'; 
+    wrapper.style.transition = 'transform 6s linear, opacity 0.8s ease';
+    
+    const inner = document.createElement('div'); inner.className = 'skullette-inner'; inner.textContent = "💀🎀";
+    wrapper.appendChild(inner); document.body.appendChild(wrapper);
+    
+    setTimeout(() => { wrapper.style.opacity = '1'; wrapper.style.transform = `translateX(${wrapper.style.left === '-50px' ? '120vw' : '-120vw'}) rotate(360deg)`; }, 100);
+    setTimeout(() => { wrapper.style.opacity = '0'; }, 5200); 
+    
+    inner.onclick = () => { checkLogro('skull'); dulces += 10; guardarDatos(); reproducirSonido(sfxExito); wrapper.remove(); };
+    setTimeout(() => { if(wrapper.parentNode) wrapper.remove(); }, 6000);
+  }
+}, 8000);
+
+function probarJuego(boton) { dulces += 20; guardarDatos(); reproducirSonido(sfxExito); const original = boton.textContent; boton.textContent = "+20 🍬"; boton.style.background = "var(--pumpkin)"; boton.style.pointerEvents = "none"; setTimeout(() => { boton.textContent = original; boton.style.background = ""; boton.style.pointerEvents = "auto"; }, 1200); }
+
+function cambiarPagina(idPagina) {
+  document.querySelectorAll('.pagina').forEach(pag => pag.classList.remove('activa'));
+  document.getElementById(idPagina).classList.add('activa');
+  document.querySelectorAll('nav a').forEach(link => link.classList.remove('activo'));
+  if(idPagina === 'sec-juegos') document.getElementById('nav-juegos').classList.add('activo');
+  if(idPagina === 'sec-tienda') document.getElementById('nav-tienda').classList.add('activo');
+  if(idPagina === 'sec-codigos') document.getElementById('nav-codigos').classList.add('activo');
+  
+  const ataud = document.getElementById('btn-ataud-global');
+  if(ataud) { if(idPagina === 'sec-home') { ataud.style.display = 'flex'; } else { ataud.style.display = 'none'; } }
+  window.scrollTo(0,0);
+}
+
+(function(){
+  document.addEventListener('pointermove', function(e){ if (e.pointerType === 'mouse') { document.body.style.setProperty('--x', e.clientX + 'px'); document.body.style.setProperty('--y', e.clientY + 'px'); } });
+  var end=new Date(2026,9,31,18,0,0).getTime();
+  function pad(n){return String(n).padStart(2,'0')}
+  function tick(){
+    var t=Math.max(0,end-Date.now()),s=Math.floor(t/1000);
+    document.getElementById('d').textContent=pad(Math.floor(s/86400));
+    document.getElementById('h').textContent=pad(Math.floor(s%86400/3600));
+    document.getElementById('m').textContent=pad(Math.floor(s%3600/60));
+    document.getElementById('s').textContent=pad(s%60);
+  }
+  tick();setInterval(tick,1000);
+})();
+</script>
+</body>
+</html>
