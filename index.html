@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Boo! Store</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;800;900&display=swap" rel="stylesheet">
+<!-- Librerías de Firebase (Compat versión 8) -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
 <style>
 :root {
   --bg: #140505; 
@@ -60,12 +64,10 @@ nav a { text-decoration: none; cursor: pointer; padding: 5px; transition: color 
 nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(--pumpkin); }
 
 .header-right { justify-self: end; display: flex; align-items: center; gap: 20px; }
-
-/* Contador de dulces fijo y estable */
 .moneda-ui { font-size: 1.2rem; font-weight: 800; color: var(--ink); display: flex; align-items: center; gap: 6px; }
 #ui-dulces { display: inline-block; min-width: 45px; text-align: left; }
 
-.btn-col { background: var(--card); border: 1px solid var(--pumpkin); color: var(--pumpkin); font-weight: 800; padding: 8px 20px; border-radius: 999px; text-decoration: none; cursor: pointer; transition: all 0.2s; }
+.btn-col { background: var(--card); border: 1px solid var(--pumpkin); color: var(--pumpkin); font-weight: 800; padding: 8px 20px; border-radius: 999px; text-decoration: none; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
 .btn-col:hover { background: var(--pumpkin); color: #000; }
 
 .btn-ajustes { background: transparent; border: none; cursor: pointer; color: var(--ink); padding: 0; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
@@ -90,17 +92,13 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .hero { position: relative; place-items: center; text-align: center; }
 .bats { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
 
-/* Murciélagos emoji sombra con rotación dinámica */
+/* Murciélagos sombra */
 .bat { position: absolute; font-size: 1.8rem; filter: brightness(0) drop-shadow(0 5px 5px rgba(0,0,0,0.6)); opacity: 0.9; animation: fly 14s linear infinite; }
 .bat:nth-child(1) { top: 14%; --rot: -12deg; font-size: 1.5rem; }
 .bat:nth-child(2) { top: 62%; --rot: 8deg; font-size: 1.1rem; animation-duration: 19s; animation-delay: -6s; }
 .bat:nth-child(3) { top: 30%; --rot: -5deg; font-size: 2.4rem; animation-duration: 24s; animation-delay: -12s; }
-@keyframes fly { 
-  from { transform: translateX(-10vw) rotate(var(--rot)); } 
-  to { transform: translateX(110vw) translateY(-40px) rotate(var(--rot)); } 
-}
+@keyframes fly { from { transform: translateX(-10vw) rotate(var(--rot)); } to { transform: translateX(110vw) translateY(-40px) rotate(var(--rot)); } }
 
-/* Título Centrado y Corazones a los bordes */
 .title-wrapper { position: relative; display: inline-flex; justify-content: center; align-items: center; }
 .hero h1 { margin: 0; font-weight: 900; font-size: clamp(3.5rem, 12vw, 8rem); line-height: 1; color: var(--pumpkin); text-shadow: 0 0 30px rgba(214, 40, 40, .55); animation: flicker 5s steps(1) infinite; }
 @keyframes flicker { 0%, 8%, 12%, 20% { opacity: .7; } 10%, 16%, 30%, 100% { opacity: 1; } }
@@ -117,6 +115,12 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .count b { display: block; font-size: 2rem; font-weight: 900; color: var(--pumpkin); }
 .count span { font-size: .8rem; text-transform: uppercase; letter-spacing: 1px; }
 
+/* Ataúd de recompensa */
+.ataud-diario { display: inline-block; margin-top: 30px; cursor: pointer; padding: 10px 20px; background: rgba(28, 8, 8, 0.8); border: 1px solid var(--violet); border-radius: 12px; font-weight: bold; transition: all 0.3s; animation: floatAtaud 4s ease-in-out infinite; }
+.ataud-diario:hover { background: var(--violet); color: white; transform: scale(1.05); }
+.ataud-diario.usado { opacity: 0.5; pointer-events: none; filter: grayscale(1); border-color: var(--ember); animation: none; }
+@keyframes floatAtaud { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
 h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; color: var(--pumpkin); }
 .sub { margin: 0 0 36px; max-width: 55ch; opacity: 0.9; font-size: 1.1rem; }
 
@@ -131,16 +135,29 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .btn-jugar { background: var(--ember); color: #fff; }
 .btn-jugar:hover { background: var(--pumpkin); }
 .btn-bloqueado { background: #331111; color: #885555; cursor: not-allowed; }
-.btn-bloqueado:hover { background: #331111; }
+
+/* iCoffin */
+.icoffin { background: #140505; border: 8px solid var(--violet); border-radius: 40px; max-width: 340px; margin: 40px auto; padding: 40px 25px; position: relative; box-shadow: 0 0 25px rgba(255, 77, 109, 0.2); text-align: center; }
+.icoffin::before { content: ''; position: absolute; top: -2px; left: 50%; transform: translateX(-50%); width: 120px; height: 20px; background: var(--violet); border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; }
+.icoffin::after { content: ''; position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 40px; height: 4px; background: rgba(255, 77, 109, 0.5); border-radius: 10px; }
+.icoffin input { width: 100%; padding: 15px; border-radius: 12px; border: 2px solid var(--violet); background: rgba(255, 77, 109, 0.1); color: var(--ink); font-size: 1.2rem; text-transform: uppercase; margin-bottom: 20px; font-family: inherit; text-align: center; outline: none; transition: 0.3s; }
+.icoffin input:focus { background: rgba(255, 77, 109, 0.2); box-shadow: 0 0 10px rgba(255,77,109,0.5); }
+
+/* Skullettes */
+.skullette-obj { position: fixed; font-size: 2.5rem; cursor: pointer; z-index: 90; transition: transform 0.2s; filter: drop-shadow(0 0 10px var(--violet)); }
+.skullette-obj:hover { transform: scale(1.2); }
 
 .error-compra { animation: shake 0.4s; background: var(--violet) !important; color: #fff !important; pointer-events: none; }
 @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
-
 .vacio { grid-column: 1/-1; text-align: center; padding: 40px; border: 1px dashed var(--ember); background: rgba(20,5,5,0.5); border-radius: 18px; opacity: 0.8; }
 
+/* Simetría Celular */
 @media(max-width: 850px) {
   header { display: flex; flex-direction: column; gap: 15px; }
-  .header-right { width: 100%; justify-content: space-between; }
+  .header-right { width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; }
+  .moneda-ui { justify-self: start; }
+  .btn-col { justify-self: center; } 
+  .btn-ajustes { justify-self: end; }
   nav { flex-wrap: wrap; justify-content: center; width: 100%; }
 }
 @media(prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
@@ -148,29 +165,17 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 </head>
 <body>
 
-<!-- Audio Background y Efectos -->
-<audio id="audio-bg" loop>
-  <source src="musica.mp3" type="audio/mpeg">
-</audio>
+<audio id="audio-bg" loop><source src="musica.mp3" type="audio/mpeg"></audio>
 
-<!-- Modal de Configuración -->
 <div class="modal-overlay" id="modal-ajustes">
   <div class="modal-box">
     <h3>
       Configuración 
       <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
     </h3>
-    
-    <div class="slider-container">
-      <label for="vol-musica">Volumen de Música</label>
-      <input type="range" id="vol-musica" min="0" max="1" step="0.01" value="0.5" oninput="cambiarVolumenMusica(this.value)">
-    </div>
-    
-    <div class="slider-container">
-      <label for="vol-sfx">Volumen de Efectos</label>
-      <input type="range" id="vol-sfx" min="0" max="1" step="0.01" value="0.5" oninput="cambiarVolumenSfx(this.value)">
-    </div>
-    
+    <div class="slider-container"><label>Volumen de Música</label><input type="range" id="vol-musica" min="0" max="1" step="0.01" value="0.5" oninput="cambiarVolumenMusica(this.value)"></div>
+    <div class="slider-container"><label>Volumen de Efectos</label><input type="range" id="vol-sfx" min="0" max="1" step="0.01" value="0.5" oninput="cambiarVolumenSfx(this.value)"></div>
+    <p id="modo-txt" style="color:var(--violet); font-size:0.8rem; font-weight:bold;"></p>
     <button class="btn-cerrar-modal" onclick="cerrarAjustes()">Guardar</button>
   </div>
 </div>
@@ -182,61 +187,53 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
     <a onclick="cambiarPagina('sec-tienda')" id="nav-tienda">Tienda</a>
     <a onclick="cambiarPagina('sec-codigos')" id="nav-codigos">Códigos</a>
   </nav>
-  
   <div class="header-right">
     <span class="moneda-ui">🍬 <span id="ui-dulces">0</span></span>
     <a class="btn-col" onclick="cambiarPagina('sec-coleccion')" id="nav-coleccion">Nuestra Colección</a>
     <button class="btn-ajustes" onclick="abrirAjustes()">
-      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="3"></circle>
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-      </svg>
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
     </button>
   </div>
 </header>
 
 <main class="pagina activa hero" id="sec-home">
-  <div class="bats" aria-hidden="true">
-    <span class="bat">🦇</span>
-    <span class="bat">🦇</span>
-    <span class="bat">🦇</span>
-  </div>
+  <div class="bats" aria-hidden="true"><span class="bat">🦇</span><span class="bat">🦇</span><span class="bat">🦇</span></div>
   <div>
-    <!-- Contenedor del título con corazones anclados a los lados -->
     <div class="title-wrapper">
       <svg class="heart-svg heart-l" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
       <h1>Feliz<br>Halloween</h1>
       <svg class="heart-svg heart-r" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
     </div>
-    
     <p>Un pequeño rincón oscuro creado solo para ti. ¿Te atreves a jugar conmigo antes de que se acabe la noche?</p>
     <button class="btn-accion" style="border-radius:999px; padding:14px 30px; font-size:1.1rem; margin-bottom: 20px;" onclick="comenzarAventura()">Comenzar la aventura</button>
-    <div class="count" role="timer" aria-label="Tiempo restante para Halloween">
+    <div class="count" role="timer">
       <div><b id="d">--</b><span>días</span></div><div><b id="h">--</b><span>horas</span></div><div><b id="m">--</b><span>min</span></div><div><b id="s">--</b><span>seg</span></div>
     </div>
+    
+    <div class="ataud-diario" id="btn-diario" onclick="reclamarDiario()">⚰️ Abrir Ataúd (+50 🍬)</div>
   </div>
 </main>
 
 <section class="pagina" id="sec-juegos">
   <h2>Salón de los Hechizos</h2>
-  <p class="sub">Juega para ganar dulces mágicos y desbloquear las sorpresas que preparé para ti.</p>
+  <p class="sub">Juega para ganar dulces mágicos y desbloquear sorpresas.</p>
   <div class="grid">
     <article class="item">
       <span class="e">👻</span>
-      <h3>Cazafantasmas</h3>
-      <p>Atrapa a los fantasmas traviesos antes de que desaparezcan de la pantalla.</p>
+      <h3>Catacumbas</h3>
+      <p>Atrapa a los espíritus traviesos del instituto antes de que escapen.</p>
       <button class="btn-accion btn-jugar" onclick="probarJuego(this)">Jugar (+20 🍬)</button>
     </article>
     <article class="item">
-      <span class="e">🧠</span>
-      <h3>Memoria Maldita</h3>
-      <p>Encuentra los pares y descubre el mensaje oculto.</p>
+      <span class="e">📱</span>
+      <h3>Memoria Monstruosa</h3>
+      <p>Encuentra los pares secretos en los diarios de las chicas.</p>
       <button class="btn-accion btn-bloqueado">Próximamente</button>
     </article>
     <article class="item">
-      <span class="e">🔮</span>
-      <h3>Pociones de Amor</h3>
-      <p>Mezcla los ingredientes correctos en el caldero.</p>
+      <span class="e">🧪</span>
+      <h3>Biteology: Pociones</h3>
+      <p>Examen de ciencias: Mezcla los ingredientes correctos para mi amor.</p>
       <button class="btn-accion btn-bloqueado">Próximamente</button>
     </article>
   </div>
@@ -255,27 +252,51 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 </section>
 
 <section class="pagina" id="sec-codigos">
-  <div style="text-align:center; max-width: 450px; margin: 40px auto; background: rgba(28, 8, 8, 0.85); backdrop-filter: blur(8px); padding: 40px 30px; border-radius: 18px; border: 1px solid var(--ember);">
-    <h2>Canjear Secreto</h2>
-    <p class="sub" style="margin: 10px auto 30px;">Ingresa una palabra mágica para obtener una recompensa especial.</p>
-    <input type="text" id="input-codigo" placeholder="Escribe el código" style="width:100%; padding: 15px; border-radius: 8px; border: 1px solid var(--pumpkin); background: rgba(0,0,0,0.5); color: var(--ink); font-size: 1.2rem; text-transform: uppercase; margin-bottom: 20px; font-family: inherit; text-align: center;">
-    <button class="btn-accion" onclick="canjearCodigo()" style="width:100%; font-size: 1.1rem; padding: 15px;">Revelar Secreto</button>
+  <div class="icoffin">
+    <h2 style="color:var(--violet);">iCoffin</h2>
+    <p class="sub" style="margin: 10px auto 30px; font-size:0.9rem;">Ingresa la contraseña para hackear el sistema.</p>
+    <input type="text" id="input-codigo" placeholder="CONTRASEÑA">
+    <button class="btn-accion" style="background:var(--violet); color:#140505; width:100%; font-size: 1.1rem; padding: 15px;" onclick="canjearCodigo()">Desbloquear</button>
     <p id="msg-codigo" style="margin-top: 20px; font-weight: bold; min-height: 24px; font-size: 1.1rem;"></p>
   </div>
 </section>
 
 <script>
-const sfxExito = new Audio('exito.mp3');
-sfxExito.volume = 0.5;
+// ========================================================
+// 1. CONFIGURACIÓN DE FIREBASE
+// ========================================================
+const firebaseConfig = {
+  apiKey: "AIzaSyAR9cVrx1s3cMd1hfG2NySoRSBrlXHBdIk",
+  authDomain: "evento-tienda-halloween.firebaseapp.com",
+  databaseURL: "https://evento-tienda-halloween-default-rtdb.firebaseio.com",
+  projectId: "evento-tienda-halloween",
+  storageBucket: "evento-tienda-halloween.firebasestorage.app",
+  messagingSenderId: "62065058890",
+  appId: "1:62065058890:web:6f53ce3be9b2c83647f2b3"
+};
 
-const sfxError = new Audio('error.mp3');
-sfxError.volume = 0.5;
+let database = null;
+if(firebaseConfig.apiKey) {
+  firebase.initializeApp(firebaseConfig);
+  database = firebase.database();
+}
 
-const bgMusic = document.getElementById('audio-bg');
-bgMusic.volume = 0.5; 
+const urlParams = new URLSearchParams(window.location.search);
+const esAdmin = urlParams.get('modo') === 'prueba';
+const rutaDB = esAdmin ? 'admin_partida' : 'greta_partida';
 
-let dulces = parseInt(localStorage.getItem('boo_dulces')) || 0;
-let coleccion = JSON.parse(localStorage.getItem('boo_coleccion')) || [];
+if(esAdmin) document.getElementById('modo-txt').textContent = "⚠️ MODO ADMINISTRADOR ACTIVADO";
+
+// ========================================================
+// 2. VARIABLES DE JUEGO Y AUDIO
+// ========================================================
+const sfxExito = new Audio('exito.mp3'); sfxExito.volume = 0.5;
+const sfxError = new Audio('error.mp3'); sfxError.volume = 0.5;
+const bgMusic = document.getElementById('audio-bg'); bgMusic.volume = 0.5; 
+
+let dulces = 0;
+let coleccion = [];
+let ultimoReclamo = 0; 
 
 const catalogo = [
   { id: 'calabaza', icono: '🎃', nombre: 'Calabaza Protectora', precio: 30, desc: 'Para iluminar nuestras noches más oscuras.' },
@@ -285,104 +306,123 @@ const catalogo = [
   { id: 'anillo', icono: '💍', nombre: 'Anillo de Promesa', precio: 300, desc: 'Un pequeño pacto para la eternidad.' }
 ];
 
-function guardarDatos() {
-  localStorage.setItem('boo_dulces', dulces);
-  localStorage.setItem('boo_coleccion', JSON.stringify(coleccion));
-  document.getElementById('ui-dulces').textContent = dulces;
+// ========================================================
+// 3. SINCRONIZACIÓN EN LA NUBE (FIREBASE)
+// ========================================================
+if(database) {
+  database.ref(rutaDB).on('value', (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+      dulces = data.dulces || 0;
+      coleccion = data.coleccion || [];
+      ultimoReclamo = data.ultimoReclamo || 0;
+    }
+    actualizarUI();
+  });
+} else {
+  dulces = parseInt(localStorage.getItem('boo_dulces')) || 0;
+  coleccion = JSON.parse(localStorage.getItem('boo_coleccion')) || [];
+  ultimoReclamo = parseInt(localStorage.getItem('boo_ataud')) || 0;
+  actualizarUI();
 }
 
-function abrirAjustes() { document.getElementById('modal-ajustes').classList.add('activo'); }
-function cerrarAjustes() { document.getElementById('modal-ajustes').classList.remove('activo'); }
+function guardarDatos() {
+  if(database) {
+    database.ref(rutaDB).set({ dulces: dulces, coleccion: coleccion, ultimoReclamo: ultimoReclamo });
+  } else {
+    localStorage.setItem('boo_dulces', dulces);
+    localStorage.setItem('boo_coleccion', JSON.stringify(coleccion));
+    localStorage.setItem('boo_ataud', ultimoReclamo);
+  }
+  actualizarUI();
+}
 
-function cambiarVolumenMusica(valor) {
-  bgMusic.volume = valor;
-  if(valor > 0 && bgMusic.paused) {
-    bgMusic.play().catch(e => console.log('Sube el audio para escuchar'));
+function actualizarUI() {
+  document.getElementById('ui-dulces').textContent = dulces;
+  const btnAtaud = document.getElementById('btn-diario');
+  const hoy = new Date().setHours(0,0,0,0);
+  if(ultimoReclamo === hoy) {
+    btnAtaud.classList.add('usado');
+    btnAtaud.textContent = "Ataúd Vacío (Vuelve mañana)";
+  } else {
+    btnAtaud.classList.remove('usado');
+    btnAtaud.textContent = "⚰️ Abrir Ataúd (+50 🍬)";
+  }
+  renderizarTiendaYColeccion();
+}
+
+// ========================================================
+// 4. FUNCIONES DE JUEGO
+// ========================================================
+function reclamarDiario() {
+  const hoy = new Date().setHours(0,0,0,0);
+  if(ultimoReclamo !== hoy) {
+    dulces += 50; ultimoReclamo = hoy;
+    guardarDatos(); reproducirSonido(sfxExito);
   }
 }
 
-function cambiarVolumenSfx(valor) {
-  sfxExito.volume = valor;
-  sfxError.volume = valor;
-  reproducirSonido(sfxExito);
-}
-
-function reproducirSonido(audio) {
-  audio.currentTime = 0;
-  audio.play().catch(err => console.log('Audio no encontrado.'));
-}
-
-function comenzarAventura() {
-  if(bgMusic.paused) bgMusic.play().catch(e => console.log('Sube el audio para escuchar'));
-  cambiarPagina('sec-juegos');
-}
-
 function probarJuego(boton) {
-  dulces += 20;
-  guardarDatos();
-  reproducirSonido(sfxExito);
-  
-  const textoOriginal = boton.textContent;
-  boton.textContent = "+20 🍬";
-  boton.style.background = "var(--pumpkin)";
-  boton.style.pointerEvents = "none";
-  
-  setTimeout(() => {
-    boton.textContent = textoOriginal;
-    boton.style.background = "";
-    boton.style.pointerEvents = "auto";
-  }, 1200);
+  dulces += 20; guardarDatos(); reproducirSonido(sfxExito);
+  const original = boton.textContent;
+  boton.textContent = "+20 🍬"; boton.style.background = "var(--pumpkin)"; boton.style.pointerEvents = "none";
+  setTimeout(() => { boton.textContent = original; boton.style.background = ""; boton.style.pointerEvents = "auto"; }, 1200);
 }
 
+setInterval(() => {
+  const enJuegos = document.getElementById('sec-juegos').classList.contains('activa');
+  if(!enJuegos && Math.random() > 0.7) {
+    const skull = document.createElement('div');
+    skull.textContent = "💀🎀"; 
+    skull.className = 'skullette-obj';
+    skull.style.top = Math.random() * 80 + 'vh';
+    skull.style.left = (Math.random() > 0.5 ? '-50px' : '105vw');
+    document.body.appendChild(skull);
+    
+    setTimeout(() => {
+      skull.style.transform = `translateX(${skull.style.left === '-50px' ? '120vw' : '-120vw'}) rotate(360deg)`;
+      skull.style.transition = 'transform 6s linear';
+    }, 100);
+
+    skull.onclick = () => {
+      dulces += 10; guardarDatos(); reproducirSonido(sfxExito); skull.remove();
+    };
+    setTimeout(() => { if(skull.parentNode) skull.remove(); }, 6000);
+  }
+}, 8000);
+
+// ========================================================
+// 5. TIENDA, CÓDIGOS Y NAVEGACIÓN
+// ========================================================
 function comprar(boton, idArticulo, precio) {
   if (dulces >= precio) {
-    dulces -= precio;
-    coleccion.push(idArticulo);
-    guardarDatos();
-    reproducirSonido(sfxExito);
-    renderizarTiendaYColeccion();
+    dulces -= precio; coleccion.push(idArticulo);
+    guardarDatos(); reproducirSonido(sfxExito);
   } else {
     reproducirSonido(sfxError);
-    boton.classList.add('error-compra');
-    boton.textContent = "¡Faltan dulces!";
-    setTimeout(() => {
-      boton.classList.remove('error-compra');
-      boton.textContent = "Obtener - " + precio + " 🍬";
-    }, 800);
+    boton.classList.add('error-compra'); boton.textContent = "¡Faltan dulces!";
+    setTimeout(() => { boton.classList.remove('error-compra'); boton.textContent = "Obtener - " + precio + " 🍬"; }, 800);
   }
 }
 
 function renderizarTiendaYColeccion() {
   const divTienda = document.getElementById('contenedor-tienda');
   const divColeccion = document.getElementById('contenedor-coleccion');
-  divTienda.innerHTML = '';
-  divColeccion.innerHTML = '';
+  if(!divTienda) return;
+  
+  divTienda.innerHTML = ''; divColeccion.innerHTML = '';
   let hayColeccion = false;
 
   catalogo.forEach(item => {
     if (coleccion.includes(item.id)) {
       hayColeccion = true;
-      divColeccion.innerHTML += `
-        <article class="item" style="border-color: var(--violet)">
-          <span class="e">${item.icono}</span>
-          <h3>${item.nombre}</h3>
-          <p>${item.desc}</p>
-          <button class="btn-accion btn-bloqueado" style="background:var(--bg)">Guardado a salvo</button>
-        </article>`;
+      divColeccion.innerHTML += `<article class="item" style="border-color: var(--violet)"><span class="e">${item.icono}</span><h3>${item.nombre}</h3><p>${item.desc}</p><button class="btn-accion btn-bloqueado" style="background:var(--bg)">Guardado a salvo</button></article>`;
     } else {
-      divTienda.innerHTML += `
-        <article class="item">
-          <span class="e">${item.icono}</span>
-          <h3>${item.nombre}</h3>
-          <p>${item.desc}</p>
-          <button class="btn-accion" onclick="comprar(this, '${item.id}', ${item.precio})">Obtener - ${item.precio} 🍬</button>
-        </article>`;
+      divTienda.innerHTML += `<article class="item"><span class="e">${item.icono}</span><h3>${item.nombre}</h3><p>${item.desc}</p><button class="btn-accion" onclick="comprar(this, '${item.id}', ${item.precio})">Obtener - ${item.precio} 🍬</button></article>`;
     }
   });
 
-  if (!hayColeccion) {
-    divColeccion.innerHTML = `<div class="vacio"><span style="font-size:3rem">🦇</span><br><br>Aún no tenemos amuletos aquí.<br>¡Vamos a jugar para conseguir el primero!</div>`;
-  }
+  if (!hayColeccion) divColeccion.innerHTML = `<div class="vacio"><span style="font-size:3rem">🦇</span><br><br>Aún no tenemos amuletos aquí.<br>¡Vamos a jugar para conseguir el primero!</div>`;
 }
 
 function canjearCodigo() {
@@ -391,27 +431,26 @@ function canjearCodigo() {
   const codigo = input.value.trim().toUpperCase();
 
   if (codigo === 'RESET') {
-    dulces = 0;
-    coleccion = [];
-    msg.style.color = "var(--violet)";
-    msg.textContent = "El tiempo ha retrocedido. Todo empieza de nuevo.";
+    dulces = 0; coleccion = []; ultimoReclamo = 0;
+    msg.style.color = "var(--violet)"; msg.textContent = "Sistema iCoffin restaurado.";
   } else if (codigo === 'GIVE') {
-    dulces += 500;
-    catalogo.forEach(item => { if (!coleccion.includes(item.id)) coleccion.push(item.id); });
-    msg.style.color = "#4CAF50";
-    msg.textContent = "¡Hechizo exitoso! Recibiste +500 🍬 y toda la colección.";
+    dulces += 500; catalogo.forEach(i => { if(!coleccion.includes(i.id)) coleccion.push(i.id); });
+    msg.style.color = "#4CAF50"; msg.textContent = "¡Hack exitoso! +500 🍬 y toda la colección.";
     reproducirSonido(sfxExito);
   } else {
-    msg.style.color = "var(--pumpkin)";
-    msg.textContent = "Esa no es la palabra mágica...";
+    msg.style.color = "var(--pumpkin)"; msg.textContent = "Contraseña incorrecta...";
     reproducirSonido(sfxError);
   }
-
-  input.value = '';
-  guardarDatos();
-  renderizarTiendaYColeccion();
+  input.value = ''; guardarDatos();
   setTimeout(() => { msg.textContent = ''; }, 4000);
 }
+
+function abrirAjustes() { document.getElementById('modal-ajustes').classList.add('activo'); }
+function cerrarAjustes() { document.getElementById('modal-ajustes').classList.remove('activo'); }
+function cambiarVolumenMusica(valor) { bgMusic.volume = valor; if(valor > 0 && bgMusic.paused) bgMusic.play().catch(e=>console.log(e)); }
+function cambiarVolumenSfx(valor) { sfxExito.volume = valor; sfxError.volume = valor; reproducirSonido(sfxExito); }
+function reproducirSonido(audio) { audio.currentTime = 0; audio.play().catch(e=>console.log(e)); }
+function comenzarAventura() { if(bgMusic.paused) bgMusic.play().catch(e=>console.log(e)); cambiarPagina('sec-juegos'); }
 
 function cambiarPagina(idPagina) {
   document.querySelectorAll('.pagina').forEach(pag => pag.classList.remove('activa'));
@@ -425,12 +464,8 @@ function cambiarPagina(idPagina) {
 
 (function(){
   document.addEventListener('pointermove', function(e){
-    if (e.pointerType === 'mouse') {
-      document.body.style.setProperty('--x', e.clientX + 'px');
-      document.body.style.setProperty('--y', e.clientY + 'px');
-    }
+    if (e.pointerType === 'mouse') { document.body.style.setProperty('--x', e.clientX + 'px'); document.body.style.setProperty('--y', e.clientY + 'px'); }
   });
-
   var end=new Date(2026,9,31,18,0,0).getTime();
   function pad(n){return String(n).padStart(2,'0')}
   function tick(){
@@ -442,9 +477,6 @@ function cambiarPagina(idPagina) {
   }
   tick();setInterval(tick,1000);
 })();
-
-guardarDatos();
-renderizarTiendaYColeccion();
 
 </script>
 </body>
