@@ -8,9 +8,9 @@
 <!-- PWA Y FAVICON -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#140505">
-<!-- Para instalar en el celular (Mantenemos el cuadrado) -->
+<!-- Para instalar en el celular -->
 <link rel="apple-touch-icon" href="icono.png">
-<!-- Favicon para la PC (Usamos el png transparente que crearás) -->
+<!-- Favicon para la PC (png transparente) -->
 <link rel="icon" type="image/png" href="logo.png">
 
 <script>
@@ -39,6 +39,10 @@
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
 *, *::before, *::after { box-sizing: inherit; }
 
+html, body {
+  overscroll-behavior: none; /* Elimina el rebote y el jalon de pantalla en celulares */
+}
+
 body {
   margin: 0;
   color: var(--ink);
@@ -47,9 +51,20 @@ body {
   overflow-x: hidden; 
   width: 100vw;
   max-width: 100%;
+  
+  /* ANTI-SELECCIÓN: Bloquea el texto azul y el menú de buscar de Google */
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
 
-/* Capa fantasma para el fondo (Solución del bug en celular) */
+/* PERMITE SELECCIONAR/ESCRIBIR SOLO EN EL INPUT DEL ICOFFIN */
+input {
+  -webkit-user-select: auto;
+  user-select: auto;
+}
+
+/* Capa fantasma para el fondo */
 body::before {
   content: "";
   position: fixed;
@@ -190,8 +205,17 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 
 /* WRAPPER FANTASMA SKULLETTES */
 .skullette-wrapper { position: fixed; z-index: 90; pointer-events: none; }
-.skullette-inner { width: 50px; height: 50px; cursor: pointer; filter: drop-shadow(0 0 10px var(--violet)); transition: transform 0.2s; pointer-events: auto; object-fit: contain; }
-.skullette-inner:hover { transform: scale(1.3); }
+.skullette-inner { 
+  width: 65px; /* Más grandes para mejor hitbox */
+  height: 65px; 
+  cursor: pointer; 
+  filter: drop-shadow(0 0 10px var(--violet)); 
+  transition: transform 0.2s; 
+  pointer-events: auto; 
+  object-fit: contain; 
+  -webkit-user-drag: none; /* Anti-arrastre en PC */
+}
+.skullette-inner:hover { transform: scale(1.2); }
 .error-compra { animation: shake 0.4s; background: var(--violet) !important; color: #fff !important; pointer-events: none; }
 @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
 
@@ -219,7 +243,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
     transform: none; 
     margin: 0; 
     width: 100%; 
-    border-radius: 20px 20px 0 0; /* Bordes redondos solo arriba */
+    border-radius: 20px 20px 0 0; 
     border-left: none; 
     border-right: none; 
     border-bottom: none; 
@@ -229,9 +253,8 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
     padding: 12px;
   }
   .ataud-flotante:hover { transform: none; background: rgba(28, 8, 8, 0.95); }
-  .ataud-flotante .badge { margin-top: 0; align-self: center; } /* Quitar margen superior para alinearlo bien */
+  .ataud-flotante .badge { margin-top: 0; align-self: center; }
   
-  /* Animación de resplandor para la barra, sin saltos de margen */
   .ataud-animado { animation: resplandorBarra 3s ease-in-out infinite; }
   @keyframes resplandorBarra { 
     0%, 100% { box-shadow: 0 -5px 15px rgba(255, 77, 109, 0.2); } 
@@ -415,7 +438,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const esAdmin = urlParams.get('modo') === 'prueba';
 const rutaDB = esAdmin ? 'admin_partida' : 'greta_partida';
 
-if(esAdmin) document.getElementById('modo-txt').textContent = "⚠️️ MODO ADMINISTRADOR ACTIVADO";
+if(esAdmin) document.getElementById('modo-txt').textContent = "⚠️ MODO ADMINISTRADOR ACTIVADO";
 
 // ========================================================
 // 2. VARIABLES DE ESTADO Y DATOS
@@ -638,7 +661,7 @@ function canjearCodigo() {
 }
 
 // ========================================================
-// 8. NAVEGACIÓN Y EXTRAS (Skullettes usan logo.png)
+// 8. NAVEGACIÓN Y EXTRAS (Skullettes con onpointerdown)
 // ========================================================
 function abrirAjustes() { checkLogro('config'); document.getElementById('modal-ajustes').classList.add('activo'); }
 function cerrarAjustes() { document.getElementById('modal-ajustes').classList.remove('activo'); }
@@ -651,9 +674,8 @@ setInterval(() => {
     wrapper.style.top = Math.random() * 80 + 'vh'; 
     wrapper.style.left = (Math.random() > 0.5 ? '-50px' : '105vw');
     wrapper.style.opacity = '0'; 
-    wrapper.style.transition = 'transform 6s linear, opacity 0.8s ease';
+    wrapper.style.transition = 'transform 8s linear, opacity 0.8s ease';
     
-    // Ahora usa logo.png transparente en lugar de icono.png
     const inner = document.createElement('img'); 
     inner.className = 'skullette-inner'; 
     inner.src = 'logo.png';
@@ -661,10 +683,11 @@ setInterval(() => {
     wrapper.appendChild(inner); document.body.appendChild(wrapper);
     
     setTimeout(() => { wrapper.style.opacity = '1'; wrapper.style.transform = `translateX(${wrapper.style.left === '-50px' ? '120vw' : '-120vw'}) rotate(360deg)`; }, 100);
-    setTimeout(() => { wrapper.style.opacity = '0'; }, 5200); 
+    setTimeout(() => { wrapper.style.opacity = '0'; }, 7200); 
     
-    inner.onclick = () => { checkLogro('skull'); dulces += 10; guardarDatos(); reproducirSonido(sfxExito); wrapper.remove(); };
-    setTimeout(() => { if(wrapper.parentNode) wrapper.remove(); }, 6000);
+    // GATILLO INSTANTÁNEO (Funciona perfecto en PC y Celular)
+    inner.onpointerdown = () => { checkLogro('skull'); dulces += 10; guardarDatos(); reproducirSonido(sfxExito); wrapper.remove(); };
+    setTimeout(() => { if(wrapper.parentNode) wrapper.remove(); }, 8000);
   }
 }, 8000);
 
