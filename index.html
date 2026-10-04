@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Boo! Store</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;800;900&display=swap" rel="stylesheet">
-<!-- Librerías de Firebase (Compat versión 8) -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
@@ -45,54 +44,34 @@ body {
 a { color: inherit; }
 :focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; }
 
-header {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  padding: 20px 5vw;
-  border-bottom: 1px solid var(--ember);
-  background: rgba(20, 5, 5, 0.95);
-  backdrop-filter: blur(10px);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
+/* HEADER Y NAVEGACIÓN */
+header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 20px 5vw; border-bottom: 1px solid var(--ember); background: rgba(20, 5, 5, 0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; }
 .logo { justify-self: start; font-weight: 900; font-size: 1.5rem; color: var(--pumpkin); text-shadow: 0 0 14px rgba(214, 40, 40, .6); text-decoration: none; cursor: pointer; }
-
 nav { justify-self: center; display: flex; align-items: center; gap: 24px; font-weight: 500; }
 nav a { text-decoration: none; cursor: pointer; padding: 5px; transition: color 0.2s; }
 nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(--pumpkin); }
-
 .header-right { justify-self: end; display: flex; align-items: center; gap: 20px; }
 .moneda-ui { font-size: 1.2rem; font-weight: 800; color: var(--ink); display: flex; align-items: center; gap: 6px; }
 #ui-dulces { display: inline-block; min-width: 45px; text-align: left; }
-
 .btn-col { background: var(--card); border: 1px solid var(--pumpkin); color: var(--pumpkin); font-weight: 800; padding: 8px 20px; border-radius: 999px; text-decoration: none; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
 .btn-col:hover { background: var(--pumpkin); color: #000; }
 
+/* TUERCA ANIMADA */
 .btn-ajustes { background: transparent; border: none; cursor: pointer; color: var(--ink); padding: 0; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
-.btn-ajustes svg { width: 26px; height: 26px; }
+.btn-ajustes svg { width: 26px; height: 26px; transition: transform 0.3s ease; }
 .btn-ajustes:hover { color: var(--pumpkin); filter: drop-shadow(0 0 8px rgba(214,40,40,0.8)); }
+.btn-ajustes:hover svg { animation: spin 2s linear infinite; }
+@keyframes spin { 100% { transform: rotate(360deg); } }
 
-.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 200; justify-content: center; align-items: center; backdrop-filter: blur(4px); }
-.modal-overlay.activo { display: flex; }
-.modal-box { background: var(--card); border: 1px solid var(--ember); border-radius: 18px; padding: 30px; width: 90%; max-width: 400px; text-align: center; }
-.modal-box h3 { margin-top: 0; color: var(--pumpkin); font-size: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 10px; }
-.slider-container { margin: 25px 0; text-align: left; }
-.slider-container label { display: block; margin-bottom: 10px; font-weight: 800; }
-.slider-container input[type="range"] { width: 100%; accent-color: var(--pumpkin); }
-.btn-cerrar-modal { background: var(--pumpkin); color: #fff; font-weight: 800; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; width: 100%; margin-top: 15px; font-family: inherit; font-size: 1rem; transition: background 0.2s; }
-.btn-cerrar-modal:hover { background: var(--violet); }
-
-.pagina { display: none; min-height: 78vh; padding: 40px 5vw; animation: fadeIn 0.4s ease; }
+/* ESTRUCTURA DE PÁGINAS */
+.pagina { display: none; min-height: 80vh; padding: 40px 5vw; animation: fadeIn 0.4s ease; }
 .pagina.activa { display: block; }
-#sec-home.activa { display: grid; } 
+#sec-home.activa { display: grid; align-items: center; } 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+/* HERO Y MURCIÉLAGOS */
 .hero { position: relative; place-items: center; text-align: center; }
 .bats { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-
-/* Murciélagos sombra */
 .bat { position: absolute; font-size: 1.8rem; filter: brightness(0) drop-shadow(0 5px 5px rgba(0,0,0,0.6)); opacity: 0.9; animation: fly 14s linear infinite; }
 .bat:nth-child(1) { top: 14%; --rot: -12deg; font-size: 1.5rem; }
 .bat:nth-child(2) { top: 62%; --rot: 8deg; font-size: 1.1rem; animation-duration: 19s; animation-delay: -6s; }
@@ -102,56 +81,87 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .title-wrapper { position: relative; display: inline-flex; justify-content: center; align-items: center; }
 .hero h1 { margin: 0; font-weight: 900; font-size: clamp(3.5rem, 12vw, 8rem); line-height: 1; color: var(--pumpkin); text-shadow: 0 0 30px rgba(214, 40, 40, .55); animation: flicker 5s steps(1) infinite; }
 @keyframes flicker { 0%, 8%, 12%, 20% { opacity: .7; } 10%, 16%, 30%, 100% { opacity: 1; } }
-
 .heart-svg { position: absolute; width: clamp(35px, 6vw, 60px); color: var(--pumpkin); filter: drop-shadow(0 0 15px rgba(214,40,40,0.8)); pointer-events: none; }
 .heart-l { left: -12%; top: 20%; animation: levitate-l 4s ease-in-out infinite; }
 .heart-r { right: -12%; top: 20%; animation: levitate-r 4s ease-in-out infinite -2s; }
 @keyframes levitate-l { 0%, 100% { transform: translateY(0px) rotate(-15deg); } 50% { transform: translateY(-15px) rotate(-5deg); } }
 @keyframes levitate-r { 0%, 100% { transform: translateY(0px) rotate(15deg); } 50% { transform: translateY(-15px) rotate(5deg); } }
-
 .hero p { position: relative; max-width: 50ch; margin: 22px auto 28px; font-size: 1.2rem; font-weight: 500; }
 .count { position: relative; display: flex; gap: 15px; justify-content: center; margin-top: 36px; flex-wrap: wrap; }
 .count div { min-width: 72px; border: 1px solid var(--pumpkin); background: rgba(20,5,5,0.6); border-radius: 12px; padding: 10px 6px; backdrop-filter: blur(4px); }
 .count b { display: block; font-size: 2rem; font-weight: 900; color: var(--pumpkin); }
 .count span { font-size: .8rem; text-transform: uppercase; letter-spacing: 1px; }
 
-/* Ataúd de recompensa */
-.ataud-diario { display: inline-block; margin-top: 30px; cursor: pointer; padding: 10px 20px; background: rgba(28, 8, 8, 0.8); border: 1px solid var(--violet); border-radius: 12px; font-weight: bold; transition: all 0.3s; animation: floatAtaud 4s ease-in-out infinite; }
-.ataud-diario:hover { background: var(--violet); color: white; transform: scale(1.05); }
-.ataud-diario.usado { opacity: 0.5; pointer-events: none; filter: grayscale(1); border-color: var(--ember); animation: none; }
+/* MODALES GLOBALES */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200; justify-content: center; align-items: center; backdrop-filter: blur(6px); }
+.modal-overlay.activo { display: flex; }
+.modal-box { background: var(--card); border: 1px solid var(--ember); border-radius: 18px; padding: 30px; width: 90%; max-width: 450px; text-align: center; position: relative; max-height: 90vh; overflow-y: auto; }
+.modal-box h3 { margin-top: 0; color: var(--pumpkin); font-size: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 10px; }
+.btn-cerrar-modal { background: var(--pumpkin); color: #fff; font-weight: 800; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; width: 100%; margin-top: 15px; font-size: 1rem; transition: background 0.2s; }
+.btn-cerrar-modal:hover { background: var(--violet); }
+
+/* ATAÚD FLOTANTE (GEOMETRY DASH STYLE) */
+.ataud-flotante { position: fixed; bottom: 20px; right: 20px; background: rgba(28, 8, 8, 0.9); border: 2px solid var(--violet); border-radius: 15px; padding: 15px; cursor: pointer; font-size: 2rem; z-index: 90; box-shadow: 0 0 15px rgba(255, 77, 109, 0.3); transition: transform 0.3s; animation: floatAtaud 4s ease-in-out infinite; display: flex; flex-direction: column; align-items: center; }
+.ataud-flotante:hover { transform: scale(1.1); background: var(--violet); }
+.ataud-flotante .badge { font-size: 0.8rem; background: var(--pumpkin); color: white; border-radius: 999px; padding: 2px 8px; font-weight: bold; margin-top: 5px; font-family: sans-serif; }
 @keyframes floatAtaud { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 
+/* GRILLA DEL ATAÚD (10 DÍAS) */
+.grid-ataud { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 20px; }
+.dia-caja { background: rgba(255,255,255,0.05); border: 1px solid var(--ember); border-radius: 10px; padding: 15px 5px; font-weight: bold; position: relative; transition: 0.3s; }
+.dia-caja.reclamado { background: var(--violet); border-color: #fff; color: #fff; }
+.dia-caja.actual { border-color: var(--pumpkin); background: rgba(214, 40, 40, 0.2); cursor: pointer; animation: pulse 2s infinite; }
+.dia-caja.bloqueado { opacity: 0.5; filter: grayscale(1); }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(214, 40, 40, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(214, 40, 40, 0); } 100% { box-shadow: 0 0 0 0 rgba(214, 40, 40, 0); } }
+
+/* NOTIFICACIÓN DE LOGRO (TOAST) */
+#toast-logro { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: var(--violet); color: #fff; border-radius: 12px; padding: 15px 25px; display: flex; align-items: center; gap: 15px; font-weight: bold; box-shadow: 0 5px 20px rgba(0,0,0,0.5); z-index: 999; transition: top 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); border: 2px solid #fff; }
+#toast-logro.visible { top: 20px; }
+
+/* AJUSTES AUDIO (Mutear) */
+.control-audio { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+.control-audio input[type="range"] { flex-grow: 1; accent-color: var(--pumpkin); }
+.btn-mute { background: var(--card); border: 1px solid var(--ember); color: var(--ink); border-radius: 8px; padding: 8px; cursor: pointer; transition: 0.2s; }
+.btn-mute:hover { border-color: var(--pumpkin); }
+
+/* GRID ELEMENTOS */
 h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; color: var(--pumpkin); }
 .sub { margin: 0 0 36px; max-width: 55ch; opacity: 0.9; font-size: 1.1rem; }
-
+.seccion-titulo { color: var(--violet); font-size: 1.5rem; margin-top: 40px; border-bottom: 1px solid var(--ember); padding-bottom: 10px; }
 .grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
-.item { background: rgba(28, 8, 8, 0.85); backdrop-filter: blur(8px); border: 1px solid var(--ember); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 10px; transition: border-color .2s, transform .2s; text-align: center; }
+.item { background: rgba(28, 8, 8, 0.85); backdrop-filter: blur(8px); border: 1px solid var(--ember); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 10px; transition: border-color .2s, transform .2s; text-align: center; position: relative; overflow: hidden; }
 .item:hover { border-color: var(--pumpkin); transform: translateY(-4px); }
 .item .e { font-size: 3.5rem; line-height: 1; margin-bottom: 10px; }
 .item h3 { margin: 0; font-size: 1.2rem; color: var(--ink); }
 .item p { margin: 0; font-size: .92rem; opacity: .8; flex-grow: 1; }
-.btn-accion { display: inline-block; background: var(--pumpkin); color: #fff; font-weight: 800; padding: 12px 20px; border-radius: 8px; border: none; cursor: pointer; font-family: inherit; font-size: 1rem; margin-top: 10px; transition: all 0.2s; }
-.btn-accion:hover { background: var(--violet); color: #fff; }
-.btn-jugar { background: var(--ember); color: #fff; }
+.btn-accion { display: inline-block; background: var(--pumpkin); color: #fff; font-weight: 800; padding: 12px 20px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem; margin-top: 10px; transition: all 0.2s; }
+.btn-accion:hover { background: var(--violet); }
+.btn-jugar { background: var(--ember); }
 .btn-jugar:hover { background: var(--pumpkin); }
 .btn-bloqueado { background: #331111; color: #885555; cursor: not-allowed; }
 
-/* iCoffin */
-.icoffin { background: #140505; border: 8px solid var(--violet); border-radius: 40px; max-width: 340px; margin: 40px auto; padding: 40px 25px; position: relative; box-shadow: 0 0 25px rgba(255, 77, 109, 0.2); text-align: center; }
+/* ICOFFIN Y DIARIO */
+.icoffin-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; align-items: flex-start; }
+.icoffin { background: #140505; border: 8px solid var(--violet); border-radius: 40px; width: 100%; max-width: 320px; padding: 40px 25px; position: relative; box-shadow: 0 0 25px rgba(255, 77, 109, 0.2); text-align: center; }
 .icoffin::before { content: ''; position: absolute; top: -2px; left: 50%; transform: translateX(-50%); width: 120px; height: 20px; background: var(--violet); border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; }
 .icoffin::after { content: ''; position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 40px; height: 4px; background: rgba(255, 77, 109, 0.5); border-radius: 10px; }
-.icoffin input { width: 100%; padding: 15px; border-radius: 12px; border: 2px solid var(--violet); background: rgba(255, 77, 109, 0.1); color: var(--ink); font-size: 1.2rem; text-transform: uppercase; margin-bottom: 20px; font-family: inherit; text-align: center; outline: none; transition: 0.3s; }
+.icoffin input { width: 100%; padding: 15px; border-radius: 12px; border: 2px solid var(--violet); background: rgba(255, 77, 109, 0.1); color: var(--ink); font-size: 1.2rem; text-transform: uppercase; margin-bottom: 20px; font-family: inherit; text-align: center; outline: none; }
 .icoffin input:focus { background: rgba(255, 77, 109, 0.2); box-shadow: 0 0 10px rgba(255,77,109,0.5); }
 
-/* Skullettes */
+.diario-btn { background: rgba(28, 8, 8, 0.8); border: 2px dashed var(--pumpkin); border-radius: 18px; padding: 20px; text-align: center; cursor: pointer; transition: 0.3s; width: 150px; }
+.diario-btn:hover { background: rgba(214, 40, 40, 0.2); transform: scale(1.05); }
+.diario-btn span { font-size: 3rem; display: block; margin-bottom: 10px; }
+
+/* ANIMACIÓN INICIAL DIARIO */
+#overlay-diario { display: none; position: fixed; inset: 0; background: #000; z-index: 300; justify-content: center; align-items: center; color: var(--violet); font-size: 1.5rem; text-align: center; font-style: italic; padding: 20px; opacity: 0; transition: opacity 1.5s; }
+.pista-blur { filter: blur(4px); user-select: none; opacity: 0.5; }
+.pista-box { background: rgba(255,255,255,0.05); border-left: 4px solid var(--violet); padding: 15px; margin-bottom: 15px; text-align: left; }
+
 .skullette-obj { position: fixed; font-size: 2.5rem; cursor: pointer; z-index: 90; transition: transform 0.2s; filter: drop-shadow(0 0 10px var(--violet)); }
 .skullette-obj:hover { transform: scale(1.2); }
-
 .error-compra { animation: shake 0.4s; background: var(--violet) !important; color: #fff !important; pointer-events: none; }
 @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
-.vacio { grid-column: 1/-1; text-align: center; padding: 40px; border: 1px dashed var(--ember); background: rgba(20,5,5,0.5); border-radius: 18px; opacity: 0.8; }
 
-/* Simetría Celular */
 @media(max-width: 850px) {
   header { display: flex; flex-direction: column; gap: 15px; }
   .header-right { width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; }
@@ -160,25 +170,68 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   .btn-ajustes { justify-self: end; }
   nav { flex-wrap: wrap; justify-content: center; width: 100%; }
 }
-@media(prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 </style>
 </head>
 <body>
 
+<!-- AUDIOS (Inician en silencio en JS) -->
 <audio id="audio-bg" loop><source src="musica.mp3" type="audio/mpeg"></audio>
 
+<!-- TOAST LOGRO -->
+<div id="toast-logro">
+  <span style="font-size: 2rem;">🏆</span>
+  <div><div style="font-size: 0.8rem; opacity: 0.8;">Logro Desbloqueado</div><div id="toast-txt">Título</div><div style="color: #ffd700; font-size: 0.9rem;">+15 🍬</div></div>
+</div>
+
+<!-- ANIMACIÓN DIARIO PRIMERA VEZ -->
+<div id="overlay-diario">
+  "Parece que alguien dejó sus contraseñas acá tiradas, qué despistado..."
+</div>
+
+<!-- MODAL CONFIGURACIÓN -->
 <div class="modal-overlay" id="modal-ajustes">
   <div class="modal-box">
-    <h3>
-      Configuración 
-      <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-    </h3>
-    <div class="slider-container"><label>Volumen de Música</label><input type="range" id="vol-musica" min="0" max="1" step="0.01" value="0.5" oninput="cambiarVolumenMusica(this.value)"></div>
-    <div class="slider-container"><label>Volumen de Efectos</label><input type="range" id="vol-sfx" min="0" max="1" step="0.01" value="0.5" oninput="cambiarVolumenSfx(this.value)"></div>
+    <h3>Configuración <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></h3>
+    <div style="text-align: left; margin: 20px 0;">
+      <label style="font-weight: 800; display:block; margin-bottom:5px;">Música Base</label>
+      <div class="control-audio">
+        <button class="btn-mute" id="btn-mute-musica" onclick="toggleMuteMusica()">🔇</button>
+        <input type="range" id="vol-musica" min="0" max="1" step="0.01" value="0" oninput="cambiarVolumenMusica(this.value)">
+      </div>
+      <label style="font-weight: 800; display:block; margin-bottom:5px; margin-top:15px;">Efectos (SFX)</label>
+      <div class="control-audio">
+        <button class="btn-mute" id="btn-mute-sfx" onclick="toggleMuteSfx()">🔇</button>
+        <input type="range" id="vol-sfx" min="0" max="1" step="0.01" value="0" oninput="cambiarVolumenSfx(this.value)">
+      </div>
+    </div>
     <p id="modo-txt" style="color:var(--violet); font-size:0.8rem; font-weight:bold;"></p>
     <button class="btn-cerrar-modal" onclick="cerrarAjustes()">Guardar</button>
   </div>
 </div>
+
+<!-- MODAL ATAÚD DIARIO -->
+<div class="modal-overlay" id="modal-ataud">
+  <div class="modal-box">
+    <h3>Recompensa Diaria ⚰️</h3>
+    <p style="font-size: 0.9rem; margin-top: 0;">Abre una caja cada 24 horas.</p>
+    <div style="font-weight:bold; color:var(--pumpkin); font-size:1.2rem; margin:10px 0;" id="contador-ataud">Disponible Ahora</div>
+    <div class="grid-ataud" id="grid-ataud-cajas"></div>
+    <button class="btn-cerrar-modal" onclick="cerrarAtaud()">Cerrar</button>
+  </div>
+</div>
+
+<!-- MODAL DIARIO DE PISTAS -->
+<div class="modal-overlay" id="modal-diario">
+  <div class="modal-box" style="text-align: left;">
+    <h3 style="justify-content: flex-start;">Diario Secreto 📖</h3>
+    <p style="font-size: 0.9rem; border-bottom:1px solid var(--ember); padding-bottom:10px;">Encuentra cómo revelar los secretos.</p>
+    <div id="lista-pistas"></div>
+    <button class="btn-cerrar-modal" onclick="document.getElementById('modal-diario').classList.remove('activo')">Esconder</button>
+  </div>
+</div>
+
+<!-- ATAÚD FLOTANTE UI -->
+<div class="ataud-flotante" onclick="abrirAtaud()">⚰️<div class="badge" id="badge-ataud">¡Listo!</div></div>
 
 <header>
   <a class="logo" onclick="cambiarPagina('sec-home')">Boo! Store</a>
@@ -191,7 +244,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
     <span class="moneda-ui">🍬 <span id="ui-dulces">0</span></span>
     <a class="btn-col" onclick="cambiarPagina('sec-coleccion')" id="nav-coleccion">Nuestra Colección</a>
     <button class="btn-ajustes" onclick="abrirAjustes()">
-      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
     </button>
   </div>
 </header>
@@ -205,12 +258,10 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
       <svg class="heart-svg heart-r" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
     </div>
     <p>Un pequeño rincón oscuro creado solo para ti. ¿Te atreves a jugar conmigo antes de que se acabe la noche?</p>
-    <button class="btn-accion" style="border-radius:999px; padding:14px 30px; font-size:1.1rem; margin-bottom: 20px;" onclick="comenzarAventura()">Comenzar la aventura</button>
+    <button class="btn-accion" style="border-radius:999px; padding:14px 30px; font-size:1.1rem; margin-bottom: 20px;" onclick="cambiarPagina('sec-juegos')">Comenzar la aventura</button>
     <div class="count" role="timer">
       <div><b id="d">--</b><span>días</span></div><div><b id="h">--</b><span>horas</span></div><div><b id="m">--</b><span>min</span></div><div><b id="s">--</b><span>seg</span></div>
     </div>
-    
-    <div class="ataud-diario" id="btn-diario" onclick="reclamarDiario()">⚰️ Abrir Ataúd (+50 🍬)</div>
   </div>
 </main>
 
@@ -219,20 +270,17 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   <p class="sub">Juega para ganar dulces mágicos y desbloquear sorpresas.</p>
   <div class="grid">
     <article class="item">
-      <span class="e">👻</span>
-      <h3>Catacumbas</h3>
+      <span class="e">👻</span><h3>Catacumbas</h3>
       <p>Atrapa a los espíritus traviesos del instituto antes de que escapen.</p>
       <button class="btn-accion btn-jugar" onclick="probarJuego(this)">Jugar (+20 🍬)</button>
     </article>
     <article class="item">
-      <span class="e">📱</span>
-      <h3>Memoria Monstruosa</h3>
+      <span class="e">📱</span><h3>Memoria Monstruosa</h3>
       <p>Encuentra los pares secretos en los diarios de las chicas.</p>
       <button class="btn-accion btn-bloqueado">Próximamente</button>
     </article>
     <article class="item">
-      <span class="e">🧪</span>
-      <h3>Biteology: Pociones</h3>
+      <span class="e">🧪</span><h3>Biteology: Pociones</h3>
       <p>Examen de ciencias: Mezcla los ingredientes correctos para mi amor.</p>
       <button class="btn-accion btn-bloqueado">Próximamente</button>
     </article>
@@ -247,23 +295,36 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 
 <section class="pagina" id="sec-coleccion">
   <h2>Tu Colección</h2>
-  <p class="sub">Aquí guardaremos cada recuerdo y amuleto que consigas hoy.</p>
+  <p class="sub">Aquí guardaremos cada recuerdo y amuleto que consigas.</p>
+  
+  <h3 class="seccion-titulo">En el menú (Logros)</h3>
+  <div class="grid" id="contenedor-logros"></div>
+  
+  <h3 class="seccion-titulo">Amuletos (Tienda)</h3>
   <div class="grid" id="contenedor-coleccion"></div>
 </section>
 
 <section class="pagina" id="sec-codigos">
-  <div class="icoffin">
-    <h2 style="color:var(--violet);">iCoffin</h2>
-    <p class="sub" style="margin: 10px auto 30px; font-size:0.9rem;">Ingresa la contraseña para hackear el sistema.</p>
-    <input type="text" id="input-codigo" placeholder="CONTRASEÑA">
-    <button class="btn-accion" style="background:var(--violet); color:#140505; width:100%; font-size: 1.1rem; padding: 15px;" onclick="canjearCodigo()">Desbloquear</button>
-    <p id="msg-codigo" style="margin-top: 20px; font-weight: bold; min-height: 24px; font-size: 1.1rem;"></p>
+  <div class="icoffin-container">
+    <div class="icoffin">
+      <h2 style="color:var(--violet);">iCoffin</h2>
+      <p style="margin: 10px auto 20px; font-size:0.9rem; opacity:0.8;">Ingresa la contraseña para hackear el sistema.</p>
+      <input type="text" id="input-codigo" placeholder="CONTRASEÑA">
+      <button class="btn-accion" style="background:var(--violet); color:#140505; width:100%; font-size: 1.1rem; padding: 15px;" onclick="canjearCodigo()">Desbloquear</button>
+      <p id="msg-codigo" style="margin-top: 15px; font-weight: bold; min-height: 24px; font-size: 1rem;"></p>
+    </div>
+    
+    <!-- Botón Diario -->
+    <div class="diario-btn" onclick="abrirDiario()">
+      <span>📖</span>
+      <strong style="color:var(--pumpkin);">Diario de Pistas</strong>
+    </div>
   </div>
 </section>
 
 <script>
 // ========================================================
-// 1. CONFIGURACIÓN DE FIREBASE
+// 1. CONFIGURACIÓN DE FIREBASE (Mantenida intacta)
 // ========================================================
 const firebaseConfig = {
   apiKey: "AIzaSyAR9cVrx1s3cMd1hfG2NySoRSBrlXHBdIk",
@@ -288,16 +349,21 @@ const rutaDB = esAdmin ? 'admin_partida' : 'greta_partida';
 if(esAdmin) document.getElementById('modo-txt').textContent = "⚠️ MODO ADMINISTRADOR ACTIVADO";
 
 // ========================================================
-// 2. VARIABLES DE JUEGO Y AUDIO
+// 2. VARIABLES DE ESTADO Y DATOS
 // ========================================================
-const sfxExito = new Audio('exito.mp3'); sfxExito.volume = 0.5;
-const sfxError = new Audio('error.mp3'); sfxError.volume = 0.5;
-const bgMusic = document.getElementById('audio-bg'); bgMusic.volume = 0.5; 
+const bgMusic = document.getElementById('audio-bg'); bgMusic.volume = 0; bgMusic.muted = true; // Inicia silenciado
+const sfxExito = new Audio('exito.mp3'); sfxExito.volume = 0; sfxExito.muted = true;
+const sfxError = new Audio('error.mp3'); sfxError.volume = 0; sfxError.muted = true;
 
 let dulces = 0;
 let coleccion = [];
-let ultimoReclamo = 0; 
+let logros = [];
+let ataudDia = 1;      // Día actual del camino (1-10)
+let ataudTiempo = 0;   // Timestamp (ms) de la última vez que reclamó
+let diarioVisto = false;
+let pistas = [];       // Pistas desbloqueadas
 
+// Base de datos de Catálogos y Logros
 const catalogo = [
   { id: 'calabaza', icono: '🎃', nombre: 'Calabaza Protectora', precio: 30, desc: 'Para iluminar nuestras noches más oscuras.' },
   { id: 'pocion', icono: '🍷', nombre: 'Bebida de Vampiro', precio: 50, desc: 'Una copa para brindar por nosotros.' },
@@ -306,8 +372,20 @@ const catalogo = [
   { id: 'anillo', icono: '💍', nombre: 'Anillo de Promesa', precio: 300, desc: 'Un pequeño pacto para la eternidad.' }
 ];
 
+const catalogoLogros = {
+  'config': { icono: '⚙️', nombre: 'Curiosidad Monstruosa', desc: 'Abriste la configuración por primera vez.' },
+  'skull': { icono: '💀', nombre: 'Reflejos de Vampiro', desc: 'Atrapaste una Skullette flotante rápida.' },
+  'noche': { icono: '🦇', nombre: 'Noctámbula', desc: 'Entraste a la tienda pasada la medianoche.' },
+  'ahorro': { icono: '💰', nombre: 'Bolsillos Llenos', desc: 'Lograste ahorrar 150 dulces.' },
+  'diario': { icono: '📖', nombre: 'Cazadora de Secretos', desc: 'Encontraste y abriste el Diario de Pistas.' }
+};
+
+const catalogoPistas = {
+  'pista_amor': { pistaTxt: "El sentimiento que nos une. 4 letras.", codigo: "AMOR", desc: "El amor es la chispa mágica que ilumina las catacumbas de mi corazón cuando estás cerca." }
+};
+
 // ========================================================
-// 3. SINCRONIZACIÓN EN LA NUBE (FIREBASE)
+// 3. SINCRONIZACIÓN FIREBASE Y UI
 // ========================================================
 if(database) {
   database.ref(rutaDB).on('value', (snapshot) => {
@@ -315,88 +393,188 @@ if(database) {
     if (data) {
       dulces = data.dulces || 0;
       coleccion = data.coleccion || [];
-      ultimoReclamo = data.ultimoReclamo || 0;
+      logros = data.logros || [];
+      ataudDia = data.ataudDia || 1;
+      ataudTiempo = data.ataudTiempo || 0;
+      diarioVisto = data.diarioVisto || false;
+      pistas = data.pistas || [];
     }
     actualizarUI();
   });
-} else {
-  dulces = parseInt(localStorage.getItem('boo_dulces')) || 0;
-  coleccion = JSON.parse(localStorage.getItem('boo_coleccion')) || [];
-  ultimoReclamo = parseInt(localStorage.getItem('boo_ataud')) || 0;
-  actualizarUI();
 }
 
 function guardarDatos() {
+  if (dulces >= 150) checkLogro('ahorro');
   if(database) {
-    database.ref(rutaDB).set({ dulces: dulces, coleccion: coleccion, ultimoReclamo: ultimoReclamo });
-  } else {
-    localStorage.setItem('boo_dulces', dulces);
-    localStorage.setItem('boo_coleccion', JSON.stringify(coleccion));
-    localStorage.setItem('boo_ataud', ultimoReclamo);
+    database.ref(rutaDB).set({ 
+      dulces: dulces, coleccion: coleccion, logros: logros, 
+      ataudDia: ataudDia, ataudTiempo: ataudTiempo, 
+      diarioVisto: diarioVisto, pistas: pistas 
+    });
   }
   actualizarUI();
 }
 
 function actualizarUI() {
   document.getElementById('ui-dulces').textContent = dulces;
-  const btnAtaud = document.getElementById('btn-diario');
-  const hoy = new Date().setHours(0,0,0,0);
-  if(ultimoReclamo === hoy) {
-    btnAtaud.classList.add('usado');
-    btnAtaud.textContent = "Ataúd Vacío (Vuelve mañana)";
-  } else {
-    btnAtaud.classList.remove('usado');
-    btnAtaud.textContent = "⚰️ Abrir Ataúd (+50 🍬)";
-  }
   renderizarTiendaYColeccion();
+  actualizarEstadoAtaud();
+  renderizarDiario();
 }
 
-// ========================================================
-// 4. FUNCIONES DE JUEGO
-// ========================================================
-function reclamarDiario() {
-  const hoy = new Date().setHours(0,0,0,0);
-  if(ultimoReclamo !== hoy) {
-    dulces += 50; ultimoReclamo = hoy;
-    guardarDatos(); reproducirSonido(sfxExito);
+// Comprobación de Logro Noctámbula al inicio
+const horaActual = new Date().getHours();
+if (horaActual >= 0 && horaActual < 4) { setTimeout(() => checkLogro('noche'), 2000); }
+
+function checkLogro(id) {
+  if (!logros.includes(id)) {
+    logros.push(id);
+    dulces += 15;
+    mostrarToast(catalogoLogros[id].nombre);
+    guardarDatos();
+    reproducirSonido(sfxExito);
   }
 }
 
-function probarJuego(boton) {
-  dulces += 20; guardarDatos(); reproducirSonido(sfxExito);
-  const original = boton.textContent;
-  boton.textContent = "+20 🍬"; boton.style.background = "var(--pumpkin)"; boton.style.pointerEvents = "none";
-  setTimeout(() => { boton.textContent = original; boton.style.background = ""; boton.style.pointerEvents = "auto"; }, 1200);
+function mostrarToast(titulo) {
+  const toast = document.getElementById('toast-logro');
+  document.getElementById('toast-txt').textContent = titulo;
+  toast.classList.add('visible');
+  setTimeout(() => toast.classList.remove('visible'), 4000);
 }
 
-setInterval(() => {
-  const enJuegos = document.getElementById('sec-juegos').classList.contains('activa');
-  if(!enJuegos && Math.random() > 0.7) {
-    const skull = document.createElement('div');
-    skull.textContent = "💀🎀"; 
-    skull.className = 'skullette-obj';
-    skull.style.top = Math.random() * 80 + 'vh';
-    skull.style.left = (Math.random() > 0.5 ? '-50px' : '105vw');
-    document.body.appendChild(skull);
+// ========================================================
+// 4. LÓGICA DE AUDIO (Anti-Bug & API Visibilidad)
+// ========================================================
+function toggleMuteMusica() {
+  bgMusic.muted = !bgMusic.muted;
+  const vol = document.getElementById('vol-musica');
+  if(!bgMusic.muted && vol.value == 0) { vol.value = 0.5; bgMusic.volume = 0.5; }
+  document.getElementById('btn-mute-musica').textContent = bgMusic.muted ? '🔇' : '🔊';
+  if(!bgMusic.muted) bgMusic.play().catch(e=>console.log(e));
+}
+
+function cambiarVolumenMusica(valor) {
+  if (bgMusic.muted && valor > 0) toggleMuteMusica();
+  bgMusic.volume = valor;
+  if (valor > 0 && bgMusic.paused) bgMusic.play().catch(e=>console.log(e));
+}
+
+function toggleMuteSfx() {
+  sfxExito.muted = !sfxExito.muted; sfxError.muted = !sfxError.muted;
+  const vol = document.getElementById('vol-sfx');
+  if(!sfxExito.muted && vol.value == 0) { vol.value = 0.5; sfxExito.volume = 0.5; sfxError.volume = 0.5; }
+  document.getElementById('btn-mute-sfx').textContent = sfxExito.muted ? '🔇' : '🔊';
+  if(!sfxExito.muted) reproducirSonido(sfxExito);
+}
+function cambiarVolumenSfx(valor) {
+  if (sfxExito.muted && valor > 0) toggleMuteSfx();
+  sfxExito.volume = valor; sfxError.volume = valor;
+}
+function reproducirSonido(audio) { if(!audio.muted && audio.volume > 0) { audio.currentTime = 0; audio.play().catch(e=>console.log(e)); } }
+
+// Pausar música cuando apaga la pantalla o cambia de pestaña
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "hidden") {
+    bgMusic.pause();
+  } else if (!bgMusic.muted && document.getElementById('vol-musica').value > 0) {
+    bgMusic.play().catch(e=>console.log(e));
+  }
+});
+
+// ========================================================
+// 5. ATAÚD DE RECOMPENSA (Camino 10 días)
+// ========================================================
+function actualizarEstadoAtaud() {
+  const listo = Date.now() - ataudTiempo >= 86400000; // 24 horas
+  const badge = document.getElementById('badge-ataud');
+  
+  if (ataudDia > 10) {
+    badge.textContent = "Completado"; badge.style.background = "#555";
+  } else if (listo) {
+    badge.textContent = "¡Caja Lista!"; badge.style.background = "var(--pumpkin)";
+  } else {
+    badge.textContent = "En espera..."; badge.style.background = "#555";
+  }
+}
+
+function abrirAtaud() {
+  document.getElementById('modal-ataud').classList.add('activo');
+  renderizarGrillaAtaud();
+}
+function cerrarAtaud() { document.getElementById('modal-ataud').classList.remove('activo'); }
+
+function renderizarGrillaAtaud() {
+  const grid = document.getElementById('grid-ataud-cajas');
+  grid.innerHTML = '';
+  const listo = Date.now() - ataudTiempo >= 86400000;
+  
+  for(let i=1; i<=10; i++) {
+    const div = document.createElement('div');
+    div.className = 'dia-caja';
+    div.innerHTML = `Día ${i}<br><span style="font-size:1.5rem;">${i < ataudDia ? '🦇' : '🎁'}</span>`;
     
-    setTimeout(() => {
-      skull.style.transform = `translateX(${skull.style.left === '-50px' ? '120vw' : '-120vw'}) rotate(360deg)`;
-      skull.style.transition = 'transform 6s linear';
-    }, 100);
-
-    skull.onclick = () => {
-      dulces += 10; guardarDatos(); reproducirSonido(sfxExito); skull.remove();
-    };
-    setTimeout(() => { if(skull.parentNode) skull.remove(); }, 6000);
+    if (i < ataudDia) {
+      div.classList.add('reclamado');
+    } else if (i === ataudDia) {
+      if (listo) {
+        div.classList.add('actual');
+        div.onclick = reclamarCaja;
+      } else {
+        div.classList.add('bloqueado');
+      }
+    } else {
+      div.classList.add('bloqueado');
+    }
+    grid.appendChild(div);
   }
-}, 8000);
+
+  // Actualizar Timer si está bloqueado
+  if (ataudDia <= 10 && !listo) {
+    actualizarTimerAtaud();
+  } else if (ataudDia <= 10) {
+    document.getElementById('contador-ataud').textContent = "¡Caja Disponible Ahora!";
+  } else {
+    document.getElementById('contador-ataud').textContent = "Camino Completado";
+  }
+}
+
+function reclamarCaja() {
+  ataudTiempo = Date.now();
+  ataudDia++;
+  dulces += 50; // Recompensa
+  guardarDatos();
+  reproducirSonido(sfxExito);
+  renderizarGrillaAtaud();
+}
+
+function actualizarTimerAtaud() {
+  const txt = document.getElementById('contador-ataud');
+  const calc = () => {
+    let diff = 86400000 - (Date.now() - ataudTiempo);
+    if (diff <= 0) { renderizarGrillaAtaud(); return; }
+    let h = Math.floor(diff / 3600000);
+    let m = Math.floor((diff % 3600000) / 60000);
+    let s = Math.floor((diff % 60000) / 1000);
+    txt.textContent = `Siguiente en: ${h}h ${m}m ${s}s`;
+  };
+  calc();
+  // Limpiar timer viejo si existe
+  if(window.timerAtaud) clearInterval(window.timerAtaud);
+  window.timerAtaud = setInterval(calc, 1000);
+}
 
 // ========================================================
-// 5. TIENDA, CÓDIGOS Y NAVEGACIÓN
+// 6. TIENDA Y COLECCIONES
 // ========================================================
 function comprar(boton, idArticulo, precio) {
   if (dulces >= precio) {
-    dulces -= precio; coleccion.push(idArticulo);
+    dulces -= precio; 
+    coleccion.push(idArticulo);
+    if(idArticulo === 'calabaza' || coleccion.length === 1) {
+      // Desbloquea la pista de AMOR al comprar el primer item
+      if(!pistas.includes('pista_amor')) pistas.push('pista_amor');
+    }
     guardarDatos(); reproducirSonido(sfxExito);
   } else {
     reproducirSonido(sfxError);
@@ -408,8 +586,10 @@ function comprar(boton, idArticulo, precio) {
 function renderizarTiendaYColeccion() {
   const divTienda = document.getElementById('contenedor-tienda');
   const divColeccion = document.getElementById('contenedor-coleccion');
+  const divLogros = document.getElementById('contenedor-logros');
   if(!divTienda) return;
   
+  // Tienda y Colección
   divTienda.innerHTML = ''; divColeccion.innerHTML = '';
   let hayColeccion = false;
 
@@ -421,36 +601,110 @@ function renderizarTiendaYColeccion() {
       divTienda.innerHTML += `<article class="item"><span class="e">${item.icono}</span><h3>${item.nombre}</h3><p>${item.desc}</p><button class="btn-accion" onclick="comprar(this, '${item.id}', ${item.precio})">Obtener - ${item.precio} 🍬</button></article>`;
     }
   });
+  if (!hayColeccion) divColeccion.innerHTML = `<div style="grid-column: 1/-1; text-align: center; opacity: 0.7;">Aún no tenemos amuletos...</div>`;
 
-  if (!hayColeccion) divColeccion.innerHTML = `<div class="vacio"><span style="font-size:3rem">🦇</span><br><br>Aún no tenemos amuletos aquí.<br>¡Vamos a jugar para conseguir el primero!</div>`;
+  // Logros
+  divLogros.innerHTML = '';
+  Object.keys(catalogoLogros).forEach(key => {
+    const l = catalogoLogros[key];
+    const ganado = logros.includes(key);
+    divLogros.innerHTML += `
+      <article class="item" style="padding:15px; flex-direction:row; align-items:center; text-align:left; ${ganado ? 'border-color:var(--pumpkin); background:rgba(214,40,40,0.1);' : 'opacity:0.6; filter:grayscale(1);'}">
+        <span style="font-size:2rem; min-width:40px;">${l.icono}</span>
+        <div><h3 style="font-size:1rem; margin-bottom:3px;">${ganado ? l.nombre : '???'}</h3><p style="font-size:0.8rem; margin:0;">${ganado ? l.desc : 'Secreto...'}</p></div>
+      </article>`;
+  });
+}
+
+// ========================================================
+// 7. DIARIO Y CÓDIGOS ADMIN
+// ========================================================
+function abrirDiario() {
+  checkLogro('diario');
+  if (!diarioVisto) {
+    // Animación de primera vez
+    const overlay = document.getElementById('overlay-diario');
+    overlay.style.display = 'flex';
+    setTimeout(() => { overlay.style.opacity = '1'; }, 100);
+    setTimeout(() => {
+      overlay.style.opacity = '0';
+      setTimeout(() => { overlay.style.display = 'none'; document.getElementById('modal-diario').classList.add('activo'); }, 1500);
+    }, 4000);
+    diarioVisto = true;
+    guardarDatos();
+  } else {
+    document.getElementById('modal-diario').classList.add('activo');
+  }
+}
+
+function renderizarDiario() {
+  const container = document.getElementById('lista-pistas');
+  if(!container) return;
+  container.innerHTML = '';
+  
+  Object.keys(catalogoPistas).forEach((key, index) => {
+    const p = catalogoPistas[key];
+    const desbloqueada = pistas.includes(key);
+    if (desbloqueada) {
+      container.innerHTML += `<div class="pista-box"><strong>Pista #${index+1}:</strong> ${p.pistaTxt}</div>`;
+    } else {
+      container.innerHTML += `<div class="pista-box pista-blur"><strong>🔒 Pista #${index+1}:</strong> Para leer esto, primero debes ayudarme a iluminar nuestras noches...</div>`;
+    }
+  });
 }
 
 function canjearCodigo() {
   const input = document.getElementById('input-codigo');
   const msg = document.getElementById('msg-codigo');
   const codigo = input.value.trim().toUpperCase();
+  let msjRespuesta = ""; colorRespuesta = "#4CAF50";
 
-  if (codigo === 'RESET') {
-    dulces = 0; coleccion = []; ultimoReclamo = 0;
-    msg.style.color = "var(--violet)"; msg.textContent = "Sistema iCoffin restaurado.";
-  } else if (codigo === 'GIVE') {
-    dulces += 500; catalogo.forEach(i => { if(!coleccion.includes(i.id)) coleccion.push(i.id); });
-    msg.style.color = "#4CAF50"; msg.textContent = "¡Hack exitoso! +500 🍬 y toda la colección.";
-    reproducirSonido(sfxExito);
-  } else {
-    msg.style.color = "var(--pumpkin)"; msg.textContent = "Contraseña incorrecta...";
-    reproducirSonido(sfxError);
+  switch(codigo) {
+    case 'AMOR':
+      msjRespuesta = catalogoPistas['pista_amor'].desc; colorRespuesta = "var(--violet)";
+      reproducirSonido(sfxExito); break;
+    // --- ADMIN CODES ---
+    case 'RESET':
+      dulces = 0; coleccion = []; logros = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = [];
+      msjRespuesta = "[ADMIN] Borrón y cuenta nueva total."; colorRespuesta = "var(--pumpkin)"; break;
+    case 'RESETCARAMELOS': dulces = 0; msjRespuesta = "[ADMIN] Caramelos reseteados a 0."; break;
+    case 'RESETLOGROS': logros = []; msjRespuesta = "[ADMIN] Logros bloqueados."; break;
+    case 'RESETCOLECCTION': coleccion = []; pistas = []; msjRespuesta = "[ADMIN] Colección y pistas vaciadas."; break;
+    case 'RESETATAUD': ataudDia = 1; ataudTiempo = 0; msjRespuesta = "[ADMIN] Ataúd reseteado al Día 1."; break;
+    case '24H': ataudTiempo = Date.now() - 86400000; msjRespuesta = "[ADMIN] Reloj adelantado 24 horas."; break;
+    // -------------------
+    default:
+      msjRespuesta = "Contraseña incorrecta..."; colorRespuesta = "var(--pumpkin)"; reproducirSonido(sfxError);
   }
+  
+  msg.style.color = colorRespuesta; msg.textContent = msjRespuesta;
   input.value = ''; guardarDatos();
-  setTimeout(() => { msg.textContent = ''; }, 4000);
+  if(codigo !== 'AMOR') setTimeout(() => { msg.textContent = ''; }, 4000);
 }
 
-function abrirAjustes() { document.getElementById('modal-ajustes').classList.add('activo'); }
+// ========================================================
+// 8. FUNCIONES MENORES
+// ========================================================
+function abrirAjustes() { checkLogro('config'); document.getElementById('modal-ajustes').classList.add('activo'); }
 function cerrarAjustes() { document.getElementById('modal-ajustes').classList.remove('activo'); }
-function cambiarVolumenMusica(valor) { bgMusic.volume = valor; if(valor > 0 && bgMusic.paused) bgMusic.play().catch(e=>console.log(e)); }
-function cambiarVolumenSfx(valor) { sfxExito.volume = valor; sfxError.volume = valor; reproducirSonido(sfxExito); }
-function reproducirSonido(audio) { audio.currentTime = 0; audio.play().catch(e=>console.log(e)); }
-function comenzarAventura() { if(bgMusic.paused) bgMusic.play().catch(e=>console.log(e)); cambiarPagina('sec-juegos'); }
+
+// Skullette flotante (Reflejos)
+setInterval(() => {
+  const enJuegos = document.getElementById('sec-juegos').classList.contains('activa');
+  if(!enJuegos && Math.random() > 0.7) {
+    const skull = document.createElement('div');
+    skull.textContent = "💀🎀"; skull.className = 'skullette-obj';
+    skull.style.top = Math.random() * 80 + 'vh'; skull.style.left = (Math.random() > 0.5 ? '-50px' : '105vw');
+    document.body.appendChild(skull);
+    setTimeout(() => { skull.style.transform = `translateX(${skull.style.left === '-50px' ? '120vw' : '-120vw'}) rotate(360deg)`; skull.style.transition = 'transform 6s linear'; }, 100);
+    skull.onclick = () => {
+      checkLogro('skull'); dulces += 10; guardarDatos(); reproducirSonido(sfxExito); skull.remove();
+    };
+    setTimeout(() => { if(skull.parentNode) skull.remove(); }, 6000);
+  }
+}, 8000);
+
+function probarJuego(boton) { dulces += 20; guardarDatos(); reproducirSonido(sfxExito); const original = boton.textContent; boton.textContent = "+20 🍬"; boton.style.background = "var(--pumpkin)"; boton.style.pointerEvents = "none"; setTimeout(() => { boton.textContent = original; boton.style.background = ""; boton.style.pointerEvents = "auto"; }, 1200); }
 
 function cambiarPagina(idPagina) {
   document.querySelectorAll('.pagina').forEach(pag => pag.classList.remove('activa'));
@@ -462,10 +716,9 @@ function cambiarPagina(idPagina) {
   window.scrollTo(0,0);
 }
 
+// Timer Halloween
 (function(){
-  document.addEventListener('pointermove', function(e){
-    if (e.pointerType === 'mouse') { document.body.style.setProperty('--x', e.clientX + 'px'); document.body.style.setProperty('--y', e.clientY + 'px'); }
-  });
+  document.addEventListener('pointermove', function(e){ if (e.pointerType === 'mouse') { document.body.style.setProperty('--x', e.clientX + 'px'); document.body.style.setProperty('--y', e.clientY + 'px'); } });
   var end=new Date(2026,9,31,18,0,0).getTime();
   function pad(n){return String(n).padStart(2,'0')}
   function tick(){
@@ -477,7 +730,6 @@ function cambiarPagina(idPagina) {
   }
   tick();setInterval(tick,1000);
 })();
-
 </script>
 </body>
 </html>
