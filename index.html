@@ -519,12 +519,9 @@ function renderizarTiendaYColeccion() {
 }
 
 // ========================================================
-// 7. DIARIO Y CÓDIGOS (Audio Ducking y Animación)
+// 7. DIARIO Y CÓDIGOS (Audio Ducking y Animación Retrasada)
 // ========================================================
 function abrirDiario() {
-  checkLogro('diario');
-  
-  // Bajar volumen de la música
   const volSlider = parseFloat(document.getElementById('vol-musica').value);
   if(!bgMusic.muted && volSlider > 0) {
     bgMusic.volume = volSlider * 0.3;
@@ -532,24 +529,30 @@ function abrirDiario() {
 
   if (!diarioVisto) {
     const overlay = document.getElementById('overlay-diario');
-    overlay.style.display = 'flex'; setTimeout(() => { overlay.style.opacity = '1'; }, 100);
+    overlay.style.display = 'flex'; 
+    setTimeout(() => { overlay.style.opacity = '1'; }, 100);
+    
+    // Aumentamos 1500ms al tiempo de lectura del texto
     setTimeout(() => { 
       overlay.style.opacity = '0'; 
       setTimeout(() => { 
         overlay.style.display = 'none'; 
-        document.getElementById('modal-diario').classList.add('activo'); 
+        document.getElementById('modal-diario').classList.add('activo');
+        // El logro se dispara exactamente cuando el diario termina de abrirse
+        checkLogro('diario');
       }, 1500); 
-    }, 4000);
-    diarioVisto = true; guardarDatos();
+    }, 5500); 
+    
+    diarioVisto = true; 
+    guardarDatos();
   } else { 
     document.getElementById('modal-diario').classList.add('activo'); 
+    checkLogro('diario'); // Por si acaso no se registró antes
   }
 }
 
 function esconderDiario() {
   document.getElementById('modal-diario').classList.remove('activo');
-  
-  // Restaurar volumen de la música
   const volSlider = parseFloat(document.getElementById('vol-musica').value);
   if(!bgMusic.muted && volSlider > 0) {
     bgMusic.volume = volSlider;
