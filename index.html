@@ -8,9 +8,9 @@
 <!-- PWA Y FAVICON -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#140505">
-<!-- Para instalar en el celular -->
+<!-- Para instalar en iPhone -->
 <link rel="apple-touch-icon" href="icono.png">
-<!-- Favicon para la PC (png transparente) -->
+<!-- Favicon para la PC y Android (png transparente) -->
 <link rel="icon" type="image/png" href="logo.png">
 
 <script>
@@ -40,7 +40,9 @@ html { scroll-padding-top: env(safe-area-inset-top, 0px); }
 *, *::before, *::after { box-sizing: inherit; }
 
 html, body {
-  overscroll-behavior: none; /* Elimina el rebote y el jalon de pantalla en celulares */
+  overscroll-behavior: none; 
+  height: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -48,7 +50,6 @@ body {
   color: var(--ink);
   font-family: Montserrat, system-ui, sans-serif;
   line-height: 1.6;
-  overflow-x: hidden; 
   width: 100vw;
   max-width: 100%;
   
@@ -206,14 +207,14 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 /* WRAPPER FANTASMA SKULLETTES */
 .skullette-wrapper { position: fixed; z-index: 90; pointer-events: none; }
 .skullette-inner { 
-  width: 65px; /* Más grandes para mejor hitbox */
+  width: 65px; 
   height: 65px; 
   cursor: pointer; 
   filter: drop-shadow(0 0 10px var(--violet)); 
   transition: transform 0.2s; 
   pointer-events: auto; 
   object-fit: contain; 
-  -webkit-user-drag: none; /* Anti-arrastre en PC */
+  -webkit-user-drag: none; 
 }
 .skullette-inner:hover { transform: scale(1.2); }
 .error-compra { animation: shake 0.4s; background: var(--violet) !important; color: #fff !important; pointer-events: none; }
@@ -221,6 +222,14 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 
 /* RESPONSIVE CELULARES */
 @media(max-width: 850px) {
+  /* CONGELAR SCROLL EN LA PANTALLA PRINCIPAL (HOME) */
+  body:has(#sec-home.activa) {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
+
   header { display: flex; flex-direction: column; gap: 15px; }
   .header-right { width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; }
   .moneda-ui { justify-self: start; }
@@ -228,7 +237,6 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   .btn-ajustes { justify-self: end; }
   nav { flex-wrap: wrap; justify-content: center; width: 100%; }
   
-  /* Evitar que la barra inferior tape el timer añadiendo más relleno */
   #sec-home { padding-bottom: 90px; }
   
   .icoffin-container { flex-direction: column; min-height: auto; gap: 30px; }
@@ -337,7 +345,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
     <span class="moneda-ui">🍬 <span id="ui-dulces">0</span></span>
     <a class="btn-col" onclick="cambiarPagina('sec-coleccion')" id="nav-coleccion">Nuestra Colección</a>
     <button class="btn-ajustes" onclick="abrirAjustes()">
-      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
     </button>
   </div>
 </header>
@@ -661,7 +669,7 @@ function canjearCodigo() {
 }
 
 // ========================================================
-// 8. NAVEGACIÓN Y EXTRAS (Skullettes con onpointerdown)
+// 8. NAVEGACIÓN Y EXTRAS
 // ========================================================
 function abrirAjustes() { checkLogro('config'); document.getElementById('modal-ajustes').classList.add('activo'); }
 function cerrarAjustes() { document.getElementById('modal-ajustes').classList.remove('activo'); }
@@ -685,7 +693,6 @@ setInterval(() => {
     setTimeout(() => { wrapper.style.opacity = '1'; wrapper.style.transform = `translateX(${wrapper.style.left === '-50px' ? '120vw' : '-120vw'}) rotate(360deg)`; }, 100);
     setTimeout(() => { wrapper.style.opacity = '0'; }, 7200); 
     
-    // GATILLO INSTANTÁNEO (Funciona perfecto en PC y Celular)
     inner.onpointerdown = () => { checkLogro('skull'); dulces += 10; guardarDatos(); reproducirSonido(sfxExito); wrapper.remove(); };
     setTimeout(() => { if(wrapper.parentNode) wrapper.remove(); }, 8000);
   }
