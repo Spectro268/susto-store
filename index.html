@@ -100,7 +100,7 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .btn-cerrar-modal { background: var(--pumpkin); color: #fff; font-weight: 800; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; width: 100%; margin-top: 15px; font-size: 1rem; transition: background 0.2s; }
 .btn-cerrar-modal:hover { background: var(--violet); }
 
-/* ATAÚD FLOTANTE (GEOMETRY DASH STYLE - CENTRO DERECHA) */
+/* ATAÚD FLOTANTE */
 .ataud-flotante { position: fixed; top: 50vh; right: 3vw; transform: translateY(-50%); margin-top: -30px; background: rgba(28, 8, 8, 0.9); border: 2px solid var(--violet); border-radius: 15px; padding: 15px; cursor: pointer; font-size: 2rem; z-index: 90; box-shadow: 0 0 15px rgba(255, 77, 109, 0.3); transition: transform 0.3s; display: flex; flex-direction: column; align-items: center; }
 .ataud-flotante:hover { transform: translateY(-50%) scale(1.1); background: var(--violet); }
 .ataud-flotante .badge { font-size: 0.8rem; background: var(--pumpkin); color: white; border-radius: 999px; padding: 2px 8px; font-weight: bold; margin-top: 5px; font-family: sans-serif; }
@@ -115,7 +115,7 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .dia-caja.bloqueado { opacity: 0.5; filter: grayscale(1); }
 @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(214, 40, 40, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(214, 40, 40, 0); } 100% { box-shadow: 0 0 0 0 rgba(214, 40, 40, 0); } }
 
-/* NOTIFICACIÓN DE LOGRO/PISTA (TOAST CORREGIDO: OPACIDAD) */
+/* NOTIFICACIÓN DE LOGRO/PISTA */
 #toast-logro { position: fixed; top: 20px; left: 50%; transform: translate(-50%, -20px); opacity: 0; pointer-events: none; background: var(--violet); color: #fff; border-radius: 12px; padding: 15px 25px; display: flex; align-items: center; gap: 15px; font-weight: bold; box-shadow: 0 5px 20px rgba(0,0,0,0.5); z-index: 999; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); border: 2px solid #fff; }
 #toast-logro.visible { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
 
@@ -141,7 +141,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .btn-jugar:hover { background: var(--pumpkin); }
 .btn-bloqueado { background: #331111; color: #885555; cursor: not-allowed; }
 
-/* ICOFFIN Y DIARIO (Capa absoluta para el diario) */
+/* ICOFFIN Y DIARIO */
 .icoffin-container { position: relative; display: flex; justify-content: center; align-items: center; width: 100%; max-width: 800px; margin: 0 auto; min-height: 400px; }
 .icoffin { background: #140505; border: 8px solid var(--violet); border-radius: 40px; width: 100%; max-width: 320px; padding: 40px 25px; position: relative; box-shadow: 0 0 25px rgba(255, 77, 109, 0.2); text-align: center; margin: 0 auto; z-index: 2; }
 .icoffin::before { content: ''; position: absolute; top: -2px; left: 50%; transform: translateX(-50%); width: 120px; height: 20px; background: var(--violet); border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; }
@@ -158,8 +158,10 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .pista-blur { filter: blur(4px); user-select: none; opacity: 0.5; }
 .pista-box { background: rgba(255,255,255,0.05); border-left: 4px solid var(--violet); padding: 15px; margin-bottom: 15px; text-align: left; }
 
-.skullette-obj { position: fixed; font-size: 2.5rem; cursor: pointer; z-index: 90; filter: drop-shadow(0 0 10px var(--violet)); }
-.skullette-obj:hover { transform: scale(1.2) !important; }
+/* CSS DEL WRAPPER FANTASMA (SOLUCIÓN AL BUG) */
+.skullette-wrapper { position: fixed; z-index: 90; pointer-events: none; }
+.skullette-inner { font-size: 2.5rem; cursor: pointer; filter: drop-shadow(0 0 10px var(--violet)); transition: transform 0.2s; pointer-events: auto; }
+.skullette-inner:hover { transform: scale(1.3); }
 .error-compra { animation: shake 0.4s; background: var(--violet) !important; color: #fff !important; pointer-events: none; }
 @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
 
@@ -184,13 +186,12 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 <!-- AUDIOS -->
 <audio id="audio-bg" loop><source src="musica.mp3" type="audio/mpeg"></audio>
 
-<!-- TOAST DINÁMICO (Sin línea blanca) -->
+<!-- TOAST DINÁMICO -->
 <div id="toast-logro">
   <span id="toast-icon" style="font-size: 2rem;">🏆</span>
   <div><div id="toast-sub" style="font-size: 0.8rem; opacity: 0.8;">Logro Desbloqueado</div><div id="toast-txt">Título</div><div id="toast-bonus" style="color: #ffd700; font-size: 0.9rem;">+15 🍬</div></div>
 </div>
 
-<!-- ANIMACIÓN DIARIO PRIMERA VEZ -->
 <div id="overlay-diario">
   "Parece que alguien dejó sus contraseñas acá tiradas, qué despistado..."
 </div>
@@ -237,8 +238,8 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   </div>
 </div>
 
-<!-- ATAÚD FLOTANTE (Movido al centro-derecha) -->
-<div class="ataud-flotante ataud-animado" onclick="abrirAtaud()">⚰️<div class="badge" id="badge-ataud">¡Listo!</div></div>
+<!-- ATAÚD FLOTANTE (Oculto en otras pestañas vía JS) -->
+<div class="ataud-flotante ataud-animado" id="btn-ataud-global" onclick="abrirAtaud()">⚰️<div class="badge" id="badge-ataud">¡Listo!</div></div>
 
 <header>
   <a class="logo" onclick="cambiarPagina('sec-home')">Boo! Store</a>
@@ -312,7 +313,6 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 </section>
 
 <section class="pagina" id="sec-codigos">
-  <!-- Contenedor relativo para mantener centrado el iCoffin -->
   <div class="icoffin-container">
     <div class="icoffin">
       <h2 style="color:var(--violet);">iCoffin</h2>
@@ -322,7 +322,6 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
       <p id="msg-codigo" style="margin-top: 15px; font-weight: bold; min-height: 24px; font-size: 1rem;"></p>
     </div>
     
-    <!-- Botón Diario en capa absoluta -->
     <div class="diario-btn" onclick="abrirDiario()">
       <span>📖</span>
       <strong style="color:var(--pumpkin);">Diario de Pistas</strong>
@@ -363,13 +362,9 @@ const bgMusic = document.getElementById('audio-bg'); bgMusic.volume = 0; bgMusic
 const sfxExito = new Audio('exito.mp3'); sfxExito.volume = 0; sfxExito.muted = true;
 const sfxError = new Audio('error.mp3'); sfxError.volume = 0; sfxError.muted = true;
 
-let dulces = 0;
-let coleccion = [];
-let logros = [];
-let ataudDia = 1;      
-let ataudTiempo = 0;   
-let diarioVisto = false;
-let pistas = [];       
+let dulces = 0; let coleccion = []; let logros = [];
+let ataudDia = 1; let ataudTiempo = 0;   
+let diarioVisto = false; let pistas = [];       
 
 const catalogo = [
   { id: 'calabaza', icono: '🎃', nombre: 'Calabaza Protectora', precio: 30, desc: 'Para iluminar nuestras noches más oscuras.' },
@@ -398,13 +393,9 @@ if(database) {
   database.ref(rutaDB).on('value', (snapshot) => {
     const data = snapshot.val();
     if (data) {
-      dulces = data.dulces || 0;
-      coleccion = data.coleccion || [];
-      logros = data.logros || [];
-      ataudDia = data.ataudDia || 1;
-      ataudTiempo = data.ataudTiempo || 0;
-      diarioVisto = data.diarioVisto || false;
-      pistas = data.pistas || [];
+      dulces = data.dulces || 0; coleccion = data.coleccion || []; logros = data.logros || [];
+      ataudDia = data.ataudDia || 1; ataudTiempo = data.ataudTiempo || 0;
+      diarioVisto = data.diarioVisto || false; pistas = data.pistas || [];
     }
     actualizarUI();
   });
@@ -424,9 +415,7 @@ function guardarDatos() {
 
 function actualizarUI() {
   document.getElementById('ui-dulces').textContent = dulces;
-  renderizarTiendaYColeccion();
-  actualizarEstadoAtaud();
-  renderizarDiario();
+  renderizarTiendaYColeccion(); actualizarEstadoAtaud(); renderizarDiario();
 }
 
 const horaActual = new Date().getHours();
@@ -434,101 +423,60 @@ if (horaActual >= 0 && horaActual < 4) { setTimeout(() => checkLogro('noche'), 2
 
 function checkLogro(id) {
   if (!logros.includes(id)) {
-    logros.push(id);
-    dulces += 15;
-    mostrarToast(catalogoLogros[id].nombre, false);
-    guardarDatos();
-    reproducirSonido(sfxExito);
+    logros.push(id); dulces += 15; mostrarToast(catalogoLogros[id].nombre, false);
+    guardarDatos(); reproducirSonido(sfxExito);
   }
 }
 
-// TOAST DINÁMICO (Sin línea blanca)
 function mostrarToast(texto, esPista = false) {
   const toast = document.getElementById('toast-logro');
-  
   if(esPista) {
     toast.style.background = 'var(--pumpkin)'; toast.style.borderColor = 'var(--ember)';
-    document.getElementById('toast-icon').textContent = '📖';
-    document.getElementById('toast-sub').textContent = 'Nueva pista';
-    document.getElementById('toast-bonus').textContent = '';
+    document.getElementById('toast-icon').textContent = '📖'; document.getElementById('toast-sub').textContent = 'Nueva pista'; document.getElementById('toast-bonus').textContent = '';
   } else {
     toast.style.background = 'var(--violet)'; toast.style.borderColor = '#fff';
-    document.getElementById('toast-icon').textContent = '🏆';
-    document.getElementById('toast-sub').textContent = 'Logro Desbloqueado';
-    document.getElementById('toast-bonus').textContent = '+15 🍬';
+    document.getElementById('toast-icon').textContent = '🏆'; document.getElementById('toast-sub').textContent = 'Logro Desbloqueado'; document.getElementById('toast-bonus').textContent = '+15 🍬';
   }
-  
   document.getElementById('toast-txt').textContent = texto;
-  toast.classList.add('visible');
-  setTimeout(() => toast.classList.remove('visible'), 4000);
+  toast.classList.add('visible'); setTimeout(() => toast.classList.remove('visible'), 4000);
 }
 
 // ========================================================
 // 4. LÓGICA DE AUDIO
 // ========================================================
-function toggleMuteMusica() {
-  bgMusic.muted = !bgMusic.muted;
-  const vol = document.getElementById('vol-musica');
-  if(!bgMusic.muted && vol.value == 0) { vol.value = 0.5; bgMusic.volume = 0.5; }
-  document.getElementById('btn-mute-musica').textContent = bgMusic.muted ? '🔇' : '🔊';
-  if(!bgMusic.muted) bgMusic.play().catch(e=>console.log(e));
-}
+function toggleMuteMusica() { bgMusic.muted = !bgMusic.muted; const vol = document.getElementById('vol-musica'); if(!bgMusic.muted && vol.value == 0) { vol.value = 0.5; bgMusic.volume = 0.5; } document.getElementById('btn-mute-musica').textContent = bgMusic.muted ? '🔇' : '🔊'; if(!bgMusic.muted) bgMusic.play().catch(e=>console.log(e)); }
 function cambiarVolumenMusica(valor) { if (bgMusic.muted && valor > 0) toggleMuteMusica(); bgMusic.volume = valor; if (valor > 0 && bgMusic.paused) bgMusic.play().catch(e=>console.log(e)); }
-function toggleMuteSfx() {
-  sfxExito.muted = !sfxExito.muted; sfxError.muted = !sfxError.muted;
-  const vol = document.getElementById('vol-sfx');
-  if(!sfxExito.muted && vol.value == 0) { vol.value = 0.5; sfxExito.volume = 0.5; sfxError.volume = 0.5; }
-  document.getElementById('btn-mute-sfx').textContent = sfxExito.muted ? '🔇' : '🔊';
-  if(!sfxExito.muted) reproducirSonido(sfxExito);
-}
+function toggleMuteSfx() { sfxExito.muted = !sfxExito.muted; sfxError.muted = !sfxError.muted; const vol = document.getElementById('vol-sfx'); if(!sfxExito.muted && vol.value == 0) { vol.value = 0.5; sfxExito.volume = 0.5; sfxError.volume = 0.5; } document.getElementById('btn-mute-sfx').textContent = sfxExito.muted ? '🔇' : '🔊'; if(!sfxExito.muted) reproducirSonido(sfxExito); }
 function cambiarVolumenSfx(valor) { if (sfxExito.muted && valor > 0) toggleMuteSfx(); sfxExito.volume = valor; sfxError.volume = valor; }
 function reproducirSonido(audio) { if(!audio.muted && audio.volume > 0) { audio.currentTime = 0; audio.play().catch(e=>console.log(e)); } }
-document.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === "hidden") { bgMusic.pause(); } else if (!bgMusic.muted && document.getElementById('vol-musica').value > 0) { bgMusic.play().catch(e=>console.log(e)); }
-});
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") { bgMusic.pause(); } else if (!bgMusic.muted && document.getElementById('vol-musica').value > 0) { bgMusic.play().catch(e=>console.log(e)); } });
 
 // ========================================================
 // 5. ATAÚD DE RECOMPENSA 
 // ========================================================
 function actualizarEstadoAtaud() {
-  const listo = Date.now() - ataudTiempo >= 86400000; 
-  const badge = document.getElementById('badge-ataud');
+  const listo = Date.now() - ataudTiempo >= 86400000; const badge = document.getElementById('badge-ataud');
   if (ataudDia > 10) { badge.textContent = "Completado"; badge.style.background = "#555"; } 
   else if (listo) { badge.textContent = "¡Caja Lista!"; badge.style.background = "var(--pumpkin)"; } 
   else { badge.textContent = "En espera..."; badge.style.background = "#555"; }
 }
-
 function abrirAtaud() { document.getElementById('modal-ataud').classList.add('activo'); renderizarGrillaAtaud(); }
 function cerrarAtaud() { document.getElementById('modal-ataud').classList.remove('activo'); }
-
 function renderizarGrillaAtaud() {
-  const grid = document.getElementById('grid-ataud-cajas');
-  grid.innerHTML = '';
+  const grid = document.getElementById('grid-ataud-cajas'); grid.innerHTML = '';
   const listo = Date.now() - ataudTiempo >= 86400000;
-  
   for(let i=1; i<=10; i++) {
-    const div = document.createElement('div');
-    div.className = 'dia-caja';
+    const div = document.createElement('div'); div.className = 'dia-caja';
     div.innerHTML = `Día ${i}<br><span style="font-size:1.5rem;">${i < ataudDia ? '🦇' : '🎁'}</span>`;
-    
-    if (i < ataudDia) { div.classList.add('reclamado'); } 
-    else if (i === ataudDia) { if (listo) { div.classList.add('actual'); div.onclick = reclamarCaja; } else { div.classList.add('bloqueado'); } } 
-    else { div.classList.add('bloqueado'); }
+    if (i < ataudDia) { div.classList.add('reclamado'); } else if (i === ataudDia) { if (listo) { div.classList.add('actual'); div.onclick = reclamarCaja; } else { div.classList.add('bloqueado'); } } else { div.classList.add('bloqueado'); }
     grid.appendChild(div);
   }
   if (ataudDia <= 10 && !listo) { actualizarTimerAtaud(); } else if (ataudDia <= 10) { document.getElementById('contador-ataud').textContent = "¡Caja Disponible Ahora!"; } else { document.getElementById('contador-ataud').textContent = "Camino Completado"; }
 }
-
 function reclamarCaja() { ataudTiempo = Date.now(); ataudDia++; dulces += 50; guardarDatos(); reproducirSonido(sfxExito); renderizarGrillaAtaud(); }
-
 function actualizarTimerAtaud() {
   const txt = document.getElementById('contador-ataud');
-  const calc = () => {
-    let diff = 86400000 - (Date.now() - ataudTiempo);
-    if (diff <= 0) { renderizarGrillaAtaud(); return; }
-    let h = Math.floor(diff / 3600000); let m = Math.floor((diff % 3600000) / 60000); let s = Math.floor((diff % 60000) / 1000);
-    txt.textContent = `Siguiente en: ${h}h ${m}m ${s}s`;
-  };
+  const calc = () => { let diff = 86400000 - (Date.now() - ataudTiempo); if (diff <= 0) { renderizarGrillaAtaud(); return; } let h = Math.floor(diff / 3600000); let m = Math.floor((diff % 3600000) / 60000); let s = Math.floor((diff % 60000) / 1000); txt.textContent = `Siguiente en: ${h}h ${m}m ${s}s`; };
   calc(); if(window.timerAtaud) clearInterval(window.timerAtaud); window.timerAtaud = setInterval(calc, 1000);
 }
 
@@ -537,15 +485,8 @@ function actualizarTimerAtaud() {
 // ========================================================
 function comprar(boton, idArticulo, precio) {
   if (dulces >= precio) {
-    dulces -= precio; 
-    coleccion.push(idArticulo);
-    // Desbloqueo de pista con toast inteligente
-    if(idArticulo === 'calabaza' || coleccion.length === 1) {
-      if(!pistas.includes('pista_amor')) {
-        pistas.push('pista_amor');
-        mostrarToast("Ve al Diario Secreto", true);
-      }
-    }
+    dulces -= precio; coleccion.push(idArticulo);
+    if(idArticulo === 'calabaza' || coleccion.length === 1) { if(!pistas.includes('pista_amor')) { pistas.push('pista_amor'); mostrarToast("Ve al Diario Secreto", true); } }
     guardarDatos(); reproducirSonido(sfxExito);
   } else {
     reproducirSonido(sfxError); boton.classList.add('error-compra'); boton.textContent = "¡Faltan dulces!";
@@ -554,24 +495,14 @@ function comprar(boton, idArticulo, precio) {
 }
 
 function renderizarTiendaYColeccion() {
-  const divTienda = document.getElementById('contenedor-tienda');
-  const divColeccion = document.getElementById('contenedor-coleccion');
-  const divLogros = document.getElementById('contenedor-logros');
+  const divTienda = document.getElementById('contenedor-tienda'); const divColeccion = document.getElementById('contenedor-coleccion'); const divLogros = document.getElementById('contenedor-logros');
   if(!divTienda) return;
-  
-  divTienda.innerHTML = ''; divColeccion.innerHTML = '';
-  let hayColeccion = false;
-
+  divTienda.innerHTML = ''; divColeccion.innerHTML = ''; let hayColeccion = false;
   catalogo.forEach(item => {
-    if (coleccion.includes(item.id)) {
-      hayColeccion = true;
-      divColeccion.innerHTML += `<article class="item" style="border-color: var(--violet)"><span class="e">${item.icono}</span><h3>${item.nombre}</h3><p>${item.desc}</p><button class="btn-accion btn-bloqueado" style="background:var(--bg)">Guardado a salvo</button></article>`;
-    } else {
-      divTienda.innerHTML += `<article class="item"><span class="e">${item.icono}</span><h3>${item.nombre}</h3><p>${item.desc}</p><button class="btn-accion" onclick="comprar(this, '${item.id}', ${item.precio})">Obtener - ${item.precio} 🍬</button></article>`;
-    }
+    if (coleccion.includes(item.id)) { hayColeccion = true; divColeccion.innerHTML += `<article class="item" style="border-color: var(--violet)"><span class="e">${item.icono}</span><h3>${item.nombre}</h3><p>${item.desc}</p><button class="btn-accion btn-bloqueado" style="background:var(--bg)">Guardado a salvo</button></article>`; } 
+    else { divTienda.innerHTML += `<article class="item"><span class="e">${item.icono}</span><h3>${item.nombre}</h3><p>${item.desc}</p><button class="btn-accion" onclick="comprar(this, '${item.id}', ${item.precio})">Obtener - ${item.precio} 🍬</button></article>`; }
   });
   if (!hayColeccion) divColeccion.innerHTML = `<div style="grid-column: 1/-1; text-align: center; opacity: 0.7;">Aún no tenemos amuletos...</div>`;
-
   divLogros.innerHTML = '';
   Object.keys(catalogoLogros).forEach(key => {
     const l = catalogoLogros[key]; const ganado = logros.includes(key);
@@ -594,61 +525,60 @@ function abrirDiario() {
     diarioVisto = true; guardarDatos();
   } else { document.getElementById('modal-diario').classList.add('activo'); }
 }
-
 function renderizarDiario() {
-  const container = document.getElementById('lista-pistas');
-  if(!container) return; container.innerHTML = '';
+  const container = document.getElementById('lista-pistas'); if(!container) return; container.innerHTML = '';
   Object.keys(catalogoPistas).forEach((key, index) => {
     const p = catalogoPistas[key]; const desbloqueada = pistas.includes(key);
-    if (desbloqueada) { container.innerHTML += `<div class="pista-box"><strong>Pista #${index+1}:</strong> ${p.pistaTxt}</div>`; } 
-    else { container.innerHTML += `<div class="pista-box pista-blur"><strong>🔒 Pista #${index+1}:</strong> Para leer esto, primero debes ayudarme a iluminar nuestras noches...</div>`; }
+    if (desbloqueada) { container.innerHTML += `<div class="pista-box"><strong>Pista #${index+1}:</strong> ${p.pistaTxt}</div>`; } else { container.innerHTML += `<div class="pista-box pista-blur"><strong>🔒 Pista #${index+1}:</strong> Para leer esto, primero debes ayudarme a iluminar nuestras noches...</div>`; }
   });
 }
-
 function canjearCodigo() {
-  const input = document.getElementById('input-codigo'); const msg = document.getElementById('msg-codigo');
-  const codigo = input.value.trim().toUpperCase(); let msjRespuesta = ""; colorRespuesta = "#4CAF50";
-
+  const input = document.getElementById('input-codigo'); const msg = document.getElementById('msg-codigo'); const codigo = input.value.trim().toUpperCase(); let msjRespuesta = ""; colorRespuesta = "#4CAF50";
   switch(codigo) {
     case 'AMOR': msjRespuesta = catalogoPistas['pista_amor'].desc; colorRespuesta = "var(--violet)"; reproducirSonido(sfxExito); break;
-    case 'RESET': dulces = 0; coleccion = []; logros = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; msjRespuesta = "[ADMIN] Borrón y cuenta nueva total."; colorRespuesta = "var(--pumpkin)"; break;
-    case 'RESETCARAMELOS': dulces = 0; msjRespuesta = "[ADMIN] Caramelos reseteados a 0."; break;
+    case 'RESET': dulces = 0; coleccion = []; logros = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; msjRespuesta = "[ADMIN] Borrón y cuenta total."; colorRespuesta = "var(--pumpkin)"; break;
+    case 'RESETCARAMELOS': dulces = 0; msjRespuesta = "[ADMIN] Caramelos a 0."; break;
     case 'RESETLOGROS': logros = []; msjRespuesta = "[ADMIN] Logros bloqueados."; break;
     case 'RESETCOLECCTION': coleccion = []; pistas = []; msjRespuesta = "[ADMIN] Colección vaciada."; break;
     case 'RESETATAUD': ataudDia = 1; ataudTiempo = 0; msjRespuesta = "[ADMIN] Ataúd al Día 1."; break;
-    case '24H': ataudTiempo = Date.now() - 86400000; msjRespuesta = "[ADMIN] Reloj adelantado 24 horas."; break;
+    case '24H': ataudTiempo = Date.now() - 86400000; msjRespuesta = "[ADMIN] Reloj adelantado 24h."; break;
     default: msjRespuesta = "Contraseña incorrecta..."; colorRespuesta = "var(--pumpkin)"; reproducirSonido(sfxError);
   }
-  msg.style.color = colorRespuesta; msg.textContent = msjRespuesta; input.value = ''; guardarDatos();
-  if(codigo !== 'AMOR') setTimeout(() => { msg.textContent = ''; }, 4000);
+  msg.style.color = colorRespuesta; msg.textContent = msjRespuesta; input.value = ''; guardarDatos(); if(codigo !== 'AMOR') setTimeout(() => { msg.textContent = ''; }, 4000);
 }
 
 // ========================================================
-// 8. FUNCIONES MENORES
+// 8. NAVEGACIÓN Y EXTRAS (Animaciones Corregidas)
 // ========================================================
 function abrirAjustes() { checkLogro('config'); document.getElementById('modal-ajustes').classList.add('activo'); }
 function cerrarAjustes() { document.getElementById('modal-ajustes').classList.remove('activo'); }
 
-// SKULLETTES CON EFECTO DE NIEBLA (OPACIDAD)
+// SKULLETTES - EL WRAPPER "FANTASMA"
 setInterval(() => {
   const enJuegos = document.getElementById('sec-juegos').classList.contains('activa');
   if(!enJuegos && Math.random() > 0.7) {
-    const skull = document.createElement('div');
-    skull.textContent = "💀🎀"; skull.className = 'skullette-obj';
-    skull.style.top = Math.random() * 80 + 'vh'; skull.style.left = (Math.random() > 0.5 ? '-50px' : '105vw');
-    skull.style.opacity = '0'; // Nace transparente
-    skull.style.transition = 'transform 6s linear, opacity 0.8s ease';
-    document.body.appendChild(skull);
+    const wrapper = document.createElement('div');
+    wrapper.className = 'skullette-wrapper';
+    wrapper.style.top = Math.random() * 80 + 'vh'; 
+    wrapper.style.left = (Math.random() > 0.5 ? '-50px' : '105vw');
+    wrapper.style.opacity = '0'; 
+    wrapper.style.transition = 'transform 6s linear, opacity 0.8s ease';
+    
+    const inner = document.createElement('div');
+    inner.className = 'skullette-inner';
+    inner.textContent = "💀🎀";
+    
+    wrapper.appendChild(inner);
+    document.body.appendChild(wrapper);
     
     setTimeout(() => { 
-      skull.style.opacity = '1'; // Aparece
-      skull.style.transform = `translateX(${skull.style.left === '-50px' ? '120vw' : '-120vw'}) rotate(360deg)`; 
+      wrapper.style.opacity = '1'; 
+      wrapper.style.transform = `translateX(${wrapper.style.left === '-50px' ? '120vw' : '-120vw'}) rotate(360deg)`; 
     }, 100);
+    setTimeout(() => { wrapper.style.opacity = '0'; }, 5200); 
     
-    setTimeout(() => { skull.style.opacity = '0'; }, 5200); // Se desvanece antes de irse
-    
-    skull.onclick = () => { checkLogro('skull'); dulces += 10; guardarDatos(); reproducirSonido(sfxExito); skull.remove(); };
-    setTimeout(() => { if(skull.parentNode) skull.remove(); }, 6000);
+    inner.onclick = () => { checkLogro('skull'); dulces += 10; guardarDatos(); reproducirSonido(sfxExito); wrapper.remove(); };
+    setTimeout(() => { if(wrapper.parentNode) wrapper.remove(); }, 6000);
   }
 }, 8000);
 
@@ -661,6 +591,13 @@ function cambiarPagina(idPagina) {
   if(idPagina === 'sec-juegos') document.getElementById('nav-juegos').classList.add('activo');
   if(idPagina === 'sec-tienda') document.getElementById('nav-tienda').classList.add('activo');
   if(idPagina === 'sec-codigos') document.getElementById('nav-codigos').classList.add('activo');
+  
+  // Ocultar/Mostrar el ataúd solo en la página principal
+  const ataud = document.getElementById('btn-ataud-global');
+  if(ataud) {
+    if(idPagina === 'sec-home') { ataud.style.display = 'flex'; } 
+    else { ataud.style.display = 'none'; }
+  }
   window.scrollTo(0,0);
 }
 
