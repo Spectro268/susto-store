@@ -23,7 +23,7 @@
 
 <style>
 /* ==========================================
-   VARIABLES DE COLOR Y TEMAS CSS
+   VARIABLES DE COLOR Y CARIÑO CROMÁTICO
    ========================================== */
 :root {
   --bg: #140505; 
@@ -32,17 +32,20 @@
   --ember: #7a1010; 
   --violet: #ff4d6d; 
   --card: #1c0808; 
+  --glow: rgba(214, 40, 40, 0.25);
+  --bg-overlay: rgba(20, 5, 5, 0.88);
+  
   box-sizing: border-box;
   padding-top: env(safe-area-inset-top, 0px);
   padding-bottom: env(safe-area-inset-bottom, 0px);
   color-scheme: dark;
 }
 
-/* TEMAS COMPRABLES DE LA TIENDA */
-body.tema-rosa-vampirico { --bg: #1a0512; --pumpkin: #ff3399; --ember: #990055; --violet: #ff99cc; --card: #2d0a1f; }
-body.tema-rojo-sangre { --bg: #0a0000; --pumpkin: #cc0000; --ember: #660000; --violet: #ff1a1a; --card: #1a0000; }
-body.tema-menta-electrica { --bg: #051414; --pumpkin: #00ffcc; --ember: #006655; --violet: #66ffdd; --card: #0a2d2d; }
-body.tema-oro-nilo { --bg: #141405; --pumpkin: #ffd700; --ember: #806600; --violet: #ffea00; --card: #2d2d0a; }
+/* TEMAS (Afectan resplandor, fondo oscurecido, bordes y botones) */
+body.tema-rosa { --bg: #1a0512; --pumpkin: #ff3399; --ember: #990055; --violet: #ff99cc; --card: #2d0a1f; --glow: rgba(255, 51, 153, 0.25); --bg-overlay: rgba(26, 5, 18, 0.88); }
+body.tema-sangre { --bg: #0a0000; --pumpkin: #cc0000; --ember: #660000; --violet: #ff1a1a; --card: #1a0000; --glow: rgba(204, 0, 0, 0.25); --bg-overlay: rgba(10, 0, 0, 0.88); }
+body.tema-menta { --bg: #051414; --pumpkin: #00ffcc; --ember: #006655; --violet: #66ffdd; --card: #0a2d2d; --glow: rgba(0, 255, 204, 0.25); --bg-overlay: rgba(5, 20, 20, 0.88); }
+body.tema-oro { --bg: #141405; --pumpkin: #ffd700; --ember: #806600; --violet: #ffea00; --card: #2d2d0a; --glow: rgba(255, 215, 0, 0.25); --bg-overlay: rgba(20, 20, 5, 0.88); }
 
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
 *, *::before, *::after { box-sizing: inherit; }
@@ -60,7 +63,6 @@ body {
   line-height: 1.6;
   width: 100vw;
   max-width: 100%;
-  transition: background-color 0.5s ease;
   
   -webkit-user-select: none;
   user-select: none;
@@ -69,7 +71,7 @@ body {
 
 input { -webkit-user-select: auto; user-select: auto; }
 
-/* Capa fantasma para el fondo */
+/* CAPA FANTASMA (Fondo adaptativo por temas) */
 body::before {
   content: "";
   position: fixed;
@@ -78,13 +80,13 @@ body::before {
   z-index: -1;
   background-color: var(--bg);
   background-image: 
-    radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), rgba(214, 40, 40, 0.25), transparent 80%),
-    linear-gradient(rgba(20, 5, 5, 0.88), rgba(20, 5, 5, 0.88)),
+    radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%),
+    linear-gradient(var(--bg-overlay), var(--bg-overlay)),
     url('https://wallpapercave.com/wp/wp7805134.jpg'); 
   background-size: cover;
   background-position: center;
   pointer-events: none;
-  transition: background-color 0.5s ease;
+  transition: all 0.5s ease;
 }
 
 a { color: inherit; }
@@ -92,7 +94,7 @@ a { color: inherit; }
 
 /* HEADER Y NAVEGACIÓN */
 header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 20px 5vw; border-bottom: 1px solid var(--ember); background: rgba(20, 5, 5, 0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; }
-.logo { justify-self: start; font-weight: 900; font-size: 1.5rem; color: var(--pumpkin); text-shadow: 0 0 14px rgba(214, 40, 40, .6); text-decoration: none; cursor: pointer; }
+.logo { justify-self: start; font-weight: 900; font-size: 1.5rem; color: var(--pumpkin); text-shadow: 0 0 14px var(--glow); text-decoration: none; cursor: pointer; }
 nav { justify-self: center; display: flex; align-items: center; gap: 24px; font-weight: 500; }
 nav a { text-decoration: none; cursor: pointer; padding: 5px; transition: color 0.2s; }
 nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(--pumpkin); }
@@ -104,7 +106,7 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 
 .btn-ajustes { background: transparent; border: none; cursor: pointer; color: var(--ink); padding: 0; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
 .btn-ajustes svg { width: 26px; height: 26px; transition: transform 0.3s ease; }
-.btn-ajustes:hover { color: var(--pumpkin); filter: drop-shadow(0 0 8px rgba(214,40,40,0.8)); }
+.btn-ajustes:hover { color: var(--pumpkin); filter: drop-shadow(0 0 8px var(--glow)); }
 .btn-ajustes:hover svg { animation: spin 2s linear infinite; }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
@@ -124,9 +126,9 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 @keyframes fly { from { transform: translateX(-10vw) rotate(var(--rot)); } to { transform: translateX(110vw) translateY(-40px) rotate(var(--rot)); } }
 
 .title-wrapper { position: relative; display: inline-flex; justify-content: center; align-items: center; }
-.hero h1 { margin: 0; font-weight: 900; font-size: clamp(3.5rem, 12vw, 8rem); line-height: 1; color: var(--pumpkin); text-shadow: 0 0 30px rgba(214, 40, 40, .55); animation: flicker 5s steps(1) infinite; }
+.hero h1 { margin: 0; font-weight: 900; font-size: clamp(3.5rem, 12vw, 8rem); line-height: 1; color: var(--pumpkin); text-shadow: 0 0 30px var(--glow); animation: flicker 5s steps(1) infinite; }
 @keyframes flicker { 0%, 8%, 12%, 20% { opacity: .7; } 10%, 16%, 30%, 100% { opacity: 1; } }
-.heart-svg { position: absolute; width: clamp(35px, 6vw, 60px); color: var(--pumpkin); filter: drop-shadow(0 0 15px rgba(214,40,40,0.8)); pointer-events: none; }
+.heart-svg { position: absolute; width: clamp(35px, 6vw, 60px); color: var(--pumpkin); filter: drop-shadow(0 0 15px var(--glow)); pointer-events: none; }
 .heart-l { left: -12%; top: 20%; animation: levitate-l 4s ease-in-out infinite; }
 .heart-r { right: -12%; top: 20%; animation: levitate-r 4s ease-in-out infinite -2s; }
 @keyframes levitate-l { 0%, 100% { transform: translateY(0px) rotate(-15deg); } 50% { transform: translateY(-15px) rotate(-5deg); } }
@@ -149,7 +151,7 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .btn-cerrar-modal:hover { background: var(--violet); }
 
 /* ATAÚD FLOTANTE */
-.ataud-flotante { position: fixed; top: 50vh; right: 3vw; transform: translateY(-50%); margin-top: -30px; background: rgba(28, 8, 8, 0.9); border: 2px solid var(--violet); border-radius: 15px; padding: 15px; cursor: pointer; font-size: 2rem; z-index: 90; box-shadow: 0 0 15px rgba(255, 77, 109, 0.3); transition: transform 0.3s; display: flex; flex-direction: column; align-items: center; }
+.ataud-flotante { position: fixed; top: 50vh; right: 3vw; transform: translateY(-50%); margin-top: -30px; background: rgba(28, 8, 8, 0.9); border: 2px solid var(--violet); border-radius: 15px; padding: 15px; cursor: pointer; font-size: 2rem; z-index: 90; box-shadow: 0 0 15px var(--glow); transition: transform 0.3s; display: flex; flex-direction: column; align-items: center; }
 .ataud-flotante:hover { transform: translateY(-50%) scale(1.1); background: var(--violet); }
 .ataud-flotante .badge { font-size: 0.8rem; background: var(--pumpkin); color: white; border-radius: 999px; padding: 2px 8px; font-weight: bold; margin-top: 5px; font-family: sans-serif; }
 .ataud-animado { animation: floatAtaud 4s ease-in-out infinite; }
@@ -159,7 +161,7 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .dia-caja.reclamado { background: var(--violet); border-color: #fff; color: #fff; }
 .dia-caja.actual { border-color: var(--pumpkin); background: rgba(214, 40, 40, 0.2); cursor: pointer; animation: pulse 2s infinite; }
 .dia-caja.bloqueado { opacity: 0.5; filter: grayscale(1); }
-@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(214, 40, 40, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(214, 40, 40, 0); } 100% { box-shadow: 0 0 0 0 rgba(214, 40, 40, 0); } }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 var(--glow); } 70% { box-shadow: 0 0 0 10px rgba(214, 40, 40, 0); } 100% { box-shadow: 0 0 0 0 rgba(214, 40, 40, 0); } }
 
 /* TOAST LOGRO */
 #toast-logro { position: fixed; top: 20px; left: 50%; transform: translate(-50%, -20px); opacity: 0; pointer-events: none; background: var(--violet); color: #fff; border-radius: 12px; padding: 15px 25px; display: flex; align-items: center; gap: 15px; font-weight: bold; box-shadow: 0 5px 20px rgba(0,0,0,0.5); z-index: 999; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); border: 2px solid #fff; }
@@ -186,32 +188,68 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .item .e { font-size: 3.5rem; line-height: 1; margin-bottom: 10px; }
 .item h3 { margin: 0; font-size: 1.2rem; color: var(--ink); }
 .item p { margin: 0; font-size: .92rem; opacity: .8; flex-grow: 1; }
+
+/* BOTONES GLOBALES (Corregido para no pisar el modal) */
 .btn-accion { display: inline-block; background: var(--pumpkin); color: #fff; font-weight: 800; padding: 12px 20px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem; margin-top: 10px; transition: all 0.2s; }
 .btn-accion:hover { background: var(--violet); }
 .btn-jugar { background: var(--ember); }
 .btn-jugar:hover { background: var(--pumpkin); }
-.btn-bloqueado { background: #331111; color: #885555; cursor: not-allowed; }
+.btn-bloqueado { background: #331111 !important; color: #885555 !important; cursor: not-allowed !important; border: 1px solid var(--ember); }
 
 /* ==========================================
-   ESTRUCTURA VISUAL DE LA TIENDA
+   NUEVA TIENDA (ESTILO GEOMETRY DASH)
    ========================================== */
-.tienda-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px; }
-.casillero { width: 280px; background: var(--card); border: 2px solid var(--violet); position: relative; cursor: pointer; overflow: hidden; height: 380px; border-radius: 12px; }
-.casillero .puerta { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); border-right: 2px solid var(--violet); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.3rem; transition: transform 0.6s ease; transform-origin: left; z-index: 10; color: var(--pumpkin); text-shadow: 0 0 5px rgba(0,0,0,0.8); }
-.casillero.abierto .puerta { transform: perspective(600px) rotateY(-105deg); }
-.contenido-casillero { padding: 15px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; height: 100%; }
+.tienda-seccion { display: none; animation: fadeIn 0.4s ease; }
+.tienda-seccion.activa { display: block; }
 
-.maquina-expendedora { width: 280px; border: 4px solid var(--pumpkin); background: var(--card); border-radius: 12px; padding: 15px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 0 15px var(--ember); height: 380px; overflow-y: auto; }
-.letrero-neon { color: var(--pumpkin); text-align: center; font-weight: 800; font-size: 1.2rem; margin-bottom: 10px; text-shadow: 0 0 10px var(--pumpkin); border-bottom: 1px dashed var(--pumpkin); padding-bottom: 10px; }
+/* La Bodeguita Superior */
+.caja-snack { background: var(--card); border: 2px dashed var(--pumpkin); border-radius: 18px; padding: 20px; text-align: center; margin-bottom: 40px; }
+.letrero-neon { color: var(--pumpkin); font-weight: 900; font-size: 1.5rem; margin: 0 0 15px 0; text-shadow: 0 0 10px var(--glow); }
 
-.btn-tienda { background: rgba(255,255,255,0.05); color: var(--ink); border: 1px solid var(--violet); padding: 10px; cursor: pointer; border-radius: 8px; font-weight: bold; width: 100%; transition: 0.2s; text-align: left; margin-bottom: 5px; }
-.btn-tienda:hover { background: var(--violet); color: #fff; }
+/* Contenedor de Portales */
+.gd-portal-container { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+.gd-portal { background: var(--card); border: 2px solid var(--violet); border-radius: 18px; padding: 50px 20px; cursor: pointer; text-align: center; transition: all 0.3s; position: relative; overflow: hidden; }
+.gd-portal::before { content: ""; position: absolute; inset: 0; background: var(--glow); opacity: 0; transition: opacity 0.3s; }
+.gd-portal:hover { transform: translateY(-5px); border-color: var(--pumpkin); box-shadow: 0 10px 20px var(--glow); }
+.gd-portal:hover::before { opacity: 0.1; }
+.gd-portal h3 { margin: 0; font-size: 1.8rem; color: var(--violet); position: relative; z-index: 2; }
 
-/* ICOFFIN Y DIARIO */
+/* Botón Volver */
+.btn-volver { background: transparent; color: var(--ink); border: 1px solid var(--ember); padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-bottom: 20px; font-weight: bold; font-size: 1rem; transition: 0.2s; }
+.btn-volver:hover { background: var(--ember); color: #fff; }
+
+/* ==========================================
+   EL ICOFFIN CON FORMA REAL DE ATAÚD
+   ========================================== */
 .icoffin-container { position: relative; display: flex; justify-content: center; align-items: center; width: 100%; max-width: 800px; margin: 0 auto; min-height: 400px; }
-.icoffin { background: #140505; border: 8px solid var(--violet); border-radius: 40px; width: 100%; max-width: 320px; padding: 40px 25px; position: relative; box-shadow: 0 0 25px rgba(255, 77, 109, 0.2); text-align: center; margin: 0 auto; z-index: 2; }
-.icoffin input { width: 100%; padding: 15px; border-radius: 12px; border: 2px solid var(--violet); background: rgba(255, 77, 109, 0.1); color: var(--ink); font-size: 1.2rem; text-transform: uppercase; margin-bottom: 20px; font-family: inherit; text-align: center; outline: none; transition: 0.3s; }
-.icoffin input:focus { background: rgba(255, 77, 109, 0.2); box-shadow: 0 0 10px rgba(255,77,109,0.5); }
+
+/* El borde simulado con clip-path */
+.icoffin-wrapper {
+  background: var(--violet);
+  padding: 8px; /* Grosor del borde */
+  clip-path: polygon(25% 0%, 75% 0%, 100% 15%, 100% 85%, 75% 100%, 25% 100%, 0% 85%, 0% 15%);
+  max-width: 320px;
+  width: 100%;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 15px var(--glow));
+  z-index: 2;
+}
+
+/* El fondo interno */
+.icoffin-inner {
+  background: var(--card);
+  clip-path: polygon(25% 0%, 75% 0%, 100% 15%, 100% 85%, 75% 100%, 25% 100%, 0% 85%, 0% 15%);
+  padding: 50px 25px;
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.icoffin-inner input { width: 100%; padding: 15px; border-radius: 12px; border: 2px solid var(--violet); background: rgba(255, 77, 109, 0.1); color: var(--ink); font-size: 1.2rem; text-transform: uppercase; margin-bottom: 20px; font-family: inherit; text-align: center; outline: none; transition: 0.3s; }
+.icoffin-inner input:focus { background: rgba(255, 77, 109, 0.2); box-shadow: 0 0 10px var(--glow); }
+
 .diario-btn { position: absolute; right: 0; background: rgba(28, 8, 8, 0.8); border: 2px dashed var(--pumpkin); border-radius: 18px; padding: 20px; text-align: center; cursor: pointer; transition: 0.3s; width: 150px; z-index: 1; }
 .diario-btn:hover { background: rgba(214, 40, 40, 0.2); transform: scale(1.05); }
 
@@ -219,14 +257,17 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 #overlay-diario { display: none; position: fixed; inset: 0; background: #000; z-index: 300; justify-content: center; align-items: center; color: var(--violet); font-size: 1.5rem; text-align: center; font-style: italic; padding: 20px; opacity: 0; transition: opacity 1.5s; }
 .pista-box { background: rgba(255,255,255,0.05); border-left: 4px solid var(--violet); padding: 15px; margin-bottom: 15px; text-align: left; }
 
+/* CONFIGURACIÓN AUDIO */
+.control-audio { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+.control-audio input[type="range"] { flex-grow: 1; accent-color: var(--pumpkin); }
+.btn-mute { background: var(--card); border: 1px solid var(--ember); color: var(--ink); border-radius: 8px; padding: 8px; cursor: pointer; transition: 0.2s; }
+.btn-mute:hover { border-color: var(--pumpkin); }
+
 /* WRAPPER FANTASMA SKULLETTES */
 .skullette-wrapper { position: fixed; z-index: 90; pointer-events: none; }
 .skullette-inner { width: 65px; height: 65px; cursor: pointer; filter: drop-shadow(0 0 10px var(--violet)); transition: transform 0.2s; pointer-events: auto; object-fit: contain; -webkit-user-drag: none; }
 .skullette-inner:hover { transform: scale(1.2); }
-.error-compra { animation: shake 0.4s; background: var(--violet) !important; color: #fff !important; pointer-events: none; }
-@keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
 
-/* RESPONSIVE CELULARES */
 @media(max-width: 850px) {
   body:has(#sec-home.activa) { overflow: hidden; position: fixed; width: 100%; height: 100%; }
   header { display: flex; flex-direction: column; gap: 15px; }
@@ -260,10 +301,10 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   "Parece que alguien dejó sus contraseñas acá tiradas, qué despistado..."
 </div>
 
-<!-- MODAL CONFIGURACIÓN -->
+<!-- MODAL CONFIGURACIÓN (Restaurado) -->
 <div class="modal-overlay" id="modal-ajustes">
   <div class="modal-box">
-    <h3>Configuración</h3>
+    <h3 style="justify-content: center;">Configuración</h3>
     <div style="text-align: left; margin: 20px 0;">
       <label style="font-weight: 800; display:block; margin-bottom:5px;">Música Base</label>
       <div class="control-audio">
@@ -284,7 +325,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 <!-- MODAL ATAÚD DIARIO -->
 <div class="modal-overlay" id="modal-ataud">
   <div class="modal-box">
-    <h3>Recompensa Diaria ⚰️</h3>
+    <h3 style="justify-content: center;">Recompensa Diaria ⚰️</h3>
     <p style="font-size: 0.9rem; margin-top: 0;">Abre una caja cada 24 horas.</p>
     <div style="font-weight:bold; color:var(--pumpkin); font-size:1.2rem; margin:10px 0;" id="contador-ataud">Disponible Ahora</div>
     <div class="grid-ataud" id="grid-ataud-cajas"></div>
@@ -346,83 +387,100 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
     <article class="item">
       <span class="e">👻</span><h3>Catacumbas</h3>
       <p>Atrapa a los espíritus traviesos del instituto antes de que escapen.</p>
-      <button class="btn-accion btn-jugar" onclick="probarJuego(this, 'catacumbas')">Jugar (+20 🍬)</button>
+      <button class="btn-accion btn-jugar" onclick="probarJuego('catacumbas')">Jugar (+20 🍬)</button>
     </article>
     <article class="item">
       <span class="e">📱</span><h3>Memoria Monstruosa</h3>
       <p>Encuentra los pares secretos en los diarios de las chicas.</p>
-      <button class="btn-accion btn-jugar" onclick="probarJuego(this, 'memoria')">Jugar (+20 🍬)</button>
+      <button class="btn-accion btn-jugar" onclick="probarJuego('memoria')">Jugar (+20 🍬)</button>
     </article>
     <article class="item">
       <span class="e">🧪</span><h3>Biteology: Pociones</h3>
       <p>Examen de ciencias: Mezcla los ingredientes correctos para mi amor.</p>
-      <button class="btn-accion btn-jugar" onclick="probarJuego(this, 'pociones')">Jugar (+20 🍬)</button>
+      <button class="btn-accion btn-jugar" onclick="probarJuego('pociones')">Jugar (+20 🍬)</button>
     </article>
   </div>
 </section>
 
-<!-- LA TIENDA ACTUALIZADA -->
+<!-- LA TIENDA ESTRUCTURADA (GEOMETRY DASH STYLE) -->
 <section class="pagina" id="sec-tienda">
   <h2>Bazar de los Enamorados</h2>
   <p class="sub">Usa tus dulces para invocar amuletos, citas y snacks.</p>
   
-  <div class="tienda-container">
-    
-    <!-- CASILLERO 1: CITAS -->
-    <div class="casillero casillero-citas" onclick="abrirCasillero('citas')">
-        <div class="puerta">🎟️ Citas VIP</div>
-        <div class="contenido-casillero">
-            <button class="btn-tienda" onclick="comprarItemTienda(this, 'arcade', 300, 'Reto Arcade Solari', 'consumible', event)">🕹️ Arcade Solari (300 🍬)</button>
-            <button class="btn-tienda" onclick="comprarItemTienda(this, 'cine', 250, 'Cineplanet VIP', 'consumible', event)">🍿 Cineplanet VIP (250 🍬)</button>
-            <button class="btn-tienda" onclick="comprarItemTienda(this, 'cata', 150, 'Cata a Ciegas', 'consumible', event)">🍫 Cata a Ciegas (150 🍬)</button>
-            <button class="btn-tienda" onclick="comprarItemTienda(this, 'arte', 100, 'Noche de Arte Feo', 'consumible', event)">🎨 Noche Arte Feo (100 🍬)</button>
-            <button class="btn-tienda" onclick="comprarItemTienda(this, 'pizza', 200, 'Pizzería Casera', 'consumible', event)">🍕 Pizzería Casera (200 🍬)</button>
-        </div>
-    </div>
+  <!-- MENÚ PRINCIPAL DE PORTALES -->
+  <div id="tienda-main" class="tienda-seccion activa">
+      
+      <!-- SNACKS SIEMPRE VISIBLES -->
+      <div class="caja-snack">
+          <h3 class="letrero-neon">Neon Coffin Snacks</h3>
+          <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+              <button class="btn-accion" onclick="comprarItem(this, 'bonobon', 30, 'Bonobon', 'consumible')">🍬 Bonobon (30 🍬)</button>
+              <button class="btn-accion" onclick="comprarItem(this, 'chifles', 40, 'Chifles', 'consumible')">🥔 Chifles Acevichados (40 🍬)</button>
+              <button class="btn-accion" onclick="comprarItem(this, 'helado', 50, 'Helado', 'consumible')">🍦 Helado Piamonte (50 🍬)</button>
+              <button class="btn-accion" onclick="comprarItem(this, 'bebida', 40, 'Bebida', 'consumible')">🧃 Bebida de Rescate (40 🍬)</button>
+              <button class="btn-accion" onclick="comprarItem(this, 'carretilla', 60, 'Antojo', 'consumible')">🌭 Antojo Carretilla (60 🍬)</button>
+          </div>
+      </div>
 
-    <!-- CASILLERO 2: GESTOS -->
-    <div class="casillero casillero-gestos" onclick="abrirCasillero('gestos')">
-        <div class="puerta">🩹 Gestos Especiales</div>
-        <div class="contenido-casillero">
-            <button class="btn-tienda" onclick="comprarItemTienda(this, 'masaje', 200, 'Masaje VIP', 'consumible', event)">💆‍♀️ Masaje VIP (200 🍬)</button>
-            <button class="btn-tienda" onclick="comprarItemTienda(this, 'postre', 150, 'Repostero Novato', 'consumible', event)">🧁 Repostero Novato (150 🍬)</button>
-            <button class="btn-tienda" onclick="comprarItemTienda(this, 'desayuno', 180, 'Desayuno a Distancia', 'consumible', event)">☕ Desayuno Delivery (180 🍬)</button>
-            <button class="btn-tienda" onclick="comprarItemTienda(this, 'enojo', 100, 'Pase Anti-Enojo', 'consumible', event)">🕊️ Pase Anti-Enojo (100 🍬)</button>
-        </div>
-    </div>
-
-    <!-- CASILLERO 3: COSMÉTICOS -->
-    <div class="casillero casillero-cosmeticos" onclick="abrirCasillero('cosmeticos')">
-        <div class="puerta">🔮 Amuletos y Magia</div>
-        <div class="contenido-casillero">
-            <button class="btn-tienda" onclick="comprarItemTienda(this, 'manuscrito', 80, 'El Manuscrito', 'coleccionable', event)">📜 El Manuscrito (80 🍬)</button>
-            <button class="btn-tienda" onclick="comprarItemTienda(this, 'polaroid', 100, 'Polaroid Oculta', 'coleccionable', event)">📸 Polaroid Oculta (100 🍬)</button>
-            <button class="btn-tienda" onclick="comprarItemTienda(this, 'playlist', 50, 'Playlist Exclusiva', 'coleccionable', event)">🎵 Playlist Exclusiva (50 🍬)</button>
-            <button class="btn-tienda" onclick="comprarItemTienda(this, 'reloj', 150, 'Reloj VIP', 'coleccionable', event)">⏳ Cuenta Regresiva (150 🍬)</button>
-            
-            <button class="btn-tienda" onclick="comprarItemTienda(this, 'rosa-vampirico', 50, 'Tema: Rosa', 'tema', event)">🦇 Tema Rosa Vampírico (50🍬)</button>
-            <button class="btn-tienda" onclick="comprarItemTienda(this, 'rojo-sangre', 50, 'Tema: Sangre', 'tema', event)">🩸 Tema Rojo Sangre (50🍬)</button>
-            <button class="btn-tienda" onclick="comprarItemTienda(this, 'menta-electrica', 50, 'Tema: Menta', 'tema', event)">⚡ Tema Menta Eléctrica (50🍬)</button>
-            <button class="btn-tienda" onclick="comprarItemTienda(this, 'oro-nilo', 50, 'Tema: Oro', 'tema', event)">🏺 Tema Oro del Nilo (50🍬)</button>
-            
-            <button class="btn-tienda" onclick="alert('Lluvia Custom en construcción'); event.stopPropagation();">🌧️ Lluvia Custom (Pronto)</button>
-            <button class="btn-tienda" onclick="alert('Música Alternativa en construcción'); event.stopPropagation();">🎧 Música Alternativa (Pronto)</button>
-        </div>
-    </div>
-
-    <!-- MÁQUINA EXPENDEDORA: LA BODEGUITA -->
-    <div class="maquina-expendedora">
-        <div class="letrero-neon">Neon Coffin Snacks</div>
-        <button class="btn-tienda" onclick="comprarItemTienda(this, 'bonobon', 30, 'Bonobon', 'consumible', event)">🍬 Bonobon (30 🍬)</button>
-        <button class="btn-tienda" onclick="comprarItemTienda(this, 'chifles', 40, 'Chifles Acevichados', 'consumible', event)">🥔 Chifles Acevichados (40 🍬)</button>
-        <button class="btn-tienda" onclick="comprarItemTienda(this, 'helado', 50, 'Helado Piamonte', 'consumible', event)">🍦 Helado Piamonte (50 🍬)</button>
-        <button class="btn-tienda" onclick="comprarItemTienda(this, 'bebida', 40, 'Bebida de Rescate', 'consumible', event)">🧃 Bebida de Rescate (40 🍬)</button>
-        <button class="btn-tienda" onclick="comprarItemTienda(this, 'carretilla', 60, 'Antojo Carretilla', 'consumible', event)">🌭 Antojo Carretilla (60 🍬)</button>
-    </div>
-
+      <!-- PORTALES -->
+      <div class="gd-portal-container">
+          <div class="gd-portal" onclick="abrirSubTienda('tienda-citas')">
+              <h3>🎟️ Citas VIP</h3>
+          </div>
+          <div class="gd-portal" onclick="abrirSubTienda('tienda-gestos')">
+              <h3>🩹 Gestos Especiales</h3>
+          </div>
+          <div class="gd-portal" onclick="abrirSubTienda('tienda-temas')" style="grid-column: 1 / -1;">
+              <h3>🎨 Temas y Magia</h3>
+          </div>
+      </div>
   </div>
+
+  <!-- SUB-TIENDA: CITAS -->
+  <div id="tienda-citas" class="tienda-seccion">
+      <button class="btn-volver" onclick="cerrarSubTienda()">⬅ Volver al Bazar</button>
+      <h3 class="seccion-titulo" style="margin-top: 0;">🎟️ Citas VIP</h3>
+      <div class="grid">
+          <article class="item"><span class="e">🕹️</span><h3>Arcade Solari</h3><button class="btn-accion" onclick="comprarItem(this, 'arcade', 300, 'Arcade Solari', 'consumible')">Comprar - 300 🍬</button></article>
+          <article class="item"><span class="e">🍿</span><h3>Cineplanet VIP</h3><button class="btn-accion" onclick="comprarItem(this, 'cine', 250, 'Cineplanet VIP', 'consumible')">Comprar - 250 🍬</button></article>
+          <article class="item"><span class="e">🍫</span><h3>Cata a Ciegas</h3><button class="btn-accion" onclick="comprarItem(this, 'cata', 150, 'Cata a Ciegas', 'consumible')">Comprar - 150 🍬</button></article>
+          <article class="item"><span class="e">🎨</span><h3>Arte Feo</h3><button class="btn-accion" onclick="comprarItem(this, 'arte', 100, 'Noche Arte Feo', 'consumible')">Comprar - 100 🍬</button></article>
+          <article class="item"><span class="e">🍕</span><h3>Pizzería Casera</h3><button class="btn-accion" onclick="comprarItem(this, 'pizza', 200, 'Pizzería Casera', 'consumible')">Comprar - 200 🍬</button></article>
+      </div>
+  </div>
+
+  <!-- SUB-TIENDA: GESTOS -->
+  <div id="tienda-gestos" class="tienda-seccion">
+      <button class="btn-volver" onclick="cerrarSubTienda()">⬅ Volver al Bazar</button>
+      <h3 class="seccion-titulo" style="margin-top: 0;">🩹 Gestos Especiales</h3>
+      <div class="grid">
+          <article class="item"><span class="e">💆‍♀️</span><h3>Masaje VIP</h3><button class="btn-accion" onclick="comprarItem(this, 'masaje', 200, 'Masaje VIP', 'consumible')">Comprar - 200 🍬</button></article>
+          <article class="item"><span class="e">🧁</span><h3>Repostero Novato</h3><button class="btn-accion" onclick="comprarItem(this, 'postre', 150, 'Repostero Novato', 'consumible')">Comprar - 150 🍬</button></article>
+          <article class="item"><span class="e">☕</span><h3>Desayuno Distancia</h3><button class="btn-accion" onclick="comprarItem(this, 'desayuno', 180, 'Desayuno Delivery', 'consumible')">Comprar - 180 🍬</button></article>
+          <article class="item"><span class="e">🕊️</span><h3>Pase Anti-Enojo</h3><button class="btn-accion" onclick="comprarItem(this, 'enojo', 100, 'Pase Anti-Enojo', 'consumible')">Comprar - 100 🍬</button></article>
+      </div>
+  </div>
+
+  <!-- SUB-TIENDA: TEMAS Y MAGIA -->
+  <div id="tienda-temas" class="tienda-seccion">
+      <button class="btn-volver" onclick="cerrarSubTienda()">⬅ Volver al Bazar</button>
+      <h3 class="seccion-titulo" style="margin-top: 0;">🎨 Personalización de la App</h3>
+      <p style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 20px;">Los artículos comprados se guardan en tu Colección para equiparlos cuando quieras.</p>
+      
+      <div class="grid">
+          <article class="item"><span class="e">🦇</span><h3>Tema: Rosa</h3><p>Estilo Draculaura</p><button class="btn-accion" onclick="comprarItem(this, 'tema-rosa', 50, 'Tema Rosa', 'tema')">Comprar - 50 🍬</button></article>
+          <article class="item"><span class="e">🩸</span><h3>Tema: Sangre</h3><p>Romance Oscuro</p><button class="btn-accion" onclick="comprarItem(this, 'tema-sangre', 50, 'Tema Sangre', 'tema')">Comprar - 50 🍬</button></article>
+          <article class="item"><span class="e">⚡</span><h3>Tema: Menta</h3><p>Estilo Frankie</p><button class="btn-accion" onclick="comprarItem(this, 'tema-menta', 50, 'Tema Menta', 'tema')">Comprar - 50 🍬</button></article>
+          <article class="item"><span class="e">🏺</span><h3>Tema: Oro</h3><p>Estilo Cleo</p><button class="btn-accion" onclick="comprarItem(this, 'tema-oro', 50, 'Tema Oro', 'tema')">Comprar - 50 🍬</button></article>
+          
+          <article class="item" style="opacity: 0.5;"><span class="e">🌧️</span><h3>Lluvia Custom</h3><p>Próximamente</p><button class="btn-accion btn-bloqueado">En Construcción</button></article>
+          <article class="item" style="opacity: 0.5;"><span class="e">🎧</span><h3>Música Alterna</h3><p>Próximamente</p><button class="btn-accion btn-bloqueado">En Construcción</button></article>
+      </div>
+  </div>
+
 </section>
 
+<!-- COLECCIÓN (CON SECCIÓN DE COSMÉTICOS) -->
 <section class="pagina" id="sec-coleccion">
   <h2>Tu Colección</h2>
   <p class="sub">Aquí guardaremos cada recuerdo y amuleto que consigas.</p>
@@ -430,18 +488,22 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   <h3 class="seccion-titulo">En el menú (Logros)</h3>
   <div class="grid" id="contenedor-logros"></div>
   
-  <h3 class="seccion-titulo">Amuletos Digitales (Tienda)</h3>
+  <h3 class="seccion-titulo">Personalización y Cosméticos</h3>
   <div class="grid" id="contenedor-coleccion"></div>
 </section>
 
+<!-- CÓDIGOS E ICOFFIN -->
 <section class="pagina" id="sec-codigos">
   <div class="icoffin-container">
-    <div class="icoffin">
-      <h2 style="color:var(--violet);">iCoffin</h2>
-      <p style="margin: 10px auto 20px; font-size:0.9rem; opacity:0.8;">Ingresa la contraseña para hackear el sistema.</p>
-      <input type="text" id="input-codigo" placeholder="CONTRASEÑA">
-      <button class="btn-accion" style="background:var(--violet); color:#140505; width:100%; font-size: 1.1rem; padding: 15px;" onclick="canjearCodigo()">Desbloquear</button>
-      <p id="msg-codigo" style="margin-top: 15px; font-weight: bold; min-height: 24px; font-size: 1rem;"></p>
+    
+    <div class="icoffin-wrapper">
+        <div class="icoffin-inner">
+          <h2 style="color:var(--violet);">iCoffin</h2>
+          <p style="margin: 10px auto 20px; font-size:0.9rem; opacity:0.8;">Ingresa la contraseña para hackear el sistema.</p>
+          <input type="text" id="input-codigo" placeholder="CONTRASEÑA">
+          <button class="btn-accion" style="background:var(--violet); color:#140505; width:100%; font-size: 1.1rem; padding: 15px;" onclick="canjearCodigo()">Desbloquear</button>
+          <p id="msg-codigo" style="margin-top: 15px; font-weight: bold; min-height: 24px; font-size: 1rem;"></p>
+        </div>
     </div>
     
     <div class="diario-btn" onclick="abrirDiario()">
@@ -487,18 +549,15 @@ const sfxError = new Audio('error.mp3'); sfxError.volume = 0; sfxError.muted = t
 let dulces = 0; let coleccion = []; let logros = [];
 let ataudDia = 1; let ataudTiempo = 0;   
 let diarioVisto = false; let pistas = [];       
-let temaActivo = 'default';
+let temaActivo = 'tema-default';
 
-// CATÁLOGO DE COLECCIONABLES PARA RENDERIZAR "TU COLECCIÓN"
+// CATÁLOGO DE COLECCIONABLES Y TEMAS
 const catalogo = {
-  'manuscrito': { icono: '📜', nombre: 'El Manuscrito', desc: 'Un mensaje súper honesto.' },
-  'polaroid': { icono: '📸', nombre: 'Polaroid Oculta', desc: 'Un recuerdo especial.' },
-  'playlist': { icono: '🎵', nombre: 'Playlist Exclusiva', desc: 'Nuestras canciones.' },
-  'reloj': { icono: '⏳', nombre: 'Reloj VIP', desc: 'Cuenta regresiva.' },
-  'rosa-vampirico': { icono: '🦇', nombre: 'Tema: Rosa Vampírico', desc: 'Diseño para la app.' },
-  'rojo-sangre': { icono: '🩸', nombre: 'Tema: Rojo Sangre', desc: 'Diseño para la app.' },
-  'menta-electrica': { icono: '⚡', nombre: 'Tema: Menta Eléctrica', desc: 'Diseño para la app.' },
-  'oro-nilo': { icono: '🏺', nombre: 'Tema: Oro del Nilo', desc: 'Diseño para la app.' }
+  'tema-default': { icono: '🦇', nombre: 'Tema: Clásico', desc: 'El diseño original de la app.', tipo: 'tema' },
+  'tema-rosa': { icono: '🦇', nombre: 'Tema: Rosa Vampírico', desc: 'Diseño fucsia para la app.', tipo: 'tema' },
+  'tema-sangre': { icono: '🩸', nombre: 'Tema: Rojo Sangre', desc: 'Diseño carmesí oscuro.', tipo: 'tema' },
+  'tema-menta': { icono: '⚡', nombre: 'Tema: Menta Eléctrica', desc: 'Diseño cian y menta.', tipo: 'tema' },
+  'tema-oro': { icono: '🏺', nombre: 'Tema: Oro del Nilo', desc: 'Diseño dorado elegante.', tipo: 'tema' }
 };
 
 const catalogoLogros = {
@@ -520,11 +579,16 @@ if(database) {
   database.ref(rutaDB).on('value', (snapshot) => {
     const data = snapshot.val();
     if (data) {
-      dulces = data.dulces || 0; coleccion = data.coleccion || []; logros = data.logros || [];
-      ataudDia = data.ataudDia || 1; ataudTiempo = data.ataudTiempo || 0;
-      diarioVisto = data.diarioVisto || false; pistas = data.pistas || [];
-      temaActivo = data.temaActivo || 'default';
+      dulces = data.dulces || 0; 
+      coleccion = data.coleccion || ['tema-default']; // El default siempre viene de regalo
+      logros = data.logros || [];
+      ataudDia = data.ataudDia || 1; 
+      ataudTiempo = data.ataudTiempo || 0;
+      diarioVisto = data.diarioVisto || false; 
+      pistas = data.pistas || [];
+      temaActivo = data.temaActivo || 'tema-default';
     }
+    if (!coleccion.includes('tema-default')) coleccion.push('tema-default'); // Por seguridad
     aplicarTemaCSS(temaActivo);
     actualizarUI();
   });
@@ -611,26 +675,26 @@ function actualizarTimerAtaud() {
 }
 
 // ========================================================
-// 6. TIENDA ACTUALIZADA, TEMAS Y COLECCIÓN
+// 6. TIENDA MODULAR Y COLECCIÓN DE COSMÉTICOS
 // ========================================================
-function abrirCasillero(categoria) {
+function abrirSubTienda(idSub) {
     reproducirSonido(sfxExito);
-    let casillero = document.querySelector('.casillero-' + categoria);
-    casillero.classList.toggle('abierto');
+    document.querySelectorAll('.tienda-seccion').forEach(sec => sec.classList.remove('activa'));
+    document.getElementById(idSub).classList.add('activa');
+    window.scrollTo(0,0);
 }
 
-function comprarItemTienda(boton, idItem, precio, nombreItem, tipo, evento) {
-    if(evento) evento.stopPropagation(); // Evita que se cierre el casillero
-    
-    // Si ya lo tiene y es un cosmético, no le cobra, solo se activa o avisa
+function cerrarSubTienda() {
+    reproducirSonido(sfxExito);
+    document.querySelectorAll('.tienda-seccion').forEach(sec => sec.classList.remove('activa'));
+    document.getElementById('tienda-main').classList.add('activa');
+    window.scrollTo(0,0);
+}
+
+function comprarItem(boton, idItem, precio, nombreItem, tipo) {
+    // Si ya lo tiene
     if (tipo !== 'consumible' && coleccion.includes(idItem)) {
-        if(tipo === 'tema') {
-            temaActivo = idItem;
-            aplicarTemaCSS(temaActivo);
-            guardarDatos();
-        } else {
-            mostrarToast("Ya tienes este amuleto a salvo.", false);
-        }
+        mostrarToast("Ya tienes este ítem en tu colección.", false);
         return;
     }
 
@@ -638,33 +702,35 @@ function comprarItemTienda(boton, idItem, precio, nombreItem, tipo, evento) {
         dulces -= precio;
         reproducirSonido(sfxExito);
 
-        if (tipo !== 'consumible') {
-            coleccion.push(idItem);
-        }
-
         if (tipo === 'tema') {
-            temaActivo = idItem;
-            aplicarTemaCSS(temaActivo);
+            coleccion.push(idItem);
+            equiparTema(idItem); // Lo equipa y guarda en firebase automáticamente
+        } else {
+            guardarDatos(); // Guardar consumo de caramelos
         }
 
-        if(coleccion.length === 1 && !pistas.includes('pista_amor')) {
-            pistas.push('pista_amor'); 
-            mostrarToast("Ve al Diario Secreto", true);
-        }
-
-        guardarDatos();
-        alert(`¡Has invocado: ${nombreItem}!\nTe quedan ${dulces} 🍬.`);
+        alert(`¡Has adquirido: ${nombreItem}!\nTe quedan ${dulces} 🍬.`);
     } else {
         reproducirSonido(sfxError); 
         boton.classList.add('error-compra'); 
+        const txtAnterior = boton.textContent;
         boton.textContent = "¡Faltan dulces!";
-        setTimeout(() => { boton.classList.remove('error-compra'); boton.textContent = nombreItem + " (" + precio + "🍬)"; }, 800);
+        setTimeout(() => { boton.classList.remove('error-compra'); boton.textContent = txtAnterior; }, 800);
     }
+}
+
+function equiparTema(idTema) {
+    temaActivo = idTema;
+    aplicarTemaCSS(temaActivo);
+    guardarDatos();
 }
 
 function aplicarTemaCSS(tema) {
     document.body.className = '';
-    if(tema !== 'default') document.body.classList.add('tema-' + tema);
+    if(tema && tema !== 'tema-default') {
+        // Le quitamos el "tema-" para poner solo la clase CSS correspondiente
+        document.body.classList.add(tema);
+    }
 }
 
 function renderizarColeccionYLogros() {
@@ -672,16 +738,32 @@ function renderizarColeccionYLogros() {
   if(!divColeccion) return;
   divColeccion.innerHTML = ''; let hayColeccion = false;
   
-  // Renderizamos los amuletos y temas comprados
+  // Renderizamos los amuletos y temas de la colección
   Object.keys(catalogo).forEach(id => {
     if (coleccion.includes(id)) { 
         hayColeccion = true; 
         const item = catalogo[id];
-        divColeccion.innerHTML += `<article class="item" style="border-color: var(--violet)"><span class="e">${item.icono}</span><h3>${item.nombre}</h3><p>${item.desc}</p><button class="btn-accion btn-bloqueado" style="background:var(--bg)">A salvo</button></article>`; 
+        let botonHTML = '';
+        
+        if(item.tipo === 'tema') {
+            if(temaActivo === id) {
+                botonHTML = `<button class="btn-accion btn-bloqueado" style="width: 100%;">Equipado</button>`;
+            } else {
+                botonHTML = `<button class="btn-accion" style="width: 100%;" onclick="equiparTema('${id}')">Equipar</button>`;
+            }
+        }
+
+        divColeccion.innerHTML += `
+        <article class="item" style="border-color: var(--violet)">
+            <span class="e">${item.icono}</span>
+            <h3>${item.nombre}</h3>
+            <p>${item.desc}</p>
+            ${botonHTML}
+        </article>`; 
     } 
   });
   
-  if (!hayColeccion) divColeccion.innerHTML = `<div style="grid-column: 1/-1; text-align: center; opacity: 0.7;">Aún no tienes amuletos...</div>`;
+  if (!hayColeccion) divColeccion.innerHTML = `<div style="grid-column: 1/-1; text-align: center; opacity: 0.7;">Aún no tienes cosméticos...</div>`;
   divLogros.innerHTML = '';
   
   Object.keys(catalogoLogros).forEach(key => {
@@ -732,7 +814,7 @@ function renderizarDiario() {
   const container = document.getElementById('lista-pistas'); if(!container) return; container.innerHTML = '';
   Object.keys(catalogoPistas).forEach((key, index) => {
     const p = catalogoPistas[key]; const desbloqueada = pistas.includes(key);
-    if (desbloqueada) { container.innerHTML += `<div class="pista-box"><strong>Pista #${index+1}:</strong> ${p.pistaTxt}</div>`; } else { container.innerHTML += `<div class="pista-box pista-blur"><strong>🔒 Pista #${index+1}:</strong> Para leer esto, primero debes ayudarme a invocar amuletos...</div>`; }
+    if (desbloqueada) { container.innerHTML += `<div class="pista-box"><strong>Pista #${index+1}:</strong> ${p.pistaTxt}</div>`; } else { container.innerHTML += `<div class="pista-box pista-blur"><strong>🔒 Pista #${index+1}:</strong> Para leer esto, primero debes ayudarme a invocar magia...</div>`; }
   });
 }
 
@@ -740,10 +822,11 @@ function canjearCodigo() {
   const input = document.getElementById('input-codigo'); const msg = document.getElementById('msg-codigo'); const codigo = input.value.trim().toUpperCase(); let msjRespuesta = ""; colorRespuesta = "#4CAF50";
   switch(codigo) {
     case 'AMOR': msjRespuesta = catalogoPistas['pista_amor'].desc; colorRespuesta = "var(--violet)"; reproducirSonido(sfxExito); break;
-    case 'RESET': dulces = 0; coleccion = []; logros = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; temaActivo = 'default'; msjRespuesta = "[ADMIN] Borrón y cuenta total."; colorRespuesta = "var(--pumpkin)"; break;
+    case 'GIVE': dulces += 500; msjRespuesta = "[ADMIN] +500 Caramelos añadidos."; colorRespuesta = "var(--violet)"; reproducirSonido(sfxExito); break;
+    case 'RESET': dulces = 0; coleccion = ['tema-default']; logros = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; temaActivo = 'tema-default'; msjRespuesta = "[ADMIN] Borrón y cuenta total."; colorRespuesta = "var(--pumpkin)"; break;
     case 'RESETCARAMELOS': dulces = 0; msjRespuesta = "[ADMIN] Caramelos a 0."; break;
     case 'RESETLOGROS': logros = []; msjRespuesta = "[ADMIN] Logros bloqueados."; break;
-    case 'RESETCOLECCTION': coleccion = []; pistas = []; temaActivo = 'default'; msjRespuesta = "[ADMIN] Colección vaciada."; break;
+    case 'RESETCOLECCTION': coleccion = ['tema-default']; pistas = []; temaActivo = 'tema-default'; msjRespuesta = "[ADMIN] Colección vaciada."; break;
     case 'RESETATAUD': ataudDia = 1; ataudTiempo = 0; msjRespuesta = "[ADMIN] Ataúd al Día 1."; break;
     case '24H': ataudTiempo = Date.now() - 86400000; msjRespuesta = "[ADMIN] Reloj adelantado 24h."; break;
     default: msjRespuesta = "Contraseña incorrecta..."; colorRespuesta = "var(--pumpkin)"; reproducirSonido(sfxError);
@@ -757,14 +840,13 @@ function canjearCodigo() {
 function abrirAjustes() { checkLogro('config'); document.getElementById('modal-ajustes').classList.add('activo'); }
 function cerrarAjustes() { document.getElementById('modal-ajustes').classList.remove('activo'); }
 
-// SKULLETTES VOLADORAS (Con Eje Y corregido para que no se escondan)
+// SKULLETTES VOLADORAS (Eje Y central)
 setInterval(() => {
   const enJuegos = document.getElementById('sec-juegos').classList.contains('activa');
   if(!enJuegos && Math.random() > 0.7) {
     const wrapper = document.createElement('div');
     wrapper.className = 'skullette-wrapper';
     
-    // Eje Y central (15vh a 80vh)
     wrapper.style.top = Math.floor(Math.random() * 65) + 15 + 'vh'; 
     wrapper.style.left = (Math.random() > 0.5 ? '-50px' : '105vw');
     wrapper.style.opacity = '0'; 
@@ -784,8 +866,8 @@ setInterval(() => {
   }
 }, 8000);
 
-// TRANSICIÓN CINEMÁTICA DE MINIJUEGOS
-function probarJuego(boton, idJuego) { 
+// TRANSICIÓN CINEMÁTICA DE MINIJUEGOS (Pantalla negra base)
+function probarJuego(idJuego) { 
     if(!bgMusic.muted) bgMusic.pause();
     reproducirSonido(sfxExito); 
     
@@ -793,9 +875,10 @@ function probarJuego(boton, idJuego) {
     overlay.style.opacity = '1';
     
     setTimeout(() => {
+        // Aquí conectaremos los minijuegos reales después
         dulces += 20; 
         guardarDatos();
-        alert(`Entrando a: ${idJuego}... ¡Ganaste 20🍬 por probar!`);
+        alert(`Aquí comenzará el juego: ${idJuego}...\n(Te regalé 20🍬 por probar la transición).`);
         
         overlay.style.opacity = '0';
         if(!bgMusic.muted && document.getElementById('vol-musica').value > 0) {
@@ -809,7 +892,10 @@ function cambiarPagina(idPagina) {
   document.getElementById(idPagina).classList.add('activa');
   document.querySelectorAll('nav a').forEach(link => link.classList.remove('activo'));
   if(idPagina === 'sec-juegos') document.getElementById('nav-juegos').classList.add('activo');
-  if(idPagina === 'sec-tienda') document.getElementById('nav-tienda').classList.add('activo');
+  if(idPagina === 'sec-tienda') {
+      document.getElementById('nav-tienda').classList.add('activo');
+      cerrarSubTienda(); // Siempre abre la tienda en el menú principal
+  }
   if(idPagina === 'sec-codigos') document.getElementById('nav-codigos').classList.add('activo');
   
   const ataud = document.getElementById('btn-ataud-global');
