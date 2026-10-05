@@ -8,9 +8,7 @@
 <!-- PWA Y FAVICON -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#140505">
-<!-- Para instalar en iPhone -->
 <link rel="apple-touch-icon" href="icono.png">
-<!-- Favicon para la PC y Android (png transparente) -->
 <link rel="icon" type="image/png" href="logo.png">
 
 <script>
@@ -24,6 +22,9 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
 <style>
+/* ==========================================
+   VARIABLES DE COLOR Y TEMAS CSS
+   ========================================== */
 :root {
   --bg: #140505; 
   --ink: #f8f1e6; 
@@ -36,6 +37,13 @@
   padding-bottom: env(safe-area-inset-bottom, 0px);
   color-scheme: dark;
 }
+
+/* TEMAS COMPRABLES DE LA TIENDA */
+body.tema-rosa-vampirico { --bg: #1a0512; --pumpkin: #ff3399; --ember: #990055; --violet: #ff99cc; --card: #2d0a1f; }
+body.tema-rojo-sangre { --bg: #0a0000; --pumpkin: #cc0000; --ember: #660000; --violet: #ff1a1a; --card: #1a0000; }
+body.tema-menta-electrica { --bg: #051414; --pumpkin: #00ffcc; --ember: #006655; --violet: #66ffdd; --card: #0a2d2d; }
+body.tema-oro-nilo { --bg: #141405; --pumpkin: #ffd700; --ember: #806600; --violet: #ffea00; --card: #2d2d0a; }
+
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
 *, *::before, *::after { box-sizing: inherit; }
 
@@ -52,18 +60,14 @@ body {
   line-height: 1.6;
   width: 100vw;
   max-width: 100%;
+  transition: background-color 0.5s ease;
   
-  /* ANTI-SELECCIÓN: Bloquea el texto azul y el menú de buscar de Google */
   -webkit-user-select: none;
   user-select: none;
   -webkit-touch-callout: none;
 }
 
-/* PERMITE SELECCIONAR/ESCRIBIR SOLO EN EL INPUT DEL ICOFFIN */
-input {
-  -webkit-user-select: auto;
-  user-select: auto;
-}
+input { -webkit-user-select: auto; user-select: auto; }
 
 /* Capa fantasma para el fondo */
 body::before {
@@ -80,6 +84,7 @@ body::before {
   background-size: cover;
   background-position: center;
   pointer-events: none;
+  transition: background-color 0.5s ease;
 }
 
 a { color: inherit; }
@@ -97,7 +102,6 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .btn-col { background: var(--card); border: 1px solid var(--pumpkin); color: var(--pumpkin); font-weight: 800; padding: 8px 20px; border-radius: 999px; text-decoration: none; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
 .btn-col:hover { background: var(--pumpkin); color: #000; }
 
-/* TUERCA ANIMADA */
 .btn-ajustes { background: transparent; border: none; cursor: pointer; color: var(--ink); padding: 0; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
 .btn-ajustes svg { width: 26px; height: 26px; transition: transform 0.3s ease; }
 .btn-ajustes:hover { color: var(--pumpkin); filter: drop-shadow(0 0 8px rgba(214,40,40,0.8)); }
@@ -133,7 +137,7 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .count b { display: block; font-size: 2rem; font-weight: 900; color: var(--pumpkin); }
 .count span { font-size: .8rem; text-transform: uppercase; letter-spacing: 1px; }
 
-/* MODALES GLOBALES ANIMADOS */
+/* MODALES GLOBALES */
 .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200; justify-content: center; align-items: center; backdrop-filter: blur(6px); }
 .modal-overlay.activo { display: flex; animation: fadeInModal 0.3s ease forwards; }
 @keyframes fadeInModal { from { opacity: 0; } to { opacity: 1; } }
@@ -141,19 +145,15 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .modal-box { background: var(--card); border: 1px solid var(--ember); border-radius: 18px; padding: 30px; width: 90%; max-width: 450px; text-align: center; position: relative; max-height: 90vh; overflow-y: auto; opacity: 0; }
 .modal-overlay.activo .modal-box { animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
 @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-
-.modal-box h3 { margin-top: 0; color: var(--pumpkin); font-size: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 10px; }
 .btn-cerrar-modal { background: var(--pumpkin); color: #fff; font-weight: 800; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; width: 100%; margin-top: 15px; font-size: 1rem; transition: background 0.2s; }
 .btn-cerrar-modal:hover { background: var(--violet); }
 
-/* ATAÚD FLOTANTE (PC: Centro-Derecha) */
+/* ATAÚD FLOTANTE */
 .ataud-flotante { position: fixed; top: 50vh; right: 3vw; transform: translateY(-50%); margin-top: -30px; background: rgba(28, 8, 8, 0.9); border: 2px solid var(--violet); border-radius: 15px; padding: 15px; cursor: pointer; font-size: 2rem; z-index: 90; box-shadow: 0 0 15px rgba(255, 77, 109, 0.3); transition: transform 0.3s; display: flex; flex-direction: column; align-items: center; }
 .ataud-flotante:hover { transform: translateY(-50%) scale(1.1); background: var(--violet); }
 .ataud-flotante .badge { font-size: 0.8rem; background: var(--pumpkin); color: white; border-radius: 999px; padding: 2px 8px; font-weight: bold; margin-top: 5px; font-family: sans-serif; }
 .ataud-animado { animation: floatAtaud 4s ease-in-out infinite; }
 @keyframes floatAtaud { 0%, 100% { margin-top: -30px; } 50% { margin-top: -45px; } }
-
-/* GRILLA DEL ATAÚD (10 DÍAS) */
 .grid-ataud { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 20px; }
 .dia-caja { background: rgba(255,255,255,0.05); border: 1px solid var(--ember); border-radius: 10px; padding: 15px 5px; font-weight: bold; position: relative; transition: 0.3s; }
 .dia-caja.reclamado { background: var(--violet); border-color: #fff; color: #fff; }
@@ -161,17 +161,22 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .dia-caja.bloqueado { opacity: 0.5; filter: grayscale(1); }
 @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(214, 40, 40, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(214, 40, 40, 0); } 100% { box-shadow: 0 0 0 0 rgba(214, 40, 40, 0); } }
 
-/* NOTIFICACIÓN DE LOGRO/PISTA */
+/* TOAST LOGRO */
 #toast-logro { position: fixed; top: 20px; left: 50%; transform: translate(-50%, -20px); opacity: 0; pointer-events: none; background: var(--violet); color: #fff; border-radius: 12px; padding: 15px 25px; display: flex; align-items: center; gap: 15px; font-weight: bold; box-shadow: 0 5px 20px rgba(0,0,0,0.5); z-index: 999; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); border: 2px solid #fff; }
 #toast-logro.visible { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
 
-/* AJUSTES AUDIO */
-.control-audio { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
-.control-audio input[type="range"] { flex-grow: 1; accent-color: var(--pumpkin); }
-.btn-mute { background: var(--card); border: 1px solid var(--ember); color: var(--ink); border-radius: 8px; padding: 8px; cursor: pointer; transition: 0.2s; }
-.btn-mute:hover { border-color: var(--pumpkin); }
+/* OVERLAY PARA TRANSICIÓN DE MINIJUEGOS */
+#fade-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: black;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease-in-out;
+    z-index: 9999;
+}
 
-/* GRID ELEMENTOS */
+/* GRID ELEMENTOS BÁSICOS */
 h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; color: var(--pumpkin); }
 .sub { margin: 0 0 36px; max-width: 55ch; opacity: 0.9; font-size: 1.1rem; }
 .seccion-titulo { color: var(--violet); font-size: 1.5rem; margin-top: 40px; border-bottom: 1px solid var(--ember); padding-bottom: 10px; }
@@ -187,96 +192,65 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .btn-jugar:hover { background: var(--pumpkin); }
 .btn-bloqueado { background: #331111; color: #885555; cursor: not-allowed; }
 
+/* ==========================================
+   ESTRUCTURA VISUAL DE LA TIENDA
+   ========================================== */
+.tienda-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px; }
+.casillero { width: 280px; background: var(--card); border: 2px solid var(--violet); position: relative; cursor: pointer; overflow: hidden; height: 380px; border-radius: 12px; }
+.casillero .puerta { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); border-right: 2px solid var(--violet); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.3rem; transition: transform 0.6s ease; transform-origin: left; z-index: 10; color: var(--pumpkin); text-shadow: 0 0 5px rgba(0,0,0,0.8); }
+.casillero.abierto .puerta { transform: perspective(600px) rotateY(-105deg); }
+.contenido-casillero { padding: 15px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; height: 100%; }
+
+.maquina-expendedora { width: 280px; border: 4px solid var(--pumpkin); background: var(--card); border-radius: 12px; padding: 15px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 0 15px var(--ember); height: 380px; overflow-y: auto; }
+.letrero-neon { color: var(--pumpkin); text-align: center; font-weight: 800; font-size: 1.2rem; margin-bottom: 10px; text-shadow: 0 0 10px var(--pumpkin); border-bottom: 1px dashed var(--pumpkin); padding-bottom: 10px; }
+
+.btn-tienda { background: rgba(255,255,255,0.05); color: var(--ink); border: 1px solid var(--violet); padding: 10px; cursor: pointer; border-radius: 8px; font-weight: bold; width: 100%; transition: 0.2s; text-align: left; margin-bottom: 5px; }
+.btn-tienda:hover { background: var(--violet); color: #fff; }
+
 /* ICOFFIN Y DIARIO */
 .icoffin-container { position: relative; display: flex; justify-content: center; align-items: center; width: 100%; max-width: 800px; margin: 0 auto; min-height: 400px; }
 .icoffin { background: #140505; border: 8px solid var(--violet); border-radius: 40px; width: 100%; max-width: 320px; padding: 40px 25px; position: relative; box-shadow: 0 0 25px rgba(255, 77, 109, 0.2); text-align: center; margin: 0 auto; z-index: 2; }
-.icoffin::before { content: ''; position: absolute; top: -2px; left: 50%; transform: translateX(-50%); width: 120px; height: 20px; background: var(--violet); border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; }
-.icoffin::after { content: ''; position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 40px; height: 4px; background: rgba(255, 77, 109, 0.5); border-radius: 10px; }
 .icoffin input { width: 100%; padding: 15px; border-radius: 12px; border: 2px solid var(--violet); background: rgba(255, 77, 109, 0.1); color: var(--ink); font-size: 1.2rem; text-transform: uppercase; margin-bottom: 20px; font-family: inherit; text-align: center; outline: none; transition: 0.3s; }
 .icoffin input:focus { background: rgba(255, 77, 109, 0.2); box-shadow: 0 0 10px rgba(255,77,109,0.5); }
-
 .diario-btn { position: absolute; right: 0; background: rgba(28, 8, 8, 0.8); border: 2px dashed var(--pumpkin); border-radius: 18px; padding: 20px; text-align: center; cursor: pointer; transition: 0.3s; width: 150px; z-index: 1; }
 .diario-btn:hover { background: rgba(214, 40, 40, 0.2); transform: scale(1.05); }
-.diario-btn span { font-size: 3rem; display: block; margin-bottom: 10px; }
 
 /* ANIMACIÓN INICIAL DIARIO */
 #overlay-diario { display: none; position: fixed; inset: 0; background: #000; z-index: 300; justify-content: center; align-items: center; color: var(--violet); font-size: 1.5rem; text-align: center; font-style: italic; padding: 20px; opacity: 0; transition: opacity 1.5s; }
-.pista-blur { filter: blur(4px); user-select: none; opacity: 0.5; }
 .pista-box { background: rgba(255,255,255,0.05); border-left: 4px solid var(--violet); padding: 15px; margin-bottom: 15px; text-align: left; }
 
 /* WRAPPER FANTASMA SKULLETTES */
 .skullette-wrapper { position: fixed; z-index: 90; pointer-events: none; }
-.skullette-inner { 
-  width: 65px; 
-  height: 65px; 
-  cursor: pointer; 
-  filter: drop-shadow(0 0 10px var(--violet)); 
-  transition: transform 0.2s; 
-  pointer-events: auto; 
-  object-fit: contain; 
-  -webkit-user-drag: none; 
-}
+.skullette-inner { width: 65px; height: 65px; cursor: pointer; filter: drop-shadow(0 0 10px var(--violet)); transition: transform 0.2s; pointer-events: auto; object-fit: contain; -webkit-user-drag: none; }
 .skullette-inner:hover { transform: scale(1.2); }
 .error-compra { animation: shake 0.4s; background: var(--violet) !important; color: #fff !important; pointer-events: none; }
 @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
 
 /* RESPONSIVE CELULARES */
 @media(max-width: 850px) {
-  /* CONGELAR SCROLL EN LA PANTALLA PRINCIPAL (HOME) */
-  body:has(#sec-home.activa) {
-    overflow: hidden;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-  }
-
+  body:has(#sec-home.activa) { overflow: hidden; position: fixed; width: 100%; height: 100%; }
   header { display: flex; flex-direction: column; gap: 15px; }
   .header-right { width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; }
   .moneda-ui { justify-self: start; }
   .btn-col { justify-self: center; } 
   .btn-ajustes { justify-self: end; }
   nav { flex-wrap: wrap; justify-content: center; width: 100%; }
-  
   #sec-home { padding-bottom: 90px; }
-  
   .icoffin-container { flex-direction: column; min-height: auto; gap: 30px; }
   .diario-btn { position: relative; right: auto; width: 100%; max-width: 320px; }
-  
-  /* BARRA INFERIOR DEL ATAÚD (CELULARES) */
-  .ataud-flotante { 
-    right: 0; 
-    left: 0; 
-    bottom: 0; 
-    top: auto; 
-    transform: none; 
-    margin: 0; 
-    width: 100%; 
-    border-radius: 20px 20px 0 0; 
-    border-left: none; 
-    border-right: none; 
-    border-bottom: none; 
-    flex-direction: row; 
-    justify-content: center; 
-    gap: 15px; 
-    padding: 12px;
-  }
+  .ataud-flotante { right: 0; left: 0; bottom: 0; top: auto; transform: none; margin: 0; width: 100%; border-radius: 20px 20px 0 0; border-left: none; border-right: none; border-bottom: none; flex-direction: row; justify-content: center; gap: 15px; padding: 12px; }
   .ataud-flotante:hover { transform: none; background: rgba(28, 8, 8, 0.95); }
-  .ataud-flotante .badge { margin-top: 0; align-self: center; }
-  
-  .ataud-animado { animation: resplandorBarra 3s ease-in-out infinite; }
-  @keyframes resplandorBarra { 
-    0%, 100% { box-shadow: 0 -5px 15px rgba(255, 77, 109, 0.2); } 
-    50% { box-shadow: 0 -5px 25px rgba(255, 77, 109, 0.6); } 
-  }
 }
 </style>
 </head>
 <body>
 
+<!-- PANTALLA DE TRANSICIÓN PARA JUEGOS -->
+<div id="fade-overlay"></div>
+
 <!-- AUDIOS -->
 <audio id="audio-bg" loop><source src="musica.mp3" type="audio/mpeg"></audio>
 
-<!-- TOAST DINÁMICO -->
 <div id="toast-logro">
   <span id="toast-icon" style="font-size: 2rem;">🏆</span>
   <div><div id="toast-sub" style="font-size: 0.8rem; opacity: 0.8;">Logro Desbloqueado</div><div id="toast-txt">Título</div><div id="toast-bonus" style="color: #ffd700; font-size: 0.9rem;">+15 🍬</div></div>
@@ -289,7 +263,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 <!-- MODAL CONFIGURACIÓN -->
 <div class="modal-overlay" id="modal-ajustes">
   <div class="modal-box">
-    <h3>Configuración <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></h3>
+    <h3>Configuración</h3>
     <div style="text-align: left; margin: 20px 0;">
       <label style="font-weight: 800; display:block; margin-bottom:5px;">Música Base</label>
       <div class="control-audio">
@@ -328,7 +302,6 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   </div>
 </div>
 
-<!-- ATAÚD FLOTANTE / BARRA INFERIOR -->
 <div class="ataud-flotante ataud-animado" id="btn-ataud-global" onclick="abrirAtaud()">
   <span style="font-size: 1.5rem;">⚰️</span>
   <div class="badge" id="badge-ataud">¡Listo!</div>
@@ -373,25 +346,81 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
     <article class="item">
       <span class="e">👻</span><h3>Catacumbas</h3>
       <p>Atrapa a los espíritus traviesos del instituto antes de que escapen.</p>
-      <button class="btn-accion btn-jugar" onclick="probarJuego(this)">Jugar (+20 🍬)</button>
+      <button class="btn-accion btn-jugar" onclick="probarJuego(this, 'catacumbas')">Jugar (+20 🍬)</button>
     </article>
     <article class="item">
       <span class="e">📱</span><h3>Memoria Monstruosa</h3>
       <p>Encuentra los pares secretos en los diarios de las chicas.</p>
-      <button class="btn-accion btn-bloqueado">Próximamente</button>
+      <button class="btn-accion btn-jugar" onclick="probarJuego(this, 'memoria')">Jugar (+20 🍬)</button>
     </article>
     <article class="item">
       <span class="e">🧪</span><h3>Biteology: Pociones</h3>
       <p>Examen de ciencias: Mezcla los ingredientes correctos para mi amor.</p>
-      <button class="btn-accion btn-bloqueado">Próximamente</button>
+      <button class="btn-accion btn-jugar" onclick="probarJuego(this, 'pociones')">Jugar (+20 🍬)</button>
     </article>
   </div>
 </section>
 
+<!-- LA TIENDA ACTUALIZADA -->
 <section class="pagina" id="sec-tienda">
   <h2>Bazar de los Enamorados</h2>
-  <p class="sub">Usa tus dulces para coleccionar nuestros amuletos de la suerte.</p>
-  <div class="grid" id="contenedor-tienda"></div>
+  <p class="sub">Usa tus dulces para invocar amuletos, citas y snacks.</p>
+  
+  <div class="tienda-container">
+    
+    <!-- CASILLERO 1: CITAS -->
+    <div class="casillero casillero-citas" onclick="abrirCasillero('citas')">
+        <div class="puerta">🎟️ Citas VIP</div>
+        <div class="contenido-casillero">
+            <button class="btn-tienda" onclick="comprarItemTienda(this, 'arcade', 300, 'Reto Arcade Solari', 'consumible', event)">🕹️ Arcade Solari (300 🍬)</button>
+            <button class="btn-tienda" onclick="comprarItemTienda(this, 'cine', 250, 'Cineplanet VIP', 'consumible', event)">🍿 Cineplanet VIP (250 🍬)</button>
+            <button class="btn-tienda" onclick="comprarItemTienda(this, 'cata', 150, 'Cata a Ciegas', 'consumible', event)">🍫 Cata a Ciegas (150 🍬)</button>
+            <button class="btn-tienda" onclick="comprarItemTienda(this, 'arte', 100, 'Noche de Arte Feo', 'consumible', event)">🎨 Noche Arte Feo (100 🍬)</button>
+            <button class="btn-tienda" onclick="comprarItemTienda(this, 'pizza', 200, 'Pizzería Casera', 'consumible', event)">🍕 Pizzería Casera (200 🍬)</button>
+        </div>
+    </div>
+
+    <!-- CASILLERO 2: GESTOS -->
+    <div class="casillero casillero-gestos" onclick="abrirCasillero('gestos')">
+        <div class="puerta">🩹 Gestos Especiales</div>
+        <div class="contenido-casillero">
+            <button class="btn-tienda" onclick="comprarItemTienda(this, 'masaje', 200, 'Masaje VIP', 'consumible', event)">💆‍♀️ Masaje VIP (200 🍬)</button>
+            <button class="btn-tienda" onclick="comprarItemTienda(this, 'postre', 150, 'Repostero Novato', 'consumible', event)">🧁 Repostero Novato (150 🍬)</button>
+            <button class="btn-tienda" onclick="comprarItemTienda(this, 'desayuno', 180, 'Desayuno a Distancia', 'consumible', event)">☕ Desayuno Delivery (180 🍬)</button>
+            <button class="btn-tienda" onclick="comprarItemTienda(this, 'enojo', 100, 'Pase Anti-Enojo', 'consumible', event)">🕊️ Pase Anti-Enojo (100 🍬)</button>
+        </div>
+    </div>
+
+    <!-- CASILLERO 3: COSMÉTICOS -->
+    <div class="casillero casillero-cosmeticos" onclick="abrirCasillero('cosmeticos')">
+        <div class="puerta">🔮 Amuletos y Magia</div>
+        <div class="contenido-casillero">
+            <button class="btn-tienda" onclick="comprarItemTienda(this, 'manuscrito', 80, 'El Manuscrito', 'coleccionable', event)">📜 El Manuscrito (80 🍬)</button>
+            <button class="btn-tienda" onclick="comprarItemTienda(this, 'polaroid', 100, 'Polaroid Oculta', 'coleccionable', event)">📸 Polaroid Oculta (100 🍬)</button>
+            <button class="btn-tienda" onclick="comprarItemTienda(this, 'playlist', 50, 'Playlist Exclusiva', 'coleccionable', event)">🎵 Playlist Exclusiva (50 🍬)</button>
+            <button class="btn-tienda" onclick="comprarItemTienda(this, 'reloj', 150, 'Reloj VIP', 'coleccionable', event)">⏳ Cuenta Regresiva (150 🍬)</button>
+            
+            <button class="btn-tienda" onclick="comprarItemTienda(this, 'rosa-vampirico', 50, 'Tema: Rosa', 'tema', event)">🦇 Tema Rosa Vampírico (50🍬)</button>
+            <button class="btn-tienda" onclick="comprarItemTienda(this, 'rojo-sangre', 50, 'Tema: Sangre', 'tema', event)">🩸 Tema Rojo Sangre (50🍬)</button>
+            <button class="btn-tienda" onclick="comprarItemTienda(this, 'menta-electrica', 50, 'Tema: Menta', 'tema', event)">⚡ Tema Menta Eléctrica (50🍬)</button>
+            <button class="btn-tienda" onclick="comprarItemTienda(this, 'oro-nilo', 50, 'Tema: Oro', 'tema', event)">🏺 Tema Oro del Nilo (50🍬)</button>
+            
+            <button class="btn-tienda" onclick="alert('Lluvia Custom en construcción'); event.stopPropagation();">🌧️ Lluvia Custom (Pronto)</button>
+            <button class="btn-tienda" onclick="alert('Música Alternativa en construcción'); event.stopPropagation();">🎧 Música Alternativa (Pronto)</button>
+        </div>
+    </div>
+
+    <!-- MÁQUINA EXPENDEDORA: LA BODEGUITA -->
+    <div class="maquina-expendedora">
+        <div class="letrero-neon">Neon Coffin Snacks</div>
+        <button class="btn-tienda" onclick="comprarItemTienda(this, 'bonobon', 30, 'Bonobon', 'consumible', event)">🍬 Bonobon (30 🍬)</button>
+        <button class="btn-tienda" onclick="comprarItemTienda(this, 'chifles', 40, 'Chifles Acevichados', 'consumible', event)">🥔 Chifles Acevichados (40 🍬)</button>
+        <button class="btn-tienda" onclick="comprarItemTienda(this, 'helado', 50, 'Helado Piamonte', 'consumible', event)">🍦 Helado Piamonte (50 🍬)</button>
+        <button class="btn-tienda" onclick="comprarItemTienda(this, 'bebida', 40, 'Bebida de Rescate', 'consumible', event)">🧃 Bebida de Rescate (40 🍬)</button>
+        <button class="btn-tienda" onclick="comprarItemTienda(this, 'carretilla', 60, 'Antojo Carretilla', 'consumible', event)">🌭 Antojo Carretilla (60 🍬)</button>
+    </div>
+
+  </div>
 </section>
 
 <section class="pagina" id="sec-coleccion">
@@ -401,7 +430,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   <h3 class="seccion-titulo">En el menú (Logros)</h3>
   <div class="grid" id="contenedor-logros"></div>
   
-  <h3 class="seccion-titulo">Amuletos (Tienda)</h3>
+  <h3 class="seccion-titulo">Amuletos Digitales (Tienda)</h3>
   <div class="grid" id="contenedor-coleccion"></div>
 </section>
 
@@ -424,7 +453,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 
 <script>
 // ========================================================
-// 1. CONFIGURACIÓN DE FIREBASE 
+// 1. CONFIGURACIÓN DE FIREBASE (INTACTA)
 // ========================================================
 const firebaseConfig = {
   apiKey: "AIzaSyAR9cVrx1s3cMd1hfG2NySoRSBrlXHBdIk",
@@ -458,14 +487,19 @@ const sfxError = new Audio('error.mp3'); sfxError.volume = 0; sfxError.muted = t
 let dulces = 0; let coleccion = []; let logros = [];
 let ataudDia = 1; let ataudTiempo = 0;   
 let diarioVisto = false; let pistas = [];       
+let temaActivo = 'default';
 
-const catalogo = [
-  { id: 'calabaza', icono: '🎃', nombre: 'Calabaza Protectora', precio: 30, desc: 'Para iluminar nuestras noches más oscuras.' },
-  { id: 'pocion', icono: '🍷', nombre: 'Bebida de Vampiro', precio: 50, desc: 'Una copa para brindar por nosotros.' },
-  { id: 'rosanegra', icono: '🥀', nombre: 'Rosa Eterna', precio: 100, desc: 'Nunca se marchita, como lo que siento por ti.' },
-  { id: 'gato', icono: '🐈‍⬛', nombre: 'Gatito Negro', precio: 150, desc: 'Nos traerá buena suerte a donde vayamos.' },
-  { id: 'anillo', icono: '💍', nombre: 'Anillo de Promesa', precio: 300, desc: 'Un pequeño pacto para la eternidad.' }
-];
+// CATÁLOGO DE COLECCIONABLES PARA RENDERIZAR "TU COLECCIÓN"
+const catalogo = {
+  'manuscrito': { icono: '📜', nombre: 'El Manuscrito', desc: 'Un mensaje súper honesto.' },
+  'polaroid': { icono: '📸', nombre: 'Polaroid Oculta', desc: 'Un recuerdo especial.' },
+  'playlist': { icono: '🎵', nombre: 'Playlist Exclusiva', desc: 'Nuestras canciones.' },
+  'reloj': { icono: '⏳', nombre: 'Reloj VIP', desc: 'Cuenta regresiva.' },
+  'rosa-vampirico': { icono: '🦇', nombre: 'Tema: Rosa Vampírico', desc: 'Diseño para la app.' },
+  'rojo-sangre': { icono: '🩸', nombre: 'Tema: Rojo Sangre', desc: 'Diseño para la app.' },
+  'menta-electrica': { icono: '⚡', nombre: 'Tema: Menta Eléctrica', desc: 'Diseño para la app.' },
+  'oro-nilo': { icono: '🏺', nombre: 'Tema: Oro del Nilo', desc: 'Diseño para la app.' }
+};
 
 const catalogoLogros = {
   'config': { icono: '⚙️', nombre: 'Curiosidad Monstruosa', desc: 'Abriste la configuración por primera vez.' },
@@ -476,7 +510,7 @@ const catalogoLogros = {
 };
 
 const catalogoPistas = {
-  'pista_amor': { pistaTxt: "El sentimiento que nos une. 4 letras.", codigo: "AMOR", desc: "El amor es la chispa mágica que ilumina las catacumbas de mi corazón cuando estás cerca." }
+  'pista_amor': { pistaTxt: "El sentimiento que nos une. 4 letras.", codigo: "AMOR", desc: "El amor es la chispa mágica que ilumina las catacumbas de mi corazón." }
 };
 
 // ========================================================
@@ -489,7 +523,9 @@ if(database) {
       dulces = data.dulces || 0; coleccion = data.coleccion || []; logros = data.logros || [];
       ataudDia = data.ataudDia || 1; ataudTiempo = data.ataudTiempo || 0;
       diarioVisto = data.diarioVisto || false; pistas = data.pistas || [];
+      temaActivo = data.temaActivo || 'default';
     }
+    aplicarTemaCSS(temaActivo);
     actualizarUI();
   });
 }
@@ -500,7 +536,8 @@ function guardarDatos() {
     database.ref(rutaDB).set({ 
       dulces: dulces, coleccion: coleccion, logros: logros, 
       ataudDia: ataudDia, ataudTiempo: ataudTiempo, 
-      diarioVisto: diarioVisto, pistas: pistas 
+      diarioVisto: diarioVisto, pistas: pistas,
+      temaActivo: temaActivo
     });
   }
   actualizarUI();
@@ -508,7 +545,7 @@ function guardarDatos() {
 
 function actualizarUI() {
   document.getElementById('ui-dulces').textContent = dulces;
-  renderizarTiendaYColeccion(); actualizarEstadoAtaud(); renderizarDiario();
+  renderizarColeccionYLogros(); actualizarEstadoAtaud(); renderizarDiario();
 }
 
 const horaActual = new Date().getHours();
@@ -574,29 +611,79 @@ function actualizarTimerAtaud() {
 }
 
 // ========================================================
-// 6. TIENDA Y COLECCIONES
+// 6. TIENDA ACTUALIZADA, TEMAS Y COLECCIÓN
 // ========================================================
-function comprar(boton, idArticulo, precio) {
-  if (dulces >= precio) {
-    dulces -= precio; coleccion.push(idArticulo);
-    if(idArticulo === 'calabaza' || coleccion.length === 1) { if(!pistas.includes('pista_amor')) { pistas.push('pista_amor'); mostrarToast("Ve al Diario Secreto", true); } }
-    guardarDatos(); reproducirSonido(sfxExito);
-  } else {
-    reproducirSonido(sfxError); boton.classList.add('error-compra'); boton.textContent = "¡Faltan dulces!";
-    setTimeout(() => { boton.classList.remove('error-compra'); boton.textContent = "Obtener - " + precio + " 🍬"; }, 800);
-  }
+function abrirCasillero(categoria) {
+    reproducirSonido(sfxExito);
+    let casillero = document.querySelector('.casillero-' + categoria);
+    casillero.classList.toggle('abierto');
 }
 
-function renderizarTiendaYColeccion() {
-  const divTienda = document.getElementById('contenedor-tienda'); const divColeccion = document.getElementById('contenedor-coleccion'); const divLogros = document.getElementById('contenedor-logros');
-  if(!divTienda) return;
-  divTienda.innerHTML = ''; divColeccion.innerHTML = ''; let hayColeccion = false;
-  catalogo.forEach(item => {
-    if (coleccion.includes(item.id)) { hayColeccion = true; divColeccion.innerHTML += `<article class="item" style="border-color: var(--violet)"><span class="e">${item.icono}</span><h3>${item.nombre}</h3><p>${item.desc}</p><button class="btn-accion btn-bloqueado" style="background:var(--bg)">Guardado a salvo</button></article>`; } 
-    else { divTienda.innerHTML += `<article class="item"><span class="e">${item.icono}</span><h3>${item.nombre}</h3><p>${item.desc}</p><button class="btn-accion" onclick="comprar(this, '${item.id}', ${item.precio})">Obtener - ${item.precio} 🍬</button></article>`; }
+function comprarItemTienda(boton, idItem, precio, nombreItem, tipo, evento) {
+    if(evento) evento.stopPropagation(); // Evita que se cierre el casillero
+    
+    // Si ya lo tiene y es un cosmético, no le cobra, solo se activa o avisa
+    if (tipo !== 'consumible' && coleccion.includes(idItem)) {
+        if(tipo === 'tema') {
+            temaActivo = idItem;
+            aplicarTemaCSS(temaActivo);
+            guardarDatos();
+        } else {
+            mostrarToast("Ya tienes este amuleto a salvo.", false);
+        }
+        return;
+    }
+
+    if (dulces >= precio) {
+        dulces -= precio;
+        reproducirSonido(sfxExito);
+
+        if (tipo !== 'consumible') {
+            coleccion.push(idItem);
+        }
+
+        if (tipo === 'tema') {
+            temaActivo = idItem;
+            aplicarTemaCSS(temaActivo);
+        }
+
+        if(coleccion.length === 1 && !pistas.includes('pista_amor')) {
+            pistas.push('pista_amor'); 
+            mostrarToast("Ve al Diario Secreto", true);
+        }
+
+        guardarDatos();
+        alert(`¡Has invocado: ${nombreItem}!\nTe quedan ${dulces} 🍬.`);
+    } else {
+        reproducirSonido(sfxError); 
+        boton.classList.add('error-compra'); 
+        boton.textContent = "¡Faltan dulces!";
+        setTimeout(() => { boton.classList.remove('error-compra'); boton.textContent = nombreItem + " (" + precio + "🍬)"; }, 800);
+    }
+}
+
+function aplicarTemaCSS(tema) {
+    document.body.className = '';
+    if(tema !== 'default') document.body.classList.add('tema-' + tema);
+}
+
+function renderizarColeccionYLogros() {
+  const divColeccion = document.getElementById('contenedor-coleccion'); const divLogros = document.getElementById('contenedor-logros');
+  if(!divColeccion) return;
+  divColeccion.innerHTML = ''; let hayColeccion = false;
+  
+  // Renderizamos los amuletos y temas comprados
+  Object.keys(catalogo).forEach(id => {
+    if (coleccion.includes(id)) { 
+        hayColeccion = true; 
+        const item = catalogo[id];
+        divColeccion.innerHTML += `<article class="item" style="border-color: var(--violet)"><span class="e">${item.icono}</span><h3>${item.nombre}</h3><p>${item.desc}</p><button class="btn-accion btn-bloqueado" style="background:var(--bg)">A salvo</button></article>`; 
+    } 
   });
-  if (!hayColeccion) divColeccion.innerHTML = `<div style="grid-column: 1/-1; text-align: center; opacity: 0.7;">Aún no tenemos amuletos...</div>`;
+  
+  if (!hayColeccion) divColeccion.innerHTML = `<div style="grid-column: 1/-1; text-align: center; opacity: 0.7;">Aún no tienes amuletos...</div>`;
   divLogros.innerHTML = '';
+  
   Object.keys(catalogoLogros).forEach(key => {
     const l = catalogoLogros[key]; const ganado = logros.includes(key);
     divLogros.innerHTML += `<article class="item" style="padding:15px; flex-direction:row; align-items:center; text-align:left; ${ganado ? 'border-color:var(--pumpkin); background:rgba(214,40,40,0.1);' : 'opacity:0.6; filter:grayscale(1);'}">
@@ -611,9 +698,7 @@ function renderizarTiendaYColeccion() {
 // ========================================================
 function abrirDiario() {
   const volSlider = parseFloat(document.getElementById('vol-musica').value);
-  if(!bgMusic.muted && volSlider > 0) {
-    bgMusic.volume = volSlider * 0.3;
-  }
+  if(!bgMusic.muted && volSlider > 0) { bgMusic.volume = volSlider * 0.3; }
 
   if (!diarioVisto) {
     const overlay = document.getElementById('overlay-diario');
@@ -640,16 +725,14 @@ function abrirDiario() {
 function esconderDiario() {
   document.getElementById('modal-diario').classList.remove('activo');
   const volSlider = parseFloat(document.getElementById('vol-musica').value);
-  if(!bgMusic.muted && volSlider > 0) {
-    bgMusic.volume = volSlider;
-  }
+  if(!bgMusic.muted && volSlider > 0) { bgMusic.volume = volSlider; }
 }
 
 function renderizarDiario() {
   const container = document.getElementById('lista-pistas'); if(!container) return; container.innerHTML = '';
   Object.keys(catalogoPistas).forEach((key, index) => {
     const p = catalogoPistas[key]; const desbloqueada = pistas.includes(key);
-    if (desbloqueada) { container.innerHTML += `<div class="pista-box"><strong>Pista #${index+1}:</strong> ${p.pistaTxt}</div>`; } else { container.innerHTML += `<div class="pista-box pista-blur"><strong>🔒 Pista #${index+1}:</strong> Para leer esto, primero debes ayudarme a iluminar nuestras noches...</div>`; }
+    if (desbloqueada) { container.innerHTML += `<div class="pista-box"><strong>Pista #${index+1}:</strong> ${p.pistaTxt}</div>`; } else { container.innerHTML += `<div class="pista-box pista-blur"><strong>🔒 Pista #${index+1}:</strong> Para leer esto, primero debes ayudarme a invocar amuletos...</div>`; }
   });
 }
 
@@ -657,10 +740,10 @@ function canjearCodigo() {
   const input = document.getElementById('input-codigo'); const msg = document.getElementById('msg-codigo'); const codigo = input.value.trim().toUpperCase(); let msjRespuesta = ""; colorRespuesta = "#4CAF50";
   switch(codigo) {
     case 'AMOR': msjRespuesta = catalogoPistas['pista_amor'].desc; colorRespuesta = "var(--violet)"; reproducirSonido(sfxExito); break;
-    case 'RESET': dulces = 0; coleccion = []; logros = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; msjRespuesta = "[ADMIN] Borrón y cuenta total."; colorRespuesta = "var(--pumpkin)"; break;
+    case 'RESET': dulces = 0; coleccion = []; logros = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; temaActivo = 'default'; msjRespuesta = "[ADMIN] Borrón y cuenta total."; colorRespuesta = "var(--pumpkin)"; break;
     case 'RESETCARAMELOS': dulces = 0; msjRespuesta = "[ADMIN] Caramelos a 0."; break;
     case 'RESETLOGROS': logros = []; msjRespuesta = "[ADMIN] Logros bloqueados."; break;
-    case 'RESETCOLECCTION': coleccion = []; pistas = []; msjRespuesta = "[ADMIN] Colección vaciada."; break;
+    case 'RESETCOLECCTION': coleccion = []; pistas = []; temaActivo = 'default'; msjRespuesta = "[ADMIN] Colección vaciada."; break;
     case 'RESETATAUD': ataudDia = 1; ataudTiempo = 0; msjRespuesta = "[ADMIN] Ataúd al Día 1."; break;
     case '24H': ataudTiempo = Date.now() - 86400000; msjRespuesta = "[ADMIN] Reloj adelantado 24h."; break;
     default: msjRespuesta = "Contraseña incorrecta..."; colorRespuesta = "var(--pumpkin)"; reproducirSonido(sfxError);
@@ -669,17 +752,20 @@ function canjearCodigo() {
 }
 
 // ========================================================
-// 8. NAVEGACIÓN Y EXTRAS
+// 8. NAVEGACIÓN, JUEGOS Y SKULLETTES
 // ========================================================
 function abrirAjustes() { checkLogro('config'); document.getElementById('modal-ajustes').classList.add('activo'); }
 function cerrarAjustes() { document.getElementById('modal-ajustes').classList.remove('activo'); }
 
+// SKULLETTES VOLADORAS (Con Eje Y corregido para que no se escondan)
 setInterval(() => {
   const enJuegos = document.getElementById('sec-juegos').classList.contains('activa');
   if(!enJuegos && Math.random() > 0.7) {
     const wrapper = document.createElement('div');
     wrapper.className = 'skullette-wrapper';
-    wrapper.style.top = Math.random() * 80 + 'vh'; 
+    
+    // Eje Y central (15vh a 80vh)
+    wrapper.style.top = Math.floor(Math.random() * 65) + 15 + 'vh'; 
     wrapper.style.left = (Math.random() > 0.5 ? '-50px' : '105vw');
     wrapper.style.opacity = '0'; 
     wrapper.style.transition = 'transform 8s linear, opacity 0.8s ease';
@@ -698,7 +784,25 @@ setInterval(() => {
   }
 }, 8000);
 
-function probarJuego(boton) { dulces += 20; guardarDatos(); reproducirSonido(sfxExito); const original = boton.textContent; boton.textContent = "+20 🍬"; boton.style.background = "var(--pumpkin)"; boton.style.pointerEvents = "none"; setTimeout(() => { boton.textContent = original; boton.style.background = ""; boton.style.pointerEvents = "auto"; }, 1200); }
+// TRANSICIÓN CINEMÁTICA DE MINIJUEGOS
+function probarJuego(boton, idJuego) { 
+    if(!bgMusic.muted) bgMusic.pause();
+    reproducirSonido(sfxExito); 
+    
+    const overlay = document.getElementById('fade-overlay');
+    overlay.style.opacity = '1';
+    
+    setTimeout(() => {
+        dulces += 20; 
+        guardarDatos();
+        alert(`Entrando a: ${idJuego}... ¡Ganaste 20🍬 por probar!`);
+        
+        overlay.style.opacity = '0';
+        if(!bgMusic.muted && document.getElementById('vol-musica').value > 0) {
+            bgMusic.play().catch(e=>console.log(e));
+        }
+    }, 1500);
+}
 
 function cambiarPagina(idPagina) {
   document.querySelectorAll('.pagina').forEach(pag => pag.classList.remove('activa'));
