@@ -23,7 +23,7 @@
 
 <style>
 /* ==========================================
-   VARIABLES DE COLOR Y CARIÑO CROMÁTICO
+   VARIABLES DE COLOR Y TEMAS CROMÁTICOS
    ========================================== */
 :root {
   --bg: #140505; 
@@ -34,6 +34,7 @@
   --card: #1c0808; 
   --glow: rgba(214, 40, 40, 0.25);
   --bg-overlay: rgba(20, 5, 5, 0.88);
+  --borde-estilo: solid;
   
   box-sizing: border-box;
   padding-top: env(safe-area-inset-top, 0px);
@@ -41,11 +42,12 @@
   color-scheme: dark;
 }
 
-/* TEMAS (Afectan resplandor, fondo oscurecido, bordes y botones) */
+/* TEMAS PERSONALIZADOS */
 body.tema-rosa { --bg: #1a0512; --pumpkin: #ff3399; --ember: #990055; --violet: #ff99cc; --card: #2d0a1f; --glow: rgba(255, 51, 153, 0.25); --bg-overlay: rgba(26, 5, 18, 0.88); }
-body.tema-sangre { --bg: #0a0000; --pumpkin: #cc0000; --ember: #660000; --violet: #ff1a1a; --card: #1a0000; --glow: rgba(204, 0, 0, 0.25); --bg-overlay: rgba(10, 0, 0, 0.88); }
-body.tema-menta { --bg: #051414; --pumpkin: #00ffcc; --ember: #006655; --violet: #66ffdd; --card: #0a2d2d; --glow: rgba(0, 255, 204, 0.25); --bg-overlay: rgba(5, 20, 20, 0.88); }
-body.tema-oro { --bg: #141405; --pumpkin: #ffd700; --ember: #806600; --violet: #ffea00; --card: #2d2d0a; --glow: rgba(255, 215, 0, 0.25); --bg-overlay: rgba(20, 20, 5, 0.88); }
+body.tema-sangre { --bg: #0a0000; --pumpkin: #cc0000; --ember: #660000; --violet: #ff1a1a; --card: #1a0000; --glow: rgba(204, 0, 0, 0.25); --bg-overlay: rgba(10, 0, 0, 0.92); }
+body.tema-momia { --bg: #1a1610; --pumpkin: #d49a6a; --ember: #8b5a2b; --violet: #e6c280; --card: #2b2218; --glow: rgba(212, 154, 106, 0.2); --bg-overlay: rgba(26, 22, 16, 0.88); --borde-estilo: dashed; }
+body.tema-calabaza { --bg: #0a140a; --pumpkin: #ff6600; --ember: #cc5200; --violet: #00b33c; --card: #0f1f0f; --glow: rgba(255, 102, 0, 0.25); --bg-overlay: rgba(10, 20, 10, 0.88); }
+body.tema-batman { --bg: #000; --pumpkin: #fff; --ember: #555; --violet: #aaa; --card: #111; --glow: rgba(255, 255, 255, 0.1); --bg-overlay: rgba(0, 0, 0, 0.9); filter: grayscale(100%); }
 
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
 *, *::before, *::after { box-sizing: inherit; }
@@ -63,7 +65,6 @@ body {
   line-height: 1.6;
   width: 100vw;
   max-width: 100%;
-  
   -webkit-user-select: none;
   user-select: none;
   -webkit-touch-callout: none;
@@ -98,16 +99,16 @@ header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center
 nav { justify-self: center; display: flex; align-items: center; gap: 24px; font-weight: 500; }
 nav a { text-decoration: none; cursor: pointer; padding: 5px; transition: color 0.2s; }
 nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(--pumpkin); }
-.header-right { justify-self: end; display: flex; align-items: center; gap: 20px; }
+.header-right { justify-self: end; display: flex; align-items: center; gap: 15px; }
 .moneda-ui { font-size: 1.2rem; font-weight: 800; color: var(--ink); display: flex; align-items: center; gap: 6px; }
 #ui-dulces { display: inline-block; min-width: 45px; text-align: left; }
-.btn-col { background: var(--card); border: 1px solid var(--pumpkin); color: var(--pumpkin); font-weight: 800; padding: 8px 20px; border-radius: 999px; text-decoration: none; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+.btn-col { background: var(--card); border: 1px var(--borde-estilo) var(--pumpkin); color: var(--pumpkin); font-weight: 800; padding: 8px 20px; border-radius: 999px; text-decoration: none; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
 .btn-col:hover { background: var(--pumpkin); color: #000; }
 
-.btn-ajustes { background: transparent; border: none; cursor: pointer; color: var(--ink); padding: 0; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
-.btn-ajustes svg { width: 26px; height: 26px; transition: transform 0.3s ease; }
-.btn-ajustes:hover { color: var(--pumpkin); filter: drop-shadow(0 0 8px var(--glow)); }
-.btn-ajustes:hover svg { animation: spin 2s linear infinite; }
+.btn-icono { background: transparent; border: none; cursor: pointer; color: var(--ink); padding: 0; display: flex; align-items: center; justify-content: center; transition: all 0.3s; font-size: 1.6rem; }
+.btn-icono:hover { color: var(--pumpkin); filter: drop-shadow(0 0 8px var(--glow)); transform: scale(1.1); }
+.btn-icono.tuerca svg { width: 26px; height: 26px; }
+.btn-icono.tuerca:hover svg { animation: spin 2s linear infinite; }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
 /* ESTRUCTURA DE PÁGINAS */
@@ -116,15 +117,8 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 #sec-home.activa { display: grid; align-items: center; } 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* HERO Y MURCIÉLAGOS */
+/* HERO Y TÍTULOS */
 .hero { position: relative; place-items: center; text-align: center; }
-.bats { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-.bat { position: absolute; font-size: 1.8rem; filter: brightness(0) drop-shadow(0 5px 5px rgba(0,0,0,0.6)); opacity: 0.9; animation: fly 14s linear infinite; }
-.bat:nth-child(1) { top: 14%; --rot: -12deg; font-size: 1.5rem; }
-.bat:nth-child(2) { top: 62%; --rot: 8deg; font-size: 1.1rem; animation-duration: 19s; animation-delay: -6s; }
-.bat:nth-child(3) { top: 30%; --rot: -5deg; font-size: 2.4rem; animation-duration: 24s; animation-delay: -12s; }
-@keyframes fly { from { transform: translateX(-10vw) rotate(var(--rot)); } to { transform: translateX(110vw) translateY(-40px) rotate(var(--rot)); } }
-
 .title-wrapper { position: relative; display: inline-flex; justify-content: center; align-items: center; }
 .hero h1 { margin: 0; font-weight: 900; font-size: clamp(3.5rem, 12vw, 8rem); line-height: 1; color: var(--pumpkin); text-shadow: 0 0 30px var(--glow); animation: flicker 5s steps(1) infinite; }
 @keyframes flicker { 0%, 8%, 12%, 20% { opacity: .7; } 10%, 16%, 30%, 100% { opacity: 1; } }
@@ -135,7 +129,7 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 @keyframes levitate-r { 0%, 100% { transform: translateY(0px) rotate(15deg); } 50% { transform: translateY(-15px) rotate(5deg); } }
 .hero p { position: relative; max-width: 50ch; margin: 22px auto 28px; font-size: 1.2rem; font-weight: 500; }
 .count { position: relative; display: flex; gap: 15px; justify-content: center; margin-top: 36px; flex-wrap: wrap; }
-.count div { min-width: 72px; border: 1px solid var(--pumpkin); background: rgba(20,5,5,0.6); border-radius: 12px; padding: 10px 6px; backdrop-filter: blur(4px); }
+.count div { min-width: 72px; border: 1px var(--borde-estilo) var(--pumpkin); background: rgba(20,5,5,0.6); border-radius: 12px; padding: 10px 6px; backdrop-filter: blur(4px); }
 .count b { display: block; font-size: 2rem; font-weight: 900; color: var(--pumpkin); }
 .count span { font-size: .8rem; text-transform: uppercase; letter-spacing: 1px; }
 
@@ -144,20 +138,20 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .modal-overlay.activo { display: flex; animation: fadeInModal 0.3s ease forwards; }
 @keyframes fadeInModal { from { opacity: 0; } to { opacity: 1; } }
 
-.modal-box { background: var(--card); border: 1px solid var(--ember); border-radius: 18px; padding: 30px; width: 90%; max-width: 450px; text-align: center; position: relative; max-height: 90vh; overflow-y: auto; opacity: 0; }
+.modal-box { background: var(--card); border: 1px var(--borde-estilo) var(--ember); border-radius: 18px; padding: 30px; width: 90%; max-width: 450px; text-align: center; position: relative; max-height: 90vh; overflow-y: auto; opacity: 0; }
 .modal-overlay.activo .modal-box { animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
 @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 .btn-cerrar-modal { background: var(--pumpkin); color: #fff; font-weight: 800; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; width: 100%; margin-top: 15px; font-size: 1rem; transition: background 0.2s; }
 .btn-cerrar-modal:hover { background: var(--violet); }
 
 /* ATAÚD FLOTANTE */
-.ataud-flotante { position: fixed; top: 50vh; right: 3vw; transform: translateY(-50%); margin-top: -30px; background: rgba(28, 8, 8, 0.9); border: 2px solid var(--violet); border-radius: 15px; padding: 15px; cursor: pointer; font-size: 2rem; z-index: 90; box-shadow: 0 0 15px var(--glow); transition: transform 0.3s; display: flex; flex-direction: column; align-items: center; }
+.ataud-flotante { position: fixed; top: 50vh; right: 3vw; transform: translateY(-50%); margin-top: -30px; background: rgba(28, 8, 8, 0.9); border: 2px var(--borde-estilo) var(--violet); border-radius: 15px; padding: 15px; cursor: pointer; font-size: 2rem; z-index: 90; box-shadow: 0 0 15px var(--glow); transition: transform 0.3s; display: flex; flex-direction: column; align-items: center; }
 .ataud-flotante:hover { transform: translateY(-50%) scale(1.1); background: var(--violet); }
 .ataud-flotante .badge { font-size: 0.8rem; background: var(--pumpkin); color: white; border-radius: 999px; padding: 2px 8px; font-weight: bold; margin-top: 5px; font-family: sans-serif; }
 .ataud-animado { animation: floatAtaud 4s ease-in-out infinite; }
 @keyframes floatAtaud { 0%, 100% { margin-top: -30px; } 50% { margin-top: -45px; } }
 .grid-ataud { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 20px; }
-.dia-caja { background: rgba(255,255,255,0.05); border: 1px solid var(--ember); border-radius: 10px; padding: 15px 5px; font-weight: bold; position: relative; transition: 0.3s; }
+.dia-caja { background: rgba(255,255,255,0.05); border: 1px var(--borde-estilo) var(--ember); border-radius: 10px; padding: 15px 5px; font-weight: bold; position: relative; transition: 0.3s; }
 .dia-caja.reclamado { background: var(--violet); border-color: #fff; color: #fff; }
 .dia-caja.actual { border-color: var(--pumpkin); background: rgba(214, 40, 40, 0.2); cursor: pointer; animation: pulse 2s infinite; }
 .dia-caja.bloqueado { opacity: 0.5; filter: grayscale(1); }
@@ -167,118 +161,94 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 #toast-logro { position: fixed; top: 20px; left: 50%; transform: translate(-50%, -20px); opacity: 0; pointer-events: none; background: var(--violet); color: #fff; border-radius: 12px; padding: 15px 25px; display: flex; align-items: center; gap: 15px; font-weight: bold; box-shadow: 0 5px 20px rgba(0,0,0,0.5); z-index: 999; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); border: 2px solid #fff; }
 #toast-logro.visible { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
 
-/* OVERLAY PARA TRANSICIÓN DE MINIJUEGOS */
-#fade-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-color: black;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 1s ease-in-out;
-    z-index: 9999;
-}
+/* TRANSICIÓN DE MINIJUEGOS */
+#fade-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: black; opacity: 0; pointer-events: none; transition: opacity 1s ease-in-out; z-index: 9999; }
 
 /* GRID ELEMENTOS BÁSICOS */
 h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; color: var(--pumpkin); }
 .sub { margin: 0 0 36px; max-width: 55ch; opacity: 0.9; font-size: 1.1rem; }
-.seccion-titulo { color: var(--violet); font-size: 1.5rem; margin-top: 40px; border-bottom: 1px solid var(--ember); padding-bottom: 10px; }
+.seccion-titulo { color: var(--violet); font-size: 1.5rem; margin-top: 40px; border-bottom: 1px var(--borde-estilo) var(--ember); padding-bottom: 10px; }
 .grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
-.item { background: rgba(28, 8, 8, 0.85); backdrop-filter: blur(8px); border: 1px solid var(--ember); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 10px; transition: border-color .2s, transform .2s; text-align: center; position: relative; overflow: hidden; }
+.item { background: rgba(28, 8, 8, 0.85); backdrop-filter: blur(8px); border: 1px var(--borde-estilo) var(--ember); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 10px; transition: border-color .2s, transform .2s; text-align: center; position: relative; overflow: hidden; }
 .item:hover { border-color: var(--pumpkin); transform: translateY(-4px); }
 .item .e { font-size: 3.5rem; line-height: 1; margin-bottom: 10px; }
 .item h3 { margin: 0; font-size: 1.2rem; color: var(--ink); }
 .item p { margin: 0; font-size: .92rem; opacity: .8; flex-grow: 1; }
 
-/* BOTONES GLOBALES (Corregido para no pisar el modal) */
+/* BOTONES GLOBALES */
 .btn-accion { display: inline-block; background: var(--pumpkin); color: #fff; font-weight: 800; padding: 12px 20px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem; margin-top: 10px; transition: all 0.2s; }
 .btn-accion:hover { background: var(--violet); }
 .btn-jugar { background: var(--ember); }
 .btn-jugar:hover { background: var(--pumpkin); }
-.btn-bloqueado { background: #331111 !important; color: #885555 !important; cursor: not-allowed !important; border: 1px solid var(--ember); }
+.btn-bloqueado { background: #331111 !important; color: #885555 !important; cursor: not-allowed !important; border: 1px var(--borde-estilo) var(--ember); }
 
 /* ==========================================
-   NUEVA TIENDA (ESTILO GEOMETRY DASH)
+   NUEVA TIENDA (GEOMETRY DASH STYLE)
    ========================================== */
 .tienda-seccion { display: none; animation: fadeIn 0.4s ease; }
 .tienda-seccion.activa { display: block; }
 
-/* La Bodeguita Superior */
-.caja-snack { background: var(--card); border: 2px dashed var(--pumpkin); border-radius: 18px; padding: 20px; text-align: center; margin-bottom: 40px; }
+.caja-snack { background: var(--card); border: 2px dashed var(--pumpkin); border-radius: 18px; padding: 20px; text-align: center; margin-bottom: 20px; }
 .letrero-neon { color: var(--pumpkin); font-weight: 900; font-size: 1.5rem; margin: 0 0 15px 0; text-shadow: 0 0 10px var(--glow); }
 
-/* Contenedor de Portales */
-.gd-portal-container { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
-.gd-portal { background: var(--card); border: 2px solid var(--violet); border-radius: 18px; padding: 50px 20px; cursor: pointer; text-align: center; transition: all 0.3s; position: relative; overflow: hidden; }
-.gd-portal::before { content: ""; position: absolute; inset: 0; background: var(--glow); opacity: 0; transition: opacity 0.3s; }
-.gd-portal:hover { transform: translateY(-5px); border-color: var(--pumpkin); box-shadow: 0 10px 20px var(--glow); }
-.gd-portal:hover::before { opacity: 0.1; }
-.gd-portal h3 { margin: 0; font-size: 1.8rem; color: var(--violet); position: relative; z-index: 2; }
+.gd-portal-container { display: grid; gap: 20px; grid-template-columns: 1fr 1fr; margin-bottom: 20px; }
+.gd-portal { border: 2px var(--borde-estilo) var(--violet); border-radius: 18px; padding: 60px 20px; cursor: pointer; text-align: center; transition: all 0.3s; position: relative; overflow: hidden; background-size: cover; background-position: center; }
+.gd-portal:hover { transform: translateY(-5px); border-color: var(--pumpkin); box-shadow: 0 10px 20px var(--glow); filter: brightness(1.2); }
+.gd-portal h3 { margin: 0; font-size: 1.8rem; color: #fff; position: relative; z-index: 2; text-shadow: 0 0 10px rgba(0,0,0,0.8); }
 
-/* Botón Volver */
-.btn-volver { background: transparent; color: var(--ink); border: 1px solid var(--ember); padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-bottom: 20px; font-weight: bold; font-size: 1rem; transition: 0.2s; }
+/* Imágenes Placeholder (Cámbialas cuando quieras en el HTML) */
+.portal-citas { background-image: linear-gradient(rgba(20,5,5,0.7), rgba(20,5,5,0.7)), url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600'); }
+.portal-gestos { background-image: linear-gradient(rgba(20,5,5,0.7), rgba(20,5,5,0.7)), url('https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=600'); }
+.portal-temas { background-image: linear-gradient(rgba(20,5,5,0.7), rgba(20,5,5,0.7)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600'); grid-column: 1 / -1; padding: 40px 20px; }
+
+.btn-volver { background: transparent; color: var(--ink); border: 1px var(--borde-estilo) var(--ember); padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-bottom: 20px; font-weight: bold; font-size: 1rem; transition: 0.2s; }
 .btn-volver:hover { background: var(--ember); color: #fff; }
 
-/* ==========================================
-   EL ICOFFIN CON FORMA REAL DE ATAÚD
-   ========================================== */
+/* EL ICOFFIN CON CLIP-PATH */
 .icoffin-container { position: relative; display: flex; justify-content: center; align-items: center; width: 100%; max-width: 800px; margin: 0 auto; min-height: 400px; }
-
-/* El borde simulado con clip-path */
-.icoffin-wrapper {
-  background: var(--violet);
-  padding: 8px; /* Grosor del borde */
-  clip-path: polygon(25% 0%, 75% 0%, 100% 15%, 100% 85%, 75% 100%, 25% 100%, 0% 85%, 0% 15%);
-  max-width: 320px;
-  width: 100%;
-  margin: 0 auto;
-  filter: drop-shadow(0 0 15px var(--glow));
-  z-index: 2;
-}
-
-/* El fondo interno */
-.icoffin-inner {
-  background: var(--card);
-  clip-path: polygon(25% 0%, 75% 0%, 100% 15%, 100% 85%, 75% 100%, 25% 100%, 0% 85%, 0% 15%);
-  padding: 50px 25px;
-  min-height: 380px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.icoffin-inner input { width: 100%; padding: 15px; border-radius: 12px; border: 2px solid var(--violet); background: rgba(255, 77, 109, 0.1); color: var(--ink); font-size: 1.2rem; text-transform: uppercase; margin-bottom: 20px; font-family: inherit; text-align: center; outline: none; transition: 0.3s; }
+.icoffin-wrapper { background: var(--violet); padding: 8px; clip-path: polygon(25% 0%, 75% 0%, 100% 15%, 100% 85%, 75% 100%, 25% 100%, 0% 85%, 0% 15%); max-width: 320px; width: 100%; margin: 0 auto; filter: drop-shadow(0 0 15px var(--glow)); z-index: 2; }
+.icoffin-inner { background: var(--card); clip-path: polygon(25% 0%, 75% 0%, 100% 15%, 100% 85%, 75% 100%, 25% 100%, 0% 85%, 0% 15%); padding: 50px 25px; min-height: 380px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.icoffin-inner input { width: 100%; padding: 15px; border-radius: 12px; border: 2px var(--borde-estilo) var(--violet); background: rgba(255, 77, 109, 0.1); color: var(--ink); font-size: 1.2rem; text-transform: uppercase; margin-bottom: 20px; font-family: inherit; text-align: center; outline: none; transition: 0.3s; }
 .icoffin-inner input:focus { background: rgba(255, 77, 109, 0.2); box-shadow: 0 0 10px var(--glow); }
 
 .diario-btn { position: absolute; right: 0; background: rgba(28, 8, 8, 0.8); border: 2px dashed var(--pumpkin); border-radius: 18px; padding: 20px; text-align: center; cursor: pointer; transition: 0.3s; width: 150px; z-index: 1; }
 .diario-btn:hover { background: rgba(214, 40, 40, 0.2); transform: scale(1.05); }
 
-/* ANIMACIÓN INICIAL DIARIO */
+/* DIARIO Y AUDIO */
 #overlay-diario { display: none; position: fixed; inset: 0; background: #000; z-index: 300; justify-content: center; align-items: center; color: var(--violet); font-size: 1.5rem; text-align: center; font-style: italic; padding: 20px; opacity: 0; transition: opacity 1.5s; }
-.pista-box { background: rgba(255,255,255,0.05); border-left: 4px solid var(--violet); padding: 15px; margin-bottom: 15px; text-align: left; }
-
-/* CONFIGURACIÓN AUDIO */
+.pista-box { background: rgba(255,255,255,0.05); border-left: 4px var(--borde-estilo) var(--violet); padding: 15px; margin-bottom: 15px; text-align: left; }
 .control-audio { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
 .control-audio input[type="range"] { flex-grow: 1; accent-color: var(--pumpkin); }
-.btn-mute { background: var(--card); border: 1px solid var(--ember); color: var(--ink); border-radius: 8px; padding: 8px; cursor: pointer; transition: 0.2s; }
+.btn-mute { background: var(--card); border: 1px var(--borde-estilo) var(--ember); color: var(--ink); border-radius: 8px; padding: 8px; cursor: pointer; transition: 0.2s; }
 .btn-mute:hover { border-color: var(--pumpkin); }
 
-/* WRAPPER FANTASMA SKULLETTES */
+/* SISTEMA DE PARTÍCULAS JS */
+.particula-deco { position: fixed; pointer-events: none; z-index: -1; opacity: 0; }
+/* Skullette clickable */
 .skullette-wrapper { position: fixed; z-index: 90; pointer-events: none; }
 .skullette-inner { width: 65px; height: 65px; cursor: pointer; filter: drop-shadow(0 0 10px var(--violet)); transition: transform 0.2s; pointer-events: auto; object-fit: contain; -webkit-user-drag: none; }
 .skullette-inner:hover { transform: scale(1.2); }
+.error-compra { animation: shake 0.4s; background: var(--violet) !important; color: #fff !important; pointer-events: none; }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+
+/* ELEMENTOS DEL CARRITO */
+.item-carrito { background: rgba(255,255,255,0.05); border: 1px var(--borde-estilo) var(--ember); border-radius: 10px; padding: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; text-align: left; }
+.item-carrito.usado { opacity: 0.5; filter: grayscale(1); }
+.item-carrito h4 { margin: 0 0 5px 0; color: var(--pumpkin); }
+.item-carrito p { margin: 0; font-size: 0.8rem; }
 
 @media(max-width: 850px) {
   body:has(#sec-home.activa) { overflow: hidden; position: fixed; width: 100%; height: 100%; }
   header { display: flex; flex-direction: column; gap: 15px; }
-  .header-right { width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; }
+  .header-right { width: 100%; display: grid; grid-template-columns: 1fr auto auto 1fr; align-items: center; gap: 10px; }
   .moneda-ui { justify-self: start; }
   .btn-col { justify-self: center; } 
-  .btn-ajustes { justify-self: end; }
+  .btn-icono.tuerca { justify-self: end; }
   nav { flex-wrap: wrap; justify-content: center; width: 100%; }
   #sec-home { padding-bottom: 90px; }
   .icoffin-container { flex-direction: column; min-height: auto; gap: 30px; }
   .diario-btn { position: relative; right: auto; width: 100%; max-width: 320px; }
+  .gd-portal-container { grid-template-columns: 1fr; }
   .ataud-flotante { right: 0; left: 0; bottom: 0; top: auto; transform: none; margin: 0; width: 100%; border-radius: 20px 20px 0 0; border-left: none; border-right: none; border-bottom: none; flex-direction: row; justify-content: center; gap: 15px; padding: 12px; }
   .ataud-flotante:hover { transform: none; background: rgba(28, 8, 8, 0.95); }
 }
@@ -301,7 +271,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   "Parece que alguien dejó sus contraseñas acá tiradas, qué despistado..."
 </div>
 
-<!-- MODAL CONFIGURACIÓN (Restaurado) -->
+<!-- MODAL CONFIGURACIÓN -->
 <div class="modal-overlay" id="modal-ajustes">
   <div class="modal-box">
     <h3 style="justify-content: center;">Configuración</h3>
@@ -322,6 +292,36 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   </div>
 </div>
 
+<!-- MODAL CARRITO -->
+<div class="modal-overlay" id="modal-carrito">
+  <div class="modal-box">
+    <h3 style="justify-content: center;">🛒 Tu Inventario</h3>
+    <p style="font-size: 0.9rem; margin-top: 0; border-bottom: 1px var(--borde-estilo) var(--ember); padding-bottom: 10px;">Úsalos sabiamente para reclamar tus premios.</p>
+    <div id="lista-carrito" style="max-height: 400px; overflow-y: auto;"></div>
+    <button class="btn-cerrar-modal" onclick="cerrarCarrito()">Cerrar</button>
+  </div>
+</div>
+
+<!-- MODAL CANJEAR CÓDIGO -->
+<div class="modal-overlay" id="modal-usar-item">
+  <div class="modal-box">
+    <h3 style="justify-content: center;">Canjear Ticket</h3>
+    <p style="font-size: 0.9rem;">Copia este código y envíamelo para reclamar tu premio.</p>
+    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; font-size: 1.5rem; font-weight: bold; color: var(--pumpkin); margin: 20px 0; letter-spacing: 2px;" id="txt-codigo-generado">BOO-XXXX</div>
+    <button class="btn-accion" style="width: 100%; margin-bottom: 10px;" id="btn-copiar-codigo">Copiar y Usar</button>
+    <button class="btn-cerrar-modal" style="background: transparent; color: var(--ink); border: 1px solid var(--ember);" onclick="cerrarModalUsar()">Cancelar</button>
+  </div>
+</div>
+
+<!-- MODAL TICKETS ADMIN -->
+<div class="modal-overlay" id="modal-admin-tickets">
+  <div class="modal-box">
+    <h3 style="justify-content: center;">[ADMIN] Base de Tickets</h3>
+    <div id="lista-admin-tickets" style="max-height: 400px; overflow-y: auto; font-size: 0.8rem;"></div>
+    <button class="btn-cerrar-modal" onclick="document.getElementById('modal-admin-tickets').classList.remove('activo')">Cerrar</button>
+  </div>
+</div>
+
 <!-- MODAL ATAÚD DIARIO -->
 <div class="modal-overlay" id="modal-ataud">
   <div class="modal-box">
@@ -337,7 +337,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 <div class="modal-overlay" id="modal-diario">
   <div class="modal-box" style="text-align: left;">
     <h3 style="justify-content: flex-start;">Diario Secreto 📖</h3>
-    <p style="font-size: 0.9rem; border-bottom:1px solid var(--ember); padding-bottom:10px;">Encuentra cómo revelar los secretos.</p>
+    <p style="font-size: 0.9rem; border-bottom:1px var(--borde-estilo) var(--ember); padding-bottom:10px;">Encuentra cómo revelar los secretos.</p>
     <div id="lista-pistas"></div>
     <button class="btn-cerrar-modal" onclick="esconderDiario()">Esconder</button>
   </div>
@@ -349,23 +349,26 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 </div>
 
 <header>
-  <a class="logo" onclick="cambiarPagina('sec-home')">Boo! Store</a>
+  <a class="logo" onclick="reproducirSonido(sfxExito); cambiarPagina('sec-home')">Boo! Store</a>
   <nav>
-    <a onclick="cambiarPagina('sec-juegos')" id="nav-juegos">Juegos</a>
-    <a onclick="cambiarPagina('sec-tienda')" id="nav-tienda">Tienda</a>
-    <a onclick="cambiarPagina('sec-codigos')" id="nav-codigos">Códigos</a>
+    <a onclick="reproducirSonido(sfxExito); cambiarPagina('sec-juegos')" id="nav-juegos">Juegos</a>
+    <a onclick="reproducirSonido(sfxExito); cambiarPagina('sec-tienda')" id="nav-tienda">Tienda</a>
+    <a onclick="reproducirSonido(sfxExito); cambiarPagina('sec-codigos')" id="nav-codigos">Códigos</a>
   </nav>
   <div class="header-right">
     <span class="moneda-ui">🍬 <span id="ui-dulces">0</span></span>
-    <a class="btn-col" onclick="cambiarPagina('sec-coleccion')" id="nav-coleccion">Nuestra Colección</a>
-    <button class="btn-ajustes" onclick="abrirAjustes()">
+    <!-- NUEVO BOTÓN DE CARRITO -->
+    <button class="btn-icono" onclick="abrirCarrito()" title="Inventario de Compras">🛒</button>
+    <a class="btn-col" onclick="reproducirSonido(sfxExito); cambiarPagina('sec-coleccion')" id="nav-coleccion">Nuestra Colección</a>
+    <button class="btn-icono tuerca" onclick="abrirAjustes()" title="Ajustes">
       <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
     </button>
   </div>
 </header>
 
 <main class="pagina activa hero" id="sec-home">
-  <div class="bats" aria-hidden="true"><span class="bat">🦇</span><span class="bat">🦇</span><span class="bat">🦇</span></div>
+  <!-- Los murciélagos estáticos se borran visualmente desde JS si no es tema clásico -->
+  <div class="bats" id="bats-clasicos" aria-hidden="true"><span class="bat">🦇</span><span class="bat">🦇</span><span class="bat">🦇</span></div>
   <div>
     <div class="title-wrapper">
       <svg class="heart-svg heart-l" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
@@ -373,7 +376,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
       <svg class="heart-svg heart-r" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
     </div>
     <p>Un pequeño rincón oscuro creado solo para ti. ¿Te atreves a jugar conmigo antes de que se acabe la noche?</p>
-    <button class="btn-accion" style="border-radius:999px; padding:14px 30px; font-size:1.1rem; margin-bottom: 20px;" onclick="cambiarPagina('sec-juegos')">Comenzar la aventura</button>
+    <button class="btn-accion" style="border-radius:999px; padding:14px 30px; font-size:1.1rem; margin-bottom: 20px;" onclick="reproducirSonido(sfxExito); cambiarPagina('sec-juegos')">Comenzar la aventura</button>
     <div class="count" role="timer">
       <div><b id="d">--</b><span>días</span></div><div><b id="h">--</b><span>horas</span></div><div><b id="m">--</b><span>min</span></div><div><b id="s">--</b><span>seg</span></div>
     </div>
@@ -405,7 +408,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 <!-- LA TIENDA ESTRUCTURADA (GEOMETRY DASH STYLE) -->
 <section class="pagina" id="sec-tienda">
   <h2>Bazar de los Enamorados</h2>
-  <p class="sub">Usa tus dulces para invocar amuletos, citas y snacks.</p>
+  <p class="sub">Usa tus dulces para invocar citas y snacks. Se guardarán en tu 🛒 Carrito.</p>
   
   <!-- MENÚ PRINCIPAL DE PORTALES -->
   <div id="tienda-main" class="tienda-seccion activa">
@@ -414,24 +417,24 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
       <div class="caja-snack">
           <h3 class="letrero-neon">Neon Coffin Snacks</h3>
           <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-              <button class="btn-accion" onclick="comprarItem(this, 'bonobon', 30, 'Bonobon', 'consumible')">🍬 Bonobon (30 🍬)</button>
-              <button class="btn-accion" onclick="comprarItem(this, 'chifles', 40, 'Chifles', 'consumible')">🥔 Chifles Acevichados (40 🍬)</button>
-              <button class="btn-accion" onclick="comprarItem(this, 'helado', 50, 'Helado', 'consumible')">🍦 Helado Piamonte (50 🍬)</button>
-              <button class="btn-accion" onclick="comprarItem(this, 'bebida', 40, 'Bebida', 'consumible')">🧃 Bebida de Rescate (40 🍬)</button>
-              <button class="btn-accion" onclick="comprarItem(this, 'carretilla', 60, 'Antojo', 'consumible')">🌭 Antojo Carretilla (60 🍬)</button>
+              <button class="btn-accion" onclick="comprarItem(this, 'bonobon', 30, '🍬 Bonobon', 'consumible')">Bonobon (30 🍬)</button>
+              <button class="btn-accion" onclick="comprarItem(this, 'chifles', 40, '🥔 Chifles', 'consumible')">Chifles (40 🍬)</button>
+              <button class="btn-accion" onclick="comprarItem(this, 'helado', 50, '🍦 Helado', 'consumible')">Helado Piamonte (50 🍬)</button>
+              <button class="btn-accion" onclick="comprarItem(this, 'bebida', 40, '🧃 Bebida', 'consumible')">Bebida Rescate (40 🍬)</button>
+              <button class="btn-accion" onclick="comprarItem(this, 'carretilla', 60, '🌭 Antojo', 'consumible')">Antojo Carretilla (60 🍬)</button>
           </div>
       </div>
 
-      <!-- PORTALES -->
+      <!-- PORTALES Y SECCIÓN DE TEMAS -->
       <div class="gd-portal-container">
-          <div class="gd-portal" onclick="abrirSubTienda('tienda-citas')">
+          <div class="gd-portal portal-citas" onclick="abrirSubTienda('tienda-citas')">
               <h3>🎟️ Citas VIP</h3>
           </div>
-          <div class="gd-portal" onclick="abrirSubTienda('tienda-gestos')">
+          <div class="gd-portal portal-gestos" onclick="abrirSubTienda('tienda-gestos')">
               <h3>🩹 Gestos Especiales</h3>
           </div>
-          <div class="gd-portal" onclick="abrirSubTienda('tienda-temas')" style="grid-column: 1 / -1;">
-              <h3>🎨 Temas y Magia</h3>
+          <div class="gd-portal portal-temas" onclick="abrirSubTienda('tienda-temas')">
+              <h3>🎨 Temas y Magia (Cosméticos)</h3>
           </div>
       </div>
   </div>
@@ -465,30 +468,28 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   <div id="tienda-temas" class="tienda-seccion">
       <button class="btn-volver" onclick="cerrarSubTienda()">⬅ Volver al Bazar</button>
       <h3 class="seccion-titulo" style="margin-top: 0;">🎨 Personalización de la App</h3>
-      <p style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 20px;">Los artículos comprados se guardan en tu Colección para equiparlos cuando quieras.</p>
+      <p style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 20px;">Los artículos comprados van a "Nuestra Colección" para equiparlos.</p>
       
       <div class="grid">
-          <article class="item"><span class="e">🦇</span><h3>Tema: Rosa</h3><p>Estilo Draculaura</p><button class="btn-accion" onclick="comprarItem(this, 'tema-rosa', 50, 'Tema Rosa', 'tema')">Comprar - 50 🍬</button></article>
-          <article class="item"><span class="e">🩸</span><h3>Tema: Sangre</h3><p>Romance Oscuro</p><button class="btn-accion" onclick="comprarItem(this, 'tema-sangre', 50, 'Tema Sangre', 'tema')">Comprar - 50 🍬</button></article>
-          <article class="item"><span class="e">⚡</span><h3>Tema: Menta</h3><p>Estilo Frankie</p><button class="btn-accion" onclick="comprarItem(this, 'tema-menta', 50, 'Tema Menta', 'tema')">Comprar - 50 🍬</button></article>
-          <article class="item"><span class="e">🏺</span><h3>Tema: Oro</h3><p>Estilo Cleo</p><button class="btn-accion" onclick="comprarItem(this, 'tema-oro', 50, 'Tema Oro', 'tema')">Comprar - 50 🍬</button></article>
-          
-          <article class="item" style="opacity: 0.5;"><span class="e">🌧️</span><h3>Lluvia Custom</h3><p>Próximamente</p><button class="btn-accion btn-bloqueado">En Construcción</button></article>
-          <article class="item" style="opacity: 0.5;"><span class="e">🎧</span><h3>Música Alterna</h3><p>Próximamente</p><button class="btn-accion btn-bloqueado">En Construcción</button></article>
+          <article class="item"><span class="e">🦇</span><h3>Tema: Rosa</h3><p>Lluvia de Destellos</p><button class="btn-accion" onclick="comprarItem(this, 'tema-rosa', 50, 'Tema Rosa', 'tema')">Comprar - 50 🍬</button></article>
+          <article class="item"><span class="e">🩸</span><h3>Tema: Sangre</h3><p>Gotas Cayendo</p><button class="btn-accion" onclick="comprarItem(this, 'tema-sangre', 50, 'Tema Sangre', 'tema')">Comprar - 50 🍬</button></article>
+          <article class="item"><span class="e">🏺</span><h3>Tema: Momia</h3><p>Polvo de Arena</p><button class="btn-accion" onclick="comprarItem(this, 'tema-momia', 50, 'Tema Momia', 'tema')">Comprar - 50 🍬</button></article>
+          <article class="item"><span class="e">🎃</span><h3>Tema: Calabaza</h3><p>Brasas Flotantes</p><button class="btn-accion" onclick="comprarItem(this, 'tema-calabaza', 50, 'Tema Calabaza', 'tema')">Comprar - 50 🍬</button></article>
+          <article class="item"><span class="e">🦇</span><h3>Tema: Batman</h3><p>Filtro Blanco y Negro</p><button class="btn-accion" onclick="comprarItem(this, 'tema-batman', 50, 'Tema Batman', 'tema')">Comprar - 50 🍬</button></article>
       </div>
   </div>
 
 </section>
 
-<!-- COLECCIÓN (CON SECCIÓN DE COSMÉTICOS) -->
+<!-- COLECCIÓN Y COSMÉTICOS -->
 <section class="pagina" id="sec-coleccion">
   <h2>Tu Colección</h2>
-  <p class="sub">Aquí guardaremos cada recuerdo y amuleto que consigas.</p>
+  <p class="sub">Tus temas y logros conseguidos (Los consumibles están en tu 🛒).</p>
   
   <h3 class="seccion-titulo">En el menú (Logros)</h3>
   <div class="grid" id="contenedor-logros"></div>
   
-  <h3 class="seccion-titulo">Personalización y Cosméticos</h3>
+  <h3 class="seccion-titulo">Personalización de Interfaz</h3>
   <div class="grid" id="contenedor-coleccion"></div>
 </section>
 
@@ -515,7 +516,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 
 <script>
 // ========================================================
-// 1. CONFIGURACIÓN DE FIREBASE (INTACTA)
+// 1. CONFIGURACIÓN DE FIREBASE
 // ========================================================
 const firebaseConfig = {
   apiKey: "AIzaSyAR9cVrx1s3cMd1hfG2NySoRSBrlXHBdIk",
@@ -546,18 +547,22 @@ const bgMusic = document.getElementById('audio-bg'); bgMusic.volume = 0; bgMusic
 const sfxExito = new Audio('exito.mp3'); sfxExito.volume = 0; sfxExito.muted = true;
 const sfxError = new Audio('error.mp3'); sfxError.volume = 0; sfxError.muted = true;
 
-let dulces = 0; let coleccion = []; let logros = [];
+let dulces = 0; 
+let coleccion = []; 
+let logros = [];
+let carrito = []; // NUEVO: Inventario de consumibles
 let ataudDia = 1; let ataudTiempo = 0;   
 let diarioVisto = false; let pistas = [];       
 let temaActivo = 'tema-default';
 
-// CATÁLOGO DE COLECCIONABLES Y TEMAS
+// CATÁLOGO DE TEMAS (Coleccionables)
 const catalogo = {
-  'tema-default': { icono: '🦇', nombre: 'Tema: Clásico', desc: 'El diseño original de la app.', tipo: 'tema' },
-  'tema-rosa': { icono: '🦇', nombre: 'Tema: Rosa Vampírico', desc: 'Diseño fucsia para la app.', tipo: 'tema' },
-  'tema-sangre': { icono: '🩸', nombre: 'Tema: Rojo Sangre', desc: 'Diseño carmesí oscuro.', tipo: 'tema' },
-  'tema-menta': { icono: '⚡', nombre: 'Tema: Menta Eléctrica', desc: 'Diseño cian y menta.', tipo: 'tema' },
-  'tema-oro': { icono: '🏺', nombre: 'Tema: Oro del Nilo', desc: 'Diseño dorado elegante.', tipo: 'tema' }
+  'tema-default': { icono: '🦇', nombre: 'Tema: Clásico', desc: 'El diseño original.', tipo: 'tema' },
+  'tema-rosa': { icono: '💖', nombre: 'Tema: Rosa Vampírico', desc: 'Lluvia de destellos.', tipo: 'tema' },
+  'tema-sangre': { icono: '🩸', nombre: 'Tema: Rojo Sangre', desc: 'Gotas cayendo.', tipo: 'tema' },
+  'tema-momia': { icono: '🏺', nombre: 'Tema: Momia', desc: 'Polvo de arena en el viento.', tipo: 'tema' },
+  'tema-calabaza': { icono: '🎃', nombre: 'Tema: Calabaza', desc: 'Brasas flotantes.', tipo: 'tema' },
+  'tema-batman': { icono: '🦇', nombre: 'Tema: Batman', desc: 'Filtro oscuro y bat-señales.', tipo: 'tema' }
 };
 
 const catalogoLogros = {
@@ -580,15 +585,16 @@ if(database) {
     const data = snapshot.val();
     if (data) {
       dulces = data.dulces || 0; 
-      coleccion = data.coleccion || ['tema-default']; // El default siempre viene de regalo
+      coleccion = data.coleccion || ['tema-default']; 
       logros = data.logros || [];
+      carrito = data.carrito || [];
       ataudDia = data.ataudDia || 1; 
       ataudTiempo = data.ataudTiempo || 0;
       diarioVisto = data.diarioVisto || false; 
       pistas = data.pistas || [];
       temaActivo = data.temaActivo || 'tema-default';
     }
-    if (!coleccion.includes('tema-default')) coleccion.push('tema-default'); // Por seguridad
+    if (!coleccion.includes('tema-default')) coleccion.push('tema-default'); 
     aplicarTemaCSS(temaActivo);
     actualizarUI();
   });
@@ -598,7 +604,7 @@ function guardarDatos() {
   if (dulces >= 150) checkLogro('ahorro');
   if(database) {
     database.ref(rutaDB).set({ 
-      dulces: dulces, coleccion: coleccion, logros: logros, 
+      dulces: dulces, coleccion: coleccion, logros: logros, carrito: carrito,
       ataudDia: ataudDia, ataudTiempo: ataudTiempo, 
       diarioVisto: diarioVisto, pistas: pistas,
       temaActivo: temaActivo
@@ -675,7 +681,7 @@ function actualizarTimerAtaud() {
 }
 
 // ========================================================
-// 6. TIENDA MODULAR Y COLECCIÓN DE COSMÉTICOS
+// 6. TIENDA MODULAR, CARRITO Y TEMAS
 // ========================================================
 function abrirSubTienda(idSub) {
     reproducirSonido(sfxExito);
@@ -692,7 +698,6 @@ function cerrarSubTienda() {
 }
 
 function comprarItem(boton, idItem, precio, nombreItem, tipo) {
-    // Si ya lo tiene
     if (tipo !== 'consumible' && coleccion.includes(idItem)) {
         mostrarToast("Ya tienes este ítem en tu colección.", false);
         return;
@@ -704,12 +709,15 @@ function comprarItem(boton, idItem, precio, nombreItem, tipo) {
 
         if (tipo === 'tema') {
             coleccion.push(idItem);
-            equiparTema(idItem); // Lo equipa y guarda en firebase automáticamente
+            equiparTema(idItem); 
+            alert(`¡Has adquirido: ${nombreItem}!\nEquipado al instante.`);
         } else {
-            guardarDatos(); // Guardar consumo de caramelos
+            // Es consumible, genera Ticket único y va al Carrito
+            let codigoUnico = "BOO-" + Math.random().toString(36).substr(2, 4).toUpperCase();
+            carrito.push({ id: idItem, nombre: nombreItem, codigo: codigoUnico, usado: false });
+            guardarDatos();
+            alert(`¡Compraste: ${nombreItem}!\nRevisa tu 🛒 Carrito arriba para usarlo.`);
         }
-
-        alert(`¡Has adquirido: ${nombreItem}!\nTe quedan ${dulces} 🍬.`);
     } else {
         reproducirSonido(sfxError); 
         boton.classList.add('error-compra'); 
@@ -719,17 +727,88 @@ function comprarItem(boton, idItem, precio, nombreItem, tipo) {
     }
 }
 
+// ================= LÓGICA DEL CARRITO =================
+function abrirCarrito() {
+    reproducirSonido(sfxExito);
+    document.getElementById('modal-carrito').classList.add('activo');
+    renderizarCarrito();
+}
+
+function cerrarCarrito() {
+    document.getElementById('modal-carrito').classList.remove('activo');
+}
+
+function renderizarCarrito() {
+    const lista = document.getElementById('lista-carrito');
+    lista.innerHTML = '';
+    
+    if(carrito.length === 0) {
+        lista.innerHTML = '<p style="text-align: center; opacity: 0.6;">Tu carrito está vacío.</p>';
+        return;
+    }
+
+    carrito.forEach((item, index) => {
+        const estadoClase = item.usado ? 'usado' : '';
+        const botonHTML = item.usado ? 
+            `<button class="btn-accion btn-bloqueado" style="margin:0; padding: 6px 12px;">USADO</button>` : 
+            `<button class="btn-accion" style="margin:0; padding: 6px 12px; background: var(--violet);" onclick="abrirUsoItem(${index})">USAR</button>`;
+
+        lista.innerHTML += `
+            <div class="item-carrito ${estadoClase}">
+                <div>
+                    <h4>${item.nombre}</h4>
+                    <p style="opacity:0.7;">Código guardado</p>
+                </div>
+                ${botonHTML}
+            </div>
+        `;
+    });
+}
+
+function abrirUsoItem(index) {
+    cerrarCarrito();
+    reproducirSonido(sfxExito);
+    const item = carrito[index];
+    document.getElementById('txt-codigo-generado').innerText = item.codigo;
+    document.getElementById('btn-copiar-codigo').onclick = function() { confirmarUsoItem(index); };
+    document.getElementById('modal-usar-item').classList.add('activo');
+}
+
+function cerrarModalUsar() {
+    document.getElementById('modal-usar-item').classList.remove('activo');
+    abrirCarrito();
+}
+
+function confirmarUsoItem(index) {
+    const codigo = carrito[index].codigo;
+    navigator.clipboard.writeText(codigo).then(() => {
+        carrito[index].usado = true;
+        guardarDatos();
+        reproducirSonido(sfxExito);
+        document.getElementById('btn-copiar-codigo').innerText = "¡Copiado!";
+        setTimeout(() => {
+            document.getElementById('btn-copiar-codigo').innerText = "Copiar y Usar";
+            cerrarModalUsar();
+        }, 1500);
+    }).catch(err => {
+        alert("No se pudo copiar. Código: " + codigo);
+    });
+}
+
+// ================= TEMAS Y COLECCIÓN =================
 function equiparTema(idTema) {
     temaActivo = idTema;
     aplicarTemaCSS(temaActivo);
+    actualizarAnimacionInicio();
     guardarDatos();
 }
 
 function aplicarTemaCSS(tema) {
     document.body.className = '';
     if(tema && tema !== 'tema-default') {
-        // Le quitamos el "tema-" para poner solo la clase CSS correspondiente
-        document.body.classList.add(tema);
+        // Le quitamos "tema-" para inyectar la clase CSS correcta
+        let clase = tema.replace('tema-', '');
+        document.body.classList.add('tema-' + clase);
     }
 }
 
@@ -738,20 +817,13 @@ function renderizarColeccionYLogros() {
   if(!divColeccion) return;
   divColeccion.innerHTML = ''; let hayColeccion = false;
   
-  // Renderizamos los amuletos y temas de la colección
   Object.keys(catalogo).forEach(id => {
     if (coleccion.includes(id)) { 
         hayColeccion = true; 
         const item = catalogo[id];
-        let botonHTML = '';
-        
-        if(item.tipo === 'tema') {
-            if(temaActivo === id) {
-                botonHTML = `<button class="btn-accion btn-bloqueado" style="width: 100%;">Equipado</button>`;
-            } else {
-                botonHTML = `<button class="btn-accion" style="width: 100%;" onclick="equiparTema('${id}')">Equipar</button>`;
-            }
-        }
+        let botonHTML = (temaActivo === id) ? 
+            `<button class="btn-accion btn-bloqueado" style="width: 100%;">Equipado</button>` : 
+            `<button class="btn-accion" style="width: 100%;" onclick="equiparTema('${id}')">Equipar</button>`;
 
         divColeccion.innerHTML += `
         <article class="item" style="border-color: var(--violet)">
@@ -763,9 +835,7 @@ function renderizarColeccionYLogros() {
     } 
   });
   
-  if (!hayColeccion) divColeccion.innerHTML = `<div style="grid-column: 1/-1; text-align: center; opacity: 0.7;">Aún no tienes cosméticos...</div>`;
   divLogros.innerHTML = '';
-  
   Object.keys(catalogoLogros).forEach(key => {
     const l = catalogoLogros[key]; const ganado = logros.includes(key);
     divLogros.innerHTML += `<article class="item" style="padding:15px; flex-direction:row; align-items:center; text-align:left; ${ganado ? 'border-color:var(--pumpkin); background:rgba(214,40,40,0.1);' : 'opacity:0.6; filter:grayscale(1);'}">
@@ -776,7 +846,7 @@ function renderizarColeccionYLogros() {
 }
 
 // ========================================================
-// 7. DIARIO Y CÓDIGOS
+// 7. DIARIO Y CÓDIGOS (NUEVOS COMANDOS ADMIN)
 // ========================================================
 function abrirDiario() {
   const volSlider = parseFloat(document.getElementById('vol-musica').value);
@@ -786,7 +856,6 @@ function abrirDiario() {
     const overlay = document.getElementById('overlay-diario');
     overlay.style.display = 'flex'; 
     setTimeout(() => { overlay.style.opacity = '1'; }, 100);
-    
     setTimeout(() => { 
       overlay.style.opacity = '0'; 
       setTimeout(() => { 
@@ -795,7 +864,6 @@ function abrirDiario() {
         checkLogro('diario');
       }, 1500); 
     }, 5500); 
-    
     diarioVisto = true; 
     guardarDatos();
   } else { 
@@ -822,31 +890,125 @@ function canjearCodigo() {
   const input = document.getElementById('input-codigo'); const msg = document.getElementById('msg-codigo'); const codigo = input.value.trim().toUpperCase(); let msjRespuesta = ""; colorRespuesta = "#4CAF50";
   switch(codigo) {
     case 'AMOR': msjRespuesta = catalogoPistas['pista_amor'].desc; colorRespuesta = "var(--violet)"; reproducirSonido(sfxExito); break;
-    case 'GIVE': dulces += 500; msjRespuesta = "[ADMIN] +500 Caramelos añadidos."; colorRespuesta = "var(--violet)"; reproducirSonido(sfxExito); break;
-    case 'RESET': dulces = 0; coleccion = ['tema-default']; logros = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; temaActivo = 'tema-default'; msjRespuesta = "[ADMIN] Borrón y cuenta total."; colorRespuesta = "var(--pumpkin)"; break;
+    case 'GIVE': dulces += 500; msjRespuesta = "[ADMIN] +500 Caramelos."; colorRespuesta = "var(--violet)"; reproducirSonido(sfxExito); break;
+    case 'GIVE10': dulces += 10; msjRespuesta = "[ADMIN] +10 Caramelos."; colorRespuesta = "var(--violet)"; reproducirSonido(sfxExito); break;
+    case 'TICKETS': abrirAdminTickets(); msjRespuesta = "[ADMIN] Tickets abiertos."; break;
+    case 'CLEANCART': carrito = []; msjRespuesta = "[ADMIN] Carrito vacío."; break;
+    case 'UNLOCKTHEMES': coleccion = ['tema-default', 'tema-rosa', 'tema-sangre', 'tema-momia', 'tema-calabaza', 'tema-batman']; msjRespuesta = "[ADMIN] Temas desbloqueados."; break;
+    case 'RESET': dulces = 0; coleccion = ['tema-default']; logros = []; carrito = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Cuenta a cero."; colorRespuesta = "var(--pumpkin)"; break;
     case 'RESETCARAMELOS': dulces = 0; msjRespuesta = "[ADMIN] Caramelos a 0."; break;
     case 'RESETLOGROS': logros = []; msjRespuesta = "[ADMIN] Logros bloqueados."; break;
-    case 'RESETCOLECCTION': coleccion = ['tema-default']; pistas = []; temaActivo = 'tema-default'; msjRespuesta = "[ADMIN] Colección vaciada."; break;
+    case 'RESETCOLECCTION': coleccion = ['tema-default']; pistas = []; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Colección vaciada."; break;
     case 'RESETATAUD': ataudDia = 1; ataudTiempo = 0; msjRespuesta = "[ADMIN] Ataúd al Día 1."; break;
     case '24H': ataudTiempo = Date.now() - 86400000; msjRespuesta = "[ADMIN] Reloj adelantado 24h."; break;
     default: msjRespuesta = "Contraseña incorrecta..."; colorRespuesta = "var(--pumpkin)"; reproducirSonido(sfxError);
   }
-  msg.style.color = colorRespuesta; msg.textContent = msjRespuesta; input.value = ''; guardarDatos(); if(codigo !== 'AMOR') setTimeout(() => { msg.textContent = ''; }, 4000);
+  msg.style.color = colorRespuesta; msg.textContent = msjRespuesta; input.value = ''; guardarDatos(); if(codigo !== 'AMOR' && codigo !== 'TICKETS') setTimeout(() => { msg.textContent = ''; }, 4000);
+}
+
+function abrirAdminTickets() {
+    const lista = document.getElementById('lista-admin-tickets');
+    lista.innerHTML = '';
+    if(carrito.length === 0) { lista.innerHTML = '<p>No hay tickets generados.</p>'; }
+    carrito.forEach(item => {
+        lista.innerHTML += `<div style="border-bottom: 1px solid #555; padding: 10px 0; display:flex; justify-content: space-between;">
+            <span><b>${item.codigo}</b> - ${item.nombre}</span>
+            <span style="color: ${item.usado ? '#ff4d6d' : '#00b33c'};">${item.usado ? 'USADO' : 'VÁLIDO'}</span>
+        </div>`;
+    });
+    document.getElementById('modal-admin-tickets').classList.add('activo');
 }
 
 // ========================================================
-// 8. NAVEGACIÓN, JUEGOS Y SKULLETTES
+// 8. ANIMACIONES Y SISTEMA DE PARTÍCULAS JS
 // ========================================================
 function abrirAjustes() { checkLogro('config'); document.getElementById('modal-ajustes').classList.add('activo'); }
 function cerrarAjustes() { document.getElementById('modal-ajustes').classList.remove('activo'); }
 
-// SKULLETTES VOLADORAS (Eje Y central)
+// Gestionar la animación visual en Inicio según el tema
+function actualizarAnimacionInicio() {
+    const batsClasicos = document.getElementById('bats-clasicos');
+    if(batsClasicos) {
+        batsClasicos.style.display = (temaActivo === 'tema-default') ? 'block' : 'none';
+    }
+}
+
+// Generador de partículas decorativas para el fondo
+setInterval(() => {
+    // Si es tema default, ya tiene el CSS de los murciélagos, no hacemos partículas extra
+    if(temaActivo === 'tema-default') return;
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'particula-deco';
+    wrapper.style.fontSize = Math.floor(Math.random() * 1.5 + 1) + 'rem';
+    
+    // Lógica por Tema
+    if(temaActivo === 'tema-rosa') {
+        wrapper.innerHTML = Math.random() > 0.5 ? '💖' : '✨';
+        wrapper.style.top = Math.floor(Math.random() * 100) + 'vh';
+        wrapper.style.left = Math.floor(Math.random() * 100) + 'vw';
+        wrapper.style.filter = 'drop-shadow(0 0 10px rgba(255,51,153,0.8))';
+        wrapper.style.transition = 'opacity 2s ease';
+        document.body.appendChild(wrapper);
+        setTimeout(() => wrapper.style.opacity = '0.7', 100);
+        setTimeout(() => wrapper.style.opacity = '0', 2000);
+        setTimeout(() => wrapper.remove(), 4000);
+    } 
+    else if(temaActivo === 'tema-sangre') {
+        wrapper.innerHTML = '💧';
+        wrapper.style.top = '-10vh';
+        wrapper.style.left = Math.floor(Math.random() * 100) + 'vw';
+        wrapper.style.filter = 'brightness(0) drop-shadow(0 5px 5px rgba(255,0,0,0.8))';
+        wrapper.style.transition = 'transform 3s linear, opacity 1s';
+        wrapper.style.opacity = '0.8';
+        document.body.appendChild(wrapper);
+        setTimeout(() => wrapper.style.transform = 'translateY(110vh)', 100);
+        setTimeout(() => wrapper.remove(), 3200);
+    }
+    else if(temaActivo === 'tema-momia') {
+        wrapper.innerHTML = '⚱️';
+        wrapper.style.top = Math.floor(Math.random() * 100) + 'vh';
+        wrapper.style.left = '-10vw';
+        wrapper.style.filter = 'brightness(0.6) sepia(1)';
+        wrapper.style.transition = 'transform 6s linear, opacity 1s';
+        wrapper.style.opacity = '0.5';
+        document.body.appendChild(wrapper);
+        setTimeout(() => wrapper.style.transform = 'translateX(110vw) rotate(180deg)', 100);
+        setTimeout(() => wrapper.remove(), 6200);
+    }
+    else if(temaActivo === 'tema-calabaza') {
+        wrapper.innerHTML = '🔥';
+        wrapper.style.fontSize = Math.floor(Math.random() * 1 + 0.5) + 'rem';
+        wrapper.style.top = '110vh';
+        wrapper.style.left = Math.floor(Math.random() * 100) + 'vw';
+        wrapper.style.filter = 'drop-shadow(0 0 10px rgba(255,102,0,0.8))';
+        wrapper.style.transition = 'transform 4s ease-out, opacity 1s';
+        wrapper.style.opacity = '0.7';
+        document.body.appendChild(wrapper);
+        setTimeout(() => wrapper.style.transform = `translateY(-60vh) translateX(${Math.random() > 0.5 ? 50 : -50}px)`, 100);
+        setTimeout(() => wrapper.style.opacity = '0', 3000);
+        setTimeout(() => wrapper.remove(), 4200);
+    }
+    else if(temaActivo === 'tema-batman') {
+        wrapper.innerHTML = '🦇';
+        wrapper.style.fontSize = '4rem';
+        wrapper.style.top = Math.floor(Math.random() * 80) + 'vh';
+        wrapper.style.left = '-20vw';
+        wrapper.style.filter = 'brightness(0) drop-shadow(0 0 20px rgba(255,255,255,0.2))';
+        wrapper.style.transition = 'transform 12s linear, opacity 2s';
+        wrapper.style.opacity = '0.2';
+        document.body.appendChild(wrapper);
+        setTimeout(() => wrapper.style.transform = 'translateX(130vw) scale(1.5)', 100);
+        setTimeout(() => wrapper.remove(), 12200);
+    }
+}, 800);
+
+// Skullettes clickeables para ganar caramelos (Independiente del tema visual)
 setInterval(() => {
   const enJuegos = document.getElementById('sec-juegos').classList.contains('activa');
   if(!enJuegos && Math.random() > 0.7) {
     const wrapper = document.createElement('div');
     wrapper.className = 'skullette-wrapper';
-    
     wrapper.style.top = Math.floor(Math.random() * 65) + 15 + 'vh'; 
     wrapper.style.left = (Math.random() > 0.5 ? '-50px' : '105vw');
     wrapper.style.opacity = '0'; 
@@ -855,7 +1017,6 @@ setInterval(() => {
     const inner = document.createElement('img'); 
     inner.className = 'skullette-inner'; 
     inner.src = 'logo.png';
-    
     wrapper.appendChild(inner); document.body.appendChild(wrapper);
     
     setTimeout(() => { wrapper.style.opacity = '1'; wrapper.style.transform = `translateX(${wrapper.style.left === '-50px' ? '120vw' : '-120vw'}) rotate(360deg)`; }, 100);
@@ -866,7 +1027,7 @@ setInterval(() => {
   }
 }, 8000);
 
-// TRANSICIÓN CINEMÁTICA DE MINIJUEGOS (Pantalla negra base)
+// TRANSICIÓN DE MINIJUEGOS
 function probarJuego(idJuego) { 
     if(!bgMusic.muted) bgMusic.pause();
     reproducirSonido(sfxExito); 
@@ -875,11 +1036,9 @@ function probarJuego(idJuego) {
     overlay.style.opacity = '1';
     
     setTimeout(() => {
-        // Aquí conectaremos los minijuegos reales después
         dulces += 20; 
         guardarDatos();
         alert(`Aquí comenzará el juego: ${idJuego}...\n(Te regalé 20🍬 por probar la transición).`);
-        
         overlay.style.opacity = '0';
         if(!bgMusic.muted && document.getElementById('vol-musica').value > 0) {
             bgMusic.play().catch(e=>console.log(e));
@@ -894,7 +1053,7 @@ function cambiarPagina(idPagina) {
   if(idPagina === 'sec-juegos') document.getElementById('nav-juegos').classList.add('activo');
   if(idPagina === 'sec-tienda') {
       document.getElementById('nav-tienda').classList.add('activo');
-      cerrarSubTienda(); // Siempre abre la tienda en el menú principal
+      cerrarSubTienda(); 
   }
   if(idPagina === 'sec-codigos') document.getElementById('nav-codigos').classList.add('activo');
   
@@ -915,6 +1074,7 @@ function cambiarPagina(idPagina) {
     document.getElementById('s').textContent=pad(s%60);
   }
   tick();setInterval(tick,1000);
+  setTimeout(actualizarAnimacionInicio, 1000);
 })();
 </script>
 </body>
