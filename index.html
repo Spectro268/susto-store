@@ -48,15 +48,21 @@ body.tema-sangre { --bg: #0a0000; --pumpkin: #cc0000; --ember: #660000; --violet
 body.tema-momia { --bg: #1a1610; --pumpkin: #d49a6a; --ember: #8b5a2b; --violet: #e6c280; --card: #2b2218; --glow: rgba(212, 154, 106, 0.2); --bg-overlay: rgba(26, 22, 16, 0.88); --borde-estilo: dashed; }
 body.tema-calabaza { --bg: #0a140a; --pumpkin: #ff6600; --ember: #cc5200; --violet: #00b33c; --card: #0f1f0f; --glow: rgba(255, 102, 0, 0.25); --bg-overlay: rgba(10, 20, 10, 0.88); }
 
-/* TEMA BATMAN OPTIMIZADO */
+/* TEMA BATMAN BLANCO PURO */
 body.tema-batman { 
     --bg: #050505; 
-    --pumpkin: #666666; /* Gris medio para contraste de texto blanco */
-    --ember: #222222; 
-    --violet: #999999; 
+    --pumpkin: #ffffff; /* Blanco puro para título y botones */
+    --ember: #333333; 
+    --violet: #888888; 
     --card: #111111; 
-    --glow: rgba(255, 255, 255, 0.1); 
+    --glow: rgba(255, 255, 255, 0.15); 
     --bg-overlay: rgba(0, 0, 0, 0.95); 
+}
+body.tema-batman .btn-accion {
+    color: #000000; /* Letras negras para botones blancos */
+}
+body.tema-batman .btn-accion:hover {
+    color: #ffffff;
 }
 
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
@@ -189,7 +195,7 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .dia-caja.actual { border-color: var(--pumpkin); background: rgba(214, 40, 40, 0.2); cursor: pointer; animation: pulse 2s infinite; }
 .dia-caja.bloqueado { opacity: 0.5; filter: grayscale(1); }
 
-/* TOAST LOGRO */
+/* TOAST (LOGROS Y NOTIFICACIONES) */
 #toast-logro { position: fixed; top: 20px; left: 50%; transform: translate(-50%, -20px); opacity: 0; pointer-events: none; background: var(--violet); color: #fff; border-radius: 12px; padding: 15px 25px; display: flex; align-items: center; gap: 15px; font-weight: bold; box-shadow: 0 5px 20px rgba(0,0,0,0.5); z-index: 999; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); border: 2px solid #fff; }
 #toast-logro.visible { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
 
@@ -345,7 +351,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
     <p style="font-size: 0.9rem;">Haz clic para generar tu código único y copiarlo al portapapeles.</p>
     <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; font-size: 1.5rem; font-weight: bold; color: var(--pumpkin); margin: 20px 0; letter-spacing: 2px;" id="txt-codigo-generado">¿?¿?¿?</div>
     <button class="btn-accion" style="width: 100%; margin-bottom: 10px;" id="btn-copiar-codigo" onclick="confirmarUsoItem()">Generar, Copiar y Usar</button>
-    <button class="btn-cerrar-modal" style="background: transparent; color: var(--ink); border: 1px solid var(--ember);" onclick="cerrarModalUsar()">Cancelar</button>
+    <button class="btn-cerrar-modal" style="background: transparent; color: var(--ink); border: 1px var(--borde-estilo) var(--ember);" onclick="cerrarModalUsar()">Cancelar</button>
   </div>
 </div>
 
@@ -651,24 +657,35 @@ if(database) {
 }
 
 function iniciarApp() {
-    reproducirSonido(sfxExito); // SFX original on click
+    // 1. Activar Efectos de Sonido
+    sfxExito.muted = false;
+    sfxError.muted = false;
+    sfxExito.volume = 0.1;
+    sfxError.volume = 0.1;
+    document.getElementById('vol-sfx').value = 0.1;
+    document.getElementById('btn-mute-sfx').textContent = '🔊';
+    
+    // Reproducir el sonido al hacer clic en Boo
+    reproducirSonido(sfxExito);
+
+    // 2. Quitar el Splash
     const splash = document.getElementById('splash-screen');
-    splash.style.pointerEvents = 'none'; // Evitar doble click
+    splash.style.pointerEvents = 'none'; 
     splash.style.opacity = '0';
     setTimeout(() => { splash.style.display = 'none'; }, 1500);
     
-    // Iniciar el audio progresivamente
+    // 3. Iniciar Música Suavemente (Destino 10%)
     bgMusic.volume = 0;
     bgMusic.muted = false;
-    document.getElementById('vol-musica').value = 0.5;
+    document.getElementById('vol-musica').value = 0.1;
     document.getElementById('btn-mute-musica').textContent = '🔊';
     bgMusic.play().catch(e=>console.log(e));
     
     let currentVol = 0;
     let fadeAudio = setInterval(() => {
-        if (currentVol < 0.5) {
-            currentVol += 0.05;
-            bgMusic.volume = Math.min(currentVol, 0.5);
+        if (currentVol < 0.1) {
+            currentVol += 0.01;
+            bgMusic.volume = Math.min(currentVol, 0.1);
         } else {
             clearInterval(fadeAudio);
         }
@@ -698,30 +715,37 @@ if (horaActual >= 0 && horaActual < 4) { setTimeout(() => checkLogro('noche'), 2
 
 function checkLogro(id) {
   if (!logros.includes(id)) {
-    logros.push(id); dulces += 15; mostrarToast(catalogoLogros[id].nombre, false);
+    logros.push(id); dulces += 15; mostrarToast(catalogoLogros[id].nombre, 'logro');
     guardarDatos(); reproducirSonido(sfxExito);
   }
 }
 
-function mostrarToast(texto, esPista = false) {
+// Nueva versión de Toast para reemplazar los alerts y mostrar todo de forma suave
+function mostrarToast(texto, tipo = 'logro') {
   const toast = document.getElementById('toast-logro');
-  if(esPista) {
+  
+  if(tipo === 'pista') {
     toast.style.background = 'var(--pumpkin)'; toast.style.borderColor = 'var(--ember)';
     document.getElementById('toast-icon').textContent = '📖'; document.getElementById('toast-sub').textContent = 'Nueva pista'; document.getElementById('toast-bonus').textContent = '';
+  } else if (tipo === 'info') {
+    toast.style.background = 'var(--card)'; toast.style.borderColor = 'var(--pumpkin)';
+    document.getElementById('toast-icon').textContent = '🔔'; document.getElementById('toast-sub').textContent = 'Aviso'; document.getElementById('toast-bonus').textContent = '';
   } else {
     toast.style.background = 'var(--violet)'; toast.style.borderColor = '#fff';
     document.getElementById('toast-icon').textContent = '🏆'; document.getElementById('toast-sub').textContent = 'Logro Desbloqueado'; document.getElementById('toast-bonus').textContent = '+15 🍬';
   }
+  
   document.getElementById('toast-txt').textContent = texto;
-  toast.classList.add('visible'); setTimeout(() => toast.classList.remove('visible'), 4000);
+  toast.classList.add('visible'); 
+  setTimeout(() => toast.classList.remove('visible'), 4000);
 }
 
 // ========================================================
 // 4. LÓGICA DE AUDIO
 // ========================================================
-function toggleMuteMusica() { bgMusic.muted = !bgMusic.muted; const vol = document.getElementById('vol-musica'); if(!bgMusic.muted && vol.value == 0) { vol.value = 0.5; bgMusic.volume = 0.5; } document.getElementById('btn-mute-musica').textContent = bgMusic.muted ? '🔇' : '🔊'; if(!bgMusic.muted) bgMusic.play().catch(e=>console.log(e)); }
+function toggleMuteMusica() { bgMusic.muted = !bgMusic.muted; const vol = document.getElementById('vol-musica'); if(!bgMusic.muted && vol.value == 0) { vol.value = 0.1; bgMusic.volume = 0.1; } document.getElementById('btn-mute-musica').textContent = bgMusic.muted ? '🔇' : '🔊'; if(!bgMusic.muted) bgMusic.play().catch(e=>console.log(e)); }
 function cambiarVolumenMusica(valor) { if (bgMusic.muted && valor > 0) toggleMuteMusica(); bgMusic.volume = valor; if (valor > 0 && bgMusic.paused) bgMusic.play().catch(e=>console.log(e)); }
-function toggleMuteSfx() { sfxExito.muted = !sfxExito.muted; sfxError.muted = !sfxError.muted; const vol = document.getElementById('vol-sfx'); if(!sfxExito.muted && vol.value == 0) { vol.value = 0.5; sfxExito.volume = 0.5; sfxError.volume = 0.5; } document.getElementById('btn-mute-sfx').textContent = sfxExito.muted ? '🔇' : '🔊'; if(!sfxExito.muted) reproducirSonido(sfxExito); }
+function toggleMuteSfx() { sfxExito.muted = !sfxExito.muted; sfxError.muted = !sfxError.muted; const vol = document.getElementById('vol-sfx'); if(!sfxExito.muted && vol.value == 0) { vol.value = 0.1; sfxExito.volume = 0.1; sfxError.volume = 0.1; } document.getElementById('btn-mute-sfx').textContent = sfxExito.muted ? '🔇' : '🔊'; if(!sfxExito.muted) reproducirSonido(sfxExito); }
 function cambiarVolumenSfx(valor) { if (sfxExito.muted && valor > 0) toggleMuteSfx(); sfxExito.volume = valor; sfxError.volume = valor; }
 function reproducirSonido(audio) { if(!audio.muted && audio.volume > 0) { audio.currentTime = 0; audio.play().catch(e=>console.log(e)); } }
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") { bgMusic.pause(); } else if (!bgMusic.muted && document.getElementById('vol-musica').value > 0) { bgMusic.play().catch(e=>console.log(e)); } });
@@ -774,7 +798,7 @@ function cerrarSubTienda() {
 
 function comprarItem(boton, idItem, precio, nombreItem, tipo) {
     if (tipo === 'tema' && coleccion.includes(idItem)) {
-        mostrarToast("Ya tienes este ítem en tu colección.", false);
+        mostrarToast("Ya tienes este ítem en tu colección.", "info");
         return;
     }
 
@@ -785,11 +809,11 @@ function comprarItem(boton, idItem, precio, nombreItem, tipo) {
         if (tipo === 'tema') {
             coleccion.push(idItem);
             equiparTema(idItem); 
-            alert(`¡Has adquirido: ${nombreItem}!\nEquipado al instante.`);
+            mostrarToast(`Adquirido: ${nombreItem}`, "info");
         } else {
             carrito.push({ id: idItem, nombre: nombreItem, tipo: tipo, codigo: null, usado: false });
             guardarDatos();
-            alert(`¡Compraste: ${nombreItem}!\nRevisa tu Inventario (🛒) para canjearlo.`);
+            mostrarToast(`Compraste: ${nombreItem}. Revisa tu Inventario 🛒`, "info");
         }
     } else {
         reproducirSonido(sfxError); 
@@ -800,7 +824,7 @@ function comprarItem(boton, idItem, precio, nombreItem, tipo) {
     }
 }
 
-// ================= LÓGICA DEL CARRITO CORREGIDA (GUARDADO SEGURO) =================
+// ================= LÓGICA DEL CARRITO CORREGIDA (SNACKS INCLUIDOS) =================
 function abrirCarrito() {
     reproducirSonido(sfxExito);
     document.getElementById('modal-carrito').classList.add('activo');
@@ -865,15 +889,11 @@ function confirmarUsoItem() {
     // Generar el código al momento de hacer click
     const codigoGenerado = "BOO-" + Math.random().toString(36).substr(2, 4).toUpperCase();
     
-    // GUARDADO DIRECTO EN LA BASE DE DATOS PRIMERO (Solución al Bug)
-    if (item.tipo === 'snack') {
-        carrito.splice(index, 1);
-    } else {
-        carrito[index].codigo = codigoGenerado;
-        carrito[index].usado = true;
-    }
+    // GUARDADO DIRECTO EN LA BASE DE DATOS (Misma lógica para Snacks y Citas)
+    carrito[index].codigo = codigoGenerado;
+    carrito[index].usado = true;
     
-    guardarDatos(); // Guardar cambios en firebase independiente de la api del portapapeles
+    guardarDatos(); // Guardar cambios para que el admin pueda ver los códigos
     reproducirSonido(sfxExito);
     document.getElementById('txt-codigo-generado').innerText = codigoGenerado;
     
@@ -881,7 +901,8 @@ function confirmarUsoItem() {
     navigator.clipboard.writeText(codigoGenerado).then(() => {
         document.getElementById('btn-copiar-codigo').innerText = "¡Copiado y Usado!";
     }).catch(err => {
-        // Si no tiene permisos, al menos lo guardó y le avisamos que lo copie a mano
+        // Si no tiene permisos, avisar mediante toast sin interrumpir
+        mostrarToast("No se pudo copiar automático, cópialo manualmente.", "info");
         document.getElementById('btn-copiar-codigo').innerText = "¡Usado! (Cópialo manual)";
     });
 
@@ -1060,7 +1081,7 @@ setInterval(() => {
         setTimeout(() => wrapper.remove(), 3200);
     }
     else if(temaActivo === 'tema-momia') {
-        wrapper.innerHTML = '⚱️';
+        wrapper.innerHTML = '⚱️️';
         wrapper.style.top = Math.floor(Math.random() * 100) + 'vh';
         wrapper.style.left = '-10vw';
         wrapper.style.filter = 'brightness(0.6) sepia(1)';
@@ -1121,6 +1142,7 @@ setInterval(() => {
   }
 }, 12000);
 
+// SIN ALERTS: Ahora la confirmación se hace por medio del Toast
 function probarJuego(idJuego) { 
     if(!bgMusic.muted) bgMusic.pause();
     reproducirSonido(sfxExito); 
@@ -1131,7 +1153,8 @@ function probarJuego(idJuego) {
     setTimeout(() => {
         dulces += 20; 
         guardarDatos();
-        alert(`Aquí comenzará el juego: ${idJuego}...\n(Te regalé 20🍬 por probar la transición).`);
+        mostrarToast(`Iniciando juego: ${idJuego} (+20🍬)`, 'info'); // Aviso elegante sin ventanas emergentes
+        
         overlay.style.opacity = '0';
         if(!bgMusic.muted && document.getElementById('vol-musica').value > 0) {
             bgMusic.play().catch(e=>console.log(e));
