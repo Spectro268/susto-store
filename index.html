@@ -229,7 +229,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .gd-portal h3 { margin: 0; font-size: 1.8rem; color: #fff; position: relative; z-index: 2; text-shadow: 0 0 10px rgba(0,0,0,0.8); }
 
 .portal-citas-gestos { background-image: linear-gradient(rgba(20,5,5,0.7), rgba(20,5,5,0.7)), url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600'); }
-.portal-amuletos { background-image: linear-gradient(rgba(20,5,5,0.7), rgba(20,5,5,0.7)), url('https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=600'); } /* Fondo místico asegurado */
+.portal-amuletos { background-image: linear-gradient(rgba(20,5,5,0.7), rgba(20,5,5,0.7)), url('https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=600'); }
 .portal-temas { background-image: linear-gradient(rgba(20,5,5,0.7), rgba(20,5,5,0.7)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600'); }
 .btn-volver { background: transparent; color: var(--ink); border: 1px var(--borde-estilo) var(--ember); padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-bottom: 20px; font-weight: bold; font-size: 1rem; transition: 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent; }
 .btn-volver:hover { background: var(--ember); color: #fff; }
@@ -245,13 +245,13 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .diario-btn:hover { background: rgba(214, 40, 40, 0.2); transform: scale(1.05); }
 
 #overlay-diario { display: none; position: fixed; inset: 0; background: #000; z-index: 300; justify-content: center; align-items: center; color: var(--violet); font-size: 1.5rem; text-align: center; font-style: italic; padding: 20px; opacity: 0; transition: opacity 1.5s; }
-.pista-box { background: rgba(255,255,255,0.05); border-left: 4px var(--borde-estilo) var(--violet); padding: 15px; margin-bottom: 15px; text-align: left; }
+.pista-box { background: rgba(255,255,255,0.05); border-left: 4px var(--borde-estilo) var(--violet); padding: 15px; margin-bottom: 15px; text-align: left; transition: all 0.3s; }
 .control-audio { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
 .control-audio input[type="range"] { flex-grow: 1; accent-color: var(--pumpkin); }
 .btn-mute { background: var(--card); border: 1px var(--borde-estilo) var(--ember); color: var(--ink); border-radius: 8px; padding: 8px; cursor: pointer; transition: 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent; }
 .btn-mute:hover { border-color: var(--pumpkin); }
 
-/* PARTÍCULAS JS OPTIMIZADAS (text-shadow envés de filter y hardware acceleration) */
+/* PARTÍCULAS JS OPTIMIZADAS */
 .particula-deco { position: fixed; pointer-events: none; z-index: -1; opacity: 0; will-change: transform, opacity; }
 .skullette-wrapper { position: fixed; z-index: 90; pointer-events: none; will-change: transform; }
 .skullette-inner { width: 65px; height: 65px; cursor: pointer; filter: drop-shadow(0 0 10px var(--violet)); transition: transform 0.2s; pointer-events: auto; object-fit: contain; -webkit-user-drag: none; }
@@ -296,7 +296,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 <!-- AUDIOS -->
 <audio id="audio-bg" loop><source src="musica.mp3" type="audio/mpeg"></audio>
 
-<!-- TOAST LOGRO (SISTEMA DE COLA) -->
+<!-- TOAST LOGRO -->
 <div id="toast-logro">
   <span id="toast-icon" style="font-size: 2rem;">🏆</span>
   <div><div id="toast-sub" style="font-size: 0.8rem; opacity: 0.8;">Logro Desbloqueado</div><div id="toast-txt">Título</div><div id="toast-bonus" style="color: #ffd700; font-size: 0.9rem;"></div></div>
@@ -370,7 +370,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 <!-- MODAL ATAÚD DIARIO -->
 <div class="modal-overlay" id="modal-ataud">
   <div class="modal-box">
-    <h3 style="justify-content: center;">Recompensa Diaria ⚰️</h3>
+    <h3 style="justify-content: center;">Recompensa Diaria ⚰️️</h3>
     <p style="font-size: 0.9rem; margin-top: 0;">Reclama tu lealtad cada día.</p>
     <div style="font-weight:bold; color:var(--pumpkin); font-size:1.2rem; margin:10px 0;" id="contador-ataud">Disponible Ahora</div>
     <div class="grid-ataud" id="grid-ataud-cajas"></div>
@@ -382,7 +382,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 <div class="modal-overlay" id="modal-diario">
   <div class="modal-box" style="text-align: left;">
     <h3 style="justify-content: flex-start;">Diario Secreto 📖</h3>
-    <p style="font-size: 0.9rem; border-bottom:1px var(--borde-estilo) var(--ember); padding-bottom:10px;">Encuentra cómo revelar los secretos.</p>
+    <p style="font-size: 0.9rem; border-bottom:1px var(--borde-estilo) var(--ember); padding-bottom:10px;">Desbloquea conocimiento interactuando con la tienda.</p>
     <div id="lista-pistas"></div>
     <button class="btn-cerrar-modal" onclick="esconderDiario()">Esconder</button>
   </div>
@@ -403,7 +403,6 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   <div class="header-right">
     <span class="moneda-ui">🍬 <span id="ui-dulces">0</span></span>
     <a class="btn-col" onclick="reproducirSonido(sfxExito); cambiarPagina('sec-coleccion')" id="nav-coleccion">Nuestra Colección</a>
-    <!-- LA TUERCA RESTAURADA -->
     <button class="btn-icono tuerca" onclick="abrirAjustes()" title="Ajustes">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
     </button>
@@ -447,7 +446,6 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   </div>
 </section>
 
-<!-- LA TIENDA ESTRUCTURADA REDISEÑADA -->
 <section class="pagina" id="sec-tienda">
   
   <div class="tienda-header-container">
@@ -609,7 +607,9 @@ let logros = [];
 let carrito = []; 
 let codigosUsados = []; 
 let ataudDia = 1; let ataudTiempo = 0;   
-let diarioVisto = false; let pistas = [];        
+let diarioVisto = false; 
+let pistas = []; // Pistas resueltas
+let pistasReveladas = []; // Pistas descubiertas en el diario
 let temaActivo = 'tema-default';
 let appCargada = false;
 
@@ -633,19 +633,27 @@ const catalogoLogros = {
   'diario': { icono: '📖', nombre: 'Cazadora de Secretos', desc: 'Encontraste y abriste el Diario de Pistas.' }
 };
 
-const codigosSecretos = {
-    'AMOR': { msg: "El sentimiento que nos une. ¡Has revelado la pista maestra del Diario!", recompensa: 50 },
-    'GRETA': { msg: "La niña de mis ojos, la dueña de este rincón oscuro.", recompensa: 30 },
-    'EDUARDO': { msg: "Siempre aquí para ti, cuidando tu corazón.", recompensa: 30 },
-    'BOO': { msg: "¡Asustame! Espero que te estés divirtiendo.", recompensa: 15 },
-    'CALABAZA': { msg: "Dulce o Truco... ¡Definitivamente dulce!", recompensa: 10 },
-    '2211': { msg: "Nuestro día especial. Te amo hoy, mañana y siempre. 💖", recompensa: 50 },
-    'HALLOWEEN': { msg: "La noche más mágica del año. ¡A disfrutar!", recompensa: 20 },
-    'MONSTER': { msg: "¡Bienvenida a Monster High! Desata tu estilo.", recompensa: 15 }
+// LA LÓGICA DE PISTAS (ANTI-ADIVINACIÓN)
+const catalogoPistas = {
+  'pista_amor':      { pistaTxt: "El sentimiento que nos une. 4 letras.", desc: "El amor es la chispa mágica que ilumina las catacumbas de mi corazón.", reqTxt: "adquirir una 🎟️ Cita VIP en la tienda" },
+  'pista_greta':     { pistaTxt: "La dueña de este rincón oscuro...", desc: "La niña de mis ojos, la dueña de este rincón oscuro.", reqTxt: "equipar el 🦇 Tema: Rosa" },
+  'pista_eduardo':   { pistaTxt: "El que siempre cuidará tu corazón...", desc: "Siempre aquí para ti, cuidando tu corazón.", reqTxt: "equipar el 🦇 Tema: Batman" },
+  'pista_boo':       { pistaTxt: "El nombre que le da vida a esta tienda...", desc: "¡Asustame! Espero que te estés divirtiendo.", reqTxt: "comprar cualquier 🍬 Snack (Neon Coffin)" },
+  'pista_calabaza':  { pistaTxt: "Dulce o truco, el símbolo naranja...", desc: "Dulce o Truco... ¡Definitivamente dulce!", reqTxt: "equipar el 🎃 Tema: Calabaza" },
+  'pista_2211':      { pistaTxt: "Nuestro día especial en números (DDMM)...", desc: "Nuestro día especial. Te amo hoy, mañana y siempre. 💖", reqTxt: "alcanzar el Día 5 de lealtad en el Ataúd Diario" },
+  'pista_halloween': { pistaTxt: "La noche más mágica del año...", desc: "La noche más mágica del año. ¡A disfrutar!", reqTxt: "atrapar tu primera 💀 Skullette voladora" },
+  'pista_monster':   { pistaTxt: "El instituto donde los monstruos son reales...", desc: "¡Bienvenida a Monster High! Desata tu estilo.", reqTxt: "adquirir un 💖 Gesto Especial" }
 };
 
-const catalogoPistas = {
-  'pista_amor': { pistaTxt: "El sentimiento que nos une. 4 letras.", codigo: "AMOR", desc: "El amor es la chispa mágica que ilumina las catacumbas de mi corazón." }
+const codigosSecretos = {
+    'AMOR': { id: 'pista_amor', msg: "El sentimiento que nos une. ¡Has revelado la pista maestra del Diario!", recompensa: 50 },
+    'GRETA': { id: 'pista_greta', msg: "La niña de mis ojos, la dueña de este rincón oscuro.", recompensa: 30 },
+    'EDUARDO': { id: 'pista_eduardo', msg: "Siempre aquí para ti, cuidando tu corazón.", recompensa: 30 },
+    'BOO': { id: 'pista_boo', msg: "¡Asustame! Espero que te estés divirtiendo.", recompensa: 15 },
+    'CALABAZA': { id: 'pista_calabaza', msg: "Dulce o Truco... ¡Definitivamente dulce!", recompensa: 10 },
+    '2211': { id: 'pista_2211', msg: "Nuestro día especial. Te amo hoy, mañana y siempre. 💖", recompensa: 50 },
+    'HALLOWEEN': { id: 'pista_halloween', msg: "La noche más mágica del año. ¡A disfrutar!", recompensa: 20 },
+    'MONSTER': { id: 'pista_monster', msg: "¡Bienvenida a Monster High! Desata tu estilo.", recompensa: 15 }
 };
 
 const recompensasDiarias = [
@@ -677,6 +685,7 @@ if(database) {
       ataudTiempo = data.ataudTiempo || 0;
       diarioVisto = data.diarioVisto || false; 
       pistas = data.pistas || [];
+      pistasReveladas = data.pistasReveladas || [];
       temaActivo = data.temaActivo || 'tema-default';
     }
     if (!coleccion.includes('tema-default')) coleccion.push('tema-default'); 
@@ -705,11 +714,6 @@ if(database) {
 }
 
 function iniciarApp() {
-    // Inicialización del audio en segundo plano sin efecto inmediato para evitar bug en iOS/Chrome
-    sfxExito.muted = false; sfxError.muted = false;
-    sfxExito.volume = 0.1; sfxError.volume = 0.1;
-    document.getElementById('vol-sfx').value = 0.1; document.getElementById('btn-mute-sfx').textContent = '🔊';
-
     const splash = document.getElementById('splash-screen');
     splash.style.pointerEvents = 'none'; splash.style.opacity = '0';
     setTimeout(() => { splash.style.display = 'none'; }, 1500);
@@ -731,7 +735,7 @@ function guardarDatos() {
     database.ref(rutaDB).set({ 
       dulces: dulces, coleccion: coleccion, logros: logros, carrito: carrito, codigosUsados: codigosUsados,
       ataudDia: ataudDia, ataudTiempo: ataudTiempo, 
-      diarioVisto: diarioVisto, pistas: pistas, temaActivo: temaActivo
+      diarioVisto: diarioVisto, pistas: pistas, pistasReveladas: pistasReveladas, temaActivo: temaActivo
     });
   }
   actualizarUI();
@@ -759,6 +763,15 @@ function checkLogro(id) {
     mostrarToast(catalogoLogros[id].nombre, 'logro', ganados);
     guardarDatos(); reproducirSonido(sfxExito);
   }
+}
+
+// SISTEMA DE REVELACIÓN DE PISTAS (TRIGGERS)
+function revelarPista(idPista) {
+    if (!pistasReveladas.includes(idPista)) {
+        pistasReveladas.push(idPista);
+        guardarDatos();
+        mostrarToast("¡El Diario de Pistas está brillando!", "pista");
+    }
 }
 
 // ================= SISTEMA DE COLA PARA TOASTS =================
@@ -809,7 +822,7 @@ function cambiarVolumenSfx(valor) { if (sfxExito.muted && valor > 0) toggleMuteS
 function reproducirSonido(audio) { if(!audio.muted && audio.volume > 0) { audio.currentTime = 0; audio.play().catch(e=>console.log(e)); } }
 
 // ========================================================
-// 5. ATAÚD DE RECOMPENSA (CARRUSEL PROGRESIVO)
+// 5. ATAÚD DE RECOMPENSA
 // ========================================================
 function getTiempoEsperaAtaud() { return coleccion.includes('amuleto-reloj') ? 64800000 : 86400000; }
 
@@ -850,6 +863,9 @@ function reclamarCaja() {
       mostrarToast(`¡Reclamado: ${premio.texto}!`, "logro");
   }
   ataudTiempo = Date.now(); ataudDia++; 
+  
+  if (ataudDia > 5) revelarPista('pista_2211'); // Revelar pista día 5
+  
   guardarDatos(); reproducirSonido(sfxExito); 
   renderizarGrillaAtaud(); 
 }
@@ -866,7 +882,7 @@ function actualizarTimerAtaud() {
 }
 
 // ========================================================
-// 6. TIENDA MODULAR, CARRITO Y TEMAS
+// 6. TIENDA MODULAR Y CARRITO
 // ========================================================
 function abrirSubTienda(idSub) { reproducirSonido(sfxExito); document.querySelectorAll('.tienda-seccion').forEach(sec => sec.classList.remove('activa')); document.getElementById(idSub).classList.add('activa'); window.scrollTo(0,0); }
 function cerrarSubTienda() { reproducirSonido(sfxExito); document.querySelectorAll('.tienda-seccion').forEach(sec => sec.classList.remove('activa')); document.getElementById('tienda-main').classList.add('activa'); window.scrollTo(0,0); }
@@ -875,15 +891,25 @@ function comprarItem(boton, idItem, precio, nombreItem, tipo) {
     if ((tipo === 'tema' || tipo === 'amuleto') && coleccion.includes(idItem)) { mostrarToast("Ya tienes este ítem en tu colección.", "info"); return; }
     if (dulces >= precio) {
         dulces -= precio; reproducirSonido(sfxExito);
-        if (tipo === 'tema' || tipo === 'amuleto') { coleccion.push(idItem); if(tipo === 'tema') equiparTema(idItem); guardarDatos(); mostrarToast(`Adquirido: ${nombreItem}`, "info"); } 
-        else { carrito.push({ id: idItem, nombre: nombreItem, tipo: tipo, codigo: null, usado: false }); guardarDatos(); mostrarToast(`Compraste: ${nombreItem}. Revisa tu 🛒`, "info"); }
+        
+        if (tipo === 'tema' || tipo === 'amuleto') { 
+            coleccion.push(idItem); 
+            if(tipo === 'tema') equiparTema(idItem); 
+            guardarDatos(); mostrarToast(`Adquirido: ${nombreItem}`, "info"); 
+        } 
+        else { 
+            carrito.push({ id: idItem, nombre: nombreItem, tipo: tipo, codigo: null, usado: false }); 
+            if(tipo === 'cita') revelarPista('pista_amor');
+            if(tipo === 'gesto') revelarPista('pista_monster');
+            if(tipo === 'snack') revelarPista('pista_boo');
+            guardarDatos(); mostrarToast(`Compraste: ${nombreItem}. Revisa tu 🛒`, "info"); 
+        }
     } else {
         reproducirSonido(sfxError); boton.classList.add('error-compra'); const txtAnterior = boton.textContent; boton.textContent = "¡Faltan dulces!";
         setTimeout(() => { boton.classList.remove('error-compra'); boton.textContent = txtAnterior; }, 800);
     }
 }
 
-// LÓGICA DEL CARRITO
 function abrirCarrito() { reproducirSonido(sfxExito); document.getElementById('modal-carrito').classList.add('activo'); renderizarCarrito(); }
 function cerrarCarrito() { document.getElementById('modal-carrito').classList.remove('activo'); }
 
@@ -922,7 +948,13 @@ function confirmarUsoItem() {
 }
 
 // TEMAS Y COLECCIÓN
-function equiparTema(idTema) { temaActivo = idTema; aplicarTemaCSS(temaActivo); actualizarAnimacionInicio(); guardarDatos(); }
+function equiparTema(idTema) { 
+    temaActivo = idTema; aplicarTemaCSS(temaActivo); actualizarAnimacionInicio(); 
+    if(idTema === 'tema-rosa') revelarPista('pista_greta');
+    if(idTema === 'tema-batman') revelarPista('pista_eduardo');
+    if(idTema === 'tema-calabaza') revelarPista('pista_calabaza');
+    guardarDatos(); 
+}
 function aplicarTemaCSS(tema) { document.body.className = ''; if(tema && tema !== 'tema-default') { document.body.classList.add('tema-' + tema.replace('tema-', '')); } }
 
 function renderizarColeccionYLogros() {
@@ -953,7 +985,7 @@ function renderizarColeccionYLogros() {
 }
 
 // ========================================================
-// 7. DIARIO Y CÓDIGOS DEL ICOFFIN
+// 7. DIARIO Y CÓDIGOS DEL ICOFFIN (ANTI-ADIVINACIÓN)
 // ========================================================
 function abrirDiario() {
   const volSlider = parseFloat(document.getElementById('vol-musica').value);
@@ -974,13 +1006,21 @@ function esconderDiario() {
 
 function renderizarDiario() {
   const container = document.getElementById('lista-pistas'); if(!container) return; container.innerHTML = '';
-  const tieneCita = carrito.some(item => item.tipo === 'cita');
   
   Object.keys(catalogoPistas).forEach((key, index) => {
-    const p = catalogoPistas[key]; const desbloqueada = pistas.includes(key);
-    if (!tieneCita) { container.innerHTML += `<div class="pista-box pista-blur" style="border-color: #555; color: #888;"><strong>🔒 Pista #${index+1}:</strong> Necesitas adquirir una 🎟️ Cita VIP en la tienda para revelar este acertijo.</div>`; } 
-    else if (desbloqueada) { container.innerHTML += `<div class="pista-box" style="border-color: #00b33c;"><strong>✅ Pista #${index+1} Resuelta:</strong> ${p.desc}</div>`; } 
-    else { container.innerHTML += `<div class="pista-box"><strong>📖 Pista #${index+1}:</strong> ${p.pistaTxt} <br><span style="font-size:0.8rem; opacity:0.7;">(Ingresa tu respuesta en el iCoffin)</span></div>`; }
+    const p = catalogoPistas[key]; 
+    const desbloqueada = pistas.includes(key); // Ya adivinó en el iCoffin
+    const revelada = pistasReveladas.includes(key); // Ya cumplió el requisito
+    
+    if (!revelada) { 
+        container.innerHTML += `<div class="pista-box pista-blur" style="border-color: #555; color: #888;"><strong>🔒 Pista #${index+1}:</strong> Necesitas ${p.reqTxt} para revelar este acertijo.</div>`; 
+    } 
+    else if (desbloqueada) { 
+        container.innerHTML += `<div class="pista-box" style="border-color: #00b33c;"><strong>✅ Pista #${index+1} Resuelta:</strong> ${p.desc}</div>`; 
+    } 
+    else { 
+        container.innerHTML += `<div class="pista-box"><strong>📖 Pista #${index+1}:</strong> ${p.pistaTxt} <br><span style="font-size:0.8rem; opacity:0.7;">(Ingresa tu respuesta en el iCoffin)</span></div>`; 
+    }
   });
 }
 
@@ -988,13 +1028,13 @@ function canjearCodigo() {
   const input = document.getElementById('input-codigo'); const msg = document.getElementById('msg-codigo'); const codigo = input.value.trim().toUpperCase(); 
   let msjRespuesta = ""; let colorRespuesta = "#4CAF50";
 
-  // Lógica de Comandos de Administrador
+  // Comandos de Administrador
   switch(codigo) {
     case 'GIVE': dulces += 500; msjRespuesta = "[ADMIN] +500 Caramelos."; colorRespuesta = "var(--violet)"; reproducirSonido(sfxExito); break;
     case 'TICKETS': abrirAdminTickets(); msjRespuesta = "[ADMIN] Tickets abiertos."; break;
     case 'CLEANCART': carrito = []; msjRespuesta = "[ADMIN] Carrito vacío."; break;
     case 'UNLOCKTHEMES': coleccion = ['tema-default', 'tema-rosa', 'tema-sangre', 'tema-momia', 'tema-calabaza', 'tema-batman', 'amuleto-moneda', 'amuleto-iman', 'amuleto-reloj']; msjRespuesta = "[ADMIN] Colección max."; break;
-    case 'RESET': dulces = 0; coleccion = ['tema-default']; logros = []; carrito = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; codigosUsados = []; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Cuenta a cero."; colorRespuesta = "var(--pumpkin)"; break;
+    case 'RESET': dulces = 0; coleccion = ['tema-default']; logros = []; carrito = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; pistasReveladas = []; codigosUsados = []; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Cuenta a cero."; colorRespuesta = "var(--pumpkin)"; break;
     case '24H': ataudTiempo = Date.now() - 86400000; msjRespuesta = "[ADMIN] Reloj adelantado."; actualizarUI(); if(document.getElementById('modal-ataud').classList.contains('activo')) renderizarGrillaAtaud(); break;
   }
 
@@ -1004,14 +1044,20 @@ function canjearCodigo() {
       return;
   }
 
-  // Lógica de Códigos de Usuario (Ventana Especial)
+  // Lógica de Códigos de Pistas (Con validación ANTI-ADIVINACIÓN)
   if(codigosSecretos[codigo]) {
-      if(codigosUsados.includes(codigo)) {
-          msg.style.color = "var(--pumpkin)"; msg.textContent = "Ya usaste este código..."; reproducirSonido(sfxError);
+      const premio = codigosSecretos[codigo];
+      
+      if(!pistasReveladas.includes(premio.id)) {
+          msg.style.color = "var(--pumpkin)"; msg.textContent = "Aún no tienes el conocimiento para usar esto..."; reproducirSonido(sfxError);
+      }
+      else if(codigosUsados.includes(codigo)) {
+          msg.style.color = "var(--pumpkin)"; msg.textContent = "Ya resolviste este secreto..."; reproducirSonido(sfxError);
       } else {
           codigosUsados.push(codigo);
-          if (codigo === 'AMOR' && !pistas.includes('pista_amor')) pistas.push('pista_amor');
-          const premio = codigosSecretos[codigo]; let gananciaExtra = agregarDulces(premio.recompensa);
+          if (!pistas.includes(premio.id)) pistas.push(premio.id); // Marcar como resuelto en el diario
+          
+          let gananciaExtra = agregarDulces(premio.recompensa);
           guardarDatos(); input.value = ''; reproducirSonido(sfxExito);
           
           document.getElementById('icoffin-msg').textContent = premio.msg;
@@ -1032,20 +1078,25 @@ function abrirAdminTickets() {
 }
 
 // ========================================================
-// 8. ANIMACIONES Y SISTEMA ANTI-LAG
+// 8. ANIMACIONES VISUALES Y SISTEMA ANTI-LAG
 // ========================================================
 function abrirAjustes() { checkLogro('config'); document.getElementById('modal-ajustes').classList.add('activo'); }
 function cerrarAjustes() { document.getElementById('modal-ajustes').classList.remove('activo'); }
 function actualizarAnimacionInicio() { const batsClasicos = document.getElementById('bats-clasicos'); if(batsClasicos) { batsClasicos.style.display = (temaActivo === 'tema-default') ? 'block' : 'none'; } }
 
-// Generador de partículas optimizado (Emojis clásicos reincorporados)
 setInterval(() => {
     if(temaActivo === 'tema-default') return;
     const wrapper = document.createElement('div'); wrapper.className = 'particula-deco'; wrapper.style.fontSize = Math.floor(Math.random() * 1.5 + 1) + 'rem';
     
     if(temaActivo === 'tema-rosa') { wrapper.innerHTML = Math.random() > 0.5 ? '💖' : '✨'; wrapper.style.top = Math.floor(Math.random() * 100) + 'vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; wrapper.style.textShadow = '0 0 10px rgba(255,51,153,0.8)'; wrapper.style.transition = 'opacity 2s ease'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.opacity = '0.7', 100); setTimeout(() => wrapper.style.opacity = '0', 2000); setTimeout(() => wrapper.remove(), 4000); } 
-    else if(temaActivo === 'tema-sangre') { wrapper.innerHTML = '💧'; wrapper.style.top = '-10vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; wrapper.style.textShadow = '0 5px 5px rgba(255,0,0,0.8)'; wrapper.style.transition = 'transform 3s linear, opacity 1s'; wrapper.style.opacity = '0.8'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateY(110vh)', 100); setTimeout(() => wrapper.remove(), 3200); }
-    else if(temaActivo === 'tema-momia') { wrapper.innerHTML = '⚱'; wrapper.style.top = Math.floor(Math.random() * 100) + 'vh'; wrapper.style.left = '-10vw'; wrapper.style.filter = 'brightness(0.6) sepia(1)'; wrapper.style.transition = 'transform 6s linear, opacity 1s'; wrapper.style.opacity = '0.5'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateX(110vw) rotate(180deg)', 100); setTimeout(() => wrapper.remove(), 6200); }
+    else if(temaActivo === 'tema-sangre') { 
+        wrapper.innerHTML = '<svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor"><path d="M12 2c-.3 0-.6.2-.8.5l-6 10c-.8 1.4-1 3.1-.3 4.6.6 1.5 2 2.7 3.6 3.1 3.4.8 6.7-1.2 7.3-4.6.2-1.2 0-2.4-.6-3.5l-2.4-4.1-1.6-2.7c-2.3-3.9-3.2-3.3-3.2-3.3z"/></svg>'; 
+        wrapper.style.color = '#cc0000'; wrapper.style.top = '-10vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; wrapper.style.filter = 'drop-shadow(0 5px 5px rgba(204,0,0,0.8))'; wrapper.style.transition = 'transform 3s linear, opacity 1s'; wrapper.style.opacity = '0.8'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateY(110vh)', 100); setTimeout(() => wrapper.remove(), 3200); 
+    }
+    else if(temaActivo === 'tema-momia') { 
+        if (Math.random() > 0.5) { wrapper.innerHTML = '⚱'; wrapper.style.filter = 'brightness(0.6) sepia(1)'; } else { wrapper.innerHTML = '•'; wrapper.style.fontSize = Math.floor(Math.random() * 2 + 1.5) + 'rem'; wrapper.style.color = '#d49a6a'; wrapper.style.textShadow = '0 0 5px rgba(212,154,106,0.5)'; }
+        wrapper.style.top = Math.floor(Math.random() * 100) + 'vh'; wrapper.style.left = '-10vw'; wrapper.style.transition = 'transform 6s linear, opacity 1s'; wrapper.style.opacity = '0.5'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateX(110vw) rotate(180deg)', 100); setTimeout(() => wrapper.remove(), 6200); 
+    }
     else if(temaActivo === 'tema-calabaza') { wrapper.innerHTML = '🔥'; wrapper.style.fontSize = Math.floor(Math.random() * 1 + 0.5) + 'rem'; wrapper.style.top = '110vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; wrapper.style.textShadow = '0 0 10px rgba(255,102,0,0.8)'; wrapper.style.transition = 'transform 4s ease-out, opacity 1s'; wrapper.style.opacity = '0.7'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = `translateY(-60vh) translateX(${Math.random() > 0.5 ? 50 : -50}px)`, 100); setTimeout(() => wrapper.style.opacity = '0', 3000); setTimeout(() => wrapper.remove(), 4200); }
     else if(temaActivo === 'tema-batman') { wrapper.innerHTML = '🦇'; wrapper.style.fontSize = '4rem'; wrapper.style.top = Math.floor(Math.random() * 80) + 'vh'; wrapper.style.left = '-20vw'; wrapper.style.filter = 'brightness(0)'; wrapper.style.transition = 'transform 12s linear, opacity 2s'; wrapper.style.opacity = '0.2'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateX(130vw) scale(1.5)', 100); setTimeout(() => wrapper.remove(), 12200); }
 }, 3000); 
@@ -1053,7 +1104,6 @@ setInterval(() => {
 function programarSkullette() {
     let baseTime = coleccion.includes('amuleto-iman') ? 6000 : 15000;
     let randomTime = baseTime + Math.random() * 4000;
-    
     setTimeout(() => {
         const enJuegos = document.getElementById('sec-juegos').classList.contains('activa');
         if(!enJuegos && Math.random() > 0.3) {
@@ -1062,7 +1112,10 @@ function programarSkullette() {
             wrapper.appendChild(inner); document.body.appendChild(wrapper);
             setTimeout(() => { wrapper.style.opacity = '1'; wrapper.style.transform = `translateX(${wrapper.style.left === '-50px' ? '120vw' : '-120vw'}) rotate(360deg)`; }, 100);
             setTimeout(() => { wrapper.style.opacity = '0'; }, 7200); 
-            inner.onpointerdown = () => { checkLogro('skull'); let g = agregarDulces(2); guardarDatos(); reproducirSonido(sfxExito); wrapper.remove(); };
+            inner.onpointerdown = () => { 
+                checkLogro('skull'); let g = agregarDulces(2); revelarPista('pista_halloween'); // REVELA PISTA #7
+                guardarDatos(); reproducirSonido(sfxExito); wrapper.remove(); 
+            };
             setTimeout(() => { if(wrapper.parentNode) wrapper.remove(); }, 8000);
         }
         programarSkullette();
