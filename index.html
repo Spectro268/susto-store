@@ -7,7 +7,7 @@
 
 <!-- PWA Y FAVICON -->
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#140505">
+<meta name="theme-color" content="#000000">
 <link rel="apple-touch-icon" href="icono.png">
 <link rel="icon" type="image/png" href="logo.png">
 
@@ -48,15 +48,15 @@ body.tema-sangre { --bg: #0a0000; --pumpkin: #cc0000; --ember: #660000; --violet
 body.tema-momia { --bg: #1a1610; --pumpkin: #d49a6a; --ember: #8b5a2b; --violet: #e6c280; --card: #2b2218; --glow: rgba(212, 154, 106, 0.2); --bg-overlay: rgba(26, 22, 16, 0.88); --borde-estilo: dashed; }
 body.tema-calabaza { --bg: #0a140a; --pumpkin: #ff6600; --ember: #cc5200; --violet: #00b33c; --card: #0f1f0f; --glow: rgba(255, 102, 0, 0.25); --bg-overlay: rgba(10, 20, 10, 0.88); }
 
-/* TEMA BATMAN SOLUCIONADO (Sin filtro destructivo) */
+/* TEMA BATMAN OPTIMIZADO */
 body.tema-batman { 
     --bg: #050505; 
-    --pumpkin: #ffffff; 
-    --ember: #444444; 
-    --violet: #888888; 
+    --pumpkin: #666666; /* Gris medio para contraste de texto blanco */
+    --ember: #222222; 
+    --violet: #999999; 
     --card: #111111; 
-    --glow: rgba(255, 255, 255, 0.15); 
-    --bg-overlay: rgba(5, 5, 5, 0.95); 
+    --glow: rgba(255, 255, 255, 0.1); 
+    --bg-overlay: rgba(0, 0, 0, 0.95); 
 }
 
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
@@ -92,14 +92,31 @@ a { color: inherit; }
 :focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; }
 
 /* ==========================================
-   PANTALLA DE CARGA (SPLASH SCREEN)
+   PANTALLA DE CARGA (SPLASH SCREEN NEGRO PURO)
    ========================================== */
 #splash-screen {
-  position: fixed; inset: 0; background: var(--bg-overlay); z-index: 99999;
+  position: fixed; inset: 0; background: #000000; z-index: 99999;
   display: flex; flex-direction: column; justify-content: center; align-items: center;
-  backdrop-filter: blur(10px); transition: opacity 1s ease;
+  transition: opacity 1.5s ease;
 }
-.splash-loader { color: var(--violet); font-size: 1.5rem; font-weight: 800; animation: pulse 1.5s infinite; letter-spacing: 2px;}
+.splash-loader { color: #d62828; font-size: 1.5rem; font-weight: 800; animation: pulse 1.5s infinite; letter-spacing: 2px;}
+
+#btn-boo {
+  display: none;
+  background: #d62828 !important; /* Tema clásico forzado */
+  color: #ffffff !important;
+  border: 2px solid #7a1010 !important;
+  font-size: 2.5rem; padding: 20px 60px; border-radius: 999px;
+  box-shadow: 0 0 30px rgba(214, 40, 40, 0.6);
+  transition: transform 0.3s, opacity 1s ease;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.9);
+}
+#btn-boo.show { opacity: 1; transform: scale(1); }
+#btn-boo:hover { transform: scale(1.1); }
+
+@keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
 /* HEADER Y NAVEGACIÓN */
 header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 20px 5vw; border-bottom: 1px solid var(--ember); background: rgba(20, 5, 5, 0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; }
@@ -171,7 +188,6 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .dia-caja.reclamado { background: var(--violet); border-color: #fff; color: #fff; }
 .dia-caja.actual { border-color: var(--pumpkin); background: rgba(214, 40, 40, 0.2); cursor: pointer; animation: pulse 2s infinite; }
 .dia-caja.bloqueado { opacity: 0.5; filter: grayscale(1); }
-@keyframes pulse { 0% { box-shadow: 0 0 0 0 var(--glow); } 70% { box-shadow: 0 0 0 10px rgba(214, 40, 40, 0); } 100% { box-shadow: 0 0 0 0 rgba(214, 40, 40, 0); } }
 
 /* TOAST LOGRO */
 #toast-logro { position: fixed; top: 20px; left: 50%; transform: translate(-50%, -20px); opacity: 0; pointer-events: none; background: var(--violet); color: #fff; border-radius: 12px; padding: 15px 25px; display: flex; align-items: center; gap: 15px; font-weight: bold; box-shadow: 0 5px 20px rgba(0,0,0,0.5); z-index: 999; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); border: 2px solid #fff; }
@@ -235,9 +251,9 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .btn-mute { background: var(--card); border: 1px var(--borde-estilo) var(--ember); color: var(--ink); border-radius: 8px; padding: 8px; cursor: pointer; transition: 0.2s; }
 .btn-mute:hover { border-color: var(--pumpkin); }
 
-/* PARTÍCULAS JS */
-.particula-deco { position: fixed; pointer-events: none; z-index: -1; opacity: 0; }
-.skullette-wrapper { position: fixed; z-index: 90; pointer-events: none; }
+/* PARTÍCULAS JS (Optimizadas para lag) */
+.particula-deco { position: fixed; pointer-events: none; z-index: -1; opacity: 0; will-change: transform, opacity; }
+.skullette-wrapper { position: fixed; z-index: 90; pointer-events: none; will-change: transform; }
 .skullette-inner { width: 65px; height: 65px; cursor: pointer; filter: drop-shadow(0 0 10px var(--violet)); transition: transform 0.2s; pointer-events: auto; object-fit: contain; -webkit-user-drag: none; }
 .skullette-inner:hover { transform: scale(1.2); }
 .error-compra { animation: shake 0.4s; background: var(--violet) !important; color: #fff !important; pointer-events: none; }
@@ -268,10 +284,10 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 </head>
 <body>
 
-<!-- PANTALLA DE CARGA INICIAL -->
+<!-- PANTALLA DE CARGA INICIAL (NEGRA PURA) -->
 <div id="splash-screen">
   <div class="splash-loader" id="txt-cargando">Descargando Magia...</div>
-  <button id="btn-boo" class="btn-accion" style="display:none; font-size: 2rem; padding: 20px 50px; border-radius: 999px;" onclick="iniciarApp()">¡Boo!</button>
+  <button id="btn-boo" onclick="iniciarApp()">¡Boo!</button>
 </div>
 
 <!-- MURCIÉLAGOS GLOBALES (Reubicados para vuelo correcto) -->
@@ -322,7 +338,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   </div>
 </div>
 
-<!-- MODAL CANJEAR CÓDIGO (Generación Diferida) -->
+<!-- MODAL CANJEAR CÓDIGO (Lógica Corregida) -->
 <div class="modal-overlay" id="modal-usar-item">
   <div class="modal-box">
     <h3 style="justify-content: center;">Canjear Ticket</h3>
@@ -378,7 +394,6 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   <div class="header-right">
     <span class="moneda-ui">🍬 <span id="ui-dulces">0</span></span>
     <a class="btn-col" onclick="reproducirSonido(sfxExito); cambiarPagina('sec-coleccion')" id="nav-coleccion">Nuestra Colección</a>
-    <!-- Ajustes Tuerca Restaurada -->
     <button class="btn-icono tuerca" onclick="abrirAjustes()" title="Ajustes">
       <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
     </button>
@@ -593,7 +608,7 @@ const catalogoPistas = {
 };
 
 // ========================================================
-// 3. SINCRONIZACIÓN FIREBASE Y UI (CARGA INICIAL)
+// 3. SINCRONIZACIÓN FIREBASE Y UI (CARGA INICIAL Y SPLASH)
 // ========================================================
 if(database) {
   database.ref(rutaDB).on('value', (snapshot) => {
@@ -613,7 +628,7 @@ if(database) {
     aplicarTemaCSS(temaActivo);
     actualizarUI();
 
-    // Desbloquear Splash Screen cuando Firebase responda
+    // Desbloquear Splash Screen (Mostrar botón BOO)
     if (!appCargada) {
         appCargada = true;
         const loaderTxt = document.getElementById('txt-cargando');
@@ -621,22 +636,26 @@ if(database) {
         if(loaderTxt && btnBoo) {
             loaderTxt.style.display = 'none';
             btnBoo.style.display = 'block';
+            setTimeout(() => { btnBoo.classList.add('show'); }, 50);
         }
     }
   });
 } else {
-    // Si no hay conexión local rápida, quitar el bloqueo a los 1.5s
     setTimeout(() => {
         appCargada = true;
         document.getElementById('txt-cargando').style.display = 'none';
-        document.getElementById('btn-boo').style.display = 'block';
+        const btnBoo = document.getElementById('btn-boo');
+        btnBoo.style.display = 'block';
+        setTimeout(() => { btnBoo.classList.add('show'); }, 50);
     }, 1500);
 }
 
 function iniciarApp() {
+    reproducirSonido(sfxExito); // SFX original on click
     const splash = document.getElementById('splash-screen');
+    splash.style.pointerEvents = 'none'; // Evitar doble click
     splash.style.opacity = '0';
-    setTimeout(() => { splash.style.display = 'none'; }, 1000);
+    setTimeout(() => { splash.style.display = 'none'; }, 1500);
     
     // Iniciar el audio progresivamente
     bgMusic.volume = 0;
@@ -737,7 +756,7 @@ function actualizarTimerAtaud() {
 }
 
 // ========================================================
-// 6. TIENDA MODULAR, CARRITO NUEVO Y TEMAS
+// 6. TIENDA MODULAR, CARRITO Y TEMAS
 // ========================================================
 function abrirSubTienda(idSub) {
     reproducirSonido(sfxExito);
@@ -768,7 +787,6 @@ function comprarItem(boton, idItem, precio, nombreItem, tipo) {
             equiparTema(idItem); 
             alert(`¡Has adquirido: ${nombreItem}!\nEquipado al instante.`);
         } else {
-            // Se manda al carrito SIN GENERAR CÓDIGO
             carrito.push({ id: idItem, nombre: nombreItem, tipo: tipo, codigo: null, usado: false });
             guardarDatos();
             alert(`¡Compraste: ${nombreItem}!\nRevisa tu Inventario (🛒) para canjearlo.`);
@@ -782,7 +800,7 @@ function comprarItem(boton, idItem, precio, nombreItem, tipo) {
     }
 }
 
-// ================= LÓGICA DEL CARRITO REPARADA =================
+// ================= LÓGICA DEL CARRITO CORREGIDA (GUARDADO SEGURO) =================
 function abrirCarrito() {
     reproducirSonido(sfxExito);
     document.getElementById('modal-carrito').classList.add('activo');
@@ -829,7 +847,6 @@ function abrirUsoItem(index) {
     cerrarCarrito();
     reproducirSonido(sfxExito);
     
-    // Preparar el modal (el código aún NO se ha generado)
     document.getElementById('txt-codigo-generado').innerText = "¿?¿?¿?";
     document.getElementById('btn-copiar-codigo').innerText = "Generar, Copiar y Usar";
     document.getElementById('modal-usar-item').classList.add('activo');
@@ -845,35 +862,33 @@ function confirmarUsoItem() {
     const index = indexItemEnUso;
     const item = carrito[index];
     
-    // SE GENERA EL CÓDIGO ÚNICAMENTE AQUÍ
+    // Generar el código al momento de hacer click
     const codigoGenerado = "BOO-" + Math.random().toString(36).substr(2, 4).toUpperCase();
     
+    // GUARDADO DIRECTO EN LA BASE DE DATOS PRIMERO (Solución al Bug)
+    if (item.tipo === 'snack') {
+        carrito.splice(index, 1);
+    } else {
+        carrito[index].codigo = codigoGenerado;
+        carrito[index].usado = true;
+    }
+    
+    guardarDatos(); // Guardar cambios en firebase independiente de la api del portapapeles
+    reproducirSonido(sfxExito);
+    document.getElementById('txt-codigo-generado').innerText = codigoGenerado;
+    
+    // Luego intentamos copiar visualmente para el usuario
     navigator.clipboard.writeText(codigoGenerado).then(() => {
-        document.getElementById('txt-codigo-generado').innerText = codigoGenerado;
-        
-        // Reglas de consumo
-        if (item.tipo === 'snack') {
-            // Los snacks se borran completamente tras generarse
-            carrito.splice(index, 1);
-        } else {
-            // Las citas/gestos se quedan registrados como "usados"
-            carrito[index].codigo = codigoGenerado;
-            carrito[index].usado = true;
-        }
-
-        guardarDatos();
-        reproducirSonido(sfxExito);
         document.getElementById('btn-copiar-codigo').innerText = "¡Copiado y Usado!";
-        
-        // Darle un par de segundos para que vea el código antes de cerrar
-        setTimeout(() => {
-            document.getElementById('btn-copiar-codigo').innerText = "Generar, Copiar y Usar";
-            cerrarModalUsar();
-        }, 2500);
-
     }).catch(err => {
-        alert("No se pudo copiar. Inténtalo de nuevo.");
+        // Si no tiene permisos, al menos lo guardó y le avisamos que lo copie a mano
+        document.getElementById('btn-copiar-codigo').innerText = "¡Usado! (Cópialo manual)";
     });
+
+    setTimeout(() => {
+        document.getElementById('btn-copiar-codigo').innerText = "Generar, Copiar y Usar";
+        cerrarModalUsar();
+    }, 3000);
 }
 
 // ================= TEMAS Y COLECCIÓN =================
@@ -1002,7 +1017,7 @@ function abrirAdminTickets() {
 }
 
 // ========================================================
-// 8. ANIMACIONES Y SISTEMA DE PARTÍCULAS JS
+// 8. ANIMACIONES Y SISTEMA DE PARTÍCULAS JS (Optimizadas)
 // ========================================================
 function abrirAjustes() { checkLogro('config'); document.getElementById('modal-ajustes').classList.add('activo'); }
 function cerrarAjustes() { document.getElementById('modal-ajustes').classList.remove('activo'); }
@@ -1014,6 +1029,7 @@ function actualizarAnimacionInicio() {
     }
 }
 
+// Generador de partículas optimizado (Intervalo ampliado a 2000ms para reducir lag)
 setInterval(() => {
     if(temaActivo === 'tema-default') return;
 
@@ -1079,8 +1095,9 @@ setInterval(() => {
         setTimeout(() => wrapper.style.transform = 'translateX(130vw) scale(1.5)', 100);
         setTimeout(() => wrapper.remove(), 12200);
     }
-}, 800);
+}, 2000);
 
+// Skullettes voladoras (Intervalo a 12s para reducir lag)
 setInterval(() => {
   const enJuegos = document.getElementById('sec-juegos').classList.contains('activa');
   if(!enJuegos && Math.random() > 0.7) {
@@ -1102,7 +1119,7 @@ setInterval(() => {
     inner.onpointerdown = () => { checkLogro('skull'); dulces += 10; guardarDatos(); reproducirSonido(sfxExito); wrapper.remove(); };
     setTimeout(() => { if(wrapper.parentNode) wrapper.remove(); }, 8000);
   }
-}, 8000);
+}, 12000);
 
 function probarJuego(idJuego) { 
     if(!bgMusic.muted) bgMusic.pause();
