@@ -64,6 +64,9 @@ body.tema-batman .btn-accion:hover,
 body.tema-batman .btn-cerrar-modal:hover { color: #ffffff !important; background: var(--ember) !important; }
 body.tema-batman .btn-carrito-tienda { color: #ffffff !important; border-color: #ffffff !important; }
 body.tema-batman .btn-carrito-tienda:hover { background: rgba(255,255,255,0.1) !important; }
+body.tema-batman #toast-logro, 
+body.tema-batman #toast-sub, 
+body.tema-batman #toast-txt { color: #000000 !important; } /* Toast legible en Batman */
 
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
 *, *::before, *::after { box-sizing: inherit; }
@@ -88,7 +91,7 @@ body::before {
   background-size: cover; background-position: center; pointer-events: none; transition: all 0.5s ease;
 }
 
-a { color: inherit; }
+a { color: inherit; -webkit-tap-highlight-color: transparent; }
 :focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; }
 
 /* ==========================================
@@ -113,17 +116,17 @@ a { color: inherit; }
 
 /* HEADER Y NAVEGACIÓN */
 header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 20px 5vw; border-bottom: 1px solid var(--ember); background: rgba(20, 5, 5, 0.95); backdrop-filter: blur(5px); position: sticky; top: 0; z-index: 100; }
-.logo { justify-self: start; font-weight: 900; font-size: 1.5rem; color: var(--pumpkin); text-shadow: 0 0 14px var(--glow); text-decoration: none; cursor: pointer; }
+.logo { justify-self: start; font-weight: 900; font-size: 1.5rem; color: var(--pumpkin); text-shadow: 0 0 14px var(--glow); text-decoration: none; cursor: pointer; -webkit-tap-highlight-color: transparent;}
 nav { justify-self: center; display: flex; align-items: center; gap: 24px; font-weight: 500; }
-nav a { text-decoration: none; cursor: pointer; padding: 5px; transition: color 0.2s; }
+nav a { text-decoration: none; cursor: pointer; padding: 5px; transition: color 0.2s; -webkit-tap-highlight-color: transparent;}
 nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(--pumpkin); }
 .header-right { justify-self: end; display: flex; align-items: center; gap: 15px; }
 .moneda-ui { font-size: 1.2rem; font-weight: 800; color: var(--ink); display: flex; align-items: center; gap: 6px; }
 #ui-dulces { display: inline-block; min-width: 45px; text-align: left; }
-.btn-col { background: var(--card); border: 1px var(--borde-estilo) var(--pumpkin); color: var(--pumpkin); font-weight: 800; padding: 8px 20px; border-radius: 999px; text-decoration: none; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+.btn-col { background: var(--card); border: 1px var(--borde-estilo) var(--pumpkin); color: var(--pumpkin); font-weight: 800; padding: 8px 20px; border-radius: 999px; text-decoration: none; cursor: pointer; transition: all 0.2s; white-space: nowrap; -webkit-tap-highlight-color: transparent;}
 .btn-col:hover { background: var(--pumpkin); color: #000; }
 
-.btn-icono { background: transparent; border: none; cursor: pointer; color: var(--ink); padding: 0; display: flex; align-items: center; justify-content: center; transition: all 0.3s; font-size: 1.6rem; }
+.btn-icono { background: transparent; border: none; cursor: pointer; color: var(--ink); padding: 0; display: flex; align-items: center; justify-content: center; transition: all 0.3s; font-size: 1.6rem; -webkit-tap-highlight-color: transparent;}
 .btn-icono:hover { color: var(--pumpkin); filter: drop-shadow(0 0 8px var(--glow)); transform: scale(1.1); }
 .btn-icono.tuerca svg { width: 26px; height: 26px; }
 .btn-icono.tuerca:hover svg { animation: spin 2s linear infinite; }
@@ -370,7 +373,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 <!-- MODAL ATAÚD DIARIO -->
 <div class="modal-overlay" id="modal-ataud">
   <div class="modal-box">
-    <h3 style="justify-content: center;">Recompensa Diaria ⚰️️</h3>
+    <h3 style="justify-content: center;">Recompensa Diaria ⚰️</h3>
     <p style="font-size: 0.9rem; margin-top: 0;">Reclama tu lealtad cada día.</p>
     <div style="font-weight:bold; color:var(--pumpkin); font-size:1.2rem; margin:10px 0;" id="contador-ataud">Disponible Ahora</div>
     <div class="grid-ataud" id="grid-ataud-cajas"></div>
@@ -446,6 +449,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   </div>
 </section>
 
+<!-- LA TIENDA ESTRUCTURADA REDISEÑADA -->
 <section class="pagina" id="sec-tienda">
   
   <div class="tienda-header-container">
@@ -608,8 +612,8 @@ let carrito = [];
 let codigosUsados = []; 
 let ataudDia = 1; let ataudTiempo = 0;   
 let diarioVisto = false; 
-let pistas = []; // Pistas resueltas
-let pistasReveladas = []; // Pistas descubiertas en el diario
+let pistas = []; 
+let pistasReveladas = []; 
 let temaActivo = 'tema-default';
 let appCargada = false;
 
@@ -633,7 +637,6 @@ const catalogoLogros = {
   'diario': { icono: '📖', nombre: 'Cazadora de Secretos', desc: 'Encontraste y abriste el Diario de Pistas.' }
 };
 
-// LA LÓGICA DE PISTAS (ANTI-ADIVINACIÓN)
 const catalogoPistas = {
   'pista_amor':      { pistaTxt: "El sentimiento que nos une. 4 letras.", desc: "El amor es la chispa mágica que ilumina las catacumbas de mi corazón.", reqTxt: "adquirir una 🎟️ Cita VIP en la tienda" },
   'pista_greta':     { pistaTxt: "La dueña de este rincón oscuro...", desc: "La niña de mis ojos, la dueña de este rincón oscuro.", reqTxt: "equipar el 🦇 Tema: Rosa" },
@@ -714,6 +717,10 @@ if(database) {
 }
 
 function iniciarApp() {
+    sfxExito.muted = false; sfxError.muted = false;
+    sfxExito.volume = 0.1; sfxError.volume = 0.1;
+    document.getElementById('vol-sfx').value = 0.1; document.getElementById('btn-mute-sfx').textContent = '🔊';
+
     const splash = document.getElementById('splash-screen');
     splash.style.pointerEvents = 'none'; splash.style.opacity = '0';
     setTimeout(() => { splash.style.display = 'none'; }, 1500);
@@ -765,7 +772,6 @@ function checkLogro(id) {
   }
 }
 
-// SISTEMA DE REVELACIÓN DE PISTAS (TRIGGERS)
 function revelarPista(idPista) {
     if (!pistasReveladas.includes(idPista)) {
         pistasReveladas.push(idPista);
@@ -864,7 +870,7 @@ function reclamarCaja() {
   }
   ataudTiempo = Date.now(); ataudDia++; 
   
-  if (ataudDia > 5) revelarPista('pista_2211'); // Revelar pista día 5
+  if (ataudDia > 5) revelarPista('pista_2211'); 
   
   guardarDatos(); reproducirSonido(sfxExito); 
   renderizarGrillaAtaud(); 
@@ -985,7 +991,7 @@ function renderizarColeccionYLogros() {
 }
 
 // ========================================================
-// 7. DIARIO Y CÓDIGOS DEL ICOFFIN (ANTI-ADIVINACIÓN)
+// 7. DIARIO Y CÓDIGOS (ANTI-ADIVINACIÓN)
 // ========================================================
 function abrirDiario() {
   const volSlider = parseFloat(document.getElementById('vol-musica').value);
@@ -1009,16 +1015,14 @@ function renderizarDiario() {
   
   Object.keys(catalogoPistas).forEach((key, index) => {
     const p = catalogoPistas[key]; 
-    const desbloqueada = pistas.includes(key); // Ya adivinó en el iCoffin
-    const revelada = pistasReveladas.includes(key); // Ya cumplió el requisito
+    const desbloqueada = pistas.includes(key); 
+    const revelada = pistasReveladas.includes(key); 
     
     if (!revelada) { 
         container.innerHTML += `<div class="pista-box pista-blur" style="border-color: #555; color: #888;"><strong>🔒 Pista #${index+1}:</strong> Necesitas ${p.reqTxt} para revelar este acertijo.</div>`; 
-    } 
-    else if (desbloqueada) { 
+    } else if (desbloqueada) { 
         container.innerHTML += `<div class="pista-box" style="border-color: #00b33c;"><strong>✅ Pista #${index+1} Resuelta:</strong> ${p.desc}</div>`; 
-    } 
-    else { 
+    } else { 
         container.innerHTML += `<div class="pista-box"><strong>📖 Pista #${index+1}:</strong> ${p.pistaTxt} <br><span style="font-size:0.8rem; opacity:0.7;">(Ingresa tu respuesta en el iCoffin)</span></div>`; 
     }
   });
@@ -1028,7 +1032,6 @@ function canjearCodigo() {
   const input = document.getElementById('input-codigo'); const msg = document.getElementById('msg-codigo'); const codigo = input.value.trim().toUpperCase(); 
   let msjRespuesta = ""; let colorRespuesta = "#4CAF50";
 
-  // Comandos de Administrador
   switch(codigo) {
     case 'GIVE': dulces += 500; msjRespuesta = "[ADMIN] +500 Caramelos."; colorRespuesta = "var(--violet)"; reproducirSonido(sfxExito); break;
     case 'TICKETS': abrirAdminTickets(); msjRespuesta = "[ADMIN] Tickets abiertos."; break;
@@ -1044,22 +1047,17 @@ function canjearCodigo() {
       return;
   }
 
-  // Lógica de Códigos de Pistas (Con validación ANTI-ADIVINACIÓN)
   if(codigosSecretos[codigo]) {
       const premio = codigosSecretos[codigo];
-      
       if(!pistasReveladas.includes(premio.id)) {
           msg.style.color = "var(--pumpkin)"; msg.textContent = "Aún no tienes el conocimiento para usar esto..."; reproducirSonido(sfxError);
-      }
-      else if(codigosUsados.includes(codigo)) {
+      } else if(codigosUsados.includes(codigo)) {
           msg.style.color = "var(--pumpkin)"; msg.textContent = "Ya resolviste este secreto..."; reproducirSonido(sfxError);
       } else {
           codigosUsados.push(codigo);
-          if (!pistas.includes(premio.id)) pistas.push(premio.id); // Marcar como resuelto en el diario
-          
+          if (!pistas.includes(premio.id)) pistas.push(premio.id); 
           let gananciaExtra = agregarDulces(premio.recompensa);
           guardarDatos(); input.value = ''; reproducirSonido(sfxExito);
-          
           document.getElementById('icoffin-msg').textContent = premio.msg;
           document.getElementById('icoffin-premio').textContent = gananciaExtra;
           document.getElementById('modal-recompensa-icoffin').classList.add('activo');
@@ -1078,7 +1076,7 @@ function abrirAdminTickets() {
 }
 
 // ========================================================
-// 8. ANIMACIONES VISUALES Y SISTEMA ANTI-LAG
+// 8. ANIMACIONES Y SISTEMA ANTI-LAG
 // ========================================================
 function abrirAjustes() { checkLogro('config'); document.getElementById('modal-ajustes').classList.add('activo'); }
 function cerrarAjustes() { document.getElementById('modal-ajustes').classList.remove('activo'); }
@@ -1113,7 +1111,7 @@ function programarSkullette() {
             setTimeout(() => { wrapper.style.opacity = '1'; wrapper.style.transform = `translateX(${wrapper.style.left === '-50px' ? '120vw' : '-120vw'}) rotate(360deg)`; }, 100);
             setTimeout(() => { wrapper.style.opacity = '0'; }, 7200); 
             inner.onpointerdown = () => { 
-                checkLogro('skull'); let g = agregarDulces(2); revelarPista('pista_halloween'); // REVELA PISTA #7
+                checkLogro('skull'); let g = agregarDulces(2); revelarPista('pista_halloween');
                 guardarDatos(); reproducirSonido(sfxExito); wrapper.remove(); 
             };
             setTimeout(() => { if(wrapper.parentNode) wrapper.remove(); }, 8000);
@@ -1145,7 +1143,6 @@ function cambiarPagina(idPagina) {
   window.scrollTo(0,0);
 }
 
-// OPTIMIZACIÓN DE MOUSE TRACKING
 (function(){
   let ticking = false;
   document.addEventListener('pointermove', function(e){ 
