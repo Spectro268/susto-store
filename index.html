@@ -51,19 +51,15 @@ body.tema-calabaza { --bg: #0a140a; --pumpkin: #ff6600; --ember: #cc5200; --viol
 /* TEMA BATMAN BLANCO PURO */
 body.tema-batman { 
     --bg: #050505; 
-    --pumpkin: #ffffff; /* Blanco puro para título y botones */
+    --pumpkin: #ffffff; 
     --ember: #333333; 
     --violet: #888888; 
     --card: #111111; 
     --glow: rgba(255, 255, 255, 0.15); 
     --bg-overlay: rgba(0, 0, 0, 0.95); 
 }
-body.tema-batman .btn-accion {
-    color: #000000; /* Letras negras para botones blancos */
-}
-body.tema-batman .btn-accion:hover {
-    color: #ffffff;
-}
+body.tema-batman .btn-accion { color: #000000; }
+body.tema-batman .btn-accion:hover { color: #ffffff; background: var(--ember); }
 
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
 *, *::before, *::after { box-sizing: inherit; }
@@ -71,15 +67,9 @@ html { scroll-padding-top: env(safe-area-inset-top, 0px); }
 html, body { overscroll-behavior: none; height: 100%; overflow-x: hidden; }
 
 body {
-  margin: 0;
-  color: var(--ink);
-  font-family: Montserrat, system-ui, sans-serif;
-  line-height: 1.6;
-  width: 100vw;
-  max-width: 100%;
-  -webkit-user-select: none;
-  user-select: none;
-  -webkit-touch-callout: none;
+  margin: 0; color: var(--ink); font-family: 'Montserrat', system-ui, sans-serif;
+  line-height: 1.6; width: 100vw; max-width: 100%;
+  -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
 }
 input { -webkit-user-select: auto; user-select: auto; }
 
@@ -98,7 +88,7 @@ a { color: inherit; }
 :focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; }
 
 /* ==========================================
-   PANTALLA DE CARGA (SPLASH SCREEN NEGRO PURO)
+   PANTALLA DE CARGA Y BOTÓN BOO
    ========================================== */
 #splash-screen {
   position: fixed; inset: 0; background: #000000; z-index: 99999;
@@ -108,20 +98,13 @@ a { color: inherit; }
 .splash-loader { color: #d62828; font-size: 1.5rem; font-weight: 800; animation: pulse 1.5s infinite; letter-spacing: 2px;}
 
 #btn-boo {
-  display: none;
-  background: #d62828 !important; /* Tema clásico forzado */
-  color: #ffffff !important;
-  border: 2px solid #7a1010 !important;
-  font-size: 2.5rem; padding: 20px 60px; border-radius: 999px;
-  box-shadow: 0 0 30px rgba(214, 40, 40, 0.6);
-  transition: transform 0.3s, opacity 1s ease;
-  cursor: pointer;
-  opacity: 0;
-  transform: scale(0.9);
+  display: none; background: #d62828 !important; color: #ffffff !important; border: 2px solid #7a1010 !important;
+  font-size: 2.5rem; padding: 20px 60px; border-radius: 999px; box-shadow: 0 0 30px rgba(214, 40, 40, 0.6);
+  transition: transform 0.3s, opacity 1s ease; cursor: pointer; opacity: 0; transform: scale(0.9);
+  font-family: inherit; font-weight: 900; -webkit-tap-highlight-color: transparent; outline: none; /* Mejoras de Tipografía y Clic Móvil */
 }
 #btn-boo.show { opacity: 1; transform: scale(1); }
 #btn-boo:hover { transform: scale(1.1); }
-
 @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
 /* HEADER Y NAVEGACIÓN */
@@ -148,7 +131,7 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 #sec-home.activa { display: grid; align-items: center; } 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* HERO, MURCIÉLAGOS GLOBALES Y LEVITACIÓN SUTIL */
+/* HERO Y MURCIÉLAGOS */
 .hero { position: relative; place-items: center; text-align: center; }
 .bats { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 5; }
 .bat { position: absolute; font-size: 1.8rem; filter: brightness(0) drop-shadow(0 5px 5px rgba(0,0,0,0.6)); opacity: 0.9; animation: fly 14s linear infinite; }
@@ -189,15 +172,21 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .ataud-flotante .badge { font-size: 0.8rem; background: var(--pumpkin); color: white; border-radius: 999px; padding: 2px 8px; font-weight: bold; margin-top: 5px; font-family: sans-serif; }
 .ataud-animado { animation: floatAtaud 4s ease-in-out infinite; }
 @keyframes floatAtaud { 0%, 100% { margin-top: -30px; } 50% { margin-top: -45px; } }
-.grid-ataud { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 20px; }
-.dia-caja { background: rgba(255,255,255,0.05); border: 1px var(--borde-estilo) var(--ember); border-radius: 10px; padding: 15px 5px; font-weight: bold; position: relative; transition: 0.3s; }
-.dia-caja.reclamado { background: var(--violet); border-color: #fff; color: #fff; }
-.dia-caja.actual { border-color: var(--pumpkin); background: rgba(214, 40, 40, 0.2); cursor: pointer; animation: pulse 2s infinite; }
-.dia-caja.bloqueado { opacity: 0.5; filter: grayscale(1); }
 
-/* TOAST (LOGROS Y NOTIFICACIONES) */
-#toast-logro { position: fixed; top: 20px; left: 50%; transform: translate(-50%, -20px); opacity: 0; pointer-events: none; background: var(--violet); color: #fff; border-radius: 12px; padding: 15px 25px; display: flex; align-items: center; gap: 15px; font-weight: bold; box-shadow: 0 5px 20px rgba(0,0,0,0.5); z-index: 999; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); border: 2px solid #fff; }
+/* NUEVO CARRUSEL HORIZONTAL PARA RECOMPENSAS DIARIAS */
+.grid-ataud { display: flex; overflow-x: auto; gap: 15px; margin-top: 20px; padding-bottom: 10px; scroll-snap-type: x mandatory; }
+.grid-ataud::-webkit-scrollbar { height: 8px; }
+.grid-ataud::-webkit-scrollbar-thumb { background: var(--ember); border-radius: 4px; }
+.dia-caja { background: rgba(255,255,255,0.05); border: 1px var(--borde-estilo) var(--ember); border-radius: 10px; padding: 15px 5px; font-weight: bold; position: relative; transition: 0.3s; min-width: 100px; flex-shrink: 0; scroll-snap-align: start; }
+.dia-caja.reclamado { background: var(--violet); border-color: #fff; color: #fff; }
+.dia-caja.actual { border-color: var(--pumpkin); background: rgba(214, 40, 40, 0.2); cursor: pointer; animation: pulseAtaud 2s infinite; }
+.dia-caja.bloqueado { opacity: 0.5; filter: grayscale(1); }
+@keyframes pulseAtaud { 0% { box-shadow: 0 0 0 0 var(--glow); } 70% { box-shadow: 0 0 0 10px rgba(214, 40, 40, 0); } 100% { box-shadow: 0 0 0 0 rgba(214, 40, 40, 0); } }
+
+/* TOAST (SISTEMA DE COLA Y ESTILO MÓVIL ESTIRADO) */
+#toast-logro { position: fixed; top: 20px; left: 50%; transform: translate(-50%, -20px); opacity: 0; pointer-events: none; background: var(--violet); color: #fff; border-radius: 12px; padding: 15px 20px; display: flex; align-items: center; gap: 15px; font-weight: bold; box-shadow: 0 5px 20px rgba(0,0,0,0.5); z-index: 9999; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); border: 2px solid #fff; width: 90%; max-width: 400px; text-align: left; }
 #toast-logro.visible { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
+#toast-txt { flex-grow: 1; }
 
 #fade-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: black; opacity: 0; pointer-events: none; transition: opacity 1s ease-in-out; z-index: 9999; }
 
@@ -213,7 +202,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .item p { margin: 0; font-size: .92rem; opacity: .8; flex-grow: 1; }
 
 /* BOTONES GLOBALES */
-.btn-accion { display: inline-block; background: var(--pumpkin); color: #fff; font-weight: 800; padding: 12px 20px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem; margin-top: 10px; transition: all 0.2s; }
+.btn-accion { display: inline-block; background: var(--pumpkin); color: #fff; font-weight: 800; padding: 12px 20px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem; margin-top: 10px; transition: all 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent; }
 .btn-accion:hover { background: var(--violet); }
 .btn-jugar { background: var(--ember); }
 .btn-jugar:hover { background: var(--pumpkin); }
@@ -221,7 +210,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 
 /* TIENDA Y CARRITO */
 .tienda-header-container { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 15px; margin-bottom: 30px; }
-.btn-carrito-tienda { background: var(--card); border: 2px dashed var(--pumpkin); color: var(--ink); padding: 15px 25px; border-radius: 18px; cursor: pointer; font-size: 1.2rem; font-weight: bold; transition: all 0.3s; display: flex; align-items: center; gap: 10px; }
+.btn-carrito-tienda { background: var(--card); border: 2px dashed var(--pumpkin); color: var(--ink); padding: 15px 25px; border-radius: 18px; cursor: pointer; font-size: 1.2rem; font-weight: bold; transition: all 0.3s; display: flex; align-items: center; gap: 10px; font-family: inherit; -webkit-tap-highlight-color: transparent; }
 .btn-carrito-tienda:hover { background: rgba(214, 40, 40, 0.2); transform: scale(1.05); }
 
 .tienda-seccion { display: none; animation: fadeIn 0.4s ease; }
@@ -230,14 +219,15 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .letrero-neon { color: var(--pumpkin); font-weight: 900; font-size: 1.5rem; margin: 0 0 15px 0; text-shadow: 0 0 10px var(--glow); }
 
 .gd-portal-container { display: grid; gap: 20px; grid-template-columns: 1fr 1fr; margin-bottom: 20px; }
-.gd-portal { border: 2px var(--borde-estilo) var(--violet); border-radius: 18px; padding: 60px 20px; cursor: pointer; text-align: center; transition: all 0.3s; position: relative; overflow: hidden; background-size: cover; background-position: center; }
+.gd-portal { border: 2px var(--borde-estilo) var(--violet); border-radius: 18px; padding: 60px 20px; cursor: pointer; text-align: center; transition: all 0.3s; position: relative; overflow: hidden; background-size: cover; background-position: center; -webkit-tap-highlight-color: transparent; }
 .gd-portal:hover { transform: translateY(-5px); border-color: var(--pumpkin); box-shadow: 0 10px 20px var(--glow); filter: brightness(1.2); }
 .gd-portal h3 { margin: 0; font-size: 1.8rem; color: #fff; position: relative; z-index: 2; text-shadow: 0 0 10px rgba(0,0,0,0.8); }
 
-.portal-citas { background-image: linear-gradient(rgba(20,5,5,0.7), rgba(20,5,5,0.7)), url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600'); }
-.portal-gestos { background-image: linear-gradient(rgba(20,5,5,0.7), rgba(20,5,5,0.7)), url('https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=600'); }
+/* PORTALES REDISEÑADOS */
+.portal-citas-gestos { background-image: linear-gradient(rgba(20,5,5,0.7), rgba(20,5,5,0.7)), url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600'); }
+.portal-amuletos { background-image: linear-gradient(rgba(20,5,5,0.7), rgba(20,5,5,0.7)), url('https://images.unsplash.com/photo-1618609378039-b684869c9eb1?q=80&w=600'); }
 .portal-temas { background-image: linear-gradient(rgba(20,5,5,0.7), rgba(20,5,5,0.7)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600'); grid-column: 1 / -1; padding: 40px 20px; }
-.btn-volver { background: transparent; color: var(--ink); border: 1px var(--borde-estilo) var(--ember); padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-bottom: 20px; font-weight: bold; font-size: 1rem; transition: 0.2s; }
+.btn-volver { background: transparent; color: var(--ink); border: 1px var(--borde-estilo) var(--ember); padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-bottom: 20px; font-weight: bold; font-size: 1rem; transition: 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent; }
 .btn-volver:hover { background: var(--ember); color: #fff; }
 
 /* ICOFFIN Y DIARIO */
@@ -247,14 +237,14 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .icoffin-inner input { width: 100%; padding: 15px; border-radius: 12px; border: 2px var(--borde-estilo) var(--violet); background: rgba(255, 77, 109, 0.1); color: var(--ink); font-size: 1.2rem; text-transform: uppercase; margin-bottom: 20px; font-family: inherit; text-align: center; outline: none; transition: 0.3s; }
 .icoffin-inner input:focus { background: rgba(255, 77, 109, 0.2); box-shadow: 0 0 10px var(--glow); }
 
-.diario-btn { position: absolute; right: 0; background: rgba(28, 8, 8, 0.8); border: 2px dashed var(--pumpkin); border-radius: 18px; padding: 20px; text-align: center; cursor: pointer; transition: 0.3s; width: 150px; z-index: 1; }
+.diario-btn { position: absolute; right: 0; background: rgba(28, 8, 8, 0.8); border: 2px dashed var(--pumpkin); border-radius: 18px; padding: 20px; text-align: center; cursor: pointer; transition: 0.3s; width: 150px; z-index: 1; -webkit-tap-highlight-color: transparent; }
 .diario-btn:hover { background: rgba(214, 40, 40, 0.2); transform: scale(1.05); }
 
 #overlay-diario { display: none; position: fixed; inset: 0; background: #000; z-index: 300; justify-content: center; align-items: center; color: var(--violet); font-size: 1.5rem; text-align: center; font-style: italic; padding: 20px; opacity: 0; transition: opacity 1.5s; }
 .pista-box { background: rgba(255,255,255,0.05); border-left: 4px var(--borde-estilo) var(--violet); padding: 15px; margin-bottom: 15px; text-align: left; }
 .control-audio { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
 .control-audio input[type="range"] { flex-grow: 1; accent-color: var(--pumpkin); }
-.btn-mute { background: var(--card); border: 1px var(--borde-estilo) var(--ember); color: var(--ink); border-radius: 8px; padding: 8px; cursor: pointer; transition: 0.2s; }
+.btn-mute { background: var(--card); border: 1px var(--borde-estilo) var(--ember); color: var(--ink); border-radius: 8px; padding: 8px; cursor: pointer; transition: 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent; }
 .btn-mute:hover { border-color: var(--pumpkin); }
 
 /* PARTÍCULAS JS (Optimizadas para lag) */
@@ -296,7 +286,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   <button id="btn-boo" onclick="iniciarApp()">¡Boo!</button>
 </div>
 
-<!-- MURCIÉLAGOS GLOBALES (Reubicados para vuelo correcto) -->
+<!-- MURCIÉLAGOS GLOBALES -->
 <div class="bats" id="bats-clasicos" aria-hidden="true"><span class="bat">🦇</span><span class="bat">🦇</span><span class="bat">🦇</span></div>
 
 <div id="fade-overlay"></div>
@@ -304,6 +294,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 <!-- AUDIOS -->
 <audio id="audio-bg" loop><source src="musica.mp3" type="audio/mpeg"></audio>
 
+<!-- TOAST (Notificaciones Rediseñadas) -->
 <div id="toast-logro">
   <span id="toast-icon" style="font-size: 2rem;">🏆</span>
   <div><div id="toast-sub" style="font-size: 0.8rem; opacity: 0.8;">Logro Desbloqueado</div><div id="toast-txt">Título</div><div id="toast-bonus" style="color: #ffd700; font-size: 0.9rem;">+15 🍬</div></div>
@@ -344,14 +335,14 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   </div>
 </div>
 
-<!-- MODAL CANJEAR CÓDIGO (Lógica Corregida) -->
+<!-- MODAL CANJEAR CÓDIGO -->
 <div class="modal-overlay" id="modal-usar-item">
   <div class="modal-box">
     <h3 style="justify-content: center;">Canjear Ticket</h3>
     <p style="font-size: 0.9rem;">Haz clic para generar tu código único y copiarlo al portapapeles.</p>
     <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; font-size: 1.5rem; font-weight: bold; color: var(--pumpkin); margin: 20px 0; letter-spacing: 2px;" id="txt-codigo-generado">¿?¿?¿?</div>
     <button class="btn-accion" style="width: 100%; margin-bottom: 10px;" id="btn-copiar-codigo" onclick="confirmarUsoItem()">Generar, Copiar y Usar</button>
-    <button class="btn-cerrar-modal" style="background: transparent; color: var(--ink); border: 1px var(--borde-estilo) var(--ember);" onclick="cerrarModalUsar()">Cancelar</button>
+    <button class="btn-cerrar-modal" style="background: transparent; color: var(--ink); border: 1px solid var(--ember);" onclick="cerrarModalUsar()">Cancelar</button>
   </div>
 </div>
 
@@ -364,11 +355,11 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   </div>
 </div>
 
-<!-- MODAL ATAÚD DIARIO -->
+<!-- MODAL ATAÚD DIARIO (REDISEÑADO CON CARRUSEL) -->
 <div class="modal-overlay" id="modal-ataud">
   <div class="modal-box">
     <h3 style="justify-content: center;">Recompensa Diaria ⚰️</h3>
-    <p style="font-size: 0.9rem; margin-top: 0;">Abre una caja cada 24 horas.</p>
+    <p style="font-size: 0.9rem; margin-top: 0;">Reclama tu lealtad cada día.</p>
     <div style="font-weight:bold; color:var(--pumpkin); font-size:1.2rem; margin:10px 0;" id="contador-ataud">Disponible Ahora</div>
     <div class="grid-ataud" id="grid-ataud-cajas"></div>
     <button class="btn-cerrar-modal" onclick="cerrarAtaud()">Cerrar</button>
@@ -443,7 +434,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   </div>
 </section>
 
-<!-- LA TIENDA ESTRUCTURADA -->
+<!-- LA TIENDA ESTRUCTURADA REDISEÑADA -->
 <section class="pagina" id="sec-tienda">
   
   <div class="tienda-header-container">
@@ -451,14 +442,12 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
           <h2>Bazar de los Enamorados</h2>
           <p class="sub" style="margin-bottom:0;">Usa tus dulces para invocar citas y snacks. Se guardarán en tu Inventario.</p>
       </div>
-      <!-- CARRITO REUBICADO AQUÍ -->
       <button class="btn-carrito-tienda" onclick="abrirCarrito()" title="Inventario de Compras">
           <span>🛒 Tu Inventario</span>
       </button>
   </div>
   
   <div id="tienda-main" class="tienda-seccion activa">
-      <!-- SNACKS SIEMPRE VISIBLES (NOMBRES CORTOS) -->
       <div class="caja-snack">
           <h3 class="letrero-neon">Neon Coffin Snacks</h3>
           <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
@@ -470,13 +459,13 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
           </div>
       </div>
 
-      <!-- PORTALES -->
+      <!-- PORTALES REDISEÑADOS -->
       <div class="gd-portal-container">
-          <div class="gd-portal portal-citas" onclick="abrirSubTienda('tienda-citas')">
-              <h3>🎟️ Citas VIP</h3>
+          <div class="gd-portal portal-citas-gestos" onclick="abrirSubTienda('tienda-citas-gestos')">
+              <h3>🎟️ Citas y Gestos 💖</h3>
           </div>
-          <div class="gd-portal portal-gestos" onclick="abrirSubTienda('tienda-gestos')">
-              <h3>🩹 Gestos Especiales</h3>
+          <div class="gd-portal portal-amuletos" onclick="abrirSubTienda('tienda-amuletos')">
+              <h3>🔮 Amuletos Mágicos</h3>
           </div>
           <div class="gd-portal portal-temas" onclick="abrirSubTienda('tienda-temas')">
               <h3>🎨 Temas y Magia (Cosméticos)</h3>
@@ -484,27 +473,46 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
       </div>
   </div>
 
-  <!-- SUB-TIENDAS -->
-  <div id="tienda-citas" class="tienda-seccion">
+  <!-- SUB-TIENDA: CITAS Y GESTOS MERGED -->
+  <div id="tienda-citas-gestos" class="tienda-seccion">
       <button class="btn-volver" onclick="cerrarSubTienda()">⬅ Volver al Bazar</button>
+      
       <h3 class="seccion-titulo" style="margin-top: 0;">🎟️ Citas VIP</h3>
-      <div class="grid">
+      <div class="grid" style="margin-bottom: 40px;">
           <article class="item"><span class="e">🕹️</span><h3>Arcade Solari</h3><button class="btn-accion" onclick="comprarItem(this, 'arcade', 300, 'Arcade Solari', 'cita')">Comprar - 300 🍬</button></article>
           <article class="item"><span class="e">🍿</span><h3>Cineplanet VIP</h3><button class="btn-accion" onclick="comprarItem(this, 'cine', 250, 'Cineplanet VIP', 'cita')">Comprar - 250 🍬</button></article>
           <article class="item"><span class="e">🍫</span><h3>Cata a Ciegas</h3><button class="btn-accion" onclick="comprarItem(this, 'cata', 150, 'Cata a Ciegas', 'cita')">Comprar - 150 🍬</button></article>
           <article class="item"><span class="e">🎨</span><h3>Arte Feo</h3><button class="btn-accion" onclick="comprarItem(this, 'arte', 100, 'Noche Arte Feo', 'cita')">Comprar - 100 🍬</button></article>
           <article class="item"><span class="e">🍕</span><h3>Pizzería Casera</h3><button class="btn-accion" onclick="comprarItem(this, 'pizza', 200, 'Pizzería Casera', 'cita')">Comprar - 200 🍬</button></article>
       </div>
-  </div>
 
-  <div id="tienda-gestos" class="tienda-seccion">
-      <button class="btn-volver" onclick="cerrarSubTienda()">⬅ Volver al Bazar</button>
-      <h3 class="seccion-titulo" style="margin-top: 0;">🩹 Gestos Especiales</h3>
+      <h3 class="seccion-titulo" style="margin-top: 0;">💖 Gestos Especiales</h3>
       <div class="grid">
           <article class="item"><span class="e">💆‍♀️</span><h3>Masaje VIP</h3><button class="btn-accion" onclick="comprarItem(this, 'masaje', 200, 'Masaje VIP', 'gesto')">Comprar - 200 🍬</button></article>
           <article class="item"><span class="e">🧁</span><h3>Repostero Novato</h3><button class="btn-accion" onclick="comprarItem(this, 'postre', 150, 'Repostero Novato', 'gesto')">Comprar - 150 🍬</button></article>
           <article class="item"><span class="e">☕</span><h3>Desayuno Distancia</h3><button class="btn-accion" onclick="comprarItem(this, 'desayuno', 180, 'Desayuno Delivery', 'gesto')">Comprar - 180 🍬</button></article>
           <article class="item"><span class="e">🕊️</span><h3>Pase Anti-Enojo</h3><button class="btn-accion" onclick="comprarItem(this, 'enojo', 100, 'Pase Anti-Enojo', 'gesto')">Comprar - 100 🍬</button></article>
+      </div>
+  </div>
+
+  <!-- SUB-TIENDA: AMULETOS MÁGICOS -->
+  <div id="tienda-amuletos" class="tienda-seccion">
+      <button class="btn-volver" onclick="cerrarSubTienda()">⬅ Volver al Bazar</button>
+      <h3 class="seccion-titulo" style="margin-top: 0;">🔮 Amuletos de Poder</h3>
+      <p style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 20px;">Mejora tus ganancias y desbloquea secretos permanentes.</p>
+      <div class="grid">
+          <article class="item">
+              <span class="e">👁️</span><h3>Ojo de Clarividencia</h3><p>Descifra y desbloquea el Diario Secreto.</p>
+              <button class="btn-accion" onclick="comprarItem(this, 'amuleto-ojo', 150, 'Ojo de Clarividencia', 'amuleto')">Comprar - 150 🍬</button>
+          </article>
+          <article class="item" style="opacity: 0.5;">
+              <span class="e">🦇</span><h3>Imán de Skullettes</h3><p>Próximamente</p>
+              <button class="btn-accion btn-bloqueado">En Construcción</button>
+          </article>
+          <article class="item" style="opacity: 0.5;">
+              <span class="e">⏳</span><h3>Reloj Vampírico</h3><p>Próximamente</p>
+              <button class="btn-accion btn-bloqueado">En Construcción</button>
+          </article>
       </div>
   </div>
 
@@ -524,11 +532,13 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 <!-- COLECCIÓN -->
 <section class="pagina" id="sec-coleccion">
   <h2>Tu Colección</h2>
-  <p class="sub">Tus temas y logros conseguidos (Los consumibles están en tu Inventario 🛒).</p>
-  <h3 class="seccion-titulo">En el menú (Logros)</h3>
-  <div class="grid" id="contenedor-logros"></div>
+  <p class="sub">Tus amuletos, temas y logros conseguidos (Los tickets consumibles están en tu 🛒).</p>
+  <h3 class="seccion-titulo">Amuletos Mágicos Activos</h3>
+  <div class="grid" id="contenedor-amuletos"></div>
   <h3 class="seccion-titulo">Personalización de Interfaz</h3>
   <div class="grid" id="contenedor-coleccion"></div>
+  <h3 class="seccion-titulo">En el menú (Logros)</h3>
+  <div class="grid" id="contenedor-logros"></div>
 </section>
 
 <!-- CÓDIGOS E ICOFFIN -->
@@ -598,7 +608,8 @@ const catalogo = {
   'tema-sangre': { icono: '🩸', nombre: 'Tema: Rojo Sangre', desc: 'Gotas cayendo.', tipo: 'tema' },
   'tema-momia': { icono: '🏺', nombre: 'Tema: Momia', desc: 'Polvo de arena en el viento.', tipo: 'tema' },
   'tema-calabaza': { icono: '🎃', nombre: 'Tema: Calabaza', desc: 'Brasas flotantes.', tipo: 'tema' },
-  'tema-batman': { icono: '🦇', nombre: 'Tema: Batman', desc: 'Tonos oscuros y contrastados.', tipo: 'tema' }
+  'tema-batman': { icono: '🦇', nombre: 'Tema: Batman', desc: 'Tonos oscuros y contrastados.', tipo: 'tema' },
+  'amuleto-ojo': { icono: '👁️', nombre: 'Ojo de Clarividencia', desc: 'Te permite descifrar el Diario Secreto.', tipo: 'amuleto' }
 };
 
 const catalogoLogros = {
@@ -613,8 +624,22 @@ const catalogoPistas = {
   'pista_amor': { pistaTxt: "El sentimiento que nos une. 4 letras.", codigo: "AMOR", desc: "El amor es la chispa mágica que ilumina las catacumbas de mi corazón." }
 };
 
+// Mapa de recompensas progresivas
+const recompensasDiarias = [
+    { dia: 1, valor: 50, texto: "50 🍬", icono: "🍬" },
+    { dia: 2, valor: 80, texto: "80 🍬", icono: "🍬" },
+    { dia: 3, idItem: "bonobon", nombre: "🍬 Bonobon", tipo: "snack", texto: "Snack Extra", icono: "🎁" },
+    { dia: 4, valor: 120, texto: "120 🍬", icono: "🍬" },
+    { dia: 5, idItem: "enojo", nombre: "🕊️ Pase Anti-Enojo", tipo: "gesto", texto: "Gesto VIP", icono: "💖" },
+    { dia: 6, valor: 150, texto: "150 🍬", icono: "🍬" },
+    { dia: 7, idItem: "arte", nombre: "🎨 Noche Arte Feo", tipo: "cita", texto: "Cita Especial", icono: "🎟️" },
+    { dia: 8, valor: 200, texto: "200 🍬", icono: "🍬" },
+    { dia: 9, valor: 300, texto: "300 🍬", icono: "🍬" },
+    { dia: 10, valor: 500, texto: "El Gran Botín", icono: "💎" }
+];
+
 // ========================================================
-// 3. SINCRONIZACIÓN FIREBASE Y UI (CARGA INICIAL Y SPLASH)
+// 3. SINCRONIZACIÓN FIREBASE Y UI
 // ========================================================
 if(database) {
   database.ref(rutaDB).on('value', (snapshot) => {
@@ -634,7 +659,6 @@ if(database) {
     aplicarTemaCSS(temaActivo);
     actualizarUI();
 
-    // Desbloquear Splash Screen (Mostrar botón BOO)
     if (!appCargada) {
         appCargada = true;
         const loaderTxt = document.getElementById('txt-cargando');
@@ -657,38 +681,23 @@ if(database) {
 }
 
 function iniciarApp() {
-    // 1. Activar Efectos de Sonido
-    sfxExito.muted = false;
-    sfxError.muted = false;
-    sfxExito.volume = 0.1;
-    sfxError.volume = 0.1;
-    document.getElementById('vol-sfx').value = 0.1;
-    document.getElementById('btn-mute-sfx').textContent = '🔊';
-    
-    // Reproducir el sonido al hacer clic en Boo
+    sfxExito.muted = false; sfxError.muted = false;
+    sfxExito.volume = 0.1; sfxError.volume = 0.1;
+    document.getElementById('vol-sfx').value = 0.1; document.getElementById('btn-mute-sfx').textContent = '🔊';
     reproducirSonido(sfxExito);
 
-    // 2. Quitar el Splash
     const splash = document.getElementById('splash-screen');
-    splash.style.pointerEvents = 'none'; 
-    splash.style.opacity = '0';
+    splash.style.pointerEvents = 'none'; splash.style.opacity = '0';
     setTimeout(() => { splash.style.display = 'none'; }, 1500);
     
-    // 3. Iniciar Música Suavemente (Destino 10%)
-    bgMusic.volume = 0;
-    bgMusic.muted = false;
-    document.getElementById('vol-musica').value = 0.1;
-    document.getElementById('btn-mute-musica').textContent = '🔊';
+    bgMusic.volume = 0; bgMusic.muted = false;
+    document.getElementById('vol-musica').value = 0.1; document.getElementById('btn-mute-musica').textContent = '🔊';
     bgMusic.play().catch(e=>console.log(e));
     
     let currentVol = 0;
     let fadeAudio = setInterval(() => {
-        if (currentVol < 0.1) {
-            currentVol += 0.01;
-            bgMusic.volume = Math.min(currentVol, 0.1);
-        } else {
-            clearInterval(fadeAudio);
-        }
+        if (currentVol < 0.1) { currentVol += 0.01; bgMusic.volume = Math.min(currentVol, 0.1); } 
+        else { clearInterval(fadeAudio); }
     }, 200);
 }
 
@@ -698,8 +707,7 @@ function guardarDatos() {
     database.ref(rutaDB).set({ 
       dulces: dulces, coleccion: coleccion, logros: logros, carrito: carrito,
       ataudDia: ataudDia, ataudTiempo: ataudTiempo, 
-      diarioVisto: diarioVisto, pistas: pistas,
-      temaActivo: temaActivo
+      diarioVisto: diarioVisto, pistas: pistas, temaActivo: temaActivo
     });
   }
   actualizarUI();
@@ -715,29 +723,49 @@ if (horaActual >= 0 && horaActual < 4) { setTimeout(() => checkLogro('noche'), 2
 
 function checkLogro(id) {
   if (!logros.includes(id)) {
-    logros.push(id); dulces += 15; mostrarToast(catalogoLogros[id].nombre, 'logro');
+    logros.push(id); dulces += 15; 
+    mostrarToast(catalogoLogros[id].nombre, 'logro');
     guardarDatos(); reproducirSonido(sfxExito);
   }
 }
 
-// Nueva versión de Toast para reemplazar los alerts y mostrar todo de forma suave
+// SISTEMA DE COLA PARA TOASTS
+let toastQueue = [];
+let toastActivo = false;
+
 function mostrarToast(texto, tipo = 'logro') {
-  const toast = document.getElementById('toast-logro');
-  
-  if(tipo === 'pista') {
-    toast.style.background = 'var(--pumpkin)'; toast.style.borderColor = 'var(--ember)';
-    document.getElementById('toast-icon').textContent = '📖'; document.getElementById('toast-sub').textContent = 'Nueva pista'; document.getElementById('toast-bonus').textContent = '';
-  } else if (tipo === 'info') {
-    toast.style.background = 'var(--card)'; toast.style.borderColor = 'var(--pumpkin)';
-    document.getElementById('toast-icon').textContent = '🔔'; document.getElementById('toast-sub').textContent = 'Aviso'; document.getElementById('toast-bonus').textContent = '';
-  } else {
-    toast.style.background = 'var(--violet)'; toast.style.borderColor = '#fff';
-    document.getElementById('toast-icon').textContent = '🏆'; document.getElementById('toast-sub').textContent = 'Logro Desbloqueado'; document.getElementById('toast-bonus').textContent = '+15 🍬';
-  }
-  
-  document.getElementById('toast-txt').textContent = texto;
-  toast.classList.add('visible'); 
-  setTimeout(() => toast.classList.remove('visible'), 4000);
+    toastQueue.push({ texto, tipo });
+    procesarToastQueue();
+}
+
+function procesarToastQueue() {
+    if (toastActivo || toastQueue.length === 0) return;
+    toastActivo = true;
+    
+    const t = toastQueue.shift();
+    const toast = document.getElementById('toast-logro');
+    
+    if(t.tipo === 'pista') {
+      toast.style.background = 'var(--pumpkin)'; toast.style.borderColor = 'var(--ember)';
+      document.getElementById('toast-icon').textContent = '📖'; document.getElementById('toast-sub').textContent = 'Nueva pista'; document.getElementById('toast-bonus').textContent = '';
+    } else if (t.tipo === 'info') {
+      toast.style.background = 'var(--card)'; toast.style.borderColor = 'var(--pumpkin)';
+      document.getElementById('toast-icon').textContent = '🔔'; document.getElementById('toast-sub').textContent = 'Aviso'; document.getElementById('toast-bonus').textContent = '';
+    } else {
+      toast.style.background = 'var(--violet)'; toast.style.borderColor = '#fff';
+      document.getElementById('toast-icon').textContent = '🏆'; document.getElementById('toast-sub').textContent = 'Logro Desbloqueado'; document.getElementById('toast-bonus').textContent = '+15 🍬';
+    }
+    
+    document.getElementById('toast-txt').textContent = t.texto;
+    toast.classList.add('visible'); 
+    
+    setTimeout(() => {
+        toast.classList.remove('visible');
+        setTimeout(() => {
+            toastActivo = false;
+            procesarToastQueue();
+        }, 500); // 0.5s de espera antes del siguiente toast
+    }, 4000);
 }
 
 // ========================================================
@@ -748,10 +776,9 @@ function cambiarVolumenMusica(valor) { if (bgMusic.muted && valor > 0) toggleMut
 function toggleMuteSfx() { sfxExito.muted = !sfxExito.muted; sfxError.muted = !sfxError.muted; const vol = document.getElementById('vol-sfx'); if(!sfxExito.muted && vol.value == 0) { vol.value = 0.1; sfxExito.volume = 0.1; sfxError.volume = 0.1; } document.getElementById('btn-mute-sfx').textContent = sfxExito.muted ? '🔇' : '🔊'; if(!sfxExito.muted) reproducirSonido(sfxExito); }
 function cambiarVolumenSfx(valor) { if (sfxExito.muted && valor > 0) toggleMuteSfx(); sfxExito.volume = valor; sfxError.volume = valor; }
 function reproducirSonido(audio) { if(!audio.muted && audio.volume > 0) { audio.currentTime = 0; audio.play().catch(e=>console.log(e)); } }
-document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") { bgMusic.pause(); } else if (!bgMusic.muted && document.getElementById('vol-musica').value > 0) { bgMusic.play().catch(e=>console.log(e)); } });
 
 // ========================================================
-// 5. ATAÚD DE RECOMPENSA 
+// 5. ATAÚD DE RECOMPENSA (CARRUSEL PROGRESIVO)
 // ========================================================
 function actualizarEstadoAtaud() {
   const listo = Date.now() - ataudTiempo >= 86400000; const badge = document.getElementById('badge-ataud');
@@ -765,14 +792,32 @@ function renderizarGrillaAtaud() {
   const grid = document.getElementById('grid-ataud-cajas'); grid.innerHTML = '';
   const listo = Date.now() - ataudTiempo >= 86400000;
   for(let i=1; i<=10; i++) {
+    const premio = recompensasDiarias[i-1];
     const div = document.createElement('div'); div.className = 'dia-caja';
-    div.innerHTML = `Día ${i}<br><span style="font-size:1.5rem;">${i < ataudDia ? '🦇' : '🎁'}</span>`;
-    if (i < ataudDia) { div.classList.add('reclamado'); } else if (i === ataudDia) { if (listo) { div.classList.add('actual'); div.onclick = reclamarCaja; } else { div.classList.add('bloqueado'); } } else { div.classList.add('bloqueado'); }
+    div.innerHTML = `Día ${i}<br><span style="font-size:1.5rem;">${i < ataudDia ? '🦇' : premio.icono}</span><br><span style="font-size:0.8rem;">${i < ataudDia ? 'Recogido' : premio.texto}</span>`;
+    
+    if (i < ataudDia) { div.classList.add('reclamado'); } 
+    else if (i === ataudDia) { if (listo) { div.classList.add('actual'); div.onclick = reclamarCaja; } else { div.classList.add('bloqueado'); } } 
+    else { div.classList.add('bloqueado'); }
     grid.appendChild(div);
   }
-  if (ataudDia <= 10 && !listo) { actualizarTimerAtaud(); } else if (ataudDia <= 10) { document.getElementById('contador-ataud').textContent = "¡Caja Disponible Ahora!"; } else { document.getElementById('contador-ataud').textContent = "Camino Completado"; }
+  if (ataudDia <= 10 && !listo) { actualizarTimerAtaud(); } 
+  else if (ataudDia <= 10) { document.getElementById('contador-ataud').textContent = "¡Caja Disponible Ahora!"; } 
+  else { document.getElementById('contador-ataud').textContent = "Camino Completado"; }
 }
-function reclamarCaja() { ataudTiempo = Date.now(); ataudDia++; dulces += 50; guardarDatos(); reproducirSonido(sfxExito); renderizarGrillaAtaud(); }
+
+function reclamarCaja() { 
+  const premio = recompensasDiarias[ataudDia - 1];
+  if(premio.valor) { dulces += premio.valor; } 
+  else if (premio.idItem) {
+      carrito.push({ id: premio.idItem, nombre: premio.nombre, tipo: premio.tipo, codigo: null, usado: false });
+  }
+  ataudTiempo = Date.now(); ataudDia++; 
+  guardarDatos(); reproducirSonido(sfxExito); 
+  mostrarToast(`¡Reclamado: ${premio.texto}!`, "logro");
+  renderizarGrillaAtaud(); 
+}
+
 function actualizarTimerAtaud() {
   const txt = document.getElementById('contador-ataud');
   const calc = () => { let diff = 86400000 - (Date.now() - ataudTiempo); if (diff <= 0) { renderizarGrillaAtaud(); return; } let h = Math.floor(diff / 3600000); let m = Math.floor((diff % 3600000) / 60000); let s = Math.floor((diff % 60000) / 1000); txt.textContent = `Siguiente en: ${h}h ${m}m ${s}s`; };
@@ -788,7 +833,6 @@ function abrirSubTienda(idSub) {
     document.getElementById(idSub).classList.add('activa');
     window.scrollTo(0,0);
 }
-
 function cerrarSubTienda() {
     reproducirSonido(sfxExito);
     document.querySelectorAll('.tienda-seccion').forEach(sec => sec.classList.remove('activa'));
@@ -797,159 +841,107 @@ function cerrarSubTienda() {
 }
 
 function comprarItem(boton, idItem, precio, nombreItem, tipo) {
-    if (tipo === 'tema' && coleccion.includes(idItem)) {
-        mostrarToast("Ya tienes este ítem en tu colección.", "info");
-        return;
+    if ((tipo === 'tema' || tipo === 'amuleto') && coleccion.includes(idItem)) {
+        mostrarToast("Ya tienes este ítem en tu colección.", "info"); return;
     }
-
     if (dulces >= precio) {
         dulces -= precio;
         reproducirSonido(sfxExito);
-
-        if (tipo === 'tema') {
+        if (tipo === 'tema' || tipo === 'amuleto') {
             coleccion.push(idItem);
-            equiparTema(idItem); 
+            if(tipo === 'tema') equiparTema(idItem); 
+            guardarDatos();
             mostrarToast(`Adquirido: ${nombreItem}`, "info");
         } else {
             carrito.push({ id: idItem, nombre: nombreItem, tipo: tipo, codigo: null, usado: false });
             guardarDatos();
-            mostrarToast(`Compraste: ${nombreItem}. Revisa tu Inventario 🛒`, "info");
+            mostrarToast(`Compraste: ${nombreItem}. Revisa tu 🛒`, "info");
         }
     } else {
         reproducirSonido(sfxError); 
         boton.classList.add('error-compra'); 
-        const txtAnterior = boton.textContent;
-        boton.textContent = "¡Faltan dulces!";
+        const txtAnterior = boton.textContent; boton.textContent = "¡Faltan dulces!";
         setTimeout(() => { boton.classList.remove('error-compra'); boton.textContent = txtAnterior; }, 800);
     }
 }
 
-// ================= LÓGICA DEL CARRITO CORREGIDA (SNACKS INCLUIDOS) =================
-function abrirCarrito() {
-    reproducirSonido(sfxExito);
-    document.getElementById('modal-carrito').classList.add('activo');
-    renderizarCarrito();
-}
-
-function cerrarCarrito() {
-    document.getElementById('modal-carrito').classList.remove('activo');
-}
+// LÓGICA DEL CARRITO
+function abrirCarrito() { reproducirSonido(sfxExito); document.getElementById('modal-carrito').classList.add('activo'); renderizarCarrito(); }
+function cerrarCarrito() { document.getElementById('modal-carrito').classList.remove('activo'); }
 
 function renderizarCarrito() {
-    const lista = document.getElementById('lista-carrito');
-    lista.innerHTML = '';
-    
-    if(carrito.length === 0) {
-        lista.innerHTML = '<p style="text-align: center; opacity: 0.6;">Tu inventario está vacío.</p>';
-        return;
-    }
-
+    const lista = document.getElementById('lista-carrito'); lista.innerHTML = '';
+    if(carrito.length === 0) { lista.innerHTML = '<p style="text-align: center; opacity: 0.6;">Tu inventario está vacío.</p>'; return; }
     carrito.forEach((item, index) => {
         const estadoClase = item.usado ? 'usado' : '';
         const codTxt = item.codigo ? item.codigo : 'Aún sin canjear';
-
         const botonHTML = item.usado ? 
             `<button class="btn-accion btn-bloqueado" style="margin:0; padding: 6px 12px;">USADO</button>` : 
             `<button class="btn-accion" style="margin:0; padding: 6px 12px; background: var(--violet);" onclick="abrirUsoItem(${index})">USAR</button>`;
-
         lista.innerHTML += `
             <div class="item-carrito ${estadoClase}">
-                <div>
-                    <h4>${item.nombre}</h4>
-                    <p style="opacity:0.7;">${codTxt}</p>
-                </div>
+                <div><h4>${item.nombre}</h4><p style="opacity:0.7;">${codTxt}</p></div>
                 ${botonHTML}
-            </div>
-        `;
+            </div>`;
     });
 }
 
 let indexItemEnUso = -1;
-
 function abrirUsoItem(index) {
-    indexItemEnUso = index;
-    cerrarCarrito();
-    reproducirSonido(sfxExito);
-    
+    indexItemEnUso = index; cerrarCarrito(); reproducirSonido(sfxExito);
     document.getElementById('txt-codigo-generado').innerText = "¿?¿?¿?";
     document.getElementById('btn-copiar-codigo').innerText = "Generar, Copiar y Usar";
     document.getElementById('modal-usar-item').classList.add('activo');
 }
-
-function cerrarModalUsar() {
-    document.getElementById('modal-usar-item').classList.remove('activo');
-    abrirCarrito();
-}
+function cerrarModalUsar() { document.getElementById('modal-usar-item').classList.remove('activo'); abrirCarrito(); }
 
 function confirmarUsoItem() {
     if(indexItemEnUso === -1) return;
-    const index = indexItemEnUso;
-    const item = carrito[index];
-    
-    // Generar el código al momento de hacer click
+    const index = indexItemEnUso; const item = carrito[index];
     const codigoGenerado = "BOO-" + Math.random().toString(36).substr(2, 4).toUpperCase();
     
-    // GUARDADO DIRECTO EN LA BASE DE DATOS (Misma lógica para Snacks y Citas)
-    carrito[index].codigo = codigoGenerado;
-    carrito[index].usado = true;
-    
-    guardarDatos(); // Guardar cambios para que el admin pueda ver los códigos
-    reproducirSonido(sfxExito);
+    carrito[index].codigo = codigoGenerado; carrito[index].usado = true;
+    guardarDatos(); reproducirSonido(sfxExito);
     document.getElementById('txt-codigo-generado').innerText = codigoGenerado;
     
-    // Luego intentamos copiar visualmente para el usuario
     navigator.clipboard.writeText(codigoGenerado).then(() => {
         document.getElementById('btn-copiar-codigo').innerText = "¡Copiado y Usado!";
     }).catch(err => {
-        // Si no tiene permisos, avisar mediante toast sin interrumpir
         mostrarToast("No se pudo copiar automático, cópialo manualmente.", "info");
         document.getElementById('btn-copiar-codigo').innerText = "¡Usado! (Cópialo manual)";
     });
-
-    setTimeout(() => {
-        document.getElementById('btn-copiar-codigo').innerText = "Generar, Copiar y Usar";
-        cerrarModalUsar();
-    }, 3000);
+    setTimeout(() => { document.getElementById('btn-copiar-codigo').innerText = "Generar, Copiar y Usar"; cerrarModalUsar(); }, 3000);
 }
 
-// ================= TEMAS Y COLECCIÓN =================
-function equiparTema(idTema) {
-    temaActivo = idTema;
-    aplicarTemaCSS(temaActivo);
-    actualizarAnimacionInicio();
-    guardarDatos();
-}
-
+// TEMAS Y COLECCIÓN
+function equiparTema(idTema) { temaActivo = idTema; aplicarTemaCSS(temaActivo); actualizarAnimacionInicio(); guardarDatos(); }
 function aplicarTemaCSS(tema) {
     document.body.className = '';
-    if(tema && tema !== 'tema-default') {
-        let clase = tema.replace('tema-', '');
-        document.body.classList.add('tema-' + clase);
-    }
+    if(tema && tema !== 'tema-default') { document.body.classList.add('tema-' + tema.replace('tema-', '')); }
 }
 
 function renderizarColeccionYLogros() {
-  const divColeccion = document.getElementById('contenedor-coleccion'); const divLogros = document.getElementById('contenedor-logros');
-  if(!divColeccion) return;
-  divColeccion.innerHTML = ''; let hayColeccion = false;
+  const divColeccion = document.getElementById('contenedor-coleccion'); 
+  const divLogros = document.getElementById('contenedor-logros');
+  const divAmuletos = document.getElementById('contenedor-amuletos');
+  if(!divColeccion || !divAmuletos) return;
+  
+  divColeccion.innerHTML = ''; divAmuletos.innerHTML = '';
   
   Object.keys(catalogo).forEach(id => {
     if (coleccion.includes(id)) { 
-        hayColeccion = true; 
         const item = catalogo[id];
-        let botonHTML = (temaActivo === id) ? 
-            `<button class="btn-accion btn-bloqueado" style="width: 100%;">Equipado</button>` : 
-            `<button class="btn-accion" style="width: 100%;" onclick="equiparTema('${id}')">Equipar</button>`;
-
-        divColeccion.innerHTML += `
-        <article class="item" style="border-color: var(--violet)">
-            <span class="e">${item.icono}</span>
-            <h3>${item.nombre}</h3>
-            <p>${item.desc}</p>
-            ${botonHTML}
-        </article>`; 
+        
+        if (item.tipo === 'amuleto') {
+            divAmuletos.innerHTML += `<article class="item" style="border-color: var(--pumpkin)"><span class="e">${item.icono}</span><h3>${item.nombre}</h3><p>${item.desc}</p><button class="btn-accion btn-bloqueado" style="width: 100%;">Activo</button></article>`; 
+        } else if (item.tipo === 'tema') {
+            let botonHTML = (temaActivo === id) ? `<button class="btn-accion btn-bloqueado" style="width: 100%;">Equipado</button>` : `<button class="btn-accion" style="width: 100%;" onclick="equiparTema('${id}')">Equipar</button>`;
+            divColeccion.innerHTML += `<article class="item" style="border-color: var(--violet)"><span class="e">${item.icono}</span><h3>${item.nombre}</h3><p>${item.desc}</p>${botonHTML}</article>`; 
+        }
     } 
   });
+  
+  if (divAmuletos.innerHTML === '') divAmuletos.innerHTML = `<p style="grid-column: 1/-1; opacity:0.6; text-align:center;">No tienes amuletos activos.</p>`;
   
   divLogros.innerHTML = '';
   Object.keys(catalogoLogros).forEach(key => {
@@ -962,7 +954,7 @@ function renderizarColeccionYLogros() {
 }
 
 // ========================================================
-// 7. DIARIO Y CÓDIGOS (NUEVOS COMANDOS ADMIN)
+// 7. DIARIO Y CÓDIGOS (LÓGICA DEL AMULETO)
 // ========================================================
 function abrirDiario() {
   const volSlider = parseFloat(document.getElementById('vol-musica').value);
@@ -974,18 +966,10 @@ function abrirDiario() {
     setTimeout(() => { overlay.style.opacity = '1'; }, 100);
     setTimeout(() => { 
       overlay.style.opacity = '0'; 
-      setTimeout(() => { 
-        overlay.style.display = 'none'; 
-        document.getElementById('modal-diario').classList.add('activo');
-        checkLogro('diario');
-      }, 1500); 
+      setTimeout(() => { overlay.style.display = 'none'; document.getElementById('modal-diario').classList.add('activo'); checkLogro('diario'); }, 1500); 
     }, 5500); 
-    diarioVisto = true; 
-    guardarDatos();
-  } else { 
-    document.getElementById('modal-diario').classList.add('activo'); 
-    checkLogro('diario');
-  }
+    diarioVisto = true; guardarDatos();
+  } else { document.getElementById('modal-diario').classList.add('activo'); checkLogro('diario'); }
 }
 
 function esconderDiario() {
@@ -996,9 +980,19 @@ function esconderDiario() {
 
 function renderizarDiario() {
   const container = document.getElementById('lista-pistas'); if(!container) return; container.innerHTML = '';
+  // Validamos si tiene el amuleto del Ojo
+  const tieneOjo = coleccion.includes('amuleto-ojo');
+  
   Object.keys(catalogoPistas).forEach((key, index) => {
     const p = catalogoPistas[key]; const desbloqueada = pistas.includes(key);
-    if (desbloqueada) { container.innerHTML += `<div class="pista-box"><strong>Pista #${index+1}:</strong> ${p.pistaTxt}</div>`; } else { container.innerHTML += `<div class="pista-box pista-blur"><strong>🔒 Pista #${index+1}:</strong> Para leer esto, primero debes ayudarme a invocar magia...</div>`; }
+    
+    if (!tieneOjo) {
+        container.innerHTML += `<div class="pista-box pista-blur" style="border-color: #555; color: #888;"><strong>🔒 Pista #${index+1}:</strong> Necesitas el 👁️ Ojo de Clarividencia (Amuleto) para descifrar este contenido.</div>`;
+    } else if (desbloqueada) { 
+        container.innerHTML += `<div class="pista-box"><strong>Pista #${index+1}:</strong> ${p.pistaTxt}</div>`; 
+    } else { 
+        container.innerHTML += `<div class="pista-box pista-blur"><strong>🔒 Pista #${index+1}:</strong> Para leer esto, primero debes ayudarme a invocar magia...</div>`; 
+    }
   });
 }
 
@@ -1007,158 +1001,63 @@ function canjearCodigo() {
   switch(codigo) {
     case 'AMOR': msjRespuesta = catalogoPistas['pista_amor'].desc; colorRespuesta = "var(--violet)"; reproducirSonido(sfxExito); break;
     case 'GIVE': dulces += 500; msjRespuesta = "[ADMIN] +500 Caramelos."; colorRespuesta = "var(--violet)"; reproducirSonido(sfxExito); break;
-    case 'GIVE10': dulces += 10; msjRespuesta = "[ADMIN] +10 Caramelos."; colorRespuesta = "var(--violet)"; reproducirSonido(sfxExito); break;
     case 'TICKETS': abrirAdminTickets(); msjRespuesta = "[ADMIN] Tickets abiertos."; break;
     case 'CLEANCART': carrito = []; msjRespuesta = "[ADMIN] Carrito vacío."; break;
-    case 'UNLOCKTHEMES': coleccion = ['tema-default', 'tema-rosa', 'tema-sangre', 'tema-momia', 'tema-calabaza', 'tema-batman']; msjRespuesta = "[ADMIN] Temas desbloqueados."; break;
+    case 'UNLOCKTHEMES': coleccion = ['tema-default', 'tema-rosa', 'tema-sangre', 'tema-momia', 'tema-calabaza', 'tema-batman', 'amuleto-ojo']; msjRespuesta = "[ADMIN] Colección max."; break;
     case 'RESET': dulces = 0; coleccion = ['tema-default']; logros = []; carrito = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Cuenta a cero."; colorRespuesta = "var(--pumpkin)"; break;
-    case 'RESETCARAMELOS': dulces = 0; msjRespuesta = "[ADMIN] Caramelos a 0."; break;
-    case 'RESETLOGROS': logros = []; msjRespuesta = "[ADMIN] Logros bloqueados."; break;
-    case 'RESETCOLECCTION': coleccion = ['tema-default']; pistas = []; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Colección vaciada."; break;
-    case 'RESETATAUD': ataudDia = 1; ataudTiempo = 0; msjRespuesta = "[ADMIN] Ataúd al Día 1."; break;
-    case '24H': ataudTiempo = Date.now() - 86400000; msjRespuesta = "[ADMIN] Reloj adelantado 24h."; break;
     default: msjRespuesta = "Contraseña incorrecta..."; colorRespuesta = "var(--pumpkin)"; reproducirSonido(sfxError);
   }
   msg.style.color = colorRespuesta; msg.textContent = msjRespuesta; input.value = ''; guardarDatos(); if(codigo !== 'AMOR' && codigo !== 'TICKETS') setTimeout(() => { msg.textContent = ''; }, 4000);
 }
 
 function abrirAdminTickets() {
-    const lista = document.getElementById('lista-admin-tickets');
-    lista.innerHTML = '';
+    const lista = document.getElementById('lista-admin-tickets'); lista.innerHTML = '';
     if(carrito.length === 0) { lista.innerHTML = '<p>No hay tickets generados.</p>'; }
     carrito.forEach(item => {
-        if(item.codigo) {
-            lista.innerHTML += `<div style="border-bottom: 1px solid #555; padding: 10px 0; display:flex; justify-content: space-between;">
-                <span><b>${item.codigo}</b> - ${item.nombre}</span>
-                <span style="color: ${item.usado ? '#ff4d6d' : '#00b33c'};">${item.usado ? 'USADO' : 'VÁLIDO'}</span>
-            </div>`;
-        }
+        if(item.codigo) { lista.innerHTML += `<div style="border-bottom: 1px solid #555; padding: 10px 0; display:flex; justify-content: space-between;"><span><b>${item.codigo}</b> - ${item.nombre}</span><span style="color: ${item.usado ? '#ff4d6d' : '#00b33c'};">${item.usado ? 'USADO' : 'VÁLIDO'}</span></div>`; }
     });
     document.getElementById('modal-admin-tickets').classList.add('activo');
 }
 
 // ========================================================
-// 8. ANIMACIONES Y SISTEMA DE PARTÍCULAS JS (Optimizadas)
+// 8. ANIMACIONES Y SKULLETTES
 // ========================================================
 function abrirAjustes() { checkLogro('config'); document.getElementById('modal-ajustes').classList.add('activo'); }
 function cerrarAjustes() { document.getElementById('modal-ajustes').classList.remove('activo'); }
 
-function actualizarAnimacionInicio() {
-    const batsClasicos = document.getElementById('bats-clasicos');
-    if(batsClasicos) {
-        batsClasicos.style.display = (temaActivo === 'tema-default') ? 'block' : 'none';
-    }
-}
+function actualizarAnimacionInicio() { const batsClasicos = document.getElementById('bats-clasicos'); if(batsClasicos) { batsClasicos.style.display = (temaActivo === 'tema-default') ? 'block' : 'none'; } }
 
-// Generador de partículas optimizado (Intervalo ampliado a 2000ms para reducir lag)
 setInterval(() => {
     if(temaActivo === 'tema-default') return;
-
-    const wrapper = document.createElement('div');
-    wrapper.className = 'particula-deco';
-    wrapper.style.fontSize = Math.floor(Math.random() * 1.5 + 1) + 'rem';
+    const wrapper = document.createElement('div'); wrapper.className = 'particula-deco'; wrapper.style.fontSize = Math.floor(Math.random() * 1.5 + 1) + 'rem';
     
-    if(temaActivo === 'tema-rosa') {
-        wrapper.innerHTML = Math.random() > 0.5 ? '💖' : '✨';
-        wrapper.style.top = Math.floor(Math.random() * 100) + 'vh';
-        wrapper.style.left = Math.floor(Math.random() * 100) + 'vw';
-        wrapper.style.filter = 'drop-shadow(0 0 10px rgba(255,51,153,0.8))';
-        wrapper.style.transition = 'opacity 2s ease';
-        document.body.appendChild(wrapper);
-        setTimeout(() => wrapper.style.opacity = '0.7', 100);
-        setTimeout(() => wrapper.style.opacity = '0', 2000);
-        setTimeout(() => wrapper.remove(), 4000);
-    } 
-    else if(temaActivo === 'tema-sangre') {
-        wrapper.innerHTML = '💧';
-        wrapper.style.top = '-10vh';
-        wrapper.style.left = Math.floor(Math.random() * 100) + 'vw';
-        wrapper.style.filter = 'brightness(0) drop-shadow(0 5px 5px rgba(255,0,0,0.8))';
-        wrapper.style.transition = 'transform 3s linear, opacity 1s';
-        wrapper.style.opacity = '0.8';
-        document.body.appendChild(wrapper);
-        setTimeout(() => wrapper.style.transform = 'translateY(110vh)', 100);
-        setTimeout(() => wrapper.remove(), 3200);
-    }
-    else if(temaActivo === 'tema-momia') {
-        wrapper.innerHTML = '⚱️️';
-        wrapper.style.top = Math.floor(Math.random() * 100) + 'vh';
-        wrapper.style.left = '-10vw';
-        wrapper.style.filter = 'brightness(0.6) sepia(1)';
-        wrapper.style.transition = 'transform 6s linear, opacity 1s';
-        wrapper.style.opacity = '0.5';
-        document.body.appendChild(wrapper);
-        setTimeout(() => wrapper.style.transform = 'translateX(110vw) rotate(180deg)', 100);
-        setTimeout(() => wrapper.remove(), 6200);
-    }
-    else if(temaActivo === 'tema-calabaza') {
-        wrapper.innerHTML = '🔥';
-        wrapper.style.fontSize = Math.floor(Math.random() * 1 + 0.5) + 'rem';
-        wrapper.style.top = '110vh';
-        wrapper.style.left = Math.floor(Math.random() * 100) + 'vw';
-        wrapper.style.filter = 'drop-shadow(0 0 10px rgba(255,102,0,0.8))';
-        wrapper.style.transition = 'transform 4s ease-out, opacity 1s';
-        wrapper.style.opacity = '0.7';
-        document.body.appendChild(wrapper);
-        setTimeout(() => wrapper.style.transform = `translateY(-60vh) translateX(${Math.random() > 0.5 ? 50 : -50}px)`, 100);
-        setTimeout(() => wrapper.style.opacity = '0', 3000);
-        setTimeout(() => wrapper.remove(), 4200);
-    }
-    else if(temaActivo === 'tema-batman') {
-        wrapper.innerHTML = '🦇';
-        wrapper.style.fontSize = '4rem';
-        wrapper.style.top = Math.floor(Math.random() * 80) + 'vh';
-        wrapper.style.left = '-20vw';
-        wrapper.style.filter = 'brightness(0) drop-shadow(0 0 20px rgba(255,255,255,0.2))';
-        wrapper.style.transition = 'transform 12s linear, opacity 2s';
-        wrapper.style.opacity = '0.2';
-        document.body.appendChild(wrapper);
-        setTimeout(() => wrapper.style.transform = 'translateX(130vw) scale(1.5)', 100);
-        setTimeout(() => wrapper.remove(), 12200);
-    }
+    if(temaActivo === 'tema-rosa') { wrapper.innerHTML = Math.random() > 0.5 ? '💖' : '✨'; wrapper.style.top = Math.floor(Math.random() * 100) + 'vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; wrapper.style.filter = 'drop-shadow(0 0 10px rgba(255,51,153,0.8))'; wrapper.style.transition = 'opacity 2s ease'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.opacity = '0.7', 100); setTimeout(() => wrapper.style.opacity = '0', 2000); setTimeout(() => wrapper.remove(), 4000); } 
+    else if(temaActivo === 'tema-sangre') { wrapper.innerHTML = '💧'; wrapper.style.top = '-10vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; wrapper.style.filter = 'brightness(0) drop-shadow(0 5px 5px rgba(255,0,0,0.8))'; wrapper.style.transition = 'transform 3s linear, opacity 1s'; wrapper.style.opacity = '0.8'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateY(110vh)', 100); setTimeout(() => wrapper.remove(), 3200); }
+    else if(temaActivo === 'tema-momia') { wrapper.innerHTML = '⚱'; wrapper.style.top = Math.floor(Math.random() * 100) + 'vh'; wrapper.style.left = '-10vw'; wrapper.style.filter = 'brightness(0.6) sepia(1)'; wrapper.style.transition = 'transform 6s linear, opacity 1s'; wrapper.style.opacity = '0.5'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateX(110vw) rotate(180deg)', 100); setTimeout(() => wrapper.remove(), 6200); }
+    else if(temaActivo === 'tema-calabaza') { wrapper.innerHTML = '🔥'; wrapper.style.fontSize = Math.floor(Math.random() * 1 + 0.5) + 'rem'; wrapper.style.top = '110vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; wrapper.style.filter = 'drop-shadow(0 0 10px rgba(255,102,0,0.8))'; wrapper.style.transition = 'transform 4s ease-out, opacity 1s'; wrapper.style.opacity = '0.7'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = `translateY(-60vh) translateX(${Math.random() > 0.5 ? 50 : -50}px)`, 100); setTimeout(() => wrapper.style.opacity = '0', 3000); setTimeout(() => wrapper.remove(), 4200); }
+    else if(temaActivo === 'tema-batman') { wrapper.innerHTML = '🦇'; wrapper.style.fontSize = '4rem'; wrapper.style.top = Math.floor(Math.random() * 80) + 'vh'; wrapper.style.left = '-20vw'; wrapper.style.filter = 'brightness(0) drop-shadow(0 0 20px rgba(255,255,255,0.2))'; wrapper.style.transition = 'transform 12s linear, opacity 2s'; wrapper.style.opacity = '0.2'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateX(130vw) scale(1.5)', 100); setTimeout(() => wrapper.remove(), 12200); }
 }, 2000);
 
-// Skullettes voladoras (Intervalo a 12s para reducir lag)
 setInterval(() => {
   const enJuegos = document.getElementById('sec-juegos').classList.contains('activa');
   if(!enJuegos && Math.random() > 0.7) {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'skullette-wrapper';
-    wrapper.style.top = Math.floor(Math.random() * 65) + 15 + 'vh'; 
-    wrapper.style.left = (Math.random() > 0.5 ? '-50px' : '105vw');
-    wrapper.style.opacity = '0'; 
-    wrapper.style.transition = 'transform 8s linear, opacity 0.8s ease';
-    
-    const inner = document.createElement('img'); 
-    inner.className = 'skullette-inner'; 
-    inner.src = 'logo.png';
+    const wrapper = document.createElement('div'); wrapper.className = 'skullette-wrapper'; wrapper.style.top = Math.floor(Math.random() * 65) + 15 + 'vh'; wrapper.style.left = (Math.random() > 0.5 ? '-50px' : '105vw'); wrapper.style.opacity = '0'; wrapper.style.transition = 'transform 8s linear, opacity 0.8s ease';
+    const inner = document.createElement('img'); inner.className = 'skullette-inner'; inner.src = 'logo.png';
     wrapper.appendChild(inner); document.body.appendChild(wrapper);
-    
     setTimeout(() => { wrapper.style.opacity = '1'; wrapper.style.transform = `translateX(${wrapper.style.left === '-50px' ? '120vw' : '-120vw'}) rotate(360deg)`; }, 100);
     setTimeout(() => { wrapper.style.opacity = '0'; }, 7200); 
-    
     inner.onpointerdown = () => { checkLogro('skull'); dulces += 10; guardarDatos(); reproducirSonido(sfxExito); wrapper.remove(); };
     setTimeout(() => { if(wrapper.parentNode) wrapper.remove(); }, 8000);
   }
 }, 12000);
 
-// SIN ALERTS: Ahora la confirmación se hace por medio del Toast
 function probarJuego(idJuego) { 
     if(!bgMusic.muted) bgMusic.pause();
     reproducirSonido(sfxExito); 
-    
-    const overlay = document.getElementById('fade-overlay');
-    overlay.style.opacity = '1';
-    
+    const overlay = document.getElementById('fade-overlay'); overlay.style.opacity = '1';
     setTimeout(() => {
-        dulces += 20; 
-        guardarDatos();
-        mostrarToast(`Iniciando juego: ${idJuego} (+20🍬)`, 'info'); // Aviso elegante sin ventanas emergentes
-        
-        overlay.style.opacity = '0';
-        if(!bgMusic.muted && document.getElementById('vol-musica').value > 0) {
-            bgMusic.play().catch(e=>console.log(e));
-        }
+        dulces += 20; guardarDatos(); mostrarToast(`Iniciando juego: ${idJuego} (+20🍬)`, 'info'); 
+        overlay.style.opacity = '0'; if(!bgMusic.muted && document.getElementById('vol-musica').value > 0) { bgMusic.play().catch(e=>console.log(e)); }
     }, 1500);
 }
 
@@ -1167,12 +1066,8 @@ function cambiarPagina(idPagina) {
   document.getElementById(idPagina).classList.add('activa');
   document.querySelectorAll('nav a').forEach(link => link.classList.remove('activo'));
   if(idPagina === 'sec-juegos') document.getElementById('nav-juegos').classList.add('activo');
-  if(idPagina === 'sec-tienda') {
-      document.getElementById('nav-tienda').classList.add('activo');
-      cerrarSubTienda(); 
-  }
+  if(idPagina === 'sec-tienda') { document.getElementById('nav-tienda').classList.add('activo'); cerrarSubTienda(); }
   if(idPagina === 'sec-codigos') document.getElementById('nav-codigos').classList.add('activo');
-  
   const ataud = document.getElementById('btn-ataud-global');
   if(ataud) { if(idPagina === 'sec-home') { ataud.style.display = 'flex'; } else { ataud.style.display = 'none'; } }
   window.scrollTo(0,0);
@@ -1182,15 +1077,8 @@ function cambiarPagina(idPagina) {
   document.addEventListener('pointermove', function(e){ if (e.pointerType === 'mouse') { document.body.style.setProperty('--x', e.clientX + 'px'); document.body.style.setProperty('--y', e.clientY + 'px'); } });
   var end=new Date(2026,9,31,18,0,0).getTime();
   function pad(n){return String(n).padStart(2,'0')}
-  function tick(){
-    var t=Math.max(0,end-Date.now()),s=Math.floor(t/1000);
-    document.getElementById('d').textContent=pad(Math.floor(s/86400));
-    document.getElementById('h').textContent=pad(Math.floor(s%86400/3600));
-    document.getElementById('m').textContent=pad(Math.floor(s%3600/60));
-    document.getElementById('s').textContent=pad(s%60);
-  }
-  tick();setInterval(tick,1000);
-  setTimeout(actualizarAnimacionInicio, 1000);
+  function tick(){ var t=Math.max(0,end-Date.now()),s=Math.floor(t/1000); document.getElementById('d').textContent=pad(Math.floor(s/86400)); document.getElementById('h').textContent=pad(Math.floor(s%86400/3600)); document.getElementById('m').textContent=pad(Math.floor(s%3600/60)); document.getElementById('s').textContent=pad(s%60); }
+  tick();setInterval(tick,1000); setTimeout(actualizarAnimacionInicio, 1000);
 })();
 </script>
 </body>
