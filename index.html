@@ -64,9 +64,11 @@ body.tema-batman .btn-accion:hover,
 body.tema-batman .btn-cerrar-modal:hover { color: #ffffff !important; background: var(--ember) !important; }
 body.tema-batman .btn-carrito-tienda { color: #ffffff !important; border-color: #ffffff !important; }
 body.tema-batman .btn-carrito-tienda:hover { background: rgba(255,255,255,0.1) !important; }
-body.tema-batman #toast-logro, 
-body.tema-batman #toast-sub, 
-body.tema-batman #toast-txt { color: #000000 !important; } /* Toast legible en Batman */
+
+/* SOLO la notificación de pista en Batman tiene letras negras */
+body.tema-batman #toast-logro.is-pista,
+body.tema-batman #toast-logro.is-pista #toast-sub,
+body.tema-batman #toast-logro.is-pista #toast-txt { color: #000000 !important; }
 
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
 *, *::before, *::after { box-sizing: inherit; }
@@ -397,17 +399,17 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 </div>
 
 <header>
-  <a class="logo" onclick="reproducirSonido(sfxExito); cambiarPagina('sec-home')">Boo! Store</a>
+  <a class="logo" onclick="cambiarPagina('sec-home')">Boo! Store</a>
   <nav>
-    <a onclick="reproducirSonido(sfxExito); cambiarPagina('sec-juegos')" id="nav-juegos">Juegos</a>
-    <a onclick="reproducirSonido(sfxExito); cambiarPagina('sec-tienda')" id="nav-tienda">Tienda</a>
-    <a onclick="reproducirSonido(sfxExito); cambiarPagina('sec-codigos')" id="nav-codigos">Códigos</a>
+    <a onclick="cambiarPagina('sec-juegos')" id="nav-juegos">Juegos</a>
+    <a onclick="cambiarPagina('sec-tienda')" id="nav-tienda">Tienda</a>
+    <a onclick="cambiarPagina('sec-codigos')" id="nav-codigos">Códigos</a>
   </nav>
   <div class="header-right">
     <span class="moneda-ui">🍬 <span id="ui-dulces">0</span></span>
-    <a class="btn-col" onclick="reproducirSonido(sfxExito); cambiarPagina('sec-coleccion')" id="nav-coleccion">Nuestra Colección</a>
+    <a class="btn-col" onclick="cambiarPagina('sec-coleccion')" id="nav-coleccion">Nuestra Colección</a>
     <button class="btn-icono tuerca" onclick="abrirAjustes()" title="Ajustes">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
     </button>
   </div>
 </header>
@@ -717,6 +719,7 @@ if(database) {
 }
 
 function iniciarApp() {
+    // Solo despierta los canales de audio, no reproduce ningún sonido aún.
     sfxExito.muted = false; sfxError.muted = false;
     sfxExito.volume = 0.1; sfxError.volume = 0.1;
     document.getElementById('vol-sfx').value = 0.1; document.getElementById('btn-mute-sfx').textContent = '🔊';
@@ -796,6 +799,11 @@ function procesarToastQueue() {
     const t = toastQueue.shift();
     const toast = document.getElementById('toast-logro');
     const bonusTxt = t.bonus ? `+${t.bonus} 🍬` : '';
+    
+    // Limpiamos clases previas
+    toast.classList.remove('is-pista', 'is-info', 'is-logro');
+    // Asignamos la nueva para el CSS
+    toast.classList.add('is-' + t.tipo);
     
     if(t.tipo === 'pista') {
       toast.style.background = 'var(--pumpkin)'; toast.style.borderColor = 'var(--ember)';
