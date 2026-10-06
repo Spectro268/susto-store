@@ -48,7 +48,7 @@ body.tema-sangre { --bg: #0a0000; --pumpkin: #cc0000; --ember: #660000; --violet
 body.tema-momia { --bg: #1a1610; --pumpkin: #d49a6a; --ember: #8b5a2b; --violet: #e6c280; --card: #2b2218; --glow: rgba(212, 154, 106, 0.2); --bg-overlay: rgba(26, 22, 16, 0.88); --borde-estilo: dashed; }
 body.tema-calabaza { --bg: #0a140a; --pumpkin: #ff6600; --ember: #cc5200; --violet: #00b33c; --card: #0f1f0f; --glow: rgba(255, 102, 0, 0.25); --bg-overlay: rgba(10, 20, 10, 0.88); }
 
-/* TEMA BATMAN BLANCO PURO */
+/* TEMA BATMAN 100% FUNCIONAL */
 body.tema-batman { 
     --bg: #050505; 
     --pumpkin: #ffffff; 
@@ -58,8 +58,19 @@ body.tema-batman {
     --glow: rgba(255, 255, 255, 0.15); 
     --bg-overlay: rgba(0, 0, 0, 0.95); 
 }
-body.tema-batman .btn-accion { color: #000000; }
-body.tema-batman .btn-accion:hover { color: #ffffff; background: var(--ember); }
+body.tema-batman .btn-accion, 
+body.tema-batman .btn-cerrar-modal, 
+body.tema-batman .btn-carrito-tienda { 
+    color: #000000 !important; font-weight: 900;
+}
+body.tema-batman .dia-caja.reclamado,
+body.tema-batman .dia-caja.actual {
+    color: #000000 !important;
+}
+body.tema-batman .btn-accion:hover, 
+body.tema-batman .btn-cerrar-modal:hover { 
+    color: #ffffff !important; background: var(--ember) !important; 
+}
 
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
 *, *::before, *::after { box-sizing: inherit; }
@@ -73,7 +84,7 @@ body {
 }
 input { -webkit-user-select: auto; user-select: auto; }
 
-/* CAPA FANTASMA (Fondo adaptativo por temas) */
+/* CAPA FANTASMA */
 body::before {
   content: ""; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1;
   background-color: var(--bg);
@@ -101,14 +112,14 @@ a { color: inherit; }
   display: none; background: #d62828 !important; color: #ffffff !important; border: 2px solid #7a1010 !important;
   font-size: 2.5rem; padding: 20px 60px; border-radius: 999px; box-shadow: 0 0 30px rgba(214, 40, 40, 0.6);
   transition: transform 0.3s, opacity 1s ease; cursor: pointer; opacity: 0; transform: scale(0.9);
-  font-family: inherit; font-weight: 900; -webkit-tap-highlight-color: transparent; outline: none; /* Mejoras de Tipografía y Clic Móvil */
+  font-family: inherit; font-weight: 900; -webkit-tap-highlight-color: transparent; outline: none;
 }
 #btn-boo.show { opacity: 1; transform: scale(1); }
 #btn-boo:hover { transform: scale(1.1); }
 @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
 /* HEADER Y NAVEGACIÓN */
-header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 20px 5vw; border-bottom: 1px solid var(--ember); background: rgba(20, 5, 5, 0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; }
+header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 20px 5vw; border-bottom: 1px solid var(--ember); background: rgba(20, 5, 5, 0.95); backdrop-filter: blur(5px); position: sticky; top: 0; z-index: 100; }
 .logo { justify-self: start; font-weight: 900; font-size: 1.5rem; color: var(--pumpkin); text-shadow: 0 0 14px var(--glow); text-decoration: none; cursor: pointer; }
 nav { justify-self: center; display: flex; align-items: center; gap: 24px; font-weight: 500; }
 nav a { text-decoration: none; cursor: pointer; padding: 5px; transition: color 0.2s; }
@@ -163,21 +174,21 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .modal-box { background: var(--card); border: 1px var(--borde-estilo) var(--ember); border-radius: 18px; padding: 30px; width: 90%; max-width: 450px; text-align: center; position: relative; max-height: 90vh; overflow-y: auto; opacity: 0; }
 .modal-overlay.activo .modal-box { animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
 @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-.btn-cerrar-modal { background: var(--pumpkin); color: #fff; font-weight: 800; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; width: 100%; margin-top: 15px; font-size: 1rem; transition: background 0.2s; }
+.btn-cerrar-modal { background: var(--pumpkin); color: #fff; font-weight: 800; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; width: 100%; margin-top: 15px; font-size: 1rem; transition: background 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent;}
 .btn-cerrar-modal:hover { background: var(--violet); }
 
 /* ATAÚD FLOTANTE */
-.ataud-flotante { position: fixed; top: 50vh; right: 3vw; transform: translateY(-50%); margin-top: -30px; background: rgba(28, 8, 8, 0.9); border: 2px var(--borde-estilo) var(--violet); border-radius: 15px; padding: 15px; cursor: pointer; font-size: 2rem; z-index: 90; box-shadow: 0 0 15px var(--glow); transition: transform 0.3s; display: flex; flex-direction: column; align-items: center; }
+.ataud-flotante { position: fixed; top: 50vh; right: 3vw; transform: translateY(-50%); margin-top: -30px; background: rgba(28, 8, 8, 0.9); border: 2px var(--borde-estilo) var(--violet); border-radius: 15px; padding: 15px; cursor: pointer; font-size: 2rem; z-index: 90; box-shadow: 0 0 15px var(--glow); transition: transform 0.3s; display: flex; flex-direction: column; align-items: center; -webkit-tap-highlight-color: transparent;}
 .ataud-flotante:hover { transform: translateY(-50%) scale(1.1); background: var(--violet); }
 .ataud-flotante .badge { font-size: 0.8rem; background: var(--pumpkin); color: white; border-radius: 999px; padding: 2px 8px; font-weight: bold; margin-top: 5px; font-family: sans-serif; }
 .ataud-animado { animation: floatAtaud 4s ease-in-out infinite; }
 @keyframes floatAtaud { 0%, 100% { margin-top: -30px; } 50% { margin-top: -45px; } }
 
-/* NUEVO CARRUSEL HORIZONTAL PARA RECOMPENSAS DIARIAS */
+/* CARRUSEL HORIZONTAL PARA RECOMPENSAS DIARIAS */
 .grid-ataud { display: flex; overflow-x: auto; gap: 15px; margin-top: 20px; padding-bottom: 10px; scroll-snap-type: x mandatory; }
 .grid-ataud::-webkit-scrollbar { height: 8px; }
 .grid-ataud::-webkit-scrollbar-thumb { background: var(--ember); border-radius: 4px; }
-.dia-caja { background: rgba(255,255,255,0.05); border: 1px var(--borde-estilo) var(--ember); border-radius: 10px; padding: 15px 5px; font-weight: bold; position: relative; transition: 0.3s; min-width: 100px; flex-shrink: 0; scroll-snap-align: start; }
+.dia-caja { background: rgba(255,255,255,0.05); border: 1px var(--borde-estilo) var(--ember); border-radius: 10px; padding: 15px 5px; font-weight: bold; position: relative; transition: 0.3s; min-width: 100px; flex-shrink: 0; scroll-snap-align: start; -webkit-tap-highlight-color: transparent; }
 .dia-caja.reclamado { background: var(--violet); border-color: #fff; color: #fff; }
 .dia-caja.actual { border-color: var(--pumpkin); background: rgba(214, 40, 40, 0.2); cursor: pointer; animation: pulseAtaud 2s infinite; }
 .dia-caja.bloqueado { opacity: 0.5; filter: grayscale(1); }
@@ -195,7 +206,8 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .sub { margin: 0 0 36px; max-width: 55ch; opacity: 0.9; font-size: 1.1rem; }
 .seccion-titulo { color: var(--violet); font-size: 1.5rem; margin-top: 40px; border-bottom: 1px var(--borde-estilo) var(--ember); padding-bottom: 10px; }
 .grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
-.item { background: rgba(28, 8, 8, 0.85); backdrop-filter: blur(8px); border: 1px var(--borde-estilo) var(--ember); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 10px; transition: border-color .2s, transform .2s; text-align: center; position: relative; overflow: hidden; }
+/* Optimización de Lag: Quitamos el backdrop-filter general de .item */
+.item { background: rgba(28, 8, 8, 0.95); border: 1px var(--borde-estilo) var(--ember); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 10px; transition: border-color .2s, transform .2s; text-align: center; position: relative; overflow: hidden; }
 .item:hover { border-color: var(--pumpkin); transform: translateY(-4px); }
 .item .e { font-size: 3.5rem; line-height: 1; margin-bottom: 10px; }
 .item h3 { margin: 0; font-size: 1.2rem; color: var(--ink); }
@@ -218,15 +230,15 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .caja-snack { background: var(--card); border: 2px dashed var(--pumpkin); border-radius: 18px; padding: 20px; text-align: center; margin-bottom: 20px; }
 .letrero-neon { color: var(--pumpkin); font-weight: 900; font-size: 1.5rem; margin: 0 0 15px 0; text-shadow: 0 0 10px var(--glow); }
 
-.gd-portal-container { display: grid; gap: 20px; grid-template-columns: 1fr 1fr; margin-bottom: 20px; }
+/* ALINEACIÓN FLEXIBLE PARA PORTALES */
+.gd-portal-container { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); margin-bottom: 20px; }
 .gd-portal { border: 2px var(--borde-estilo) var(--violet); border-radius: 18px; padding: 60px 20px; cursor: pointer; text-align: center; transition: all 0.3s; position: relative; overflow: hidden; background-size: cover; background-position: center; -webkit-tap-highlight-color: transparent; }
 .gd-portal:hover { transform: translateY(-5px); border-color: var(--pumpkin); box-shadow: 0 10px 20px var(--glow); filter: brightness(1.2); }
 .gd-portal h3 { margin: 0; font-size: 1.8rem; color: #fff; position: relative; z-index: 2; text-shadow: 0 0 10px rgba(0,0,0,0.8); }
 
-/* PORTALES REDISEÑADOS */
 .portal-citas-gestos { background-image: linear-gradient(rgba(20,5,5,0.7), rgba(20,5,5,0.7)), url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600'); }
 .portal-amuletos { background-image: linear-gradient(rgba(20,5,5,0.7), rgba(20,5,5,0.7)), url('https://images.unsplash.com/photo-1618609378039-b684869c9eb1?q=80&w=600'); }
-.portal-temas { background-image: linear-gradient(rgba(20,5,5,0.7), rgba(20,5,5,0.7)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600'); grid-column: 1 / -1; padding: 40px 20px; }
+.portal-temas { background-image: linear-gradient(rgba(20,5,5,0.7), rgba(20,5,5,0.7)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600'); }
 .btn-volver { background: transparent; color: var(--ink); border: 1px var(--borde-estilo) var(--ember); padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-bottom: 20px; font-weight: bold; font-size: 1rem; transition: 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent; }
 .btn-volver:hover { background: var(--ember); color: #fff; }
 
@@ -247,7 +259,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .btn-mute { background: var(--card); border: 1px var(--borde-estilo) var(--ember); color: var(--ink); border-radius: 8px; padding: 8px; cursor: pointer; transition: 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent; }
 .btn-mute:hover { border-color: var(--pumpkin); }
 
-/* PARTÍCULAS JS (Optimizadas para lag) */
+/* PARTÍCULAS JS OPTIMIZADAS (text-shadow envés de filter y hardware acceleration) */
 .particula-deco { position: fixed; pointer-events: none; z-index: -1; opacity: 0; will-change: transform, opacity; }
 .skullette-wrapper { position: fixed; z-index: 90; pointer-events: none; will-change: transform; }
 .skullette-inner { width: 65px; height: 65px; cursor: pointer; filter: drop-shadow(0 0 10px var(--violet)); transition: transform 0.2s; pointer-events: auto; object-fit: contain; -webkit-user-drag: none; }
@@ -272,7 +284,6 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   #sec-home { padding-bottom: 90px; }
   .icoffin-container { flex-direction: column; min-height: auto; gap: 30px; }
   .diario-btn { position: relative; right: auto; width: 100%; max-width: 320px; }
-  .gd-portal-container { grid-template-columns: 1fr; }
   .ataud-flotante { right: 0; left: 0; bottom: 0; top: auto; transform: none; margin: 0; width: 100%; border-radius: 20px 20px 0 0; border-left: none; border-right: none; border-bottom: none; flex-direction: row; justify-content: center; gap: 15px; padding: 12px; }
   .ataud-flotante:hover { transform: none; background: rgba(28, 8, 8, 0.95); }
 }
@@ -280,21 +291,19 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 </head>
 <body>
 
-<!-- PANTALLA DE CARGA INICIAL (NEGRA PURA) -->
+<!-- PANTALLA DE CARGA INICIAL -->
 <div id="splash-screen">
   <div class="splash-loader" id="txt-cargando">Descargando Magia...</div>
   <button id="btn-boo" onclick="iniciarApp()">¡Boo!</button>
 </div>
 
-<!-- MURCIÉLAGOS GLOBALES -->
 <div class="bats" id="bats-clasicos" aria-hidden="true"><span class="bat">🦇</span><span class="bat">🦇</span><span class="bat">🦇</span></div>
-
 <div id="fade-overlay"></div>
 
 <!-- AUDIOS -->
 <audio id="audio-bg" loop><source src="musica.mp3" type="audio/mpeg"></audio>
 
-<!-- TOAST (Notificaciones Rediseñadas) -->
+<!-- TOAST LOGRO (SISTEMA DE COLA) -->
 <div id="toast-logro">
   <span id="toast-icon" style="font-size: 2rem;">🏆</span>
   <div><div id="toast-sub" style="font-size: 0.8rem; opacity: 0.8;">Logro Desbloqueado</div><div id="toast-txt">Título</div><div id="toast-bonus" style="color: #ffd700; font-size: 0.9rem;">+15 🍬</div></div>
@@ -342,7 +351,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
     <p style="font-size: 0.9rem;">Haz clic para generar tu código único y copiarlo al portapapeles.</p>
     <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; font-size: 1.5rem; font-weight: bold; color: var(--pumpkin); margin: 20px 0; letter-spacing: 2px;" id="txt-codigo-generado">¿?¿?¿?</div>
     <button class="btn-accion" style="width: 100%; margin-bottom: 10px;" id="btn-copiar-codigo" onclick="confirmarUsoItem()">Generar, Copiar y Usar</button>
-    <button class="btn-cerrar-modal" style="background: transparent; color: var(--ink); border: 1px solid var(--ember);" onclick="cerrarModalUsar()">Cancelar</button>
+    <button class="btn-cerrar-modal" style="background: transparent; color: var(--ink); border: 1px var(--borde-estilo) var(--ember);" onclick="cerrarModalUsar()">Cancelar</button>
   </div>
 </div>
 
@@ -355,7 +364,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   </div>
 </div>
 
-<!-- MODAL ATAÚD DIARIO (REDISEÑADO CON CARRUSEL) -->
+<!-- MODAL ATAÚD DIARIO -->
 <div class="modal-overlay" id="modal-ataud">
   <div class="modal-box">
     <h3 style="justify-content: center;">Recompensa Diaria ⚰️</h3>
@@ -459,10 +468,10 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
           </div>
       </div>
 
-      <!-- PORTALES REDISEÑADOS -->
+      <!-- PORTALES REDISEÑADOS Y ALINEADOS -->
       <div class="gd-portal-container">
           <div class="gd-portal portal-citas-gestos" onclick="abrirSubTienda('tienda-citas-gestos')">
-              <h3>🎟️ Citas y Gestos 💖</h3>
+              <h3>🎟️️ Citas y Gestos 💖</h3>
           </div>
           <div class="gd-portal portal-amuletos" onclick="abrirSubTienda('tienda-amuletos')">
               <h3>🔮 Amuletos Mágicos</h3>
@@ -501,16 +510,16 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
       <h3 class="seccion-titulo" style="margin-top: 0;">🔮 Amuletos de Poder</h3>
       <p style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 20px;">Mejora tus ganancias y desbloquea secretos permanentes.</p>
       <div class="grid">
-          <article class="item">
-              <span class="e">👁️</span><h3>Ojo de Clarividencia</h3><p>Descifra y desbloquea el Diario Secreto.</p>
-              <button class="btn-accion" onclick="comprarItem(this, 'amuleto-ojo', 150, 'Ojo de Clarividencia', 'amuleto')">Comprar - 150 🍬</button>
-          </article>
           <article class="item" style="opacity: 0.5;">
               <span class="e">🦇</span><h3>Imán de Skullettes</h3><p>Próximamente</p>
               <button class="btn-accion btn-bloqueado">En Construcción</button>
           </article>
           <article class="item" style="opacity: 0.5;">
               <span class="e">⏳</span><h3>Reloj Vampírico</h3><p>Próximamente</p>
+              <button class="btn-accion btn-bloqueado">En Construcción</button>
+          </article>
+          <article class="item" style="opacity: 0.5;">
+              <span class="e">💳</span><h3>Bolsillo de Momia</h3><p>Próximamente</p>
               <button class="btn-accion btn-bloqueado">En Construcción</button>
           </article>
       </div>
@@ -608,8 +617,7 @@ const catalogo = {
   'tema-sangre': { icono: '🩸', nombre: 'Tema: Rojo Sangre', desc: 'Gotas cayendo.', tipo: 'tema' },
   'tema-momia': { icono: '🏺', nombre: 'Tema: Momia', desc: 'Polvo de arena en el viento.', tipo: 'tema' },
   'tema-calabaza': { icono: '🎃', nombre: 'Tema: Calabaza', desc: 'Brasas flotantes.', tipo: 'tema' },
-  'tema-batman': { icono: '🦇', nombre: 'Tema: Batman', desc: 'Tonos oscuros y contrastados.', tipo: 'tema' },
-  'amuleto-ojo': { icono: '👁️', nombre: 'Ojo de Clarividencia', desc: 'Te permite descifrar el Diario Secreto.', tipo: 'amuleto' }
+  'tema-batman': { icono: '🦇', nombre: 'Tema: Batman', desc: 'Tonos oscuros y contrastados.', tipo: 'tema' }
 };
 
 const catalogoLogros = {
@@ -624,7 +632,6 @@ const catalogoPistas = {
   'pista_amor': { pistaTxt: "El sentimiento que nos une. 4 letras.", codigo: "AMOR", desc: "El amor es la chispa mágica que ilumina las catacumbas de mi corazón." }
 };
 
-// Mapa de recompensas progresivas
 const recompensasDiarias = [
     { dia: 1, valor: 50, texto: "50 🍬", icono: "🍬" },
     { dia: 2, valor: 80, texto: "80 🍬", icono: "🍬" },
@@ -681,10 +688,10 @@ if(database) {
 }
 
 function iniciarApp() {
+    // Activamos SFX global en memoria para que no haya que pedir permiso después
     sfxExito.muted = false; sfxError.muted = false;
     sfxExito.volume = 0.1; sfxError.volume = 0.1;
     document.getElementById('vol-sfx').value = 0.1; document.getElementById('btn-mute-sfx').textContent = '🔊';
-    reproducirSonido(sfxExito);
 
     const splash = document.getElementById('splash-screen');
     splash.style.pointerEvents = 'none'; splash.style.opacity = '0';
@@ -729,7 +736,7 @@ function checkLogro(id) {
   }
 }
 
-// SISTEMA DE COLA PARA TOASTS
+// ================= SISTEMA DE COLA PARA TOASTS (ANTI PISADO) =================
 let toastQueue = [];
 let toastActivo = false;
 
@@ -764,7 +771,7 @@ function procesarToastQueue() {
         setTimeout(() => {
             toastActivo = false;
             procesarToastQueue();
-        }, 500); // 0.5s de espera antes del siguiente toast
+        }, 500); 
     }, 4000);
 }
 
@@ -931,7 +938,6 @@ function renderizarColeccionYLogros() {
   Object.keys(catalogo).forEach(id => {
     if (coleccion.includes(id)) { 
         const item = catalogo[id];
-        
         if (item.tipo === 'amuleto') {
             divAmuletos.innerHTML += `<article class="item" style="border-color: var(--pumpkin)"><span class="e">${item.icono}</span><h3>${item.nombre}</h3><p>${item.desc}</p><button class="btn-accion btn-bloqueado" style="width: 100%;">Activo</button></article>`; 
         } else if (item.tipo === 'tema') {
@@ -954,7 +960,7 @@ function renderizarColeccionYLogros() {
 }
 
 // ========================================================
-// 7. DIARIO Y CÓDIGOS (LÓGICA DEL AMULETO)
+// 7. DIARIO Y CÓDIGOS (LÓGICA DEL DIARIO ARREGLADA)
 // ========================================================
 function abrirDiario() {
   const volSlider = parseFloat(document.getElementById('vol-musica').value);
@@ -980,18 +986,19 @@ function esconderDiario() {
 
 function renderizarDiario() {
   const container = document.getElementById('lista-pistas'); if(!container) return; container.innerHTML = '';
-  // Validamos si tiene el amuleto del Ojo
-  const tieneOjo = coleccion.includes('amuleto-ojo');
+  
+  // Novedad: Valida si la usuaria ya compró o tiene una "Cita"
+  const tieneCita = carrito.some(item => item.tipo === 'cita');
   
   Object.keys(catalogoPistas).forEach((key, index) => {
     const p = catalogoPistas[key]; const desbloqueada = pistas.includes(key);
     
-    if (!tieneOjo) {
-        container.innerHTML += `<div class="pista-box pista-blur" style="border-color: #555; color: #888;"><strong>🔒 Pista #${index+1}:</strong> Necesitas el 👁️ Ojo de Clarividencia (Amuleto) para descifrar este contenido.</div>`;
+    if (!tieneCita) {
+        container.innerHTML += `<div class="pista-box pista-blur" style="border-color: #555; color: #888;"><strong>🔒 Pista #${index+1}:</strong> Necesitas adquirir una 🎟️ Cita VIP en la tienda para revelar este acertijo.</div>`;
     } else if (desbloqueada) { 
-        container.innerHTML += `<div class="pista-box"><strong>Pista #${index+1}:</strong> ${p.pistaTxt}</div>`; 
+        container.innerHTML += `<div class="pista-box" style="border-color: #00b33c;"><strong>✅ Pista #${index+1} Resuelta:</strong> ${p.desc}</div>`; 
     } else { 
-        container.innerHTML += `<div class="pista-box pista-blur"><strong>🔒 Pista #${index+1}:</strong> Para leer esto, primero debes ayudarme a invocar magia...</div>`; 
+        container.innerHTML += `<div class="pista-box"><strong>📖 Pista #${index+1}:</strong> ${p.pistaTxt} <br><span style="font-size:0.8rem; opacity:0.7;">(Ingresa tu respuesta en el iCoffin)</span></div>`; 
     }
   });
 }
@@ -999,12 +1006,20 @@ function renderizarDiario() {
 function canjearCodigo() {
   const input = document.getElementById('input-codigo'); const msg = document.getElementById('msg-codigo'); const codigo = input.value.trim().toUpperCase(); let msjRespuesta = ""; colorRespuesta = "#4CAF50";
   switch(codigo) {
-    case 'AMOR': msjRespuesta = catalogoPistas['pista_amor'].desc; colorRespuesta = "var(--violet)"; reproducirSonido(sfxExito); break;
+    case 'AMOR': 
+        if(!pistas.includes('pista_amor')) pistas.push('pista_amor'); 
+        msjRespuesta = catalogoPistas['pista_amor'].desc; colorRespuesta = "var(--violet)"; reproducirSonido(sfxExito); break;
     case 'GIVE': dulces += 500; msjRespuesta = "[ADMIN] +500 Caramelos."; colorRespuesta = "var(--violet)"; reproducirSonido(sfxExito); break;
     case 'TICKETS': abrirAdminTickets(); msjRespuesta = "[ADMIN] Tickets abiertos."; break;
     case 'CLEANCART': carrito = []; msjRespuesta = "[ADMIN] Carrito vacío."; break;
-    case 'UNLOCKTHEMES': coleccion = ['tema-default', 'tema-rosa', 'tema-sangre', 'tema-momia', 'tema-calabaza', 'tema-batman', 'amuleto-ojo']; msjRespuesta = "[ADMIN] Colección max."; break;
+    case 'UNLOCKTHEMES': coleccion = ['tema-default', 'tema-rosa', 'tema-sangre', 'tema-momia', 'tema-calabaza', 'tema-batman']; msjRespuesta = "[ADMIN] Colección max."; break;
     case 'RESET': dulces = 0; coleccion = ['tema-default']; logros = []; carrito = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Cuenta a cero."; colorRespuesta = "var(--pumpkin)"; break;
+    case '24H': 
+        ataudTiempo = Date.now() - 86400000; 
+        msjRespuesta = "[ADMIN] Reloj adelantado 24h."; 
+        actualizarUI(); // Refuerza la UI para que la caja brille al instante
+        if(document.getElementById('modal-ataud').classList.contains('activo')) renderizarGrillaAtaud();
+        break;
     default: msjRespuesta = "Contraseña incorrecta..."; colorRespuesta = "var(--pumpkin)"; reproducirSonido(sfxError);
   }
   msg.style.color = colorRespuesta; msg.textContent = msjRespuesta; input.value = ''; guardarDatos(); if(codigo !== 'AMOR' && codigo !== 'TICKETS') setTimeout(() => { msg.textContent = ''; }, 4000);
@@ -1020,23 +1035,23 @@ function abrirAdminTickets() {
 }
 
 // ========================================================
-// 8. ANIMACIONES Y SKULLETTES
+// 8. ANIMACIONES Y SISTEMA ANTI-LAG PROFUNDO
 // ========================================================
 function abrirAjustes() { checkLogro('config'); document.getElementById('modal-ajustes').classList.add('activo'); }
 function cerrarAjustes() { document.getElementById('modal-ajustes').classList.remove('activo'); }
-
 function actualizarAnimacionInicio() { const batsClasicos = document.getElementById('bats-clasicos'); if(batsClasicos) { batsClasicos.style.display = (temaActivo === 'tema-default') ? 'block' : 'none'; } }
 
+// Partículas JS Ultra Optimizadas (Usando Text-Shadow y RequestAnimationFrame)
 setInterval(() => {
     if(temaActivo === 'tema-default') return;
     const wrapper = document.createElement('div'); wrapper.className = 'particula-deco'; wrapper.style.fontSize = Math.floor(Math.random() * 1.5 + 1) + 'rem';
     
-    if(temaActivo === 'tema-rosa') { wrapper.innerHTML = Math.random() > 0.5 ? '💖' : '✨'; wrapper.style.top = Math.floor(Math.random() * 100) + 'vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; wrapper.style.filter = 'drop-shadow(0 0 10px rgba(255,51,153,0.8))'; wrapper.style.transition = 'opacity 2s ease'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.opacity = '0.7', 100); setTimeout(() => wrapper.style.opacity = '0', 2000); setTimeout(() => wrapper.remove(), 4000); } 
-    else if(temaActivo === 'tema-sangre') { wrapper.innerHTML = '💧'; wrapper.style.top = '-10vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; wrapper.style.filter = 'brightness(0) drop-shadow(0 5px 5px rgba(255,0,0,0.8))'; wrapper.style.transition = 'transform 3s linear, opacity 1s'; wrapper.style.opacity = '0.8'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateY(110vh)', 100); setTimeout(() => wrapper.remove(), 3200); }
+    if(temaActivo === 'tema-rosa') { wrapper.innerHTML = Math.random() > 0.5 ? '💖' : '✨'; wrapper.style.top = Math.floor(Math.random() * 100) + 'vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; wrapper.style.textShadow = '0 0 10px rgba(255,51,153,0.8)'; wrapper.style.transition = 'opacity 2s ease'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.opacity = '0.7', 100); setTimeout(() => wrapper.style.opacity = '0', 2000); setTimeout(() => wrapper.remove(), 4000); } 
+    else if(temaActivo === 'tema-sangre') { wrapper.innerHTML = '💧'; wrapper.style.top = '-10vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; wrapper.style.textShadow = '0 5px 5px rgba(255,0,0,0.8)'; wrapper.style.transition = 'transform 3s linear, opacity 1s'; wrapper.style.opacity = '0.8'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateY(110vh)', 100); setTimeout(() => wrapper.remove(), 3200); }
     else if(temaActivo === 'tema-momia') { wrapper.innerHTML = '⚱'; wrapper.style.top = Math.floor(Math.random() * 100) + 'vh'; wrapper.style.left = '-10vw'; wrapper.style.filter = 'brightness(0.6) sepia(1)'; wrapper.style.transition = 'transform 6s linear, opacity 1s'; wrapper.style.opacity = '0.5'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateX(110vw) rotate(180deg)', 100); setTimeout(() => wrapper.remove(), 6200); }
-    else if(temaActivo === 'tema-calabaza') { wrapper.innerHTML = '🔥'; wrapper.style.fontSize = Math.floor(Math.random() * 1 + 0.5) + 'rem'; wrapper.style.top = '110vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; wrapper.style.filter = 'drop-shadow(0 0 10px rgba(255,102,0,0.8))'; wrapper.style.transition = 'transform 4s ease-out, opacity 1s'; wrapper.style.opacity = '0.7'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = `translateY(-60vh) translateX(${Math.random() > 0.5 ? 50 : -50}px)`, 100); setTimeout(() => wrapper.style.opacity = '0', 3000); setTimeout(() => wrapper.remove(), 4200); }
-    else if(temaActivo === 'tema-batman') { wrapper.innerHTML = '🦇'; wrapper.style.fontSize = '4rem'; wrapper.style.top = Math.floor(Math.random() * 80) + 'vh'; wrapper.style.left = '-20vw'; wrapper.style.filter = 'brightness(0) drop-shadow(0 0 20px rgba(255,255,255,0.2))'; wrapper.style.transition = 'transform 12s linear, opacity 2s'; wrapper.style.opacity = '0.2'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateX(130vw) scale(1.5)', 100); setTimeout(() => wrapper.remove(), 12200); }
-}, 2000);
+    else if(temaActivo === 'tema-calabaza') { wrapper.innerHTML = '🔥'; wrapper.style.fontSize = Math.floor(Math.random() * 1 + 0.5) + 'rem'; wrapper.style.top = '110vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; wrapper.style.textShadow = '0 0 10px rgba(255,102,0,0.8)'; wrapper.style.transition = 'transform 4s ease-out, opacity 1s'; wrapper.style.opacity = '0.7'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = `translateY(-60vh) translateX(${Math.random() > 0.5 ? 50 : -50}px)`, 100); setTimeout(() => wrapper.style.opacity = '0', 3000); setTimeout(() => wrapper.remove(), 4200); }
+    else if(temaActivo === 'tema-batman') { wrapper.innerHTML = '🦇'; wrapper.style.fontSize = '4rem'; wrapper.style.top = Math.floor(Math.random() * 80) + 'vh'; wrapper.style.left = '-20vw'; wrapper.style.textShadow = '0 0 20px rgba(255,255,255,0.2)'; wrapper.style.transition = 'transform 12s linear, opacity 2s'; wrapper.style.opacity = '0.2'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateX(130vw) scale(1.5)', 100); setTimeout(() => wrapper.remove(), 12200); }
+}, 3000); // Intervalo reducido a la mitad para evitar saturación de RAM
 
 setInterval(() => {
   const enJuegos = document.getElementById('sec-juegos').classList.contains('activa');
@@ -1049,7 +1064,7 @@ setInterval(() => {
     inner.onpointerdown = () => { checkLogro('skull'); dulces += 10; guardarDatos(); reproducirSonido(sfxExito); wrapper.remove(); };
     setTimeout(() => { if(wrapper.parentNode) wrapper.remove(); }, 8000);
   }
-}, 12000);
+}, 15000);
 
 function probarJuego(idJuego) { 
     if(!bgMusic.muted) bgMusic.pause();
@@ -1073,8 +1088,21 @@ function cambiarPagina(idPagina) {
   window.scrollTo(0,0);
 }
 
+// OPTIMIZACIÓN DE MOUSE TRACKING (Anti-Lag)
 (function(){
-  document.addEventListener('pointermove', function(e){ if (e.pointerType === 'mouse') { document.body.style.setProperty('--x', e.clientX + 'px'); document.body.style.setProperty('--y', e.clientY + 'px'); } });
+  let ticking = false;
+  document.addEventListener('pointermove', function(e){ 
+      if (e.pointerType !== 'mouse') return; // Ignoramos pantallas táctiles, ahorra muchísima memoria
+      if (!ticking) {
+          window.requestAnimationFrame(function() {
+              document.body.style.setProperty('--x', e.clientX + 'px'); 
+              document.body.style.setProperty('--y', e.clientY + 'px');
+              ticking = false;
+          });
+          ticking = true;
+      }
+  });
+  
   var end=new Date(2026,9,31,18,0,0).getTime();
   function pad(n){return String(n).padStart(2,'0')}
   function tick(){ var t=Math.max(0,end-Date.now()),s=Math.floor(t/1000); document.getElementById('d').textContent=pad(Math.floor(s/86400)); document.getElementById('h').textContent=pad(Math.floor(s%86400/3600)); document.getElementById('m').textContent=pad(Math.floor(s%3600/60)); document.getElementById('s').textContent=pad(s%60); }
