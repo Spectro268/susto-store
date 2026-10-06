@@ -65,10 +65,12 @@ body.tema-batman .btn-cerrar-modal:hover { color: #ffffff !important; background
 body.tema-batman .btn-carrito-tienda { color: #ffffff !important; border-color: #ffffff !important; }
 body.tema-batman .btn-carrito-tienda:hover { background: rgba(255,255,255,0.1) !important; }
 
-/* SOLO la notificación de pista en Batman tiene letras negras */
+/* Letras negras dedicadas en el tema Batman */
 body.tema-batman #toast-logro.is-pista,
 body.tema-batman #toast-logro.is-pista #toast-sub,
 body.tema-batman #toast-logro.is-pista #toast-txt { color: #000000 !important; }
+
+body.tema-batman .ataud-flotante .badge { color: #000000 !important; } /* Corrección Etiqueta del Ataúd */
 
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
 *, *::before, *::after { box-sizing: inherit; }
@@ -375,7 +377,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 <!-- MODAL ATAÚD DIARIO -->
 <div class="modal-overlay" id="modal-ataud">
   <div class="modal-box">
-    <h3 style="justify-content: center;">Recompensa Diaria ⚰️</h3>
+    <h3 style="justify-content: center;">Recompensa Diaria ⚰️️</h3>
     <p style="font-size: 0.9rem; margin-top: 0;">Reclama tu lealtad cada día.</p>
     <div style="font-weight:bold; color:var(--pumpkin); font-size:1.2rem; margin:10px 0;" id="contador-ataud">Disponible Ahora</div>
     <div class="grid-ataud" id="grid-ataud-cajas"></div>
@@ -408,8 +410,9 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   <div class="header-right">
     <span class="moneda-ui">🍬 <span id="ui-dulces">0</span></span>
     <a class="btn-col" onclick="cambiarPagina('sec-coleccion')" id="nav-coleccion">Nuestra Colección</a>
+    <!-- LA TUERCA RESTAURADA -->
     <button class="btn-icono tuerca" onclick="abrirAjustes()" title="Ajustes">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
     </button>
   </div>
 </header>
@@ -719,7 +722,7 @@ if(database) {
 }
 
 function iniciarApp() {
-    // Solo despierta los canales de audio, no reproduce ningún sonido aún.
+    // Solo activamos los canales, NO hay sonido en el botón Boo.
     sfxExito.muted = false; sfxError.muted = false;
     sfxExito.volume = 0.1; sfxError.volume = 0.1;
     document.getElementById('vol-sfx').value = 0.1; document.getElementById('btn-mute-sfx').textContent = '🔊';
@@ -800,9 +803,7 @@ function procesarToastQueue() {
     const toast = document.getElementById('toast-logro');
     const bonusTxt = t.bonus ? `+${t.bonus} 🍬` : '';
     
-    // Limpiamos clases previas
     toast.classList.remove('is-pista', 'is-info', 'is-logro');
-    // Asignamos la nueva para el CSS
     toast.classList.add('is-' + t.tipo);
     
     if(t.tipo === 'pista') {
@@ -877,11 +878,8 @@ function reclamarCaja() {
       mostrarToast(`¡Reclamado: ${premio.texto}!`, "logro");
   }
   ataudTiempo = Date.now(); ataudDia++; 
-  
   if (ataudDia > 5) revelarPista('pista_2211'); 
-  
-  guardarDatos(); reproducirSonido(sfxExito); 
-  renderizarGrillaAtaud(); 
+  guardarDatos(); reproducirSonido(sfxExito); renderizarGrillaAtaud(); 
 }
 
 function actualizarTimerAtaud() {
@@ -905,13 +903,10 @@ function comprarItem(boton, idItem, precio, nombreItem, tipo) {
     if ((tipo === 'tema' || tipo === 'amuleto') && coleccion.includes(idItem)) { mostrarToast("Ya tienes este ítem en tu colección.", "info"); return; }
     if (dulces >= precio) {
         dulces -= precio; reproducirSonido(sfxExito);
-        
         if (tipo === 'tema' || tipo === 'amuleto') { 
-            coleccion.push(idItem); 
-            if(tipo === 'tema') equiparTema(idItem); 
+            coleccion.push(idItem); if(tipo === 'tema') equiparTema(idItem); 
             guardarDatos(); mostrarToast(`Adquirido: ${nombreItem}`, "info"); 
-        } 
-        else { 
+        } else { 
             carrito.push({ id: idItem, nombre: nombreItem, tipo: tipo, codigo: null, usado: false }); 
             if(tipo === 'cita') revelarPista('pista_amor');
             if(tipo === 'gesto') revelarPista('pista_monster');
@@ -931,8 +926,7 @@ function renderizarCarrito() {
     const lista = document.getElementById('lista-carrito'); lista.innerHTML = '';
     if(carrito.length === 0) { lista.innerHTML = '<p style="text-align: center; opacity: 0.6;">Tu inventario está vacío.</p>'; return; }
     carrito.forEach((item, index) => {
-        const estadoClase = item.usado ? 'usado' : '';
-        const codTxt = item.codigo ? item.codigo : 'Aún sin canjear';
+        const estadoClase = item.usado ? 'usado' : ''; const codTxt = item.codigo ? item.codigo : 'Aún sin canjear';
         const botonHTML = item.usado ? `<button class="btn-accion btn-bloqueado" style="margin:0; padding: 6px 12px;">USADO</button>` : `<button class="btn-accion" style="margin:0; padding: 6px 12px; background: var(--violet);" onclick="abrirUsoItem(${index})">USAR</button>`;
         lista.innerHTML += `<div class="item-carrito ${estadoClase}"><div><h4>${item.nombre}</h4><p style="opacity:0.7;">${codTxt}</p></div>${botonHTML}</div>`;
     });
@@ -953,15 +947,13 @@ function confirmarUsoItem() {
     const codigoGenerado = "BOO-" + Math.random().toString(36).substr(2, 4).toUpperCase();
     
     carrito[index].codigo = codigoGenerado; carrito[index].usado = true;
-    guardarDatos(); reproducirSonido(sfxExito);
-    document.getElementById('txt-codigo-generado').innerText = codigoGenerado;
+    guardarDatos(); reproducirSonido(sfxExito); document.getElementById('txt-codigo-generado').innerText = codigoGenerado;
     
     navigator.clipboard.writeText(codigoGenerado).then(() => { document.getElementById('btn-copiar-codigo').innerText = "¡Copiado y Usado!";
     }).catch(err => { mostrarToast("No se pudo copiar automático, cópialo manualmente.", "info"); document.getElementById('btn-copiar-codigo').innerText = "¡Usado! (Cópialo manual)"; });
     setTimeout(() => { document.getElementById('btn-copiar-codigo').innerText = "Generar, Copiar y Usar"; cerrarModalUsar(); }, 3000);
 }
 
-// TEMAS Y COLECCIÓN
 function equiparTema(idTema) { 
     temaActivo = idTema; aplicarTemaCSS(temaActivo); actualizarAnimacionInicio(); 
     if(idTema === 'tema-rosa') revelarPista('pista_greta');
@@ -986,53 +978,35 @@ function renderizarColeccionYLogros() {
         }
     } 
   });
-  
   if (divAmuletos.innerHTML === '') divAmuletos.innerHTML = `<p style="grid-column: 1/-1; opacity:0.6; text-align:center;">No tienes amuletos activos.</p>`;
   
   divLogros.innerHTML = '';
   Object.keys(catalogoLogros).forEach(key => {
     const l = catalogoLogros[key]; const ganado = logros.includes(key);
-    divLogros.innerHTML += `<article class="item" style="padding:15px; flex-direction:row; align-items:center; text-align:left; ${ganado ? 'border-color:var(--pumpkin); background:rgba(214,40,40,0.1);' : 'opacity:0.6; filter:grayscale(1);'}">
-        <span style="font-size:2rem; min-width:40px;">${l.icono}</span>
-        <div><h3 style="font-size:1rem; margin-bottom:3px;">${ganado ? l.nombre : '???'}</h3><p style="font-size:0.8rem; margin:0;">${ganado ? l.desc : 'Secreto...'}</p></div></article>`;
+    divLogros.innerHTML += `<article class="item" style="padding:15px; flex-direction:row; align-items:center; text-align:left; ${ganado ? 'border-color:var(--pumpkin); background:rgba(214,40,40,0.1);' : 'opacity:0.6; filter:grayscale(1);'}"><span style="font-size:2rem; min-width:40px;">${l.icono}</span><div><h3 style="font-size:1rem; margin-bottom:3px;">${ganado ? l.nombre : '???'}</h3><p style="font-size:0.8rem; margin:0;">${ganado ? l.desc : 'Secreto...'}</p></div></article>`;
   });
 }
 
 // ========================================================
-// 7. DIARIO Y CÓDIGOS (ANTI-ADIVINACIÓN)
+// 7. DIARIO Y CÓDIGOS
 // ========================================================
 function abrirDiario() {
-  const volSlider = parseFloat(document.getElementById('vol-musica').value);
-  if(!bgMusic.muted && volSlider > 0) { bgMusic.volume = volSlider * 0.3; }
+  const volSlider = parseFloat(document.getElementById('vol-musica').value); if(!bgMusic.muted && volSlider > 0) { bgMusic.volume = volSlider * 0.3; }
   if (!diarioVisto) {
-    const overlay = document.getElementById('overlay-diario'); overlay.style.display = 'flex'; 
-    setTimeout(() => { overlay.style.opacity = '1'; }, 100);
+    const overlay = document.getElementById('overlay-diario'); overlay.style.display = 'flex'; setTimeout(() => { overlay.style.opacity = '1'; }, 100);
     setTimeout(() => { overlay.style.opacity = '0'; setTimeout(() => { overlay.style.display = 'none'; document.getElementById('modal-diario').classList.add('activo'); checkLogro('diario'); }, 1500); }, 5500); 
     diarioVisto = true; guardarDatos();
   } else { document.getElementById('modal-diario').classList.add('activo'); checkLogro('diario'); }
 }
-
-function esconderDiario() {
-  document.getElementById('modal-diario').classList.remove('activo');
-  const volSlider = parseFloat(document.getElementById('vol-musica').value);
-  if(!bgMusic.muted && volSlider > 0) { bgMusic.volume = volSlider; }
-}
+function esconderDiario() { document.getElementById('modal-diario').classList.remove('activo'); const volSlider = parseFloat(document.getElementById('vol-musica').value); if(!bgMusic.muted && volSlider > 0) { bgMusic.volume = volSlider; } }
 
 function renderizarDiario() {
   const container = document.getElementById('lista-pistas'); if(!container) return; container.innerHTML = '';
-  
   Object.keys(catalogoPistas).forEach((key, index) => {
-    const p = catalogoPistas[key]; 
-    const desbloqueada = pistas.includes(key); 
-    const revelada = pistasReveladas.includes(key); 
-    
-    if (!revelada) { 
-        container.innerHTML += `<div class="pista-box pista-blur" style="border-color: #555; color: #888;"><strong>🔒 Pista #${index+1}:</strong> Necesitas ${p.reqTxt} para revelar este acertijo.</div>`; 
-    } else if (desbloqueada) { 
-        container.innerHTML += `<div class="pista-box" style="border-color: #00b33c;"><strong>✅ Pista #${index+1} Resuelta:</strong> ${p.desc}</div>`; 
-    } else { 
-        container.innerHTML += `<div class="pista-box"><strong>📖 Pista #${index+1}:</strong> ${p.pistaTxt} <br><span style="font-size:0.8rem; opacity:0.7;">(Ingresa tu respuesta en el iCoffin)</span></div>`; 
-    }
+    const p = catalogoPistas[key]; const desbloqueada = pistas.includes(key); const revelada = pistasReveladas.includes(key); 
+    if (!revelada) { container.innerHTML += `<div class="pista-box pista-blur" style="border-color: #555; color: #888;"><strong>🔒 Pista #${index+1}:</strong> Necesitas ${p.reqTxt} para revelar este acertijo.</div>`; } 
+    else if (desbloqueada) { container.innerHTML += `<div class="pista-box" style="border-color: #00b33c;"><strong>✅ Pista #${index+1} Resuelta:</strong> ${p.desc}</div>`; } 
+    else { container.innerHTML += `<div class="pista-box"><strong>📖 Pista #${index+1}:</strong> ${p.pistaTxt} <br><span style="font-size:0.8rem; opacity:0.7;">(Ingresa tu respuesta en el iCoffin)</span></div>`; }
   });
 }
 
@@ -1048,31 +1022,18 @@ function canjearCodigo() {
     case 'RESET': dulces = 0; coleccion = ['tema-default']; logros = []; carrito = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; pistasReveladas = []; codigosUsados = []; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Cuenta a cero."; colorRespuesta = "var(--pumpkin)"; break;
     case '24H': ataudTiempo = Date.now() - 86400000; msjRespuesta = "[ADMIN] Reloj adelantado."; actualizarUI(); if(document.getElementById('modal-ataud').classList.contains('activo')) renderizarGrillaAtaud(); break;
   }
-
-  if(msjRespuesta !== "") {
-      msg.style.color = colorRespuesta; msg.textContent = msjRespuesta; input.value = ''; guardarDatos(); 
-      if(codigo !== 'TICKETS') setTimeout(() => { msg.textContent = ''; }, 4000);
-      return;
-  }
+  if(msjRespuesta !== "") { msg.style.color = colorRespuesta; msg.textContent = msjRespuesta; input.value = ''; guardarDatos(); if(codigo !== 'TICKETS') setTimeout(() => { msg.textContent = ''; }, 4000); return; }
 
   if(codigosSecretos[codigo]) {
       const premio = codigosSecretos[codigo];
-      if(!pistasReveladas.includes(premio.id)) {
-          msg.style.color = "var(--pumpkin)"; msg.textContent = "Aún no tienes el conocimiento para usar esto..."; reproducirSonido(sfxError);
-      } else if(codigosUsados.includes(codigo)) {
-          msg.style.color = "var(--pumpkin)"; msg.textContent = "Ya resolviste este secreto..."; reproducirSonido(sfxError);
-      } else {
-          codigosUsados.push(codigo);
-          if (!pistas.includes(premio.id)) pistas.push(premio.id); 
-          let gananciaExtra = agregarDulces(premio.recompensa);
-          guardarDatos(); input.value = ''; reproducirSonido(sfxExito);
-          document.getElementById('icoffin-msg').textContent = premio.msg;
-          document.getElementById('icoffin-premio').textContent = gananciaExtra;
-          document.getElementById('modal-recompensa-icoffin').classList.add('activo');
+      if(!pistasReveladas.includes(premio.id)) { msg.style.color = "var(--pumpkin)"; msg.textContent = "Aún no tienes el conocimiento para usar esto..."; reproducirSonido(sfxError); } 
+      else if(codigosUsados.includes(codigo)) { msg.style.color = "var(--pumpkin)"; msg.textContent = "Ya resolviste este secreto..."; reproducirSonido(sfxError); } 
+      else {
+          codigosUsados.push(codigo); if (!pistas.includes(premio.id)) pistas.push(premio.id); 
+          let gananciaExtra = agregarDulces(premio.recompensa); guardarDatos(); input.value = ''; reproducirSonido(sfxExito);
+          document.getElementById('icoffin-msg').textContent = premio.msg; document.getElementById('icoffin-premio').textContent = gananciaExtra; document.getElementById('modal-recompensa-icoffin').classList.add('activo');
       }
-  } else {
-      msg.style.color = "var(--pumpkin)"; msg.textContent = "Contraseña incorrecta..."; reproducirSonido(sfxError);
-  }
+  } else { msg.style.color = "var(--pumpkin)"; msg.textContent = "Contraseña incorrecta..."; reproducirSonido(sfxError); }
   setTimeout(() => { msg.textContent = ''; }, 4000);
 }
 
@@ -1095,14 +1056,8 @@ setInterval(() => {
     const wrapper = document.createElement('div'); wrapper.className = 'particula-deco'; wrapper.style.fontSize = Math.floor(Math.random() * 1.5 + 1) + 'rem';
     
     if(temaActivo === 'tema-rosa') { wrapper.innerHTML = Math.random() > 0.5 ? '💖' : '✨'; wrapper.style.top = Math.floor(Math.random() * 100) + 'vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; wrapper.style.textShadow = '0 0 10px rgba(255,51,153,0.8)'; wrapper.style.transition = 'opacity 2s ease'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.opacity = '0.7', 100); setTimeout(() => wrapper.style.opacity = '0', 2000); setTimeout(() => wrapper.remove(), 4000); } 
-    else if(temaActivo === 'tema-sangre') { 
-        wrapper.innerHTML = '<svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor"><path d="M12 2c-.3 0-.6.2-.8.5l-6 10c-.8 1.4-1 3.1-.3 4.6.6 1.5 2 2.7 3.6 3.1 3.4.8 6.7-1.2 7.3-4.6.2-1.2 0-2.4-.6-3.5l-2.4-4.1-1.6-2.7c-2.3-3.9-3.2-3.3-3.2-3.3z"/></svg>'; 
-        wrapper.style.color = '#cc0000'; wrapper.style.top = '-10vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; wrapper.style.filter = 'drop-shadow(0 5px 5px rgba(204,0,0,0.8))'; wrapper.style.transition = 'transform 3s linear, opacity 1s'; wrapper.style.opacity = '0.8'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateY(110vh)', 100); setTimeout(() => wrapper.remove(), 3200); 
-    }
-    else if(temaActivo === 'tema-momia') { 
-        if (Math.random() > 0.5) { wrapper.innerHTML = '⚱'; wrapper.style.filter = 'brightness(0.6) sepia(1)'; } else { wrapper.innerHTML = '•'; wrapper.style.fontSize = Math.floor(Math.random() * 2 + 1.5) + 'rem'; wrapper.style.color = '#d49a6a'; wrapper.style.textShadow = '0 0 5px rgba(212,154,106,0.5)'; }
-        wrapper.style.top = Math.floor(Math.random() * 100) + 'vh'; wrapper.style.left = '-10vw'; wrapper.style.transition = 'transform 6s linear, opacity 1s'; wrapper.style.opacity = '0.5'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateX(110vw) rotate(180deg)', 100); setTimeout(() => wrapper.remove(), 6200); 
-    }
+    else if(temaActivo === 'tema-sangre') { wrapper.innerHTML = '<svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor"><path d="M12 2c-.3 0-.6.2-.8.5l-6 10c-.8 1.4-1 3.1-.3 4.6.6 1.5 2 2.7 3.6 3.1 3.4.8 6.7-1.2 7.3-4.6.2-1.2 0-2.4-.6-3.5l-2.4-4.1-1.6-2.7c-2.3-3.9-3.2-3.3-3.2-3.3z"/></svg>'; wrapper.style.color = '#cc0000'; wrapper.style.top = '-10vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; wrapper.style.filter = 'drop-shadow(0 5px 5px rgba(204,0,0,0.8))'; wrapper.style.transition = 'transform 3s linear, opacity 1s'; wrapper.style.opacity = '0.8'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateY(110vh)', 100); setTimeout(() => wrapper.remove(), 3200); }
+    else if(temaActivo === 'tema-momia') { if (Math.random() > 0.5) { wrapper.innerHTML = '⚱'; wrapper.style.filter = 'brightness(0.6) sepia(1)'; } else { wrapper.innerHTML = '•'; wrapper.style.fontSize = Math.floor(Math.random() * 2 + 1.5) + 'rem'; wrapper.style.color = '#d49a6a'; wrapper.style.textShadow = '0 0 5px rgba(212,154,106,0.5)'; } wrapper.style.top = Math.floor(Math.random() * 100) + 'vh'; wrapper.style.left = '-10vw'; wrapper.style.transition = 'transform 6s linear, opacity 1s'; wrapper.style.opacity = '0.5'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateX(110vw) rotate(180deg)', 100); setTimeout(() => wrapper.remove(), 6200); }
     else if(temaActivo === 'tema-calabaza') { wrapper.innerHTML = '🔥'; wrapper.style.fontSize = Math.floor(Math.random() * 1 + 0.5) + 'rem'; wrapper.style.top = '110vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; wrapper.style.textShadow = '0 0 10px rgba(255,102,0,0.8)'; wrapper.style.transition = 'transform 4s ease-out, opacity 1s'; wrapper.style.opacity = '0.7'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = `translateY(-60vh) translateX(${Math.random() > 0.5 ? 50 : -50}px)`, 100); setTimeout(() => wrapper.style.opacity = '0', 3000); setTimeout(() => wrapper.remove(), 4200); }
     else if(temaActivo === 'tema-batman') { wrapper.innerHTML = '🦇'; wrapper.style.fontSize = '4rem'; wrapper.style.top = Math.floor(Math.random() * 80) + 'vh'; wrapper.style.left = '-20vw'; wrapper.style.filter = 'brightness(0)'; wrapper.style.transition = 'transform 12s linear, opacity 2s'; wrapper.style.opacity = '0.2'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateX(130vw) scale(1.5)', 100); setTimeout(() => wrapper.remove(), 12200); }
 }, 3000); 
@@ -1118,10 +1073,7 @@ function programarSkullette() {
             wrapper.appendChild(inner); document.body.appendChild(wrapper);
             setTimeout(() => { wrapper.style.opacity = '1'; wrapper.style.transform = `translateX(${wrapper.style.left === '-50px' ? '120vw' : '-120vw'}) rotate(360deg)`; }, 100);
             setTimeout(() => { wrapper.style.opacity = '0'; }, 7200); 
-            inner.onpointerdown = () => { 
-                checkLogro('skull'); let g = agregarDulces(2); revelarPista('pista_halloween');
-                guardarDatos(); reproducirSonido(sfxExito); wrapper.remove(); 
-            };
+            inner.onpointerdown = () => { checkLogro('skull'); let g = agregarDulces(2); revelarPista('pista_halloween'); guardarDatos(); reproducirSonido(sfxExito); wrapper.remove(); };
             setTimeout(() => { if(wrapper.parentNode) wrapper.remove(); }, 8000);
         }
         programarSkullette();
@@ -1131,23 +1083,17 @@ programarSkullette();
 
 function probarJuego(idJuego) { 
     if(!bgMusic.muted) bgMusic.pause();
-    reproducirSonido(sfxExito); 
-    const overlay = document.getElementById('fade-overlay'); overlay.style.opacity = '1';
-    setTimeout(() => {
-        let g = agregarDulces(5); guardarDatos(); mostrarToast(`Iniciando juego: ${idJuego} (+${g}🍬)`, 'info'); 
-        overlay.style.opacity = '0'; if(!bgMusic.muted && document.getElementById('vol-musica').value > 0) { bgMusic.play().catch(e=>console.log(e)); }
-    }, 1500);
+    reproducirSonido(sfxExito); const overlay = document.getElementById('fade-overlay'); overlay.style.opacity = '1';
+    setTimeout(() => { let g = agregarDulces(5); guardarDatos(); mostrarToast(`Iniciando juego: ${idJuego} (+${g}🍬)`, 'info'); overlay.style.opacity = '0'; if(!bgMusic.muted && document.getElementById('vol-musica').value > 0) { bgMusic.play().catch(e=>console.log(e)); } }, 1500);
 }
 
 function cambiarPagina(idPagina) {
-  document.querySelectorAll('.pagina').forEach(pag => pag.classList.remove('activa'));
-  document.getElementById(idPagina).classList.add('activa');
+  document.querySelectorAll('.pagina').forEach(pag => pag.classList.remove('activa')); document.getElementById(idPagina).classList.add('activa');
   document.querySelectorAll('nav a').forEach(link => link.classList.remove('activo'));
   if(idPagina === 'sec-juegos') document.getElementById('nav-juegos').classList.add('activo');
   if(idPagina === 'sec-tienda') { document.getElementById('nav-tienda').classList.add('activo'); cerrarSubTienda(); }
   if(idPagina === 'sec-codigos') document.getElementById('nav-codigos').classList.add('activo');
-  const ataud = document.getElementById('btn-ataud-global');
-  if(ataud) { if(idPagina === 'sec-home') { ataud.style.display = 'flex'; } else { ataud.style.display = 'none'; } }
+  const ataud = document.getElementById('btn-ataud-global'); if(ataud) { if(idPagina === 'sec-home') { ataud.style.display = 'flex'; } else { ataud.style.display = 'none'; } }
   window.scrollTo(0,0);
 }
 
