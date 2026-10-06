@@ -47,16 +47,22 @@ body.tema-rosa { --bg: #1a0512; --pumpkin: #ff3399; --ember: #990055; --violet: 
 body.tema-sangre { --bg: #0a0000; --pumpkin: #cc0000; --ember: #660000; --violet: #ff1a1a; --card: #1a0000; --glow: rgba(204, 0, 0, 0.25); --bg-overlay: rgba(10, 0, 0, 0.92); }
 body.tema-momia { --bg: #1a1610; --pumpkin: #d49a6a; --ember: #8b5a2b; --violet: #e6c280; --card: #2b2218; --glow: rgba(212, 154, 106, 0.2); --bg-overlay: rgba(26, 22, 16, 0.88); --borde-estilo: dashed; }
 body.tema-calabaza { --bg: #0a140a; --pumpkin: #ff6600; --ember: #cc5200; --violet: #00b33c; --card: #0f1f0f; --glow: rgba(255, 102, 0, 0.25); --bg-overlay: rgba(10, 20, 10, 0.88); }
-body.tema-batman { --bg: #000; --pumpkin: #fff; --ember: #555; --violet: #aaa; --card: #111; --glow: rgba(255, 255, 255, 0.1); --bg-overlay: rgba(0, 0, 0, 0.9); filter: grayscale(100%); }
+
+/* TEMA BATMAN SOLUCIONADO (Sin filtro destructivo) */
+body.tema-batman { 
+    --bg: #050505; 
+    --pumpkin: #ffffff; 
+    --ember: #444444; 
+    --violet: #888888; 
+    --card: #111111; 
+    --glow: rgba(255, 255, 255, 0.15); 
+    --bg-overlay: rgba(5, 5, 5, 0.95); 
+}
 
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
 *, *::before, *::after { box-sizing: inherit; }
 
-html, body {
-  overscroll-behavior: none; 
-  height: 100%;
-  overflow-x: hidden;
-}
+html, body { overscroll-behavior: none; height: 100%; overflow-x: hidden; }
 
 body {
   margin: 0;
@@ -69,29 +75,31 @@ body {
   user-select: none;
   -webkit-touch-callout: none;
 }
-
 input { -webkit-user-select: auto; user-select: auto; }
 
 /* CAPA FANTASMA (Fondo adaptativo por temas) */
 body::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0; 
-  width: 100vw; height: 100vh;
-  z-index: -1;
+  content: ""; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1;
   background-color: var(--bg);
   background-image: 
     radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%),
     linear-gradient(var(--bg-overlay), var(--bg-overlay)),
     url('https://wallpapercave.com/wp/wp7805134.jpg'); 
-  background-size: cover;
-  background-position: center;
-  pointer-events: none;
-  transition: all 0.5s ease;
+  background-size: cover; background-position: center; pointer-events: none; transition: all 0.5s ease;
 }
 
 a { color: inherit; }
 :focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; }
+
+/* ==========================================
+   PANTALLA DE CARGA (SPLASH SCREEN)
+   ========================================== */
+#splash-screen {
+  position: fixed; inset: 0; background: var(--bg-overlay); z-index: 99999;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  backdrop-filter: blur(10px); transition: opacity 1s ease;
+}
+.splash-loader { color: var(--violet); font-size: 1.5rem; font-weight: 800; animation: pulse 1.5s infinite; letter-spacing: 2px;}
 
 /* HEADER Y NAVEGACIÓN */
 header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 20px 5vw; border-bottom: 1px solid var(--ember); background: rgba(20, 5, 5, 0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; }
@@ -117,11 +125,20 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 #sec-home.activa { display: grid; align-items: center; } 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* HERO Y TÍTULOS */
+/* HERO, MURCIÉLAGOS GLOBALES Y LEVITACIÓN SUTIL */
 .hero { position: relative; place-items: center; text-align: center; }
+.bats { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 5; }
+.bat { position: absolute; font-size: 1.8rem; filter: brightness(0) drop-shadow(0 5px 5px rgba(0,0,0,0.6)); opacity: 0.9; animation: fly 14s linear infinite; }
+.bat:nth-child(1) { top: 14%; --rot: -12deg; font-size: 1.5rem; }
+.bat:nth-child(2) { top: 62%; --rot: 8deg; font-size: 1.1rem; animation-duration: 19s; animation-delay: -6s; }
+.bat:nth-child(3) { top: 30%; --rot: -5deg; font-size: 2.4rem; animation-duration: 24s; animation-delay: -12s; }
+@keyframes fly { from { transform: translateX(-10vw) rotate(var(--rot)); } to { transform: translateX(110vw) translateY(-40px) rotate(var(--rot)); } }
+
 .title-wrapper { position: relative; display: inline-flex; justify-content: center; align-items: center; }
-.hero h1 { margin: 0; font-weight: 900; font-size: clamp(3.5rem, 12vw, 8rem); line-height: 1; color: var(--pumpkin); text-shadow: 0 0 30px var(--glow); animation: flicker 5s steps(1) infinite; }
+.hero h1 { margin: 0; font-weight: 900; font-size: clamp(3.5rem, 12vw, 8rem); line-height: 1; color: var(--pumpkin); text-shadow: 0 0 30px var(--glow); display: inline-block; animation: flicker 5s steps(1) infinite, levitate-sutil 6s ease-in-out infinite; }
 @keyframes flicker { 0%, 8%, 12%, 20% { opacity: .7; } 10%, 16%, 30%, 100% { opacity: 1; } }
+@keyframes levitate-sutil { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+
 .heart-svg { position: absolute; width: clamp(35px, 6vw, 60px); color: var(--pumpkin); filter: drop-shadow(0 0 15px var(--glow)); pointer-events: none; }
 .heart-l { left: -12%; top: 20%; animation: levitate-l 4s ease-in-out infinite; }
 .heart-r { right: -12%; top: 20%; animation: levitate-r 4s ease-in-out infinite -2s; }
@@ -137,7 +154,6 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200; justify-content: center; align-items: center; backdrop-filter: blur(6px); }
 .modal-overlay.activo { display: flex; animation: fadeInModal 0.3s ease forwards; }
 @keyframes fadeInModal { from { opacity: 0; } to { opacity: 1; } }
-
 .modal-box { background: var(--card); border: 1px var(--borde-estilo) var(--ember); border-radius: 18px; padding: 30px; width: 90%; max-width: 450px; text-align: center; position: relative; max-height: 90vh; overflow-y: auto; opacity: 0; }
 .modal-overlay.activo .modal-box { animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
 @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
@@ -161,7 +177,6 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 #toast-logro { position: fixed; top: 20px; left: 50%; transform: translate(-50%, -20px); opacity: 0; pointer-events: none; background: var(--violet); color: #fff; border-radius: 12px; padding: 15px 25px; display: flex; align-items: center; gap: 15px; font-weight: bold; box-shadow: 0 5px 20px rgba(0,0,0,0.5); z-index: 999; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); border: 2px solid #fff; }
 #toast-logro.visible { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
 
-/* TRANSICIÓN DE MINIJUEGOS */
 #fade-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: black; opacity: 0; pointer-events: none; transition: opacity 1s ease-in-out; z-index: 9999; }
 
 /* GRID ELEMENTOS BÁSICOS */
@@ -182,12 +197,13 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .btn-jugar:hover { background: var(--pumpkin); }
 .btn-bloqueado { background: #331111 !important; color: #885555 !important; cursor: not-allowed !important; border: 1px var(--borde-estilo) var(--ember); }
 
-/* ==========================================
-   NUEVA TIENDA (GEOMETRY DASH STYLE)
-   ========================================== */
+/* TIENDA Y CARRITO */
+.tienda-header-container { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 15px; margin-bottom: 30px; }
+.btn-carrito-tienda { background: var(--card); border: 2px dashed var(--pumpkin); color: var(--ink); padding: 15px 25px; border-radius: 18px; cursor: pointer; font-size: 1.2rem; font-weight: bold; transition: all 0.3s; display: flex; align-items: center; gap: 10px; }
+.btn-carrito-tienda:hover { background: rgba(214, 40, 40, 0.2); transform: scale(1.05); }
+
 .tienda-seccion { display: none; animation: fadeIn 0.4s ease; }
 .tienda-seccion.activa { display: block; }
-
 .caja-snack { background: var(--card); border: 2px dashed var(--pumpkin); border-radius: 18px; padding: 20px; text-align: center; margin-bottom: 20px; }
 .letrero-neon { color: var(--pumpkin); font-weight: 900; font-size: 1.5rem; margin: 0 0 15px 0; text-shadow: 0 0 10px var(--glow); }
 
@@ -196,15 +212,13 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .gd-portal:hover { transform: translateY(-5px); border-color: var(--pumpkin); box-shadow: 0 10px 20px var(--glow); filter: brightness(1.2); }
 .gd-portal h3 { margin: 0; font-size: 1.8rem; color: #fff; position: relative; z-index: 2; text-shadow: 0 0 10px rgba(0,0,0,0.8); }
 
-/* Imágenes Placeholder (Cámbialas cuando quieras en el HTML) */
 .portal-citas { background-image: linear-gradient(rgba(20,5,5,0.7), rgba(20,5,5,0.7)), url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600'); }
 .portal-gestos { background-image: linear-gradient(rgba(20,5,5,0.7), rgba(20,5,5,0.7)), url('https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=600'); }
 .portal-temas { background-image: linear-gradient(rgba(20,5,5,0.7), rgba(20,5,5,0.7)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600'); grid-column: 1 / -1; padding: 40px 20px; }
-
 .btn-volver { background: transparent; color: var(--ink); border: 1px var(--borde-estilo) var(--ember); padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-bottom: 20px; font-weight: bold; font-size: 1rem; transition: 0.2s; }
 .btn-volver:hover { background: var(--ember); color: #fff; }
 
-/* EL ICOFFIN CON CLIP-PATH */
+/* ICOFFIN Y DIARIO */
 .icoffin-container { position: relative; display: flex; justify-content: center; align-items: center; width: 100%; max-width: 800px; margin: 0 auto; min-height: 400px; }
 .icoffin-wrapper { background: var(--violet); padding: 8px; clip-path: polygon(25% 0%, 75% 0%, 100% 15%, 100% 85%, 75% 100%, 25% 100%, 0% 85%, 0% 15%); max-width: 320px; width: 100%; margin: 0 auto; filter: drop-shadow(0 0 15px var(--glow)); z-index: 2; }
 .icoffin-inner { background: var(--card); clip-path: polygon(25% 0%, 75% 0%, 100% 15%, 100% 85%, 75% 100%, 25% 100%, 0% 85%, 0% 15%); padding: 50px 25px; min-height: 380px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
@@ -214,7 +228,6 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .diario-btn { position: absolute; right: 0; background: rgba(28, 8, 8, 0.8); border: 2px dashed var(--pumpkin); border-radius: 18px; padding: 20px; text-align: center; cursor: pointer; transition: 0.3s; width: 150px; z-index: 1; }
 .diario-btn:hover { background: rgba(214, 40, 40, 0.2); transform: scale(1.05); }
 
-/* DIARIO Y AUDIO */
 #overlay-diario { display: none; position: fixed; inset: 0; background: #000; z-index: 300; justify-content: center; align-items: center; color: var(--violet); font-size: 1.5rem; text-align: center; font-style: italic; padding: 20px; opacity: 0; transition: opacity 1.5s; }
 .pista-box { background: rgba(255,255,255,0.05); border-left: 4px var(--borde-estilo) var(--violet); padding: 15px; margin-bottom: 15px; text-align: left; }
 .control-audio { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
@@ -222,9 +235,8 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .btn-mute { background: var(--card); border: 1px var(--borde-estilo) var(--ember); color: var(--ink); border-radius: 8px; padding: 8px; cursor: pointer; transition: 0.2s; }
 .btn-mute:hover { border-color: var(--pumpkin); }
 
-/* SISTEMA DE PARTÍCULAS JS */
+/* PARTÍCULAS JS */
 .particula-deco { position: fixed; pointer-events: none; z-index: -1; opacity: 0; }
-/* Skullette clickable */
 .skullette-wrapper { position: fixed; z-index: 90; pointer-events: none; }
 .skullette-inner { width: 65px; height: 65px; cursor: pointer; filter: drop-shadow(0 0 10px var(--violet)); transition: transform 0.2s; pointer-events: auto; object-fit: contain; -webkit-user-drag: none; }
 .skullette-inner:hover { transform: scale(1.2); }
@@ -240,7 +252,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 @media(max-width: 850px) {
   body:has(#sec-home.activa) { overflow: hidden; position: fixed; width: 100%; height: 100%; }
   header { display: flex; flex-direction: column; gap: 15px; }
-  .header-right { width: 100%; display: grid; grid-template-columns: 1fr auto auto 1fr; align-items: center; gap: 10px; }
+  .header-right { width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; }
   .moneda-ui { justify-self: start; }
   .btn-col { justify-self: center; } 
   .btn-icono.tuerca { justify-self: end; }
@@ -256,7 +268,15 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 </head>
 <body>
 
-<!-- PANTALLA DE TRANSICIÓN PARA JUEGOS -->
+<!-- PANTALLA DE CARGA INICIAL -->
+<div id="splash-screen">
+  <div class="splash-loader" id="txt-cargando">Descargando Magia...</div>
+  <button id="btn-boo" class="btn-accion" style="display:none; font-size: 2rem; padding: 20px 50px; border-radius: 999px;" onclick="iniciarApp()">¡Boo!</button>
+</div>
+
+<!-- MURCIÉLAGOS GLOBALES (Reubicados para vuelo correcto) -->
+<div class="bats" id="bats-clasicos" aria-hidden="true"><span class="bat">🦇</span><span class="bat">🦇</span><span class="bat">🦇</span></div>
+
 <div id="fade-overlay"></div>
 
 <!-- AUDIOS -->
@@ -302,13 +322,13 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   </div>
 </div>
 
-<!-- MODAL CANJEAR CÓDIGO -->
+<!-- MODAL CANJEAR CÓDIGO (Generación Diferida) -->
 <div class="modal-overlay" id="modal-usar-item">
   <div class="modal-box">
     <h3 style="justify-content: center;">Canjear Ticket</h3>
-    <p style="font-size: 0.9rem;">Copia este código y envíamelo para reclamar tu premio.</p>
-    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; font-size: 1.5rem; font-weight: bold; color: var(--pumpkin); margin: 20px 0; letter-spacing: 2px;" id="txt-codigo-generado">BOO-XXXX</div>
-    <button class="btn-accion" style="width: 100%; margin-bottom: 10px;" id="btn-copiar-codigo">Copiar y Usar</button>
+    <p style="font-size: 0.9rem;">Haz clic para generar tu código único y copiarlo al portapapeles.</p>
+    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; font-size: 1.5rem; font-weight: bold; color: var(--pumpkin); margin: 20px 0; letter-spacing: 2px;" id="txt-codigo-generado">¿?¿?¿?</div>
+    <button class="btn-accion" style="width: 100%; margin-bottom: 10px;" id="btn-copiar-codigo" onclick="confirmarUsoItem()">Generar, Copiar y Usar</button>
     <button class="btn-cerrar-modal" style="background: transparent; color: var(--ink); border: 1px solid var(--ember);" onclick="cerrarModalUsar()">Cancelar</button>
   </div>
 </div>
@@ -357,9 +377,8 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   </nav>
   <div class="header-right">
     <span class="moneda-ui">🍬 <span id="ui-dulces">0</span></span>
-    <!-- NUEVO BOTÓN DE CARRITO -->
-    <button class="btn-icono" onclick="abrirCarrito()" title="Inventario de Compras">🛒</button>
     <a class="btn-col" onclick="reproducirSonido(sfxExito); cambiarPagina('sec-coleccion')" id="nav-coleccion">Nuestra Colección</a>
+    <!-- Ajustes Tuerca Restaurada -->
     <button class="btn-icono tuerca" onclick="abrirAjustes()" title="Ajustes">
       <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
     </button>
@@ -367,8 +386,6 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 </header>
 
 <main class="pagina activa hero" id="sec-home">
-  <!-- Los murciélagos estáticos se borran visualmente desde JS si no es tema clásico -->
-  <div class="bats" id="bats-clasicos" aria-hidden="true"><span class="bat">🦇</span><span class="bat">🦇</span><span class="bat">🦇</span></div>
   <div>
     <div class="title-wrapper">
       <svg class="heart-svg heart-l" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
@@ -405,27 +422,34 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   </div>
 </section>
 
-<!-- LA TIENDA ESTRUCTURADA (GEOMETRY DASH STYLE) -->
+<!-- LA TIENDA ESTRUCTURADA -->
 <section class="pagina" id="sec-tienda">
-  <h2>Bazar de los Enamorados</h2>
-  <p class="sub">Usa tus dulces para invocar citas y snacks. Se guardarán en tu 🛒 Carrito.</p>
   
-  <!-- MENÚ PRINCIPAL DE PORTALES -->
+  <div class="tienda-header-container">
+      <div>
+          <h2>Bazar de los Enamorados</h2>
+          <p class="sub" style="margin-bottom:0;">Usa tus dulces para invocar citas y snacks. Se guardarán en tu Inventario.</p>
+      </div>
+      <!-- CARRITO REUBICADO AQUÍ -->
+      <button class="btn-carrito-tienda" onclick="abrirCarrito()" title="Inventario de Compras">
+          <span>🛒 Tu Inventario</span>
+      </button>
+  </div>
+  
   <div id="tienda-main" class="tienda-seccion activa">
-      
-      <!-- SNACKS SIEMPRE VISIBLES -->
+      <!-- SNACKS SIEMPRE VISIBLES (NOMBRES CORTOS) -->
       <div class="caja-snack">
           <h3 class="letrero-neon">Neon Coffin Snacks</h3>
           <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-              <button class="btn-accion" onclick="comprarItem(this, 'bonobon', 30, '🍬 Bonobon', 'consumible')">Bonobon (30 🍬)</button>
-              <button class="btn-accion" onclick="comprarItem(this, 'chifles', 40, '🥔 Chifles', 'consumible')">Chifles (40 🍬)</button>
-              <button class="btn-accion" onclick="comprarItem(this, 'helado', 50, '🍦 Helado', 'consumible')">Helado Piamonte (50 🍬)</button>
-              <button class="btn-accion" onclick="comprarItem(this, 'bebida', 40, '🧃 Bebida', 'consumible')">Bebida Rescate (40 🍬)</button>
-              <button class="btn-accion" onclick="comprarItem(this, 'carretilla', 60, '🌭 Antojo', 'consumible')">Antojo Carretilla (60 🍬)</button>
+              <button class="btn-accion" onclick="comprarItem(this, 'bonobon', 30, '🍬 Bonobon', 'snack')">Bonobon (30 🍬)</button>
+              <button class="btn-accion" onclick="comprarItem(this, 'chifles', 40, '🥔 Chifles', 'snack')">Chifles (40 🍬)</button>
+              <button class="btn-accion" onclick="comprarItem(this, 'helado', 50, '🍦 Helado', 'snack')">Helado (50 🍬)</button>
+              <button class="btn-accion" onclick="comprarItem(this, 'bebida', 40, '🧃 Bebida', 'snack')">Bebida (40 🍬)</button>
+              <button class="btn-accion" onclick="comprarItem(this, 'carretilla', 60, '🌭 Antojo', 'snack')">Antojo (60 🍬)</button>
           </div>
       </div>
 
-      <!-- PORTALES Y SECCIÓN DE TEMAS -->
+      <!-- PORTALES -->
       <div class="gd-portal-container">
           <div class="gd-portal portal-citas" onclick="abrirSubTienda('tienda-citas')">
               <h3>🎟️ Citas VIP</h3>
@@ -439,56 +463,49 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
       </div>
   </div>
 
-  <!-- SUB-TIENDA: CITAS -->
+  <!-- SUB-TIENDAS -->
   <div id="tienda-citas" class="tienda-seccion">
       <button class="btn-volver" onclick="cerrarSubTienda()">⬅ Volver al Bazar</button>
       <h3 class="seccion-titulo" style="margin-top: 0;">🎟️ Citas VIP</h3>
       <div class="grid">
-          <article class="item"><span class="e">🕹️</span><h3>Arcade Solari</h3><button class="btn-accion" onclick="comprarItem(this, 'arcade', 300, 'Arcade Solari', 'consumible')">Comprar - 300 🍬</button></article>
-          <article class="item"><span class="e">🍿</span><h3>Cineplanet VIP</h3><button class="btn-accion" onclick="comprarItem(this, 'cine', 250, 'Cineplanet VIP', 'consumible')">Comprar - 250 🍬</button></article>
-          <article class="item"><span class="e">🍫</span><h3>Cata a Ciegas</h3><button class="btn-accion" onclick="comprarItem(this, 'cata', 150, 'Cata a Ciegas', 'consumible')">Comprar - 150 🍬</button></article>
-          <article class="item"><span class="e">🎨</span><h3>Arte Feo</h3><button class="btn-accion" onclick="comprarItem(this, 'arte', 100, 'Noche Arte Feo', 'consumible')">Comprar - 100 🍬</button></article>
-          <article class="item"><span class="e">🍕</span><h3>Pizzería Casera</h3><button class="btn-accion" onclick="comprarItem(this, 'pizza', 200, 'Pizzería Casera', 'consumible')">Comprar - 200 🍬</button></article>
+          <article class="item"><span class="e">🕹️</span><h3>Arcade Solari</h3><button class="btn-accion" onclick="comprarItem(this, 'arcade', 300, 'Arcade Solari', 'cita')">Comprar - 300 🍬</button></article>
+          <article class="item"><span class="e">🍿</span><h3>Cineplanet VIP</h3><button class="btn-accion" onclick="comprarItem(this, 'cine', 250, 'Cineplanet VIP', 'cita')">Comprar - 250 🍬</button></article>
+          <article class="item"><span class="e">🍫</span><h3>Cata a Ciegas</h3><button class="btn-accion" onclick="comprarItem(this, 'cata', 150, 'Cata a Ciegas', 'cita')">Comprar - 150 🍬</button></article>
+          <article class="item"><span class="e">🎨</span><h3>Arte Feo</h3><button class="btn-accion" onclick="comprarItem(this, 'arte', 100, 'Noche Arte Feo', 'cita')">Comprar - 100 🍬</button></article>
+          <article class="item"><span class="e">🍕</span><h3>Pizzería Casera</h3><button class="btn-accion" onclick="comprarItem(this, 'pizza', 200, 'Pizzería Casera', 'cita')">Comprar - 200 🍬</button></article>
       </div>
   </div>
 
-  <!-- SUB-TIENDA: GESTOS -->
   <div id="tienda-gestos" class="tienda-seccion">
       <button class="btn-volver" onclick="cerrarSubTienda()">⬅ Volver al Bazar</button>
       <h3 class="seccion-titulo" style="margin-top: 0;">🩹 Gestos Especiales</h3>
       <div class="grid">
-          <article class="item"><span class="e">💆‍♀️</span><h3>Masaje VIP</h3><button class="btn-accion" onclick="comprarItem(this, 'masaje', 200, 'Masaje VIP', 'consumible')">Comprar - 200 🍬</button></article>
-          <article class="item"><span class="e">🧁</span><h3>Repostero Novato</h3><button class="btn-accion" onclick="comprarItem(this, 'postre', 150, 'Repostero Novato', 'consumible')">Comprar - 150 🍬</button></article>
-          <article class="item"><span class="e">☕</span><h3>Desayuno Distancia</h3><button class="btn-accion" onclick="comprarItem(this, 'desayuno', 180, 'Desayuno Delivery', 'consumible')">Comprar - 180 🍬</button></article>
-          <article class="item"><span class="e">🕊️</span><h3>Pase Anti-Enojo</h3><button class="btn-accion" onclick="comprarItem(this, 'enojo', 100, 'Pase Anti-Enojo', 'consumible')">Comprar - 100 🍬</button></article>
+          <article class="item"><span class="e">💆‍♀️</span><h3>Masaje VIP</h3><button class="btn-accion" onclick="comprarItem(this, 'masaje', 200, 'Masaje VIP', 'gesto')">Comprar - 200 🍬</button></article>
+          <article class="item"><span class="e">🧁</span><h3>Repostero Novato</h3><button class="btn-accion" onclick="comprarItem(this, 'postre', 150, 'Repostero Novato', 'gesto')">Comprar - 150 🍬</button></article>
+          <article class="item"><span class="e">☕</span><h3>Desayuno Distancia</h3><button class="btn-accion" onclick="comprarItem(this, 'desayuno', 180, 'Desayuno Delivery', 'gesto')">Comprar - 180 🍬</button></article>
+          <article class="item"><span class="e">🕊️</span><h3>Pase Anti-Enojo</h3><button class="btn-accion" onclick="comprarItem(this, 'enojo', 100, 'Pase Anti-Enojo', 'gesto')">Comprar - 100 🍬</button></article>
       </div>
   </div>
 
-  <!-- SUB-TIENDA: TEMAS Y MAGIA -->
   <div id="tienda-temas" class="tienda-seccion">
       <button class="btn-volver" onclick="cerrarSubTienda()">⬅ Volver al Bazar</button>
       <h3 class="seccion-titulo" style="margin-top: 0;">🎨 Personalización de la App</h3>
-      <p style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 20px;">Los artículos comprados van a "Nuestra Colección" para equiparlos.</p>
-      
       <div class="grid">
           <article class="item"><span class="e">🦇</span><h3>Tema: Rosa</h3><p>Lluvia de Destellos</p><button class="btn-accion" onclick="comprarItem(this, 'tema-rosa', 50, 'Tema Rosa', 'tema')">Comprar - 50 🍬</button></article>
           <article class="item"><span class="e">🩸</span><h3>Tema: Sangre</h3><p>Gotas Cayendo</p><button class="btn-accion" onclick="comprarItem(this, 'tema-sangre', 50, 'Tema Sangre', 'tema')">Comprar - 50 🍬</button></article>
           <article class="item"><span class="e">🏺</span><h3>Tema: Momia</h3><p>Polvo de Arena</p><button class="btn-accion" onclick="comprarItem(this, 'tema-momia', 50, 'Tema Momia', 'tema')">Comprar - 50 🍬</button></article>
           <article class="item"><span class="e">🎃</span><h3>Tema: Calabaza</h3><p>Brasas Flotantes</p><button class="btn-accion" onclick="comprarItem(this, 'tema-calabaza', 50, 'Tema Calabaza', 'tema')">Comprar - 50 🍬</button></article>
-          <article class="item"><span class="e">🦇</span><h3>Tema: Batman</h3><p>Filtro Blanco y Negro</p><button class="btn-accion" onclick="comprarItem(this, 'tema-batman', 50, 'Tema Batman', 'tema')">Comprar - 50 🍬</button></article>
+          <article class="item"><span class="e">🦇</span><h3>Tema: Batman</h3><p>Tonos Oscuros Puros</p><button class="btn-accion" onclick="comprarItem(this, 'tema-batman', 50, 'Tema Batman', 'tema')">Comprar - 50 🍬</button></article>
       </div>
   </div>
-
 </section>
 
-<!-- COLECCIÓN Y COSMÉTICOS -->
+<!-- COLECCIÓN -->
 <section class="pagina" id="sec-coleccion">
   <h2>Tu Colección</h2>
-  <p class="sub">Tus temas y logros conseguidos (Los consumibles están en tu 🛒).</p>
-  
+  <p class="sub">Tus temas y logros conseguidos (Los consumibles están en tu Inventario 🛒).</p>
   <h3 class="seccion-titulo">En el menú (Logros)</h3>
   <div class="grid" id="contenedor-logros"></div>
-  
   <h3 class="seccion-titulo">Personalización de Interfaz</h3>
   <div class="grid" id="contenedor-coleccion"></div>
 </section>
@@ -496,7 +513,6 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 <!-- CÓDIGOS E ICOFFIN -->
 <section class="pagina" id="sec-codigos">
   <div class="icoffin-container">
-    
     <div class="icoffin-wrapper">
         <div class="icoffin-inner">
           <h2 style="color:var(--violet);">iCoffin</h2>
@@ -506,7 +522,6 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
           <p id="msg-codigo" style="margin-top: 15px; font-weight: bold; min-height: 24px; font-size: 1rem;"></p>
         </div>
     </div>
-    
     <div class="diario-btn" onclick="abrirDiario()">
       <span>📖</span>
       <strong style="color:var(--pumpkin);">Diario de Pistas</strong>
@@ -550,19 +565,19 @@ const sfxError = new Audio('error.mp3'); sfxError.volume = 0; sfxError.muted = t
 let dulces = 0; 
 let coleccion = []; 
 let logros = [];
-let carrito = []; // NUEVO: Inventario de consumibles
+let carrito = []; 
 let ataudDia = 1; let ataudTiempo = 0;   
-let diarioVisto = false; let pistas = [];       
+let diarioVisto = false; let pistas = [];        
 let temaActivo = 'tema-default';
+let appCargada = false;
 
-// CATÁLOGO DE TEMAS (Coleccionables)
 const catalogo = {
   'tema-default': { icono: '🦇', nombre: 'Tema: Clásico', desc: 'El diseño original.', tipo: 'tema' },
   'tema-rosa': { icono: '💖', nombre: 'Tema: Rosa Vampírico', desc: 'Lluvia de destellos.', tipo: 'tema' },
   'tema-sangre': { icono: '🩸', nombre: 'Tema: Rojo Sangre', desc: 'Gotas cayendo.', tipo: 'tema' },
   'tema-momia': { icono: '🏺', nombre: 'Tema: Momia', desc: 'Polvo de arena en el viento.', tipo: 'tema' },
   'tema-calabaza': { icono: '🎃', nombre: 'Tema: Calabaza', desc: 'Brasas flotantes.', tipo: 'tema' },
-  'tema-batman': { icono: '🦇', nombre: 'Tema: Batman', desc: 'Filtro oscuro y bat-señales.', tipo: 'tema' }
+  'tema-batman': { icono: '🦇', nombre: 'Tema: Batman', desc: 'Tonos oscuros y contrastados.', tipo: 'tema' }
 };
 
 const catalogoLogros = {
@@ -578,7 +593,7 @@ const catalogoPistas = {
 };
 
 // ========================================================
-// 3. SINCRONIZACIÓN FIREBASE Y UI
+// 3. SINCRONIZACIÓN FIREBASE Y UI (CARGA INICIAL)
 // ========================================================
 if(database) {
   database.ref(rutaDB).on('value', (snapshot) => {
@@ -597,7 +612,48 @@ if(database) {
     if (!coleccion.includes('tema-default')) coleccion.push('tema-default'); 
     aplicarTemaCSS(temaActivo);
     actualizarUI();
+
+    // Desbloquear Splash Screen cuando Firebase responda
+    if (!appCargada) {
+        appCargada = true;
+        const loaderTxt = document.getElementById('txt-cargando');
+        const btnBoo = document.getElementById('btn-boo');
+        if(loaderTxt && btnBoo) {
+            loaderTxt.style.display = 'none';
+            btnBoo.style.display = 'block';
+        }
+    }
   });
+} else {
+    // Si no hay conexión local rápida, quitar el bloqueo a los 1.5s
+    setTimeout(() => {
+        appCargada = true;
+        document.getElementById('txt-cargando').style.display = 'none';
+        document.getElementById('btn-boo').style.display = 'block';
+    }, 1500);
+}
+
+function iniciarApp() {
+    const splash = document.getElementById('splash-screen');
+    splash.style.opacity = '0';
+    setTimeout(() => { splash.style.display = 'none'; }, 1000);
+    
+    // Iniciar el audio progresivamente
+    bgMusic.volume = 0;
+    bgMusic.muted = false;
+    document.getElementById('vol-musica').value = 0.5;
+    document.getElementById('btn-mute-musica').textContent = '🔊';
+    bgMusic.play().catch(e=>console.log(e));
+    
+    let currentVol = 0;
+    let fadeAudio = setInterval(() => {
+        if (currentVol < 0.5) {
+            currentVol += 0.05;
+            bgMusic.volume = Math.min(currentVol, 0.5);
+        } else {
+            clearInterval(fadeAudio);
+        }
+    }, 200);
 }
 
 function guardarDatos() {
@@ -681,7 +737,7 @@ function actualizarTimerAtaud() {
 }
 
 // ========================================================
-// 6. TIENDA MODULAR, CARRITO Y TEMAS
+// 6. TIENDA MODULAR, CARRITO NUEVO Y TEMAS
 // ========================================================
 function abrirSubTienda(idSub) {
     reproducirSonido(sfxExito);
@@ -698,7 +754,7 @@ function cerrarSubTienda() {
 }
 
 function comprarItem(boton, idItem, precio, nombreItem, tipo) {
-    if (tipo !== 'consumible' && coleccion.includes(idItem)) {
+    if (tipo === 'tema' && coleccion.includes(idItem)) {
         mostrarToast("Ya tienes este ítem en tu colección.", false);
         return;
     }
@@ -712,11 +768,10 @@ function comprarItem(boton, idItem, precio, nombreItem, tipo) {
             equiparTema(idItem); 
             alert(`¡Has adquirido: ${nombreItem}!\nEquipado al instante.`);
         } else {
-            // Es consumible, genera Ticket único y va al Carrito
-            let codigoUnico = "BOO-" + Math.random().toString(36).substr(2, 4).toUpperCase();
-            carrito.push({ id: idItem, nombre: nombreItem, codigo: codigoUnico, usado: false });
+            // Se manda al carrito SIN GENERAR CÓDIGO
+            carrito.push({ id: idItem, nombre: nombreItem, tipo: tipo, codigo: null, usado: false });
             guardarDatos();
-            alert(`¡Compraste: ${nombreItem}!\nRevisa tu 🛒 Carrito arriba para usarlo.`);
+            alert(`¡Compraste: ${nombreItem}!\nRevisa tu Inventario (🛒) para canjearlo.`);
         }
     } else {
         reproducirSonido(sfxError); 
@@ -727,7 +782,7 @@ function comprarItem(boton, idItem, precio, nombreItem, tipo) {
     }
 }
 
-// ================= LÓGICA DEL CARRITO =================
+// ================= LÓGICA DEL CARRITO REPARADA =================
 function abrirCarrito() {
     reproducirSonido(sfxExito);
     document.getElementById('modal-carrito').classList.add('activo');
@@ -743,12 +798,14 @@ function renderizarCarrito() {
     lista.innerHTML = '';
     
     if(carrito.length === 0) {
-        lista.innerHTML = '<p style="text-align: center; opacity: 0.6;">Tu carrito está vacío.</p>';
+        lista.innerHTML = '<p style="text-align: center; opacity: 0.6;">Tu inventario está vacío.</p>';
         return;
     }
 
     carrito.forEach((item, index) => {
         const estadoClase = item.usado ? 'usado' : '';
+        const codTxt = item.codigo ? item.codigo : 'Aún sin canjear';
+
         const botonHTML = item.usado ? 
             `<button class="btn-accion btn-bloqueado" style="margin:0; padding: 6px 12px;">USADO</button>` : 
             `<button class="btn-accion" style="margin:0; padding: 6px 12px; background: var(--violet);" onclick="abrirUsoItem(${index})">USAR</button>`;
@@ -757,7 +814,7 @@ function renderizarCarrito() {
             <div class="item-carrito ${estadoClase}">
                 <div>
                     <h4>${item.nombre}</h4>
-                    <p style="opacity:0.7;">Código guardado</p>
+                    <p style="opacity:0.7;">${codTxt}</p>
                 </div>
                 ${botonHTML}
             </div>
@@ -765,12 +822,16 @@ function renderizarCarrito() {
     });
 }
 
+let indexItemEnUso = -1;
+
 function abrirUsoItem(index) {
+    indexItemEnUso = index;
     cerrarCarrito();
     reproducirSonido(sfxExito);
-    const item = carrito[index];
-    document.getElementById('txt-codigo-generado').innerText = item.codigo;
-    document.getElementById('btn-copiar-codigo').onclick = function() { confirmarUsoItem(index); };
+    
+    // Preparar el modal (el código aún NO se ha generado)
+    document.getElementById('txt-codigo-generado').innerText = "¿?¿?¿?";
+    document.getElementById('btn-copiar-codigo').innerText = "Generar, Copiar y Usar";
     document.getElementById('modal-usar-item').classList.add('activo');
 }
 
@@ -779,19 +840,39 @@ function cerrarModalUsar() {
     abrirCarrito();
 }
 
-function confirmarUsoItem(index) {
-    const codigo = carrito[index].codigo;
-    navigator.clipboard.writeText(codigo).then(() => {
-        carrito[index].usado = true;
+function confirmarUsoItem() {
+    if(indexItemEnUso === -1) return;
+    const index = indexItemEnUso;
+    const item = carrito[index];
+    
+    // SE GENERA EL CÓDIGO ÚNICAMENTE AQUÍ
+    const codigoGenerado = "BOO-" + Math.random().toString(36).substr(2, 4).toUpperCase();
+    
+    navigator.clipboard.writeText(codigoGenerado).then(() => {
+        document.getElementById('txt-codigo-generado').innerText = codigoGenerado;
+        
+        // Reglas de consumo
+        if (item.tipo === 'snack') {
+            // Los snacks se borran completamente tras generarse
+            carrito.splice(index, 1);
+        } else {
+            // Las citas/gestos se quedan registrados como "usados"
+            carrito[index].codigo = codigoGenerado;
+            carrito[index].usado = true;
+        }
+
         guardarDatos();
         reproducirSonido(sfxExito);
-        document.getElementById('btn-copiar-codigo').innerText = "¡Copiado!";
+        document.getElementById('btn-copiar-codigo').innerText = "¡Copiado y Usado!";
+        
+        // Darle un par de segundos para que vea el código antes de cerrar
         setTimeout(() => {
-            document.getElementById('btn-copiar-codigo').innerText = "Copiar y Usar";
+            document.getElementById('btn-copiar-codigo').innerText = "Generar, Copiar y Usar";
             cerrarModalUsar();
-        }, 1500);
+        }, 2500);
+
     }).catch(err => {
-        alert("No se pudo copiar. Código: " + codigo);
+        alert("No se pudo copiar. Inténtalo de nuevo.");
     });
 }
 
@@ -806,7 +887,6 @@ function equiparTema(idTema) {
 function aplicarTemaCSS(tema) {
     document.body.className = '';
     if(tema && tema !== 'tema-default') {
-        // Le quitamos "tema-" para inyectar la clase CSS correcta
         let clase = tema.replace('tema-', '');
         document.body.classList.add('tema-' + clase);
     }
@@ -911,10 +991,12 @@ function abrirAdminTickets() {
     lista.innerHTML = '';
     if(carrito.length === 0) { lista.innerHTML = '<p>No hay tickets generados.</p>'; }
     carrito.forEach(item => {
-        lista.innerHTML += `<div style="border-bottom: 1px solid #555; padding: 10px 0; display:flex; justify-content: space-between;">
-            <span><b>${item.codigo}</b> - ${item.nombre}</span>
-            <span style="color: ${item.usado ? '#ff4d6d' : '#00b33c'};">${item.usado ? 'USADO' : 'VÁLIDO'}</span>
-        </div>`;
+        if(item.codigo) {
+            lista.innerHTML += `<div style="border-bottom: 1px solid #555; padding: 10px 0; display:flex; justify-content: space-between;">
+                <span><b>${item.codigo}</b> - ${item.nombre}</span>
+                <span style="color: ${item.usado ? '#ff4d6d' : '#00b33c'};">${item.usado ? 'USADO' : 'VÁLIDO'}</span>
+            </div>`;
+        }
     });
     document.getElementById('modal-admin-tickets').classList.add('activo');
 }
@@ -925,7 +1007,6 @@ function abrirAdminTickets() {
 function abrirAjustes() { checkLogro('config'); document.getElementById('modal-ajustes').classList.add('activo'); }
 function cerrarAjustes() { document.getElementById('modal-ajustes').classList.remove('activo'); }
 
-// Gestionar la animación visual en Inicio según el tema
 function actualizarAnimacionInicio() {
     const batsClasicos = document.getElementById('bats-clasicos');
     if(batsClasicos) {
@@ -933,16 +1014,13 @@ function actualizarAnimacionInicio() {
     }
 }
 
-// Generador de partículas decorativas para el fondo
 setInterval(() => {
-    // Si es tema default, ya tiene el CSS de los murciélagos, no hacemos partículas extra
     if(temaActivo === 'tema-default') return;
 
     const wrapper = document.createElement('div');
     wrapper.className = 'particula-deco';
     wrapper.style.fontSize = Math.floor(Math.random() * 1.5 + 1) + 'rem';
     
-    // Lógica por Tema
     if(temaActivo === 'tema-rosa') {
         wrapper.innerHTML = Math.random() > 0.5 ? '💖' : '✨';
         wrapper.style.top = Math.floor(Math.random() * 100) + 'vh';
@@ -1003,7 +1081,6 @@ setInterval(() => {
     }
 }, 800);
 
-// Skullettes clickeables para ganar caramelos (Independiente del tema visual)
 setInterval(() => {
   const enJuegos = document.getElementById('sec-juegos').classList.contains('activa');
   if(!enJuegos && Math.random() > 0.7) {
@@ -1027,7 +1104,6 @@ setInterval(() => {
   }
 }, 8000);
 
-// TRANSICIÓN DE MINIJUEGOS
 function probarJuego(idJuego) { 
     if(!bgMusic.muted) bgMusic.pause();
     reproducirSonido(sfxExito); 
@@ -1079,4 +1155,3 @@ function cambiarPagina(idPagina) {
 </script>
 </body>
 </html>
-
