@@ -47,6 +47,10 @@ body.tema-rosa { --bg: #1a0512; --pumpkin: #ff3399; --ember: #990055; --violet: 
 body.tema-sangre { --bg: #0a0000; --pumpkin: #cc0000; --ember: #660000; --violet: #ff1a1a; --card: #1a0000; --glow: rgba(204, 0, 0, 0.25); --bg-overlay: rgba(10, 0, 0, 0.92); }
 body.tema-momia { --bg: #1a1610; --pumpkin: #d49a6a; --ember: #8b5a2b; --violet: #e6c280; --card: #2b2218; --glow: rgba(212, 154, 106, 0.2); --bg-overlay: rgba(26, 22, 16, 0.88); --borde-estilo: dashed; }
 body.tema-calabaza { --bg: #0a140a; --pumpkin: #ff6600; --ember: #cc5200; --violet: #00b33c; --card: #0f1f0f; --glow: rgba(255, 102, 0, 0.25); --bg-overlay: rgba(10, 20, 10, 0.88); }
+body.tema-brujeria { --bg: #0a140a; --pumpkin: #00ffcc; --ember: #339900; --violet: #9900ff; --card: #0f1f0f; --glow: rgba(0, 255, 204, 0.25); --bg-overlay: rgba(10, 20, 10, 0.88); }
+body.tema-espectro { --bg: #050a14; --pumpkin: #00ffff; --ember: #005580; --violet: #cccccc; --card: #0a101f; --glow: rgba(0, 255, 255, 0.25); --bg-overlay: rgba(5, 10, 20, 0.88); }
+body.tema-medianoche { --bg: #05051a; --pumpkin: #ffd700; --ember: #000066; --violet: #4169e1; --card: #0a0a29; --glow: rgba(255, 215, 0, 0.25); --bg-overlay: rgba(5, 5, 26, 0.88); }
+body.tema-otono { --bg: #1a0a00; --pumpkin: #ff8c00; --ember: #8b4500; --violet: #cd853f; --card: #291400; --glow: rgba(255, 140, 0, 0.25); --bg-overlay: rgba(26, 10, 0, 0.88); }
 
 /* TEMA BATMAN */
 body.tema-batman { 
@@ -64,8 +68,6 @@ body.tema-batman .btn-accion:hover,
 body.tema-batman .btn-cerrar-modal:hover { color: #ffffff !important; background: var(--ember) !important; }
 body.tema-batman .btn-carrito-tienda { color: #ffffff !important; border-color: #ffffff !important; }
 body.tema-batman .btn-carrito-tienda:hover { background: rgba(255,255,255,0.1) !important; }
-
-/* Letras negras dedicadas en el tema Batman */
 body.tema-batman #toast-logro.is-pista,
 body.tema-batman #toast-logro.is-pista #toast-sub,
 body.tema-batman #toast-logro.is-pista #toast-txt { color: #000000 !important; }
@@ -85,7 +87,7 @@ body {
 /* EXCEPCIÓN PARA INPUTS */
 input { -webkit-user-select: auto !important; user-select: auto !important; }
 
-/* CAPA FANTASMA */
+/* CAPA FANTASMA Y FONDOS DINÁMICOS */
 body::before {
   content: ""; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1;
   background-color: var(--bg);
@@ -95,6 +97,16 @@ body::before {
     url('https://wallpapercave.com/wp/wp7805134.jpg'); 
   background-size: cover; background-position: center; pointer-events: none; transition: all 0.5s ease;
 }
+
+body.tema-rosa::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('fondo-rosa.jpg'); }
+body.tema-sangre::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('fondo-sangre.jpg'); }
+body.tema-momia::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('fondo-momia.jpg'); }
+body.tema-calabaza::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('fondo-calabaza.jpg'); }
+body.tema-batman::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('fondo-batman.jpg'); }
+body.tema-brujeria::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('fondo-brujeria.jpg'); }
+body.tema-espectro::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('fondo-espectro.jpg'); }
+body.tema-medianoche::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('fondo-medianoche.jpg'); }
+body.tema-otono::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('fondo-otono.jpg'); }
 
 a { color: inherit; -webkit-tap-highlight-color: transparent; }
 :focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; }
@@ -484,7 +496,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
               <h3>🔮 Amuletos Mágicos</h3>
           </div>
           <div class="gd-portal portal-temas" onclick="abrirSubTienda('tienda-temas', 'ataudIn')">
-              <h3>🎨 Temas y Magia (Cosméticos)</h3>
+              <h3>🎨 Temas y Magia</h3>
           </div>
       </div>
   </div>
@@ -534,11 +546,16 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
       <button class="btn-volver" onclick="cerrarSubTienda('ataudOut')">⬅ Volver al Bazar</button>
       <h3 class="seccion-titulo" style="margin-top: 0;">🎨 Personalización de la App</h3>
       <div class="grid">
-          <article class="item"><span class="e">🦇</span><h3>Tema: Rosa</h3><p>Lluvia de Destellos</p><button class="btn-accion" onclick="comprarItem(this, 'tema-rosa', 20, 'Tema Rosa', 'tema')">Comprar - 20 🍬</button></article>
-          <article class="item"><span class="e">🩸</span><h3>Tema: Sangre</h3><p>Gotas Cayendo</p><button class="btn-accion" onclick="comprarItem(this, 'tema-sangre', 20, 'Tema Sangre', 'tema')">Comprar - 20 🍬</button></article>
-          <article class="item"><span class="e">🏺</span><h3>Tema: Momia</h3><p>Polvo de Arena</p><button class="btn-accion" onclick="comprarItem(this, 'tema-momia', 20, 'Tema Momia', 'tema')">Comprar - 20 🍬</button></article>
-          <article class="item"><span class="e">🎃</span><h3>Tema: Calabaza</h3><p>Brasas Flotantes</p><button class="btn-accion" onclick="comprarItem(this, 'tema-calabaza', 20, 'Tema Calabaza', 'tema')">Comprar - 20 🍬</button></article>
-          <article class="item"><span class="e">🦇</span><h3>Tema: Batman</h3><p>Tonos Oscuros Puros</p><button class="btn-accion" onclick="comprarItem(this, 'tema-batman', 20, 'Tema Batman', 'tema')">Comprar - 20 🍬</button></article>
+          <article class="item"><span class="e">🦇</span><h3>Tema: Clásico</h3><p>El diseño original.</p><button class="btn-accion" onclick="equiparTema('tema-default')">Equipar</button></article>
+          <article class="item"><span class="e">💖</span><h3>Rosa Vampírico</h3><p>Lluvia de destellos.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-rosa', 20, 'Tema Rosa', 'tema')">Comprar - 20 🍬</button></article>
+          <article class="item"><span class="e">🩸</span><h3>Rojo Sangre</h3><p>Gotas cayendo.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-sangre', 20, 'Tema Sangre', 'tema')">Comprar - 20 🍬</button></article>
+          <article class="item"><span class="e">🏺</span><h3>Tema: Momia</h3><p>Polvo de arena.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-momia', 20, 'Tema Momia', 'tema')">Comprar - 20 🍬</button></article>
+          <article class="item"><span class="e">🎃</span><h3>Tema: Calabaza</h3><p>Brasas flotantes.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-calabaza', 20, 'Tema Calabaza', 'tema')">Comprar - 20 🍬</button></article>
+          <article class="item"><span class="e">🦇</span><h3>Tema: Batman</h3><p>Tonos oscuros puros.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-batman', 20, 'Tema Batman', 'tema')">Comprar - 20 🍬</button></article>
+          <article class="item"><span class="e">🧪</span><h3>Tema: Brujería</h3><p>Pantano tóxico.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-brujeria', 20, 'Tema Brujería', 'tema')">Comprar - 20 🍬</button></article>
+          <article class="item"><span class="e">👻</span><h3>Tema: Espectro</h3><p>Frío y etéreo.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-espectro', 20, 'Tema Espectro', 'tema')">Comprar - 20 🍬</button></article>
+          <article class="item"><span class="e">🌌</span><h3>Tema: Medianoche</h3><p>Galaxia profunda.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-medianoche', 20, 'Tema Medianoche', 'tema')">Comprar - 20 🍬</button></article>
+          <article class="item"><span class="e">🍂</span><h3>Tema: Otoño Vivo</h3><p>Viento dorado.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-otono', 20, 'Tema Otoño', 'tema')">Comprar - 20 🍬</button></article>
       </div>
   </div>
 </section>
@@ -615,6 +632,7 @@ let pistasReveladas = [];
 let temaActivo = 'tema-default';
 let halloweenReclamado = false;
 let appCargada = false;
+let vueltasDJ = 0;
 
 const catalogo = {
   'tema-default': { icono: '🦇', nombre: 'Tema: Clásico', desc: 'El diseño original.', tipo: 'tema' },
@@ -623,6 +641,10 @@ const catalogo = {
   'tema-momia': { icono: '🏺', nombre: 'Tema: Momia', desc: 'Polvo de arena en el viento.', tipo: 'tema' },
   'tema-calabaza': { icono: '🎃', nombre: 'Tema: Calabaza', desc: 'Brasas flotantes.', tipo: 'tema' },
   'tema-batman': { icono: '🦇', nombre: 'Tema: Batman', desc: 'Tonos oscuros y contrastados.', tipo: 'tema' },
+  'tema-brujeria': { icono: '🧪', nombre: 'Tema: Brujería', desc: 'Pantano tóxico.', tipo: 'tema' },
+  'tema-espectro': { icono: '👻', nombre: 'Tema: Espectro', desc: 'Frío y etéreo.', tipo: 'tema' },
+  'tema-medianoche': { icono: '🌌', nombre: 'Tema: Medianoche', desc: 'Galaxia profunda.', tipo: 'tema' },
+  'tema-otono': { icono: '🍂', nombre: 'Tema: Otoño Vivo', desc: 'Viento dorado.', tipo: 'tema' },
   'amuleto-moneda': { icono: '💰', nombre: 'Moneda Monstruosa', desc: 'Aumenta un 30% todas tus ganancias.', tipo: 'amuleto' },
   'amuleto-iman': { icono: '🦇', nombre: 'Imán de Skullettes', desc: 'Atrae Skullettes el doble de rápido.', tipo: 'amuleto' },
   'amuleto-reloj': { icono: '⏳', nombre: 'Reloj Vampírico', desc: 'Reduce el tiempo de espera a 18 horas.', tipo: 'amuleto' }
@@ -633,18 +655,30 @@ const catalogoLogros = {
   'skull': { icono: '💀', nombre: 'Reflejos de Vampiro', desc: 'Atrapaste una Skullette rápida.' },
   'noche': { icono: '🦇', nombre: 'Noctámbula', desc: 'Entraste a la tienda pasada la medianoche.' },
   'ahorro': { icono: '💰', nombre: 'Bolsillos Llenos', desc: 'Lograste ahorrar 150 dulces.' },
-  'diario': { icono: '📖', nombre: 'Cazadora de Secretos', desc: 'Encontraste y abriste el Diario de Pistas.' }
+  'diario': { icono: '📖', nombre: 'Cazadora de Secretos', desc: 'Encontraste y abriste el Diario de Pistas.' },
+  'hacker': { icono: '💻', nombre: 'Hacker de Élite', desc: 'Canjeaste 5 códigos correctos en el iCoffin.' },
+  'fashionista': { icono: '👗', nombre: 'Fashionista Oscura', desc: 'Tienes 4 temas visuales en tu colección.' },
+  'dj': { icono: '🎛️', nombre: 'DJ Monstruoso', desc: 'Jugaste con los controles de audio 10 veces.' },
+  'amor': { icono: '💖', nombre: 'Amor Incondicional', desc: 'El código de la fecha especial fue usado.' }
 };
 
 const catalogoPistas = {
-  'pista_amor':      { pistaTxt: "El sentimiento que nos une. 4 letras.", desc: "El amor es la chispa mágica que ilumina las catacumbas de mi corazón.", reqTxt: "adquirir una 🎟️ Cita VIP en la tienda" },
+  'pista_amor':      { pistaTxt: "El sentimiento que nos une. 4 letras.", desc: "El amor es la chispa mágica que ilumina las catacumbas de mi corazón.", reqTxt: "adquirir una 🎟️ Cita VIP" },
   'pista_greta':     { pistaTxt: "La dueña de este rincón oscuro...", desc: "La niña de mis ojos, la dueña de este rincón oscuro.", reqTxt: "equipar el 🦇 Tema: Rosa" },
   'pista_eduardo':   { pistaTxt: "El que siempre cuidará tu corazón...", desc: "Siempre aquí para ti, cuidando tu corazón.", reqTxt: "equipar el 🦇 Tema: Batman" },
-  'pista_boo':       { pistaTxt: "El nombre que le da vida a esta tienda...", desc: "¡Asustame! Espero que te estés divirtiendo.", reqTxt: "comprar cualquier 🍬 Snack (Neon Coffin)" },
+  'pista_boo':       { pistaTxt: "El nombre que le da vida a esta tienda...", desc: "¡Asustame! Espero que te estés divirtiendo.", reqTxt: "comprar cualquier 🍬 Snack" },
   'pista_calabaza':  { pistaTxt: "Dulce o truco, el símbolo naranja...", desc: "Dulce o Truco... ¡Definitivamente dulce!", reqTxt: "equipar el 🎃 Tema: Calabaza" },
   'pista_2211':      { pistaTxt: "Nuestro día especial en números (DDMM)...", desc: "Nuestro día especial. Te amo hoy, mañana y siempre. 💖", reqTxt: "alcanzar el Día 5 de lealtad en el Ataúd Diario" },
   'pista_halloween': { pistaTxt: "La noche más mágica del año...", desc: "La noche más mágica del año. ¡A disfrutar!", reqTxt: "atrapar tu primera 💀 Skullette voladora" },
-  'pista_monster':   { pistaTxt: "El instituto donde los monstruos son reales...", desc: "¡Bienvenida a Monster High! Desata tu estilo.", reqTxt: "adquirir un 💖 Gesto Especial" }
+  'pista_monster':   { pistaTxt: "El instituto donde los monstruos son reales...", desc: "¡Bienvenida a Monster High! Desata tu estilo.", reqTxt: "adquirir un 💖 Gesto Especial" },
+  'pista_fortuna':   { pistaTxt: "El número del medio millar...", desc: "La fortuna sonríe a quienes saben ahorrar.", reqTxt: "ahorrar 500 🍬 o más en tu inventario" },
+  'pista_coleccionista': { pistaTxt: "Quien posee las tres reliquias...", desc: "Los tres amuletos de poder son tuyos.", reqTxt: "comprar los 3 Amuletos Mágicos" },
+  'pista_lealtad':   { pistaTxt: "El tercer amanecer trae consigo...", desc: "La constancia es la mejor de las virtudes.", reqTxt: "reclamar la recompensa del Día 3" },
+  'pista_gloton':    { pistaTxt: "Un antojo dulce que cruje...", desc: "No hay nada mejor que un dulce a medianoche.", reqTxt: "comprar el snack Bonobon" },
+  'pista_bruja':     { pistaTxt: "La magia burbujea en su caldero...", desc: "Verde tóxico y morado místico.", reqTxt: "equipar el 🧪 Tema: Brujería" },
+  'pista_espectro':  { pistaTxt: "Un alma etérea que brilla fría...", desc: "El toque del más allá siempre se siente.", reqTxt: "equipar el 👻 Tema: Espectro" },
+  'pista_magia':     { pistaTxt: "Donde los hechizos cobran vida...", desc: "El salón de juegos es el mejor lugar.", reqTxt: "probar cualquier minijuego por primera vez" },
+  'pista_otono':     { pistaTxt: "Las hojas caen y el color dorado domina...", desc: "El viento se lleva las penas.", reqTxt: "equipar el 🍂 Tema: Otoño Vivo" }
 };
 
 const codigosSecretos = {
@@ -655,7 +689,15 @@ const codigosSecretos = {
     'CALABAZA': { id: 'pista_calabaza', msg: "Dulce o Truco... ¡Definitivamente dulce!", recompensa: 10 },
     '2211': { id: 'pista_2211', msg: "Nuestro día especial. Te amo hoy, mañana y siempre. 💖", recompensa: 50 },
     'HALLOWEEN': { id: 'pista_halloween', msg: "La noche más mágica del año. ¡A disfrutar!", recompensa: 20 },
-    'MONSTER': { id: 'pista_monster', msg: "¡Bienvenida a Monster High! Desata tu estilo.", recompensa: 15 }
+    'MONSTER': { id: 'pista_monster', msg: "¡Bienvenida a Monster High! Desata tu estilo.", recompensa: 15 },
+    'FORTUNA': { id: 'pista_fortuna', msg: "¡Tienes una fortuna en tus manos!", recompensa: 50 },
+    'COLECCIONISTA': { id: 'pista_coleccionista', msg: "El poder absoluto te pertenece.", recompensa: 40 },
+    'LEALTAD': { id: 'pista_lealtad', msg: "Gracias por volver cada noche.", recompensa: 30 },
+    'GLOTON': { id: 'pista_gloton', msg: "¡Cuidado con las caries!", recompensa: 20 },
+    'BRUJA': { id: 'pista_bruja', msg: "Doble, doble trabajo y problema...", recompensa: 30 },
+    'ESPECTRO': { id: 'pista_espectro', msg: "Un escalofrío recorre tu espalda.", recompensa: 30 },
+    'MAGIA': { id: 'pista_magia', msg: "¡Que comience la diversión!", recompensa: 40 },
+    'OTOÑO': { id: 'pista_otono', msg: "El cambio de estación trae paz.", recompensa: 20 }
 };
 
 const recompensasDiarias = [
@@ -786,6 +828,7 @@ function cambiarVolumenMusica(valor) {
     if (musicaMuted && masterMusica > 0) toggleMuteMusica(); 
     sfxBases['musica'].audio.volume = Math.min(1.0, masterMusica * sfxBases['musica'].vol);
     if (masterMusica > 0 && sfxBases['musica'].audio.paused) sfxBases['musica'].audio.play().catch(e=>console.log(e)); 
+    vueltasDJ++; if(vueltasDJ >= 10 && !logros.includes('dj')) checkLogro('dj');
     guardarDatos();
 }
 
@@ -801,10 +844,10 @@ function toggleMuteSfx() {
 function cambiarVolumenSfx(valor) { 
     masterSfx = parseFloat(valor);
     if (sfxMuted && masterSfx > 0) toggleMuteSfx(); 
+    vueltasDJ++; if(vueltasDJ >= 10 && !logros.includes('dj')) checkLogro('dj');
     guardarDatos();
 }
 
-// Forzar pausa cuando la pestaña se minimiza
 document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "hidden") { sfxBases['musica'].audio.pause(); } 
     else { if (!musicaMuted && masterMusica > 0) sfxBases['musica'].audio.play().catch(e=>console.log(e)); }
@@ -818,6 +861,8 @@ window.addEventListener('focus', () => { if (!musicaMuted && masterMusica > 0 &&
 // ========================================================
 function guardarDatos() {
   if (dulces >= 150) checkLogro('ahorro');
+  if (dulces >= 500 && !pistasReveladas.includes('pista_fortuna')) revelarPista('pista_fortuna');
+  
   if(database) {
     database.ref(rutaDB).set({ 
       dulces: dulces, coleccion: coleccion, logros: logros, carrito: carrito, codigosUsados: codigosUsados,
@@ -862,7 +907,7 @@ function revelarPista(idPista) {
     }
 }
 
-// ================= SISTEMA DE COLA PARA TOASTS (SALTABLES) =================
+// ================= SISTEMA DE COLA PARA TOASTS =================
 let toastQueue = [];
 let toastActivo = false;
 let toastTimeoutId;
@@ -915,6 +960,7 @@ function saltarToast() {
     ocultarToastActual();
 }
 
+
 // ========================================================
 // 6. ATAÚD DE RECOMPENSA
 // ========================================================
@@ -957,6 +1003,7 @@ function reclamarCaja() {
       mostrarToast(`¡Reclamado: ${premio.texto}!`, "logro");
   }
   ataudTiempo = Date.now(); ataudDia++; 
+  if (ataudDia > 3) revelarPista('pista_lealtad'); 
   if (ataudDia > 5) revelarPista('pista_2211'); 
   guardarDatos(); playSfx('ataudPremio'); renderizarGrillaAtaud(); 
 }
@@ -985,6 +1032,12 @@ function comprarItem(boton, idItem, precio, nombreItem, tipo) {
         
         if (tipo === 'tema' || tipo === 'amuleto') { 
             coleccion.push(idItem); 
+            
+            let countTemas = coleccion.filter(i => i.startsWith('tema-')).length;
+            if(countTemas >= 4 && !logros.includes('fashionista')) checkLogro('fashionista');
+            
+            if (coleccion.includes('amuleto-moneda') && coleccion.includes('amuleto-iman') && coleccion.includes('amuleto-reloj')) revelarPista('pista_coleccionista');
+            
             if(tipo === 'tema') equiparTema(idItem); 
             guardarDatos(); mostrarToast(`Adquirido: ${nombreItem}`, "info"); 
         } 
@@ -993,6 +1046,7 @@ function comprarItem(boton, idItem, precio, nombreItem, tipo) {
             if(tipo === 'cita') revelarPista('pista_amor');
             if(tipo === 'gesto') revelarPista('pista_monster');
             if(tipo === 'snack') revelarPista('pista_boo');
+            if(idItem === 'bonobon') revelarPista('pista_gloton');
             guardarDatos(); mostrarToast(`Compraste: ${nombreItem}. Revisa tu 🛒`, "info"); 
         }
     } else {
@@ -1043,6 +1097,9 @@ function equiparTema(idTema) {
     if(idTema === 'tema-rosa') revelarPista('pista_greta');
     if(idTema === 'tema-batman') revelarPista('pista_eduardo');
     if(idTema === 'tema-calabaza') revelarPista('pista_calabaza');
+    if(idTema === 'tema-brujeria') revelarPista('pista_bruja');
+    if(idTema === 'tema-espectro') revelarPista('pista_espectro');
+    if(idTema === 'tema-otono') revelarPista('pista_otono');
     guardarDatos(); 
 }
 function aplicarTemaCSS(tema) { document.body.className = ''; if(tema && tema !== 'tema-default') { document.body.classList.add('tema-' + tema.replace('tema-', '')); } }
@@ -1118,7 +1175,7 @@ function canjearCodigo() {
     case 'GIVE': dulces += 500; msjRespuesta = "[ADMIN] +500 Caramelos."; colorRespuesta = "var(--violet)"; playSfx('exito'); break;
     case 'TICKETS': abrirAdminTickets(); msjRespuesta = "[ADMIN] Tickets abiertos."; break;
     case 'CLEANCART': carrito = []; msjRespuesta = "[ADMIN] Carrito vacío."; break;
-    case 'UNLOCKTHEMES': coleccion = ['tema-default', 'tema-rosa', 'tema-sangre', 'tema-momia', 'tema-calabaza', 'tema-batman', 'amuleto-moneda', 'amuleto-iman', 'amuleto-reloj']; msjRespuesta = "[ADMIN] Colección max."; break;
+    case 'UNLOCKTHEMES': coleccion = ['tema-default', 'tema-rosa', 'tema-sangre', 'tema-momia', 'tema-calabaza', 'tema-batman', 'tema-brujeria', 'tema-espectro', 'tema-medianoche', 'tema-otono', 'amuleto-moneda', 'amuleto-iman', 'amuleto-reloj']; msjRespuesta = "[ADMIN] Colección max."; break;
     case 'RESET': dulces = 0; coleccion = ['tema-default']; logros = []; carrito = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; pistasReveladas = []; codigosUsados = []; halloweenReclamado = false; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Cuenta a cero."; colorRespuesta = "var(--pumpkin)"; break;
     case '24H': ataudTiempo = Date.now() - 86400000; msjRespuesta = "[ADMIN] Reloj adelantado."; actualizarUI(); if(document.getElementById('modal-ataud').classList.contains('activo')) renderizarGrillaAtaud(); break;
     case 'RESETALL':
@@ -1147,6 +1204,9 @@ function canjearCodigo() {
           msg.style.color = "var(--pumpkin)"; msg.textContent = "Ya resolviste este secreto..."; playSfx('error');
       } else {
           codigosUsados.push(codigo);
+          if (codigosUsados.length >= 5 && !logros.includes('hacker')) checkLogro('hacker');
+          if (codigo === '2211' && !logros.includes('amor')) checkLogro('amor');
+          
           if (!pistas.includes(premio.id)) pistas.push(premio.id); 
           let gananciaExtra = agregarDulces(premio.recompensa);
           guardarDatos(); input.value = ''; 
@@ -1207,7 +1267,7 @@ function reclamarHalloween() {
 }
 
 // ========================================================
-// 10. ANIMACIONES Y SISTEMA ANTI-LAG
+// 10. ANIMACIONES Y SISTEMA ANTI-LAG (Doble Partícula)
 // ========================================================
 function abrirAjustes() { checkLogro('config'); document.getElementById('modal-ajustes').classList.add('activo'); }
 function cerrarAjustes() { document.getElementById('modal-ajustes').classList.remove('activo'); }
@@ -1215,20 +1275,74 @@ function actualizarAnimacionInicio() { const batsClasicos = document.getElementB
 
 setInterval(() => {
     if(temaActivo === 'tema-default') return;
-    const wrapper = document.createElement('div'); wrapper.className = 'particula-deco'; wrapper.style.fontSize = Math.floor(Math.random() * 1.5 + 1) + 'rem';
+    const wrapper = document.createElement('div'); wrapper.className = 'particula-deco';
+    let rand = Math.random();
     
-    if(temaActivo === 'tema-rosa') { wrapper.innerHTML = Math.random() > 0.5 ? '💖' : '✨'; wrapper.style.top = Math.floor(Math.random() * 100) + 'vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; wrapper.style.textShadow = '0 0 10px rgba(255,51,153,0.8)'; wrapper.style.transition = 'opacity 2s ease'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.opacity = '0.7', 100); setTimeout(() => wrapper.style.opacity = '0', 2000); setTimeout(() => wrapper.remove(), 4000); } 
+    if(temaActivo === 'tema-rosa') { 
+        wrapper.innerHTML = rand > 0.5 ? '💖' : '🦇'; 
+        wrapper.style.fontSize = Math.floor(Math.random() * 1.5 + 1) + 'rem';
+        wrapper.style.color = '#ff99cc';
+        wrapper.style.top = Math.floor(Math.random() * 100) + 'vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; 
+        wrapper.style.textShadow = '0 0 10px rgba(255,51,153,0.8)'; wrapper.style.transition = 'opacity 2s ease'; 
+        document.body.appendChild(wrapper); setTimeout(() => wrapper.style.opacity = '0.7', 100); setTimeout(() => wrapper.style.opacity = '0', 2000); setTimeout(() => wrapper.remove(), 4000); 
+    } 
     else if(temaActivo === 'tema-sangre') { 
-        wrapper.innerHTML = '<svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor"><path d="M12 2c-.3 0-.6.2-.8.5l-6 10c-.8 1.4-1 3.1-.3 4.6.6 1.5 2 2.7 3.6 3.1 3.4.8 6.7-1.2 7.3-4.6.2-1.2 0-2.4-.6-3.5l-2.4-4.1-1.6-2.7c-2.3-3.9-3.2-3.3-3.2-3.3z"/></svg>'; 
-        wrapper.style.color = '#cc0000'; wrapper.style.top = '-10vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; wrapper.style.filter = 'drop-shadow(0 5px 5px rgba(204,0,0,0.8))'; wrapper.style.transition = 'transform 3s linear, opacity 1s'; wrapper.style.opacity = '0.8'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateY(110vh)', 100); setTimeout(() => wrapper.remove(), 3200); 
+        wrapper.innerHTML = rand > 0.5 ? '🩸' : '💀'; 
+        wrapper.style.fontSize = Math.floor(Math.random() * 1.5 + 1) + 'rem';
+        wrapper.style.top = '-10vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; 
+        if(wrapper.innerHTML === '🩸') { wrapper.style.filter = 'brightness(0) drop-shadow(0 0 12px #cc0000)'; }
+        wrapper.style.transition = 'transform 3s linear, opacity 1s'; wrapper.style.opacity = '0.8'; 
+        document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateY(110vh)', 100); setTimeout(() => wrapper.remove(), 3200); 
     }
     else if(temaActivo === 'tema-momia') { 
-        if (Math.random() > 0.5) { wrapper.innerHTML = '⚱'; wrapper.style.filter = 'brightness(0.6) sepia(1)'; } else { wrapper.innerHTML = '•'; wrapper.style.fontSize = Math.floor(Math.random() * 2 + 1.5) + 'rem'; wrapper.style.color = '#d49a6a'; wrapper.style.textShadow = '0 0 5px rgba(212,154,106,0.5)'; }
-        wrapper.style.top = Math.floor(Math.random() * 100) + 'vh'; wrapper.style.left = '-10vw'; wrapper.style.transition = 'transform 6s linear, opacity 1s'; wrapper.style.opacity = '0.5'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateX(110vw) rotate(180deg)', 100); setTimeout(() => wrapper.remove(), 6200); 
+        if (rand > 0.5) { wrapper.innerHTML = '☥'; wrapper.style.fontSize = Math.floor(Math.random() * 1.5 + 1) + 'rem'; wrapper.style.filter = 'brightness(0.6) sepia(1)'; } 
+        else { wrapper.innerHTML = '•'; wrapper.style.fontSize = Math.floor(Math.random() * 2 + 1.5) + 'rem'; wrapper.style.color = '#d49a6a'; wrapper.style.textShadow = '0 0 5px rgba(212,154,106,0.5)'; }
+        wrapper.style.top = Math.floor(Math.random() * 100) + 'vh'; wrapper.style.left = '-10vw'; wrapper.style.transition = 'transform 6s linear, opacity 1s'; wrapper.style.opacity = '0.5'; 
+        document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateX(110vw) rotate(180deg)', 100); setTimeout(() => wrapper.remove(), 6200); 
     }
-    else if(temaActivo === 'tema-calabaza') { wrapper.innerHTML = '🔥'; wrapper.style.fontSize = Math.floor(Math.random() * 1 + 0.5) + 'rem'; wrapper.style.top = '110vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; wrapper.style.textShadow = '0 0 10px rgba(255,102,0,0.8)'; wrapper.style.transition = 'transform 4s ease-out, opacity 1s'; wrapper.style.opacity = '0.7'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = `translateY(-60vh) translateX(${Math.random() > 0.5 ? 50 : -50}px)`, 100); setTimeout(() => wrapper.style.opacity = '0', 3000); setTimeout(() => wrapper.remove(), 4200); }
-    else if(temaActivo === 'tema-batman') { wrapper.innerHTML = '🦇'; wrapper.style.fontSize = '4rem'; wrapper.style.top = Math.floor(Math.random() * 80) + 'vh'; wrapper.style.left = '-20vw'; wrapper.style.filter = 'brightness(0)'; wrapper.style.transition = 'transform 12s linear, opacity 2s'; wrapper.style.opacity = '0.2'; document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateX(130vw) scale(1.5)', 100); setTimeout(() => wrapper.remove(), 12200); }
-}, 3000); 
+    else if(temaActivo === 'tema-calabaza') { 
+        wrapper.innerHTML = rand > 0.5 ? '🔥' : '🎃'; 
+        wrapper.style.fontSize = Math.floor(Math.random() * 1.5 + 0.5) + 'rem'; 
+        wrapper.style.top = '110vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; 
+        wrapper.style.textShadow = '0 0 10px rgba(255,102,0,0.8)'; wrapper.style.transition = 'transform 4s ease-out, opacity 1s'; wrapper.style.opacity = '0.7'; 
+        document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = `translateY(-60vh) translateX(${Math.random() > 0.5 ? 50 : -50}px)`, 100); setTimeout(() => wrapper.style.opacity = '0', 3000); setTimeout(() => wrapper.remove(), 4200); 
+    }
+    else if(temaActivo === 'tema-batman') { 
+        if (rand > 0.3) { wrapper.innerHTML = '🦇'; wrapper.style.fontSize = Math.floor(Math.random() * 4 + 5) + 'rem'; wrapper.style.filter = 'brightness(0)'; }
+        else { wrapper.innerHTML = '✨'; wrapper.style.fontSize = Math.floor(Math.random() * 1 + 1) + 'rem'; wrapper.style.color = 'white'; wrapper.style.textShadow = '0 0 15px white'; }
+        wrapper.style.top = Math.floor(Math.random() * 80) + 'vh'; wrapper.style.left = '-20vw'; 
+        wrapper.style.transition = 'transform 10s linear, opacity 2s'; wrapper.style.opacity = '0.8'; 
+        document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateX(130vw) scale(1.5)', 100); setTimeout(() => wrapper.remove(), 10200); 
+    }
+    else if(temaActivo === 'tema-brujeria') { 
+        wrapper.innerHTML = rand > 0.5 ? '🫧' : '🟢'; 
+        wrapper.style.fontSize = Math.floor(Math.random() * 1.5 + 1) + 'rem';
+        wrapper.style.top = '110vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; 
+        wrapper.style.textShadow = '0 0 10px rgba(0,255,204,0.8)'; wrapper.style.transition = 'transform 5s ease-in, opacity 1s'; wrapper.style.opacity = '0.7'; 
+        document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = `translateY(-120vh) translateX(${Math.random() > 0.5 ? 30 : -30}px)`, 100); setTimeout(() => wrapper.style.opacity = '0', 4000); setTimeout(() => wrapper.remove(), 5200); 
+    }
+    else if(temaActivo === 'tema-espectro') { 
+        wrapper.innerHTML = rand > 0.4 ? '👻' : '🩵'; 
+        wrapper.style.fontSize = Math.floor(Math.random() * 2 + 1) + 'rem';
+        wrapper.style.top = Math.floor(Math.random() * 100) + 'vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; 
+        wrapper.style.textShadow = '0 0 15px rgba(0,255,255,0.8)'; wrapper.style.transition = 'opacity 3s ease'; wrapper.style.opacity = '0';
+        document.body.appendChild(wrapper); setTimeout(() => wrapper.style.opacity = '0.6', 100); setTimeout(() => wrapper.style.opacity = '0', 2500); setTimeout(() => wrapper.remove(), 3500); 
+    }
+    else if(temaActivo === 'tema-medianoche') { 
+        wrapper.innerHTML = rand > 0.7 ? '🌙' : '⭐'; 
+        wrapper.style.fontSize = Math.floor(Math.random() * 1.5 + 1) + 'rem';
+        wrapper.style.top = '-10vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; 
+        wrapper.style.textShadow = '0 0 10px rgba(255,215,0,0.8)'; wrapper.style.transition = 'transform 4s linear, opacity 1s'; wrapper.style.opacity = '0.9'; 
+        document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = `translateY(110vh) translateX(-20vw)`, 100); setTimeout(() => wrapper.remove(), 4200); 
+    }
+    else if(temaActivo === 'tema-otono') { 
+        wrapper.innerHTML = rand > 0.5 ? '🍁' : '💨'; 
+        wrapper.style.fontSize = Math.floor(Math.random() * 2 + 1) + 'rem';
+        wrapper.style.top = '-10vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; 
+        wrapper.style.textShadow = '0 0 5px rgba(255,140,0,0.5)'; wrapper.style.transition = 'transform 5s ease-in-out, opacity 1s'; wrapper.style.opacity = '0.8'; 
+        document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = `translateY(110vh) translateX(${Math.random() > 0.5 ? 50 : -50}vw) rotate(360deg)`, 100); setTimeout(() => wrapper.remove(), 5200); 
+    }
+}, 1000); 
 
 function programarSkullette() {
     let baseTime = coleccion.includes('amuleto-iman') ? 6000 : 15000;
@@ -1256,6 +1370,7 @@ let juegoEnProgreso = false;
 function probarJuego(idJuego) { 
     if(juegoEnProgreso) return; 
     juegoEnProgreso = true;
+    revelarPista('pista_magia'); 
     
     if(!sfxBases['musica'].audio.muted) sfxBases['musica'].audio.pause();
     playSfx('juego'); 
