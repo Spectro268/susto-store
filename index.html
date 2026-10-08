@@ -47,8 +47,8 @@ body.tema-rosa { --bg: #1a0512; --pumpkin: #ff3399; --ember: #990055; --violet: 
 body.tema-sangre { --bg: #0a0000; --pumpkin: #cc0000; --ember: #660000; --violet: #ff1a1a; --card: #1a0000; --glow: rgba(204, 0, 0, 0.25); --bg-overlay: rgba(10, 0, 0, 0.92); }
 body.tema-momia { --bg: #1a1610; --pumpkin: #d49a6a; --ember: #8b5a2b; --violet: #e6c280; --card: #2b2218; --glow: rgba(212, 154, 106, 0.2); --bg-overlay: rgba(26, 22, 16, 0.88); --borde-estilo: dashed; }
 body.tema-calabaza { --bg: #0a140a; --pumpkin: #ff6600; --ember: #cc5200; --violet: #00b33c; --card: #0f1f0f; --glow: rgba(255, 102, 0, 0.25); --bg-overlay: rgba(10, 20, 10, 0.88); }
-body.tema-brujeria { --bg: #0a140a; --pumpkin: #00ffcc; --ember: #339900; --violet: #9900ff; --card: #0f1f0f; --glow: rgba(0, 255, 204, 0.25); --bg-overlay: rgba(10, 20, 10, 0.88); }
-body.tema-espectro { --bg: #050a14; --pumpkin: #00ffff; --ember: #005580; --violet: #cccccc; --card: #0a101f; --glow: rgba(0, 255, 255, 0.25); --bg-overlay: rgba(5, 10, 20, 0.88); }
+body.tema-brujeria { --bg: #0a0014; --pumpkin: #b300ff; --ember: #4d0066; --violet: #d896ff; --card: #140028; --glow: rgba(179, 0, 255, 0.25); --bg-overlay: rgba(10, 0, 20, 0.88); }
+body.tema-spectro { --bg: #050a14; --pumpkin: #00ffff; --ember: #005580; --violet: #cccccc; --card: #0a101f; --glow: rgba(0, 255, 255, 0.25); --bg-overlay: rgba(5, 10, 20, 0.88); }
 body.tema-medianoche { --bg: #05051a; --pumpkin: #ffd700; --ember: #000066; --violet: #4169e1; --card: #0a0a29; --glow: rgba(255, 215, 0, 0.25); --bg-overlay: rgba(5, 5, 26, 0.88); }
 body.tema-otono { --bg: #1a0a00; --pumpkin: #ff8c00; --ember: #8b4500; --violet: #cd853f; --card: #291400; --glow: rgba(255, 140, 0, 0.25); --bg-overlay: rgba(26, 10, 0, 0.88); }
 
@@ -87,7 +87,7 @@ body {
 /* EXCEPCIÓN PARA INPUTS */
 input { -webkit-user-select: auto !important; user-select: auto !important; }
 
-/* CAPA FANTASMA Y FONDOS DINÁMICOS */
+/* CAPA FANTASMA Y FONDOS DINÁMICOS ONLINE */
 body::before {
   content: ""; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1;
   background-color: var(--bg);
@@ -98,15 +98,15 @@ body::before {
   background-size: cover; background-position: center; pointer-events: none; transition: all 0.5s ease;
 }
 
-body.tema-rosa::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('fondo-rosa.jpg'); }
-body.tema-sangre::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('fondo-sangre.jpg'); }
-body.tema-momia::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('fondo-momia.jpg'); }
-body.tema-calabaza::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('fondo-calabaza.jpg'); }
-body.tema-batman::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('fondo-batman.jpg'); }
-body.tema-brujeria::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('fondo-brujeria.jpg'); }
-body.tema-espectro::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('fondo-espectro.jpg'); }
-body.tema-medianoche::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('fondo-medianoche.jpg'); }
-body.tema-otono::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('fondo-otono.jpg'); }
+body.tema-rosa::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.unsplash.com/photo-1508898558411-51201ce38f1b?q=80&w=1080'); }
+body.tema-sangre::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.unsplash.com/photo-1509983611558-9046605d21b5?q=80&w=1080'); }
+body.tema-momia::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.unsplash.com/photo-1534145802283-4a113ec4c8b2?q=80&w=1080'); }
+body.tema-calabaza::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.unsplash.com/photo-1604145559206-e3bce0040e2d?q=80&w=1080'); }
+body.tema-batman::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=1080'); }
+body.tema-brujeria::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.unsplash.com/photo-1511406361295-0a1ff814c0ce?q=80&w=1080'); }
+body.tema-spectro::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1080'); }
+body.tema-medianoche::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=1080'); }
+body.tema-otono::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.unsplash.com/photo-1507371341162-763b5e419408?q=80&w=1080'); }
 
 a { color: inherit; -webkit-tap-highlight-color: transparent; }
 :focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; }
@@ -421,7 +421,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
     <span class="moneda-ui">🍬 <span id="ui-dulces">0</span></span>
     <a class="btn-col" onclick="cambiarPagina('sec-coleccion')" id="nav-coleccion">Nuestra Colección</a>
     <button class="btn-icono tuerca" onclick="abrirAjustes()" title="Ajustes">
-      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
     </button>
   </div>
 </header>
@@ -552,10 +552,10 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
           <article class="item"><span class="e">🏺</span><h3>Tema: Momia</h3><p>Polvo de arena.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-momia', 20, 'Tema Momia', 'tema')">Comprar - 20 🍬</button></article>
           <article class="item"><span class="e">🎃</span><h3>Tema: Calabaza</h3><p>Brasas flotantes.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-calabaza', 20, 'Tema Calabaza', 'tema')">Comprar - 20 🍬</button></article>
           <article class="item"><span class="e">🦇</span><h3>Tema: Batman</h3><p>Tonos oscuros puros.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-batman', 20, 'Tema Batman', 'tema')">Comprar - 20 🍬</button></article>
-          <article class="item"><span class="e">🧪</span><h3>Tema: Brujería</h3><p>Pantano tóxico.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-brujeria', 20, 'Tema Brujería', 'tema')">Comprar - 20 🍬</button></article>
-          <article class="item"><span class="e">👻</span><h3>Tema: Espectro</h3><p>Frío y etéreo.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-espectro', 20, 'Tema Espectro', 'tema')">Comprar - 20 🍬</button></article>
+          <article class="item"><span class="e">🧪</span><h3>Tema: Brujería</h3><p>Filtros místicos.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-brujeria', 20, 'Tema Brujería', 'tema')">Comprar - 20 🍬</button></article>
+          <article class="item"><span class="e">💻</span><h3>Tema: Spectro</h3><p>Frío y cibernético.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-spectro', 20, 'Tema Spectro', 'tema')">Comprar - 20 🍬</button></article>
           <article class="item"><span class="e">🌌</span><h3>Tema: Medianoche</h3><p>Galaxia profunda.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-medianoche', 20, 'Tema Medianoche', 'tema')">Comprar - 20 🍬</button></article>
-          <article class="item"><span class="e">🍂</span><h3>Tema: Otoño Vivo</h3><p>Viento dorado.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-otono', 20, 'Tema Otoño', 'tema')">Comprar - 20 🍬</button></article>
+          <article class="item"><span class="e">🍂</span><h3>Tema: Otoño Vivo</h3><p>Hojas cayendo.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-otono', 20, 'Tema Otoño', 'tema')">Comprar - 20 🍬</button></article>
       </div>
   </div>
 </section>
@@ -641,10 +641,10 @@ const catalogo = {
   'tema-momia': { icono: '🏺', nombre: 'Tema: Momia', desc: 'Polvo de arena en el viento.', tipo: 'tema' },
   'tema-calabaza': { icono: '🎃', nombre: 'Tema: Calabaza', desc: 'Brasas flotantes.', tipo: 'tema' },
   'tema-batman': { icono: '🦇', nombre: 'Tema: Batman', desc: 'Tonos oscuros y contrastados.', tipo: 'tema' },
-  'tema-brujeria': { icono: '🧪', nombre: 'Tema: Brujería', desc: 'Pantano tóxico.', tipo: 'tema' },
-  'tema-espectro': { icono: '👻', nombre: 'Tema: Espectro', desc: 'Frío y etéreo.', tipo: 'tema' },
+  'tema-brujeria': { icono: '🧪', nombre: 'Tema: Brujería', desc: 'Filtros místicos.', tipo: 'tema' },
+  'tema-spectro': { icono: '💻', nombre: 'Tema: Spectro', desc: 'Frío y cibernético.', tipo: 'tema' },
   'tema-medianoche': { icono: '🌌', nombre: 'Tema: Medianoche', desc: 'Galaxia profunda.', tipo: 'tema' },
-  'tema-otono': { icono: '🍂', nombre: 'Tema: Otoño Vivo', desc: 'Viento dorado.', tipo: 'tema' },
+  'tema-otono': { icono: '🍂', nombre: 'Tema: Otoño Vivo', desc: 'Hojas cayendo.', tipo: 'tema' },
   'amuleto-moneda': { icono: '💰', nombre: 'Moneda Monstruosa', desc: 'Aumenta un 30% todas tus ganancias.', tipo: 'amuleto' },
   'amuleto-iman': { icono: '🦇', nombre: 'Imán de Skullettes', desc: 'Atrae Skullettes el doble de rápido.', tipo: 'amuleto' },
   'amuleto-reloj': { icono: '⏳', nombre: 'Reloj Vampírico', desc: 'Reduce el tiempo de espera a 18 horas.', tipo: 'amuleto' }
@@ -675,8 +675,8 @@ const catalogoPistas = {
   'pista_coleccionista': { pistaTxt: "Quien posee las tres reliquias...", desc: "Los tres amuletos de poder son tuyos.", reqTxt: "comprar los 3 Amuletos Mágicos" },
   'pista_lealtad':   { pistaTxt: "El tercer amanecer trae consigo...", desc: "La constancia es la mejor de las virtudes.", reqTxt: "reclamar la recompensa del Día 3" },
   'pista_gloton':    { pistaTxt: "Un antojo dulce que cruje...", desc: "No hay nada mejor que un dulce a medianoche.", reqTxt: "comprar el snack Bonobon" },
-  'pista_bruja':     { pistaTxt: "La magia burbujea en su caldero...", desc: "Verde tóxico y morado místico.", reqTxt: "equipar el 🧪 Tema: Brujería" },
-  'pista_espectro':  { pistaTxt: "Un alma etérea que brilla fría...", desc: "El toque del más allá siempre se siente.", reqTxt: "equipar el 👻 Tema: Espectro" },
+  'pista_bruja':     { pistaTxt: "La magia burbujea en su caldero...", desc: "Morado místico.", reqTxt: "equipar el 🧪 Tema: Brujería" },
+  'pista_spectro':   { pistaTxt: "Un alma etérea en la red que brilla fría...", desc: "El toque del más allá en la matrix.", reqTxt: "equipar el 💻 Tema: Spectro" },
   'pista_magia':     { pistaTxt: "Donde los hechizos cobran vida...", desc: "El salón de juegos es el mejor lugar.", reqTxt: "probar cualquier minijuego por primera vez" },
   'pista_otono':     { pistaTxt: "Las hojas caen y el color dorado domina...", desc: "El viento se lleva las penas.", reqTxt: "equipar el 🍂 Tema: Otoño Vivo" }
 };
@@ -695,7 +695,7 @@ const codigosSecretos = {
     'LEALTAD': { id: 'pista_lealtad', msg: "Gracias por volver cada noche.", recompensa: 30 },
     'GLOTON': { id: 'pista_gloton', msg: "¡Cuidado con las caries!", recompensa: 20 },
     'BRUJA': { id: 'pista_bruja', msg: "Doble, doble trabajo y problema...", recompensa: 30 },
-    'ESPECTRO': { id: 'pista_espectro', msg: "Un escalofrío recorre tu espalda.", recompensa: 30 },
+    'SPECTRO': { id: 'pista_spectro', msg: "Un escalofrío digital recorre tu espalda.", recompensa: 30 },
     'MAGIA': { id: 'pista_magia', msg: "¡Que comience la diversión!", recompensa: 40 },
     'OTOÑO': { id: 'pista_otono', msg: "El cambio de estación trae paz.", recompensa: 20 }
 };
@@ -1098,7 +1098,7 @@ function equiparTema(idTema) {
     if(idTema === 'tema-batman') revelarPista('pista_eduardo');
     if(idTema === 'tema-calabaza') revelarPista('pista_calabaza');
     if(idTema === 'tema-brujeria') revelarPista('pista_bruja');
-    if(idTema === 'tema-espectro') revelarPista('pista_espectro');
+    if(idTema === 'tema-spectro') revelarPista('pista_spectro');
     if(idTema === 'tema-otono') revelarPista('pista_otono');
     guardarDatos(); 
 }
@@ -1175,7 +1175,7 @@ function canjearCodigo() {
     case 'GIVE': dulces += 500; msjRespuesta = "[ADMIN] +500 Caramelos."; colorRespuesta = "var(--violet)"; playSfx('exito'); break;
     case 'TICKETS': abrirAdminTickets(); msjRespuesta = "[ADMIN] Tickets abiertos."; break;
     case 'CLEANCART': carrito = []; msjRespuesta = "[ADMIN] Carrito vacío."; break;
-    case 'UNLOCKTHEMES': coleccion = ['tema-default', 'tema-rosa', 'tema-sangre', 'tema-momia', 'tema-calabaza', 'tema-batman', 'tema-brujeria', 'tema-espectro', 'tema-medianoche', 'tema-otono', 'amuleto-moneda', 'amuleto-iman', 'amuleto-reloj']; msjRespuesta = "[ADMIN] Colección max."; break;
+    case 'UNLOCKTHEMES': coleccion = ['tema-default', 'tema-rosa', 'tema-sangre', 'tema-momia', 'tema-calabaza', 'tema-batman', 'tema-brujeria', 'tema-spectro', 'tema-medianoche', 'tema-otono', 'amuleto-moneda', 'amuleto-iman', 'amuleto-reloj']; msjRespuesta = "[ADMIN] Colección max."; break;
     case 'RESET': dulces = 0; coleccion = ['tema-default']; logros = []; carrito = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; pistasReveladas = []; codigosUsados = []; halloweenReclamado = false; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Cuenta a cero."; colorRespuesta = "var(--pumpkin)"; break;
     case '24H': ataudTiempo = Date.now() - 86400000; msjRespuesta = "[ADMIN] Reloj adelantado."; actualizarUI(); if(document.getElementById('modal-ataud').classList.contains('activo')) renderizarGrillaAtaud(); break;
     case 'RESETALL':
@@ -1287,10 +1287,10 @@ setInterval(() => {
         document.body.appendChild(wrapper); setTimeout(() => wrapper.style.opacity = '0.7', 100); setTimeout(() => wrapper.style.opacity = '0', 2000); setTimeout(() => wrapper.remove(), 4000); 
     } 
     else if(temaActivo === 'tema-sangre') { 
-        wrapper.innerHTML = rand > 0.5 ? '🩸' : '💀'; 
+        wrapper.innerHTML = '🩸'; 
         wrapper.style.fontSize = Math.floor(Math.random() * 1.5 + 1) + 'rem';
         wrapper.style.top = '-10vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; 
-        if(wrapper.innerHTML === '🩸') { wrapper.style.filter = 'brightness(0) drop-shadow(0 0 12px #cc0000)'; }
+        wrapper.style.filter = 'brightness(0) drop-shadow(0 0 12px #cc0000)';
         wrapper.style.transition = 'transform 3s linear, opacity 1s'; wrapper.style.opacity = '0.8'; 
         document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateY(110vh)', 100); setTimeout(() => wrapper.remove(), 3200); 
     }
@@ -1308,25 +1308,59 @@ setInterval(() => {
         document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = `translateY(-60vh) translateX(${Math.random() > 0.5 ? 50 : -50}px)`, 100); setTimeout(() => wrapper.style.opacity = '0', 3000); setTimeout(() => wrapper.remove(), 4200); 
     }
     else if(temaActivo === 'tema-batman') { 
-        if (rand > 0.3) { wrapper.innerHTML = '🦇'; wrapper.style.fontSize = Math.floor(Math.random() * 4 + 5) + 'rem'; wrapper.style.filter = 'brightness(0)'; }
-        else { wrapper.innerHTML = '✨'; wrapper.style.fontSize = Math.floor(Math.random() * 1 + 1) + 'rem'; wrapper.style.color = 'white'; wrapper.style.textShadow = '0 0 15px white'; }
+        wrapper.innerHTML = '🦇'; wrapper.style.fontSize = Math.floor(Math.random() * 5 + 4) + 'rem'; 
+        wrapper.style.filter = 'brightness(0)';
         wrapper.style.top = Math.floor(Math.random() * 80) + 'vh'; wrapper.style.left = '-20vw'; 
-        wrapper.style.transition = 'transform 10s linear, opacity 2s'; wrapper.style.opacity = '0.8'; 
+        wrapper.style.transition = 'transform ' + (Math.random() * 5 + 5) + 's linear, opacity 2s'; wrapper.style.opacity = '0.8'; 
         document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateX(130vw) scale(1.5)', 100); setTimeout(() => wrapper.remove(), 10200); 
     }
     else if(temaActivo === 'tema-brujeria') { 
-        wrapper.innerHTML = rand > 0.5 ? '🫧' : '🟢'; 
+        if (rand > 0.5) {
+            wrapper.innerHTML = '🫧'; 
+            wrapper.style.filter = 'drop-shadow(0 0 8px #b300ff) hue-rotate(270deg)';
+        } else {
+            wrapper.innerHTML = '•'; 
+            wrapper.style.color = '#d896ff';
+            wrapper.style.textShadow = '0 0 5px #b300ff';
+        }
         wrapper.style.fontSize = Math.floor(Math.random() * 1.5 + 1) + 'rem';
         wrapper.style.top = '110vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; 
-        wrapper.style.textShadow = '0 0 10px rgba(0,255,204,0.8)'; wrapper.style.transition = 'transform 5s ease-in, opacity 1s'; wrapper.style.opacity = '0.7'; 
+        wrapper.style.transition = 'transform 5s ease-in, opacity 1s'; wrapper.style.opacity = '0.7'; 
         document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = `translateY(-120vh) translateX(${Math.random() > 0.5 ? 30 : -30}px)`, 100); setTimeout(() => wrapper.style.opacity = '0', 4000); setTimeout(() => wrapper.remove(), 5200); 
     }
-    else if(temaActivo === 'tema-espectro') { 
-        wrapper.innerHTML = rand > 0.4 ? '👻' : '🩵'; 
-        wrapper.style.fontSize = Math.floor(Math.random() * 2 + 1) + 'rem';
-        wrapper.style.top = Math.floor(Math.random() * 100) + 'vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; 
-        wrapper.style.textShadow = '0 0 15px rgba(0,255,255,0.8)'; wrapper.style.transition = 'opacity 3s ease'; wrapper.style.opacity = '0';
-        document.body.appendChild(wrapper); setTimeout(() => wrapper.style.opacity = '0.6', 100); setTimeout(() => wrapper.style.opacity = '0', 2500); setTimeout(() => wrapper.remove(), 3500); 
+    else if(temaActivo === 'tema-spectro') { 
+        if (rand > 0.3) {
+            wrapper.innerHTML = Math.floor(Math.random() * 10).toString();
+            wrapper.style.color = '#00ffff';
+            wrapper.style.textShadow = '0 0 10px #00ffff';
+            wrapper.style.fontFamily = 'monospace';
+            wrapper.style.fontWeight = 'bold';
+            wrapper.style.fontSize = Math.floor(Math.random() * 1.5 + 1) + 'rem';
+            let subiendo = Math.random() > 0.5;
+            if (subiendo) {
+                wrapper.style.top = '110vh';
+                wrapper.style.transition = 'transform 4s linear, opacity 1s'; wrapper.style.opacity = '0.8';
+                document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateY(-120vh)', 100); setTimeout(() => wrapper.remove(), 4200);
+            } else {
+                wrapper.style.top = '-10vh';
+                wrapper.style.transition = 'transform 4s linear, opacity 1s'; wrapper.style.opacity = '0.8';
+                document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateY(120vh)', 100); setTimeout(() => wrapper.remove(), 4200);
+            }
+            wrapper.style.left = Math.floor(Math.random() * 100) + 'vw';
+        } else {
+            wrapper.innerHTML = '■';
+            wrapper.style.color = '#00ffff';
+            wrapper.style.textShadow = '0 0 15px #00ffff';
+            wrapper.style.fontSize = Math.floor(Math.random() * 1 + 0.5) + 'rem';
+            wrapper.style.top = Math.floor(Math.random() * 100) + 'vh';
+            wrapper.style.left = Math.floor(Math.random() * 100) + 'vw';
+            wrapper.style.opacity = '0';
+            wrapper.style.transition = 'opacity 1s ease';
+            document.body.appendChild(wrapper);
+            setTimeout(() => wrapper.style.opacity = '0.8', 100);
+            setTimeout(() => wrapper.style.opacity = '0', 1500);
+            setTimeout(() => wrapper.remove(), 2500);
+        }
     }
     else if(temaActivo === 'tema-medianoche') { 
         wrapper.innerHTML = rand > 0.7 ? '🌙' : '⭐'; 
@@ -1336,13 +1370,15 @@ setInterval(() => {
         document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = `translateY(110vh) translateX(-20vw)`, 100); setTimeout(() => wrapper.remove(), 4200); 
     }
     else if(temaActivo === 'tema-otono') { 
-        wrapper.innerHTML = rand > 0.5 ? '🍁' : '💨'; 
+        wrapper.innerHTML = '🍁'; 
         wrapper.style.fontSize = Math.floor(Math.random() * 2 + 1) + 'rem';
+        let hueRotation = Math.floor(Math.random() * 90 - 30);
+        wrapper.style.filter = `drop-shadow(0 0 5px rgba(255,140,0,0.5)) hue-rotate(${hueRotation}deg)`;
         wrapper.style.top = '-10vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; 
-        wrapper.style.textShadow = '0 0 5px rgba(255,140,0,0.5)'; wrapper.style.transition = 'transform 5s ease-in-out, opacity 1s'; wrapper.style.opacity = '0.8'; 
-        document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = `translateY(110vh) translateX(${Math.random() > 0.5 ? 50 : -50}vw) rotate(360deg)`, 100); setTimeout(() => wrapper.remove(), 5200); 
+        wrapper.style.transition = 'transform 5s ease-in-out, opacity 1s'; wrapper.style.opacity = '0.8'; 
+        document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = `translateY(110vh) translateX(${Math.random() > 0.5 ? 50 : -50}vw) rotate(${Math.floor(Math.random()*720)}deg)`, 100); setTimeout(() => wrapper.remove(), 5200); 
     }
-}, 1000); 
+}, 500); 
 
 function programarSkullette() {
     let baseTime = coleccion.includes('amuleto-iman') ? 6000 : 15000;
