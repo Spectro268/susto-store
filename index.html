@@ -33,7 +33,7 @@
   --violet: #ff4d6d; 
   --card: #1c0808; 
   --glow: rgba(214, 40, 40, 0.25);
-  --bg-overlay: rgba(20, 5, 5, 0.95);
+  --bg-overlay: rgba(20, 5, 5, 0.88);
   --borde-estilo: solid;
   
   box-sizing: border-box;
@@ -42,15 +42,15 @@
   color-scheme: dark;
 }
 
-/* TEMAS PERSONALIZADOS */
-body.tema-rosa { --bg: #1a0512; --pumpkin: #ff3399; --ember: #990055; --violet: #ff99cc; --card: #2d0a1f; --glow: rgba(255, 51, 153, 0.25); --bg-overlay: rgba(26, 5, 18, 0.95); }
-body.tema-sangre { --bg: #0a0000; --pumpkin: #cc0000; --ember: #660000; --violet: #ff1a1a; --card: #1a0000; --glow: rgba(204, 0, 0, 0.25); --bg-overlay: rgba(5, 0, 0, 0.96); }
-body.tema-momia { --bg: #1a1610; --pumpkin: #d49a6a; --ember: #8b5a2b; --violet: #e6c280; --card: #2b2218; --glow: rgba(212, 154, 106, 0.2); --bg-overlay: rgba(26, 22, 16, 0.95); --borde-estilo: dashed; }
-body.tema-calabaza { --bg: #0a140a; --pumpkin: #ff6600; --ember: #cc5200; --violet: #00b33c; --card: #0f1f0f; --glow: rgba(255, 102, 0, 0.25); --bg-overlay: rgba(10, 20, 10, 0.95); }
-body.tema-brujeria { --bg: #0a0014; --pumpkin: #b300ff; --ember: #4d0066; --violet: #d896ff; --card: #140028; --glow: rgba(179, 0, 255, 0.25); --bg-overlay: rgba(10, 0, 20, 0.95); }
-body.tema-spectro { --bg: #050a14; --pumpkin: #00ffff; --ember: #005580; --violet: #cccccc; --card: #0a101f; --glow: rgba(0, 255, 255, 0.25); --bg-overlay: rgba(5, 10, 20, 0.95); }
-body.tema-medianoche { --bg: #05051a; --pumpkin: #ffd700; --ember: #000066; --violet: #4169e1; --card: #0a0a29; --glow: rgba(255, 215, 0, 0.25); --bg-overlay: rgba(5, 5, 26, 0.95); }
-body.tema-otono { --bg: #1a0a00; --pumpkin: #ff8c00; --ember: #8b4500; --violet: #cd853f; --card: #291400; --glow: rgba(255, 140, 0, 0.25); --bg-overlay: rgba(26, 10, 0, 0.95); }
+/* TEMAS PERSONALIZADOS (Opacidades restauradas para mejor visibilidad) */
+body.tema-rosa { --bg: #1a0512; --pumpkin: #ff3399; --ember: #990055; --violet: #ff99cc; --card: #2d0a1f; --glow: rgba(255, 51, 153, 0.25); --bg-overlay: rgba(26, 5, 18, 0.88); }
+body.tema-sangre { --bg: #0a0000; --pumpkin: #cc0000; --ember: #660000; --violet: #ff1a1a; --card: #1a0000; --glow: rgba(204, 0, 0, 0.25); --bg-overlay: rgba(10, 0, 0, 0.88); }
+body.tema-momia { --bg: #1a1610; --pumpkin: #d49a6a; --ember: #8b5a2b; --violet: #e6c280; --card: #2b2218; --glow: rgba(212, 154, 106, 0.2); --bg-overlay: rgba(26, 22, 16, 0.88); --borde-estilo: dashed; }
+body.tema-calabaza { --bg: #0a140a; --pumpkin: #ff6600; --ember: #cc5200; --violet: #00b33c; --card: #0f1f0f; --glow: rgba(255, 102, 0, 0.25); --bg-overlay: rgba(10, 20, 10, 0.88); }
+body.tema-brujeria { --bg: #0a0014; --pumpkin: #b300ff; --ember: #4d0066; --violet: #d896ff; --card: #140028; --glow: rgba(179, 0, 255, 0.25); --bg-overlay: rgba(10, 0, 20, 0.88); }
+body.tema-spectro { --bg: #050a14; --pumpkin: #00ffff; --ember: #005580; --violet: #cccccc; --card: #0a101f; --glow: rgba(0, 255, 255, 0.25); --bg-overlay: rgba(5, 10, 20, 0.88); }
+body.tema-medianoche { --bg: #05051a; --pumpkin: #ffd700; --ember: #000066; --violet: #4169e1; --card: #0a0a29; --glow: rgba(255, 215, 0, 0.25); --bg-overlay: rgba(5, 5, 26, 0.88); }
+body.tema-otono { --bg: #1a0a00; --pumpkin: #ff8c00; --ember: #8b4500; --violet: #cd853f; --card: #291400; --glow: rgba(255, 140, 0, 0.25); --bg-overlay: rgba(26, 10, 0, 0.88); }
 
 /* TEMA BATMAN */
 body.tema-batman { 
@@ -60,7 +60,7 @@ body.tema-batman {
     --violet: #888888; 
     --card: #111111; 
     --glow: rgba(255, 255, 255, 0.15); 
-    --bg-overlay: rgba(0, 0, 0, 0.98); 
+    --bg-overlay: rgba(0, 0, 0, 0.92); 
 }
 body.tema-batman .btn-accion, 
 body.tema-batman .btn-cerrar-modal { color: #000000 !important; font-weight: 900; }
@@ -103,7 +103,7 @@ body::before {
 body.tema-rosa::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://www.xtrafondos.com/wallpapers/aesthetic-cielo-rosado-difuminado-y-la-luna-13279.jpg'); }
 body.tema-sangre::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://img2.wallspic.com/previews/1/1/5/6/5/156511/156511-red-magenta-tints_and_shades-art-pattern-x750.jpg'); }
 body.tema-momia::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://cdn.pixabay.com/photo/2017/08/24/05/21/pyramid-2675466_1280.jpg'); }
-body.tema-calabaza::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://www.xtrafondos.com/wallpapers/halloween-11749.jpg'); }
+body.tema-calabaza::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://www.xtrafondos.com/wallpapers/calabaza-como-bruja-para-halloween-3898.jpg'); }
 body.tema-batman::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.hdqwalls.com/wallpapers/absolute-batman-iw.jpg'); }
 body.tema-brujeria::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.hdqwalls.com/wallpapers/pink-moon-over-the-pacific-im.jpg'); }
 body.tema-spectro::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://www.wallpaperalchemy.com/storage/wallpapers/2307/windows-11-blue-bloom-abstract-4k-wallpaper.jpg'); }
@@ -145,9 +145,9 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .btn-col { background: var(--card); border: 1px var(--borde-estilo) var(--pumpkin); color: var(--pumpkin); font-weight: 800; padding: 8px 20px; border-radius: 999px; text-decoration: none; cursor: pointer; transition: all 0.2s; white-space: nowrap; -webkit-tap-highlight-color: transparent;}
 .btn-col:hover { background: var(--pumpkin); color: #000; }
 
-.btn-icono { background: transparent; border: none; cursor: pointer; color: var(--ink); padding: 0; min-width: 40px; min-height: 40px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; font-size: 1.6rem; -webkit-tap-highlight-color: transparent; overflow: visible;}
+.btn-icono { background: transparent; border: none; cursor: pointer; color: var(--ink); padding: 0; display: flex; align-items: center; justify-content: center; transition: all 0.3s; font-size: 1.6rem; -webkit-tap-highlight-color: transparent; }
 .btn-icono:hover { color: var(--pumpkin); filter: drop-shadow(0 0 8px var(--glow)); transform: scale(1.1); }
-.btn-icono.tuerca svg { width: 26px; height: 26px; overflow: visible; }
+.btn-icono.tuerca svg { width: 26px; height: 26px; }
 .btn-icono.tuerca:hover svg { animation: spin 2s linear infinite; }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
@@ -207,7 +207,7 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .dia-caja.bloqueado { opacity: 0.5; filter: grayscale(1); }
 @keyframes pulseAtaud { 0% { box-shadow: 0 0 0 0 var(--glow); } 70% { box-shadow: 0 0 0 10px rgba(214, 40, 40, 0); } 100% { box-shadow: 0 0 0 0 rgba(214, 40, 40, 0); } }
 
-/* TOAST (SISTEMA DE COLA Y ESTILO MÓVIL ESTIRADO Y CLICKEABLE) */
+/* TOAST */
 #toast-logro { cursor: pointer; position: fixed; top: 20px; left: 50%; transform: translate(-50%, -20px); opacity: 0; pointer-events: none; background: var(--violet); color: #fff; border-radius: 12px; padding: 15px 20px; display: flex; align-items: center; gap: 15px; font-weight: bold; box-shadow: 0 5px 20px rgba(0,0,0,0.5); z-index: 9999; transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); border: 2px solid #fff; width: 90%; max-width: 400px; text-align: left; -webkit-tap-highlight-color: transparent; }
 #toast-logro.visible { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
 #toast-txt { flex-grow: 1; pointer-events: none; }
@@ -498,11 +498,11 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
       <div class="caja-snack">
           <h3 class="letrero-neon">Neon Coffin Snacks</h3>
           <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-              <button class="btn-accion" onclick="comprarItem(this, 'bonobon', 30, '🍬 Bonobon', 'snack')">Bonobon (30 🍬)</button>
-              <button class="btn-accion" onclick="comprarItem(this, 'chifles', 40, '🥔 Chifles', 'snack')">Chifles (40 🍬)</button>
-              <button class="btn-accion" onclick="comprarItem(this, 'helado', 50, '🍦 Helado', 'snack')">Helado (50 🍬)</button>
-              <button class="btn-accion" onclick="comprarItem(this, 'bebida', 40, '🧃 Bebida', 'snack')">Bebida (40 🍬)</button>
-              <button class="btn-accion" onclick="comprarItem(this, 'carretilla', 60, '🌭 Antojo', 'snack')">Antojo (60 🍬)</button>
+              <button class="btn-accion" onclick="comprarItem('bonobon', 30, '🍬 Bonobon', 'snack')">Bonobon (30 🍬)</button>
+              <button class="btn-accion" onclick="comprarItem('chifles', 40, '🥔 Chifles', 'snack')">Chifles (40 🍬)</button>
+              <button class="btn-accion" onclick="comprarItem('helado', 50, '🍦 Helado', 'snack')">Helado (50 🍬)</button>
+              <button class="btn-accion" onclick="comprarItem('bebida', 40, '🧃 Bebida', 'snack')">Bebida (40 🍬)</button>
+              <button class="btn-accion" onclick="comprarItem('carretilla', 60, '🌭 Antojo', 'snack')">Antojo (60 🍬)</button>
           </div>
       </div>
 
@@ -524,19 +524,19 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
       
       <h3 class="seccion-titulo" style="margin-top: 0;">🎟 Citas VIP</h3>
       <div class="grid" style="margin-bottom: 40px;">
-          <article class="item"><span class="e">🕹️</span><h3>Arcade Solari</h3><button class="btn-accion" onclick="comprarItem(this, 'arcade', 300, 'Arcade Solari', 'cita')">Comprar - 300 🍬</button></article>
-          <article class="item"><span class="e">🍿</span><h3>Cineplanet VIP</h3><button class="btn-accion" onclick="comprarItem(this, 'cine', 250, 'Cineplanet VIP', 'cita')">Comprar - 250 🍬</button></article>
-          <article class="item"><span class="e">🍫</span><h3>Cata a Ciegas</h3><button class="btn-accion" onclick="comprarItem(this, 'cata', 150, 'Cata a Ciegas', 'cita')">Comprar - 150 🍬</button></article>
-          <article class="item"><span class="e">🎨</span><h3>Arte Feo</h3><button class="btn-accion" onclick="comprarItem(this, 'arte', 100, 'Noche Arte Feo', 'cita')">Comprar - 100 🍬</button></article>
-          <article class="item"><span class="e">🍕</span><h3>Pizzería Casera</h3><button class="btn-accion" onclick="comprarItem(this, 'pizza', 200, 'Pizzería Casera', 'cita')">Comprar - 200 🍬</button></article>
+          <article class="item"><span class="e">🕹️</span><h3>Arcade Solari</h3><button class="btn-accion" onclick="comprarItem('arcade', 300, 'Arcade Solari', 'cita')">Comprar - 300 🍬</button></article>
+          <article class="item"><span class="e">🍿</span><h3>Cineplanet VIP</h3><button class="btn-accion" onclick="comprarItem('cine', 250, 'Cineplanet VIP', 'cita')">Comprar - 250 🍬</button></article>
+          <article class="item"><span class="e">🍫</span><h3>Cata a Ciegas</h3><button class="btn-accion" onclick="comprarItem('cata', 150, 'Cata a Ciegas', 'cita')">Comprar - 150 🍬</button></article>
+          <article class="item"><span class="e">🎨</span><h3>Arte Feo</h3><button class="btn-accion" onclick="comprarItem('arte', 100, 'Noche Arte Feo', 'cita')">Comprar - 100 🍬</button></article>
+          <article class="item"><span class="e">🍕</span><h3>Pizzería Casera</h3><button class="btn-accion" onclick="comprarItem('pizza', 200, 'Pizzería Casera', 'cita')">Comprar - 200 🍬</button></article>
       </div>
 
       <h3 class="seccion-titulo" style="margin-top: 0;">💖 Gestos Especiales</h3>
       <div class="grid">
-          <article class="item"><span class="e">💆‍♀️</span><h3>Masaje VIP</h3><button class="btn-accion" onclick="comprarItem(this, 'masaje', 200, 'Masaje VIP', 'gesto')">Comprar - 200 🍬</button></article>
-          <article class="item"><span class="e">🧁</span><h3>Repostero Novato</h3><button class="btn-accion" onclick="comprarItem(this, 'postre', 150, 'Repostero Novato', 'gesto')">Comprar - 150 🍬</button></article>
-          <article class="item"><span class="e">☕</span><h3>Desayuno Distancia</h3><button class="btn-accion" onclick="comprarItem(this, 'desayuno', 180, 'Desayuno Delivery', 'gesto')">Comprar - 180 🍬</button></article>
-          <article class="item"><span class="e">🕊️</span><h3>Pase Anti-Enojo</h3><button class="btn-accion" onclick="comprarItem(this, 'enojo', 100, 'Pase Anti-Enojo', 'gesto')">Comprar - 100 🍬</button></article>
+          <article class="item"><span class="e">💆‍♀️</span><h3>Masaje VIP</h3><button class="btn-accion" onclick="comprarItem('masaje', 200, 'Masaje VIP', 'gesto')">Comprar - 200 🍬</button></article>
+          <article class="item"><span class="e">🧁</span><h3>Repostero Novato</h3><button class="btn-accion" onclick="comprarItem('postre', 150, 'Repostero Novato', 'gesto')">Comprar - 150 🍬</button></article>
+          <article class="item"><span class="e">☕</span><h3>Desayuno Distancia</h3><button class="btn-accion" onclick="comprarItem('desayuno', 180, 'Desayuno Delivery', 'gesto')">Comprar - 180 🍬</button></article>
+          <article class="item"><span class="e">🕊️</span><h3>Pase Anti-Enojo</h3><button class="btn-accion" onclick="comprarItem('enojo', 100, 'Pase Anti-Enojo', 'gesto')">Comprar - 100 🍬</button></article>
       </div>
   </div>
 
@@ -547,15 +547,15 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
       <div class="grid">
           <article class="item">
               <span class="e">💰</span><h3>Moneda Monstruosa</h3><p>Aumenta un 30% todas tus ganancias de caramelos.</p>
-              <button class="btn-accion btn-tienda-amuleto" data-id="amuleto-moneda" onclick="comprarItem(this, 'amuleto-moneda', 100, 'Moneda Monstruosa', 'amuleto')">Comprar - 100 🍬</button>
+              <button class="btn-accion" onclick="comprarItem('amuleto-moneda', 100, 'Moneda Monstruosa', 'amuleto')">Comprar - 100 🍬</button>
           </article>
           <article class="item">
               <span class="e">🦇</span><h3>Imán de Skullettes</h3><p>Las Skullettes aparecen el doble de rápido.</p>
-              <button class="btn-accion btn-tienda-amuleto" data-id="amuleto-iman" onclick="comprarItem(this, 'amuleto-iman', 150, 'Imán de Skullettes', 'amuleto')">Comprar - 150 🍬</button>
+              <button class="btn-accion" onclick="comprarItem('amuleto-iman', 150, 'Imán de Skullettes', 'amuleto')">Comprar - 150 🍬</button>
           </article>
           <article class="item">
               <span class="e">⏳</span><h3>Reloj Vampírico</h3><p>Reduce la espera del Ataúd Diario a 18 horas.</p>
-              <button class="btn-accion btn-tienda-amuleto" data-id="amuleto-reloj" onclick="comprarItem(this, 'amuleto-reloj', 120, 'Reloj Vampírico', 'amuleto')">Comprar - 120 🍬</button>
+              <button class="btn-accion" onclick="comprarItem('amuleto-reloj', 120, 'Reloj Vampírico', 'amuleto')">Comprar - 120 🍬</button>
           </article>
       </div>
   </div>
@@ -1107,7 +1107,7 @@ function renderizarTiendaTemas() {
     contenedor.innerHTML = '';
     
     Object.keys(catalogo).forEach(id => {
-        if(catalogo[id].tipo === 'tema' && id !== 'tema-default') {
+        if(catalogo[id].tipo === 'tema') {
             const item = catalogo[id];
             let yaComprado = coleccion.includes(id);
             let equipado = (temaActivo === id);
@@ -1380,9 +1380,9 @@ setInterval(() => {
     else if(temaActivo === 'tema-batman') { 
         wrapper.innerHTML = '🦇'; wrapper.style.fontSize = Math.floor(Math.random() * 5 + 4) + 'rem'; 
         wrapper.style.filter = (Math.random() > 0.8) ? 'brightness(0) drop-shadow(0 0 20px rgba(255,255,255,0.8))' : 'brightness(0)';
-        wrapper.style.top = Math.floor(Math.random() * 80) + 'vh'; wrapper.style.left = '-20vw'; 
+        wrapper.style.top = Math.floor(Math.random() * 80) + 'vh'; wrapper.style.left = '-200px'; 
         wrapper.style.transition = 'transform ' + (Math.random() * 5 + 5) + 's linear, opacity 2s'; wrapper.style.opacity = '0.8'; 
-        document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateX(130vw) scale(1.5)', 100); setTimeout(() => wrapper.remove(), 10200); 
+        document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateX(calc(100vw + 300px)) scale(1.5)', 100); setTimeout(() => wrapper.remove(), 10200); 
     }
     else if(temaActivo === 'tema-brujeria') { 
         if (rand > 0.5) {
@@ -1455,7 +1455,7 @@ setInterval(() => {
         wrapper.style.transition = 'transform 5s ease-in-out, opacity 1s'; wrapper.style.opacity = '0.8'; 
         document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = `translateY(110vh) translateX(${Math.random() > 0.5 ? 50 : -50}vw) rotate(${Math.floor(Math.random()*720)}deg)`, 100); setTimeout(() => wrapper.remove(), 5200); 
     }
-}, 500); 
+}, 1800); 
 
 function programarSkullette() {
     let baseTime = coleccion.includes('amuleto-iman') ? 6000 : 15000;
