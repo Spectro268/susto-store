@@ -33,7 +33,7 @@
   --violet: #ff4d6d; 
   --card: #1c0808; 
   --glow: rgba(214, 40, 40, 0.25);
-  --bg-overlay: rgba(20, 5, 5, 0.88);
+  --bg-overlay: rgba(20, 5, 5, 0.95);
   --borde-estilo: solid;
   
   box-sizing: border-box;
@@ -43,14 +43,14 @@
 }
 
 /* TEMAS PERSONALIZADOS */
-body.tema-rosa { --bg: #1a0512; --pumpkin: #ff3399; --ember: #990055; --violet: #ff99cc; --card: #2d0a1f; --glow: rgba(255, 51, 153, 0.25); --bg-overlay: rgba(26, 5, 18, 0.88); }
-body.tema-sangre { --bg: #0a0000; --pumpkin: #cc0000; --ember: #660000; --violet: #ff1a1a; --card: #1a0000; --glow: rgba(204, 0, 0, 0.25); --bg-overlay: rgba(10, 0, 0, 0.92); }
-body.tema-momia { --bg: #1a1610; --pumpkin: #d49a6a; --ember: #8b5a2b; --violet: #e6c280; --card: #2b2218; --glow: rgba(212, 154, 106, 0.2); --bg-overlay: rgba(26, 22, 16, 0.88); --borde-estilo: dashed; }
-body.tema-calabaza { --bg: #0a140a; --pumpkin: #ff6600; --ember: #cc5200; --violet: #00b33c; --card: #0f1f0f; --glow: rgba(255, 102, 0, 0.25); --bg-overlay: rgba(10, 20, 10, 0.88); }
-body.tema-brujeria { --bg: #0a0014; --pumpkin: #b300ff; --ember: #4d0066; --violet: #d896ff; --card: #140028; --glow: rgba(179, 0, 255, 0.25); --bg-overlay: rgba(10, 0, 20, 0.88); }
-body.tema-spectro { --bg: #050a14; --pumpkin: #00ffff; --ember: #005580; --violet: #cccccc; --card: #0a101f; --glow: rgba(0, 255, 255, 0.25); --bg-overlay: rgba(5, 10, 20, 0.88); }
-body.tema-medianoche { --bg: #05051a; --pumpkin: #ffd700; --ember: #000066; --violet: #4169e1; --card: #0a0a29; --glow: rgba(255, 215, 0, 0.25); --bg-overlay: rgba(5, 5, 26, 0.88); }
-body.tema-otono { --bg: #1a0a00; --pumpkin: #ff8c00; --ember: #8b4500; --violet: #cd853f; --card: #291400; --glow: rgba(255, 140, 0, 0.25); --bg-overlay: rgba(26, 10, 0, 0.88); }
+body.tema-rosa { --bg: #1a0512; --pumpkin: #ff3399; --ember: #990055; --violet: #ff99cc; --card: #2d0a1f; --glow: rgba(255, 51, 153, 0.25); --bg-overlay: rgba(26, 5, 18, 0.95); }
+body.tema-sangre { --bg: #0a0000; --pumpkin: #cc0000; --ember: #660000; --violet: #ff1a1a; --card: #1a0000; --glow: rgba(204, 0, 0, 0.25); --bg-overlay: rgba(5, 0, 0, 0.96); }
+body.tema-momia { --bg: #1a1610; --pumpkin: #d49a6a; --ember: #8b5a2b; --violet: #e6c280; --card: #2b2218; --glow: rgba(212, 154, 106, 0.2); --bg-overlay: rgba(26, 22, 16, 0.95); --borde-estilo: dashed; }
+body.tema-calabaza { --bg: #0a140a; --pumpkin: #ff6600; --ember: #cc5200; --violet: #00b33c; --card: #0f1f0f; --glow: rgba(255, 102, 0, 0.25); --bg-overlay: rgba(10, 20, 10, 0.95); }
+body.tema-brujeria { --bg: #0a0014; --pumpkin: #b300ff; --ember: #4d0066; --violet: #d896ff; --card: #140028; --glow: rgba(179, 0, 255, 0.25); --bg-overlay: rgba(10, 0, 20, 0.95); }
+body.tema-spectro { --bg: #050a14; --pumpkin: #00ffff; --ember: #005580; --violet: #cccccc; --card: #0a101f; --glow: rgba(0, 255, 255, 0.25); --bg-overlay: rgba(5, 10, 20, 0.95); }
+body.tema-medianoche { --bg: #05051a; --pumpkin: #ffd700; --ember: #000066; --violet: #4169e1; --card: #0a0a29; --glow: rgba(255, 215, 0, 0.25); --bg-overlay: rgba(5, 5, 26, 0.95); }
+body.tema-otono { --bg: #1a0a00; --pumpkin: #ff8c00; --ember: #8b4500; --violet: #cd853f; --card: #291400; --glow: rgba(255, 140, 0, 0.25); --bg-overlay: rgba(26, 10, 0, 0.95); }
 
 /* TEMA BATMAN */
 body.tema-batman { 
@@ -60,7 +60,7 @@ body.tema-batman {
     --violet: #888888; 
     --card: #111111; 
     --glow: rgba(255, 255, 255, 0.15); 
-    --bg-overlay: rgba(0, 0, 0, 0.95); 
+    --bg-overlay: rgba(0, 0, 0, 0.98); 
 }
 body.tema-batman .btn-accion, 
 body.tema-batman .btn-cerrar-modal { color: #000000 !important; font-weight: 900; }
@@ -75,7 +75,10 @@ body.tema-batman .ataud-flotante .badge { color: #000000 !important; }
 
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
 *, *::before, *::after { box-sizing: inherit; }
-html, body { overscroll-behavior: none; height: 100%; overflow-x: hidden; }
+
+/* ELIMINAR BARRA DE DESPLAZAMIENTO Y DESBORDAMIENTOS */
+html, body { overscroll-behavior: none; height: 100%; overflow-x: hidden; -ms-overflow-style: none; scrollbar-width: none; }
+::-webkit-scrollbar { display: none; }
 
 /* PROTECCIÓN ANTI-SELECCIÓN GLOBAL */
 body {
@@ -83,6 +86,7 @@ body {
   line-height: 1.6; width: 100vw; max-width: 100%;
   -webkit-user-select: none !important; user-select: none !important; -webkit-touch-callout: none !important;
 }
+/* EXCEPCIÓN PARA INPUTS */
 input { -webkit-user-select: auto !important; user-select: auto !important; }
 
 /* CAPA FANTASMA Y FONDOS DINÁMICOS ONLINE */
@@ -96,13 +100,13 @@ body::before {
   background-size: cover; background-position: center; pointer-events: none; transition: all 0.5s ease;
 }
 
-body.tema-rosa::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.unsplash.com/photo-1508898558411-51201ce38f1b?q=80&w=1080'); }
-body.tema-sangre::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.unsplash.com/photo-1509983611558-9046605d21b5?q=80&w=1080'); }
-body.tema-momia::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.unsplash.com/photo-1534145802283-4a113ec4c8b2?q=80&w=1080'); }
-body.tema-calabaza::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.unsplash.com/photo-1604145559206-e3bce0040e2d?q=80&w=1080'); }
-body.tema-batman::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=1080'); }
-body.tema-brujeria::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.unsplash.com/photo-1511406361295-0a1ff814c0ce?q=80&w=1080'); }
-body.tema-spectro::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1080'); }
+body.tema-rosa::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://www.xtrafondos.com/wallpapers/aesthetic-cielo-rosado-difuminado-y-la-luna-13279.jpg'); }
+body.tema-sangre::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://img2.wallspic.com/previews/1/1/5/6/5/156511/156511-red-magenta-tints_and_shades-art-pattern-x750.jpg'); }
+body.tema-momia::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://cdn.pixabay.com/photo/2017/08/24/05/21/pyramid-2675466_1280.jpg'); }
+body.tema-calabaza::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://www.xtrafondos.com/wallpapers/halloween-11749.jpg'); }
+body.tema-batman::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.hdqwalls.com/wallpapers/absolute-batman-iw.jpg'); }
+body.tema-brujeria::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.hdqwalls.com/wallpapers/pink-moon-over-the-pacific-im.jpg'); }
+body.tema-spectro::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://www.wallpaperalchemy.com/storage/wallpapers/2307/windows-11-blue-bloom-abstract-4k-wallpaper.jpg'); }
 body.tema-medianoche::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=1080'); }
 body.tema-otono::before { background-image: radial-gradient(circle 350px at var(--x, 50vw) var(--y, 50vh), var(--glow), transparent 80%), linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://images.unsplash.com/photo-1507371341162-763b5e419408?q=80&w=1080'); }
 
@@ -129,8 +133,8 @@ a { color: inherit; -webkit-tap-highlight-color: transparent; }
 #btn-boo:hover { transform: scale(1.1); }
 @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
-/* HEADER Y NAVEGACIÓN */
-header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 20px 5vw; border-bottom: 1px solid var(--ember); background: rgba(20, 5, 5, 0.95); backdrop-filter: blur(5px); position: sticky; top: 0; z-index: 100; }
+/* HEADER Y NAVEGACIÓN - ARMONIZADO CON VARIABLE DINÁMICA */
+header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 20px 5vw; border-bottom: 1px solid var(--ember); background: var(--bg-overlay); backdrop-filter: blur(5px); position: sticky; top: 0; z-index: 100; transition: background 0.5s ease; }
 .logo { justify-self: start; font-weight: 900; font-size: 1.5rem; color: var(--pumpkin); text-shadow: 0 0 14px var(--glow); text-decoration: none; cursor: pointer; -webkit-tap-highlight-color: transparent;}
 nav { justify-self: center; display: flex; align-items: center; gap: 24px; font-weight: 500; }
 nav a { text-decoration: none; cursor: pointer; padding: 5px; transition: color 0.2s; -webkit-tap-highlight-color: transparent;}
@@ -141,7 +145,7 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .btn-col { background: var(--card); border: 1px var(--borde-estilo) var(--pumpkin); color: var(--pumpkin); font-weight: 800; padding: 8px 20px; border-radius: 999px; text-decoration: none; cursor: pointer; transition: all 0.2s; white-space: nowrap; -webkit-tap-highlight-color: transparent;}
 .btn-col:hover { background: var(--pumpkin); color: #000; }
 
-.btn-icono { background: transparent; border: none; cursor: pointer; color: var(--ink); padding: 0; min-width: 40px; min-height: 40px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; font-size: 1.6rem; -webkit-tap-highlight-color: transparent;}
+.btn-icono { background: transparent; border: none; cursor: pointer; color: var(--ink); padding: 0; min-width: 40px; min-height: 40px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; font-size: 1.6rem; -webkit-tap-highlight-color: transparent; overflow: visible;}
 .btn-icono:hover { color: var(--pumpkin); filter: drop-shadow(0 0 8px var(--glow)); transform: scale(1.1); }
 .btn-icono.tuerca svg { width: 26px; height: 26px; overflow: visible; }
 .btn-icono.tuerca:hover svg { animation: spin 2s linear infinite; }
@@ -197,8 +201,6 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 
 /* CARRUSEL HORIZONTAL PARA RECOMPENSAS DIARIAS */
 .grid-ataud { display: flex; overflow-x: auto; gap: 15px; margin-top: 20px; padding-bottom: 10px; scroll-snap-type: x mandatory; }
-.grid-ataud::-webkit-scrollbar { height: 8px; }
-.grid-ataud::-webkit-scrollbar-thumb { background: var(--ember); border-radius: 4px; }
 .dia-caja { background: rgba(255,255,255,0.05); border: 1px var(--borde-estilo) var(--ember); border-radius: 10px; padding: 15px 5px; font-weight: bold; position: relative; transition: 0.3s; min-width: 100px; flex-shrink: 0; scroll-snap-align: start; -webkit-tap-highlight-color: transparent; }
 .dia-caja.reclamado { background: var(--violet); border-color: #fff; color: #fff; }
 .dia-caja.actual { border-color: var(--pumpkin); background: rgba(214, 40, 40, 0.2); cursor: pointer; animation: pulseAtaud 2s infinite; }
@@ -217,7 +219,9 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .sub { margin: 0 0 36px; max-width: 55ch; opacity: 0.9; font-size: 1.1rem; }
 .seccion-titulo { color: var(--violet); font-size: 1.5rem; margin-top: 40px; border-bottom: 1px var(--borde-estilo) var(--ember); padding-bottom: 10px; }
 .grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
-.item { background: rgba(28, 8, 8, 0.95); border: 1px var(--borde-estilo) var(--ember); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 10px; transition: border-color .2s, transform .2s; text-align: center; position: relative; overflow: hidden; }
+
+/* TARJETAS ARMONIZADAS CON VARIABLE DINÁMICA */
+.item { background: var(--card); border: 1px var(--borde-estilo) var(--ember); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 10px; transition: border-color .2s, transform .2s, background 0.5s ease; text-align: center; position: relative; overflow: hidden; opacity: 0.95; }
 .item:hover { border-color: var(--pumpkin); transform: translateY(-4px); }
 .item .e { font-size: 3.5rem; line-height: 1; margin-bottom: 10px; }
 .item h3 { margin: 0; font-size: 1.2rem; color: var(--ink); }
@@ -232,12 +236,12 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 
 /* TIENDA Y CARRITO */
 .tienda-header-container { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 15px; margin-bottom: 30px; }
-.btn-carrito-tienda { background: var(--card); border: 2px dashed var(--pumpkin); color: var(--ink); padding: 15px 25px; border-radius: 18px; cursor: pointer; font-size: 1.2rem; font-weight: bold; transition: all 0.3s; display: flex; align-items: center; gap: 10px; font-family: inherit; -webkit-tap-highlight-color: transparent; }
+.btn-carrito-tienda { background: var(--card); border: 2px dashed var(--pumpkin); color: var(--ink); padding: 15px 25px; border-radius: 18px; cursor: pointer; font-size: 1.2rem; font-weight: bold; transition: all 0.3s; display: flex; align-items: center; gap: 10px; font-family: inherit; -webkit-tap-highlight-color: transparent; opacity: 0.95; }
 .btn-carrito-tienda:hover { background: rgba(214, 40, 40, 0.2); transform: scale(1.05); }
 
 .tienda-seccion { display: none; animation: fadeIn 0.4s ease; }
 .tienda-seccion.activa { display: block; }
-.caja-snack { background: var(--card); border: 2px dashed var(--pumpkin); border-radius: 18px; padding: 20px; text-align: center; margin-bottom: 20px; }
+.caja-snack { background: var(--card); border: 2px dashed var(--pumpkin); border-radius: 18px; padding: 20px; text-align: center; margin-bottom: 20px; opacity: 0.95; }
 .letrero-neon { color: var(--pumpkin); font-weight: 900; font-size: 1.5rem; margin: 0 0 15px 0; text-shadow: 0 0 10px var(--glow); }
 
 /* ALINEACIÓN FLEXIBLE PARA PORTALES CON NUEVAS IMÁGENES .JPEG */
@@ -259,7 +263,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .icoffin-inner input { width: 100%; padding: 15px; border-radius: 12px; border: 2px var(--borde-estilo) var(--violet); background: rgba(255, 77, 109, 0.1); color: var(--ink); font-size: 1.2rem; text-transform: uppercase; margin-bottom: 20px; font-family: inherit; text-align: center; outline: none; transition: 0.3s; }
 .icoffin-inner input:focus { background: rgba(255, 77, 109, 0.2); box-shadow: 0 0 10px var(--glow); }
 
-.diario-btn { position: absolute; right: 0; background: rgba(28, 8, 8, 0.8); border: 2px dashed var(--pumpkin); border-radius: 18px; padding: 20px; text-align: center; cursor: pointer; transition: 0.3s; width: 150px; z-index: 1; -webkit-tap-highlight-color: transparent; }
+.diario-btn { position: absolute; right: 0; background: var(--card); border: 2px dashed var(--pumpkin); border-radius: 18px; padding: 20px; text-align: center; cursor: pointer; transition: 0.3s; width: 150px; z-index: 1; -webkit-tap-highlight-color: transparent; opacity: 0.95;}
 .diario-btn:hover { background: rgba(214, 40, 40, 0.2); transform: scale(1.05); }
 
 #overlay-diario { display: none; position: fixed; inset: 0; background: #000; z-index: 300; justify-content: center; align-items: center; color: var(--violet); font-size: 1.5rem; text-align: center; font-style: italic; padding: 20px; opacity: 0; transition: opacity 1.5s; }
@@ -435,7 +439,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
     <span class="moneda-ui">🍬 <span id="ui-dulces">0</span></span>
     <a class="btn-col" onclick="cambiarPagina('sec-coleccion')" id="nav-coleccion">Nuestra Colección</a>
     <button class="btn-icono tuerca" onclick="abrirAjustes()" title="Ajustes">
-      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
     </button>
   </div>
 </header>
@@ -1097,7 +1101,6 @@ function comprarItem(idItem, precio, nombreItem, tipo) {
     }
 }
 
-// Renderizado Inteligente de Temas
 function renderizarTiendaTemas() {
     const contenedor = document.getElementById('grid-tienda-temas');
     if(!contenedor) return;
@@ -1121,26 +1124,6 @@ function renderizarTiendaTemas() {
             contenedor.innerHTML += `<article class="item"><span class="e">${item.icono}</span><h3>${item.nombre}</h3><p>${item.desc}</p>${botonHTML}</article>`;
         }
     });
-}
-
-// Interfaz para amuletos en HTML que usan la nueva firma
-function procesarCompraAmuletoHTML(btn, idItem, precio, nombreItem) {
-    if (dulces < precio) {
-        playSfx('error'); btn.classList.add('error-compra'); const txtAnterior = btn.textContent; btn.textContent = "¡Faltan dulces!";
-        setTimeout(() => { btn.classList.remove('error-compra'); btn.textContent = txtAnterior; }, 800);
-    } else {
-        comprarItem(idItem, precio, nombreItem, 'amuleto');
-    }
-}
-
-// Interfaz para consumibles en HTML que usan la nueva firma
-function procesarCompraConsumibleHTML(btn, idItem, precio, nombreItem, tipo) {
-    if (dulces < precio) {
-        playSfx('error'); btn.classList.add('error-compra'); const txtAnterior = btn.textContent; btn.textContent = "¡Faltan dulces!";
-        setTimeout(() => { btn.classList.remove('error-compra'); btn.textContent = txtAnterior; }, 800);
-    } else {
-        comprarItem(idItem, precio, nombreItem, tipo);
-    }
 }
 
 function abrirCarrito() { document.getElementById('modal-carrito').classList.add('activo'); renderizarCarrito(); }
@@ -1182,6 +1165,7 @@ function confirmarUsoItem() {
 
 function equiparTema(idTema) { 
     temaActivo = idTema; aplicarTemaCSS(temaActivo); actualizarAnimacionInicio(); 
+    document.querySelectorAll('.particula-deco, .estrella-fugaz').forEach(el => el.remove());
     if(idTema === 'tema-rosa') revelarPista('pista_greta');
     if(idTema === 'tema-batman') revelarPista('pista_eduardo');
     if(idTema === 'tema-calabaza') revelarPista('pista_calabaza');
