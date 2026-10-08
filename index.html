@@ -319,12 +319,12 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
       <label style="font-weight: 800; display:block; margin-bottom:5px;">Música Base</label>
       <div class="control-audio">
         <button class="btn-mute" id="btn-mute-musica" onclick="toggleMuteMusica()">🔇</button>
-        <input type="range" id="vol-musica" min="0" max="1" step="0.01" value="0" oninput="cambiarVolumenMusica(this.value)">
+        <input type="range" id="vol-musica" min="0" max="1" step="0.01" value="0.5" oninput="cambiarVolumenMusica(this.value)">
       </div>
       <label style="font-weight: 800; display:block; margin-bottom:5px; margin-top:15px;">Efectos (SFX)</label>
       <div class="control-audio">
         <button class="btn-mute" id="btn-mute-sfx" onclick="toggleMuteSfx()">🔇</button>
-        <input type="range" id="vol-sfx" min="0" max="1" step="0.01" value="0" oninput="cambiarVolumenSfx(this.value)">
+        <input type="range" id="vol-sfx" min="0" max="1" step="0.01" value="0.5" oninput="cambiarVolumenSfx(this.value)">
       </div>
     </div>
     <p id="modo-txt" style="color:var(--violet); font-size:0.8rem; font-weight:bold;"></p>
@@ -422,11 +422,11 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
       <svg class="heart-svg heart-r" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
     </div>
     <p>Un pequeño rincón oscuro creado solo para ti. ¿Te atreves a jugar conmigo antes de que se acabe la noche?</p>
-    <button class="btn-accion" style="border-radius:999px; padding:14px 30px; font-size:1.1rem; margin-bottom: 20px;" onclick="playSfx('exito'); cambiarPagina('sec-juegos')">Comenzar la aventura</button>
+    <button class="btn-accion" style="border-radius:999px; padding:14px 30px; font-size:1.1rem; margin-bottom: 20px;" onclick="cambiarPagina('sec-juegos')">Comenzar la aventura</button>
     <div class="count" id="timer-count" role="timer">
       <div><b id="d">--</b><span>días</span></div><div><b id="h">--</b><span>horas</span></div><div><b id="m">--</b><span>min</span></div><div><b id="s">--</b><span>seg</span></div>
     </div>
-    <button class="btn-accion" id="btn-reclamar-halloween" style="display:none; font-size:1.5rem; padding:15px 40px; margin-top:20px; box-shadow: 0 0 20px var(--pumpkin); animation: pulse 2s infinite;" onclick="reclamarHalloween()">¡Reclamar 100 🍬!</button>
+    <button class="btn-accion" id="btn-reclamar-halloween" style="display:none; font-size:1.5rem; padding:15px 40px; margin-top:36px; box-shadow: 0 0 20px var(--pumpkin); animation: pulse 2s infinite;" onclick="reclamarHalloween()">¡Reclamar 100 🍬!</button>
   </div>
 </main>
 
@@ -477,20 +477,20 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
       </div>
 
       <div class="gd-portal-container">
-          <div class="gd-portal portal-citas-gestos" onclick="abrirSubTienda('tienda-citas-gestos')">
+          <div class="gd-portal portal-citas-gestos" onclick="abrirSubTienda('tienda-citas-gestos', 'ataudIn')">
               <h3>🎟 Citas y Gestos 💖</h3>
           </div>
           <div class="gd-portal portal-amuletos" onclick="abrirSubTienda('tienda-amuletos', 'ataudIn')">
               <h3>🔮 Amuletos Mágicos</h3>
           </div>
-          <div class="gd-portal portal-temas" onclick="abrirSubTienda('tienda-temas')">
+          <div class="gd-portal portal-temas" onclick="abrirSubTienda('tienda-temas', 'ataudIn')">
               <h3>🎨 Temas y Magia (Cosméticos)</h3>
           </div>
       </div>
   </div>
 
   <div id="tienda-citas-gestos" class="tienda-seccion">
-      <button class="btn-volver" onclick="cerrarSubTienda()">⬅ Volver al Bazar</button>
+      <button class="btn-volver" onclick="cerrarSubTienda('ataudOut')">⬅ Volver al Bazar</button>
       
       <h3 class="seccion-titulo" style="margin-top: 0;">🎟 Citas VIP</h3>
       <div class="grid" style="margin-bottom: 40px;">
@@ -531,7 +531,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   </div>
 
   <div id="tienda-temas" class="tienda-seccion">
-      <button class="btn-volver" onclick="cerrarSubTienda()">⬅ Volver al Bazar</button>
+      <button class="btn-volver" onclick="cerrarSubTienda('ataudOut')">⬅ Volver al Bazar</button>
       <h3 class="seccion-titulo" style="margin-top: 0;">🎨 Personalización de la App</h3>
       <div class="grid">
           <article class="item"><span class="e">🦇</span><h3>Tema: Rosa</h3><p>Lluvia de Destellos</p><button class="btn-accion" onclick="comprarItem(this, 'tema-rosa', 20, 'Tema Rosa', 'tema')">Comprar - 20 🍬</button></article>
@@ -672,6 +672,41 @@ const recompensasDiarias = [
 ];
 
 // ========================================================
+// 4. NUEVO SISTEMA DE AUDIO PROFESIONAL
+// ========================================================
+const sfxBases = {
+    'musica': { src: 'musica.mp3', vol: 0.15, audio: new Audio('musica.mp3') },
+    'comprar': { src: 'comprar.mp3', vol: 0.7, audio: new Audio('comprar.mp3') },
+    'ataudIn': { src: 'entrarataud.mp3', vol: 1.0, audio: new Audio('entrarataud.mp3') },
+    'ataudOut': { src: 'salirataud.mp3', vol: 1.0, audio: new Audio('salirataud.mp3') },
+    'ataudPremio': { src: 'recompensaataud.mp3', vol: 1.0, audio: new Audio('recompensaataud.mp3') },
+    'juego': { src: 'entrarjuego.mp3', vol: 0.7, audio: new Audio('entrarjuego.mp3') },
+    'logro': { src: 'logro.mp3', vol: 0.7, audio: new Audio('logro.mp3') },
+    'ticket': { src: 'ticketuse.mp3', vol: 1.0, audio: new Audio('ticketuse.mp3') },
+    'cod1': { src: 'codigo1.mp3', vol: 1.0, audio: new Audio('codigo1.mp3') },
+    'cod2': { src: 'codigo2.mp3', vol: 1.0, audio: new Audio('codigo2.mp3') },
+    'cod3': { src: 'codigo3.mp3', vol: 1.0, audio: new Audio('codigo3.mp3') },
+    'exito': { src: 'exito.mp3', vol: 0.5, audio: new Audio('exito.mp3') },
+    'error': { src: 'error.mp3', vol: 0.5, audio: new Audio('error.mp3') }
+};
+
+Object.values(sfxBases).forEach(s => { s.audio.loop = false; });
+sfxBases['musica'].audio.loop = true;
+
+let masterMusica = 0.5;
+let masterSfx = 0.5;
+let sfxMuted = true;
+let musicaMuted = true;
+
+function playSfx(id) {
+    if (sfxMuted || masterSfx <= 0 || !id) return;
+    let s = sfxBases[id] || sfxBases['exito'];
+    s.audio.volume = Math.min(1.0, masterSfx * s.vol);
+    s.audio.currentTime = 0;
+    s.audio.play().catch(e=>console.log(e));
+}
+
+// ========================================================
 // 3. SINCRONIZACIÓN FIREBASE Y UI
 // ========================================================
 if(database) {
@@ -690,7 +725,14 @@ if(database) {
       pistasReveladas = data.pistasReveladas || [];
       temaActivo = data.temaActivo || 'tema-default';
       halloweenReclamado = data.halloweenReclamado || false;
+      
+      if(data.volMusica !== undefined) masterMusica = data.volMusica;
+      if(data.volSfx !== undefined) masterSfx = data.volSfx;
     }
+    
+    document.getElementById('vol-musica').value = masterMusica;
+    document.getElementById('vol-sfx').value = masterSfx;
+
     if (!coleccion.includes('tema-default')) coleccion.push('tema-default'); 
     aplicarTemaCSS(temaActivo);
     actualizarUI();
@@ -716,82 +758,50 @@ if(database) {
     }, 1500);
 }
 
-// ========================================================
-// 4. NUEVO SISTEMA DE AUDIO PROFESIONAL
-// ========================================================
-const sfxBases = {
-    'musica': { src: 'musica.mp3', vol: 1.0, audio: new Audio('musica.mp3') },
-    'comprar': { src: 'comprar.mp3', vol: 1.0, audio: new Audio('comprar.mp3') },
-    'ataudIn': { src: 'entrarataud.mp3', vol: 1.0, audio: new Audio('entrarataud.mp3') },
-    'ataudOut': { src: 'salirataud.mp3', vol: 1.0, audio: new Audio('salirataud.mp3') },
-    'ataudPremio': { src: 'recompensaataud.mp3', vol: 1.0, audio: new Audio('recompensaataud.mp3') },
-    'juego': { src: 'entrarjuego.mp3', vol: 1.0, audio: new Audio('entrarjuego.mp3') },
-    'logro': { src: 'logro.mp3', vol: 1.0, audio: new Audio('logro.mp3') },
-    'ticket': { src: 'ticketuse.mp3', vol: 1.0, audio: new Audio('ticketuse.mp3') },
-    'cod1': { src: 'codigo1.mp3', vol: 1.0, audio: new Audio('codigo1.mp3') },
-    'cod2': { src: 'codigo2.mp3', vol: 1.0, audio: new Audio('codigo2.mp3') },
-    'cod3': { src: 'codigo3.mp3', vol: 1.0, audio: new Audio('codigo3.mp3') },
-    'exito': { src: 'exito.mp3', vol: 1.0, audio: new Audio('exito.mp3') },
-    'error': { src: 'error.mp3', vol: 1.0, audio: new Audio('error.mp3') }
-};
-
-Object.values(sfxBases).forEach(s => { s.audio.loop = false; });
-sfxBases['musica'].audio.loop = true;
-
-let masterMusica = 0.1;
-let masterSfx = 0.1;
-let sfxMuted = true;
-let musicaMuted = true;
-
-function playSfx(id) {
-    if (sfxMuted || masterSfx <= 0) return;
-    let s = sfxBases[id] || sfxBases['exito'];
-    s.audio.volume = masterSfx * s.vol;
-    s.audio.currentTime = 0;
-    s.audio.play().catch(e=>console.log(e));
-}
-
 function iniciarApp() {
     sfxMuted = false; musicaMuted = false;
-    masterSfx = 0.1; masterMusica = 0.1;
-    document.getElementById('vol-sfx').value = 0.1; document.getElementById('btn-mute-sfx').textContent = '🔊';
-    document.getElementById('vol-musica').value = 0.1; document.getElementById('btn-mute-musica').textContent = '🔊';
+    document.getElementById('btn-mute-sfx').textContent = '🔊';
+    document.getElementById('btn-mute-musica').textContent = '🔊';
 
     const splash = document.getElementById('splash-screen');
     splash.style.pointerEvents = 'none'; splash.style.opacity = '0';
     setTimeout(() => { splash.style.display = 'none'; }, 1500);
     
-    sfxBases['musica'].audio.volume = masterMusica * sfxBases['musica'].vol;
+    sfxBases['musica'].audio.volume = Math.min(1.0, masterMusica * sfxBases['musica'].vol);
     sfxBases['musica'].audio.play().catch(e=>console.log(e));
 }
 
 function toggleMuteMusica() {
     musicaMuted = !musicaMuted; 
     let vol = parseFloat(document.getElementById('vol-musica').value); 
-    if(!musicaMuted && vol === 0) { document.getElementById('vol-musica').value = 0.1; masterMusica = 0.1; }
+    if(!musicaMuted && vol === 0) { document.getElementById('vol-musica').value = 0.5; masterMusica = 0.5; }
     document.getElementById('btn-mute-musica').textContent = musicaMuted ? '🔇' : '🔊'; 
     sfxBases['musica'].audio.muted = musicaMuted;
     if(!musicaMuted) sfxBases['musica'].audio.play().catch(e=>console.log(e)); 
+    guardarDatos();
 }
 
 function cambiarVolumenMusica(valor) { 
     masterMusica = parseFloat(valor);
     if (musicaMuted && masterMusica > 0) toggleMuteMusica(); 
-    sfxBases['musica'].audio.volume = masterMusica * sfxBases['musica'].vol;
+    sfxBases['musica'].audio.volume = Math.min(1.0, masterMusica * sfxBases['musica'].vol);
     if (masterMusica > 0 && sfxBases['musica'].audio.paused) sfxBases['musica'].audio.play().catch(e=>console.log(e)); 
+    guardarDatos();
 }
 
 function toggleMuteSfx() { 
     sfxMuted = !sfxMuted; 
     let vol = parseFloat(document.getElementById('vol-sfx').value); 
-    if(!sfxMuted && vol === 0) { document.getElementById('vol-sfx').value = 0.1; masterSfx = 0.1; }
+    if(!sfxMuted && vol === 0) { document.getElementById('vol-sfx').value = 0.5; masterSfx = 0.5; }
     document.getElementById('btn-mute-sfx').textContent = sfxMuted ? '🔇' : '🔊'; 
     playSfx('exito');
+    guardarDatos();
 }
 
 function cambiarVolumenSfx(valor) { 
     masterSfx = parseFloat(valor);
     if (sfxMuted && masterSfx > 0) toggleMuteSfx(); 
+    guardarDatos();
 }
 
 // Forzar pausa cuando la pestaña se minimiza
@@ -813,7 +823,8 @@ function guardarDatos() {
       dulces: dulces, coleccion: coleccion, logros: logros, carrito: carrito, codigosUsados: codigosUsados,
       ataudDia: ataudDia, ataudTiempo: ataudTiempo, 
       diarioVisto: diarioVisto, pistas: pistas, pistasReveladas: pistasReveladas, temaActivo: temaActivo,
-      halloweenReclamado: halloweenReclamado
+      halloweenReclamado: halloweenReclamado,
+      volMusica: masterMusica, volSfx: masterSfx
     });
   }
   actualizarUI();
@@ -904,7 +915,6 @@ function saltarToast() {
     ocultarToastActual();
 }
 
-
 // ========================================================
 // 6. ATAÚD DE RECOMPENSA
 // ========================================================
@@ -965,8 +975,8 @@ function actualizarTimerAtaud() {
 // ========================================================
 // 7. TIENDA MODULAR Y CARRITO
 // ========================================================
-function abrirSubTienda(idSub, sfx = 'exito') { playSfx(sfx); document.querySelectorAll('.tienda-seccion').forEach(sec => sec.classList.remove('activa')); document.getElementById(idSub).classList.add('activa'); window.scrollTo(0,0); }
-function cerrarSubTienda(sfx = 'exito') { playSfx(sfx); document.querySelectorAll('.tienda-seccion').forEach(sec => sec.classList.remove('activa')); document.getElementById('tienda-main').classList.add('activa'); window.scrollTo(0,0); }
+function abrirSubTienda(idSub, sfx = false) { if(sfx) playSfx(sfx); document.querySelectorAll('.tienda-seccion').forEach(sec => sec.classList.remove('activa')); document.getElementById(idSub).classList.add('activa'); window.scrollTo(0,0); }
+function cerrarSubTienda(sfx = false) { if(sfx) playSfx(sfx); document.querySelectorAll('.tienda-seccion').forEach(sec => sec.classList.remove('activa')); document.getElementById('tienda-main').classList.add('activa'); window.scrollTo(0,0); }
 
 function comprarItem(boton, idItem, precio, nombreItem, tipo) {
     if ((tipo === 'tema' || tipo === 'amuleto') && coleccion.includes(idItem)) { mostrarToast("Ya tienes este ítem en tu colección.", "info"); return; }
@@ -991,7 +1001,7 @@ function comprarItem(boton, idItem, precio, nombreItem, tipo) {
     }
 }
 
-function abrirCarrito() { playSfx('exito'); document.getElementById('modal-carrito').classList.add('activo'); renderizarCarrito(); }
+function abrirCarrito() { document.getElementById('modal-carrito').classList.add('activo'); renderizarCarrito(); }
 function cerrarCarrito() { document.getElementById('modal-carrito').classList.remove('activo'); }
 
 function renderizarCarrito() {
@@ -1007,7 +1017,7 @@ function renderizarCarrito() {
 
 let indexItemEnUso = -1;
 function abrirUsoItem(index) {
-    indexItemEnUso = index; cerrarCarrito(); playSfx('exito');
+    indexItemEnUso = index; cerrarCarrito(); 
     document.getElementById('txt-codigo-generado').innerText = "¿?¿?¿?";
     document.getElementById('btn-copiar-codigo').innerText = "Generar, Copiar y Usar";
     document.getElementById('modal-usar-item').classList.add('activo');
@@ -1067,7 +1077,7 @@ function renderizarColeccionYLogros() {
 // ========================================================
 function abrirDiario() {
   const volSlider = parseFloat(document.getElementById('vol-musica').value);
-  if(!sfxBases['musica'].audio.muted && volSlider > 0) { sfxBases['musica'].audio.volume = masterMusica * sfxBases['musica'].vol * 0.3; }
+  if(!sfxBases['musica'].audio.muted && volSlider > 0) { sfxBases['musica'].audio.volume = Math.min(1.0, masterMusica * sfxBases['musica'].vol * 0.3); }
   if (!diarioVisto) {
     const overlay = document.getElementById('overlay-diario'); overlay.style.display = 'flex'; 
     setTimeout(() => { overlay.style.opacity = '1'; }, 100);
@@ -1079,7 +1089,7 @@ function abrirDiario() {
 function esconderDiario() {
   document.getElementById('modal-diario').classList.remove('activo');
   const volSlider = parseFloat(document.getElementById('vol-musica').value);
-  if(!sfxBases['musica'].audio.muted && volSlider > 0) { sfxBases['musica'].audio.volume = masterMusica * sfxBases['musica'].vol; }
+  if(!sfxBases['musica'].audio.muted && volSlider > 0) { sfxBases['musica'].audio.volume = Math.min(1.0, masterMusica * sfxBases['musica'].vol); }
 }
 
 function renderizarDiario() {
@@ -1113,7 +1123,7 @@ function canjearCodigo() {
     case '24H': ataudTiempo = Date.now() - 86400000; msjRespuesta = "[ADMIN] Reloj adelantado."; actualizarUI(); if(document.getElementById('modal-ataud').classList.contains('activo')) renderizarGrillaAtaud(); break;
     case 'RESETALL':
         if(esAdmin) {
-            database.ref('greta_partida').set({ dulces: 0, coleccion: ['tema-default'], logros: [], carrito: [], codigosUsados: [], ataudDia: 1, ataudTiempo: 0, diarioVisto: false, pistas: [], pistasReveladas: [], temaActivo: 'tema-default', halloweenReclamado: false });
+            database.ref('greta_partida').set({ dulces: 0, coleccion: ['tema-default'], logros: [], carrito: [], codigosUsados: [], ataudDia: 1, ataudTiempo: 0, diarioVisto: false, pistas: [], pistasReveladas: [], temaActivo: 'tema-default', halloweenReclamado: false, volMusica: 0.5, volSfx: 0.5 });
             msjRespuesta = "[ADMIN] greta_partida formateada."; colorRespuesta = "var(--pumpkin)";
         }
         break;
@@ -1264,7 +1274,7 @@ function cambiarPagina(idPagina) {
   document.getElementById(idPagina).classList.add('activa');
   document.querySelectorAll('nav a').forEach(link => link.classList.remove('activo'));
   if(idPagina === 'sec-juegos') document.getElementById('nav-juegos').classList.add('activo');
-  if(idPagina === 'sec-tienda') { document.getElementById('nav-tienda').classList.add('activo'); cerrarSubTienda('exito'); }
+  if(idPagina === 'sec-tienda') { document.getElementById('nav-tienda').classList.add('activo'); cerrarSubTienda(false); }
   if(idPagina === 'sec-codigos') document.getElementById('nav-codigos').classList.add('activo');
   const ataud = document.getElementById('btn-ataud-global');
   if(ataud) { if(idPagina === 'sec-home') { ataud.style.display = 'flex'; } else { ataud.style.display = 'none'; } }
