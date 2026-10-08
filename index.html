@@ -69,7 +69,6 @@ body.tema-batman .btn-carrito-tienda:hover { background: rgba(255,255,255,0.1) !
 body.tema-batman #toast-logro.is-pista,
 body.tema-batman #toast-logro.is-pista #toast-sub,
 body.tema-batman #toast-logro.is-pista #toast-txt { color: #000000 !important; }
-
 body.tema-batman .ataud-flotante .badge { color: #000000 !important; }
 
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
@@ -77,12 +76,14 @@ html { scroll-padding-top: env(safe-area-inset-top, 0px); }
 
 html, body { overscroll-behavior: none; height: 100%; overflow-x: hidden; }
 
+/* PROTECCIÓN ANTI-SELECCIÓN GLOBAL */
 body {
   margin: 0; color: var(--ink); font-family: 'Montserrat', system-ui, sans-serif;
   line-height: 1.6; width: 100vw; max-width: 100%;
-  -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
+  -webkit-user-select: none !important; user-select: none !important; -webkit-touch-callout: none !important;
 }
-input { -webkit-user-select: auto; user-select: auto; }
+/* EXCEPCIÓN PARA INPUTS */
+input { -webkit-user-select: auto !important; user-select: auto !important; }
 
 /* CAPA FANTASMA */
 body::before {
@@ -229,15 +230,15 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .caja-snack { background: var(--card); border: 2px dashed var(--pumpkin); border-radius: 18px; padding: 20px; text-align: center; margin-bottom: 20px; }
 .letrero-neon { color: var(--pumpkin); font-weight: 900; font-size: 1.5rem; margin: 0 0 15px 0; text-shadow: 0 0 10px var(--glow); }
 
-/* ALINEACIÓN FLEXIBLE PARA PORTALES */
+/* ALINEACIÓN FLEXIBLE PARA PORTALES CON NUEVAS IMÁGENES .JPEG */
 .gd-portal-container { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); margin-bottom: 20px; }
 .gd-portal { border: 2px var(--borde-estilo) var(--violet); border-radius: 18px; padding: 60px 20px; cursor: pointer; text-align: center; transition: all 0.3s; position: relative; overflow: hidden; background-size: cover; background-position: center; -webkit-tap-highlight-color: transparent; }
 .gd-portal:hover { transform: translateY(-5px); border-color: var(--pumpkin); box-shadow: 0 10px 20px var(--glow); filter: brightness(1.2); }
 .gd-portal h3 { margin: 0; font-size: 1.8rem; color: #fff; position: relative; z-index: 2; text-shadow: 0 0 10px rgba(0,0,0,0.8); }
 
-.portal-citas-gestos { background-image: linear-gradient(rgba(20,5,5,0.7), rgba(20,5,5,0.7)), url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600'); }
-.portal-amuletos { background-image: linear-gradient(rgba(20,5,5,0.7), rgba(20,5,5,0.7)), url('https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=600'); }
-.portal-temas { background-image: linear-gradient(rgba(20,5,5,0.7), rgba(20,5,5,0.7)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600'); }
+.portal-citas-gestos { background-image: linear-gradient(rgba(20,5,5,0.7), rgba(20,5,5,0.7)), url('citasimagen.jpeg'); }
+.portal-amuletos { background-image: linear-gradient(rgba(20,5,5,0.7), rgba(20,5,5,0.7)), url('amuletosimagen.jpeg'); }
+.portal-temas { background-image: linear-gradient(rgba(20,5,5,0.7), rgba(20,5,5,0.7)), url('temas.jpeg'); }
 .btn-volver { background: transparent; color: var(--ink); border: 1px var(--borde-estilo) var(--ember); padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-bottom: 20px; font-weight: bold; font-size: 1rem; transition: 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent; }
 .btn-volver:hover { background: var(--ember); color: #fff; }
 
@@ -299,9 +300,6 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 
 <div class="bats" id="bats-clasicos" aria-hidden="true"><span class="bat">🦇</span><span class="bat">🦇</span><span class="bat">🦇</span></div>
 <div id="fade-overlay"></div>
-
-<!-- AUDIOS -->
-<audio id="audio-bg" loop><source src="musica.mp3" type="audio/mpeg"></audio>
 
 <!-- TOAST LOGRO -->
 <div id="toast-logro" onclick="saltarToast()" title="Haz clic para cerrar esta notificación">
@@ -424,10 +422,11 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
       <svg class="heart-svg heart-r" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
     </div>
     <p>Un pequeño rincón oscuro creado solo para ti. ¿Te atreves a jugar conmigo antes de que se acabe la noche?</p>
-    <button class="btn-accion" style="border-radius:999px; padding:14px 30px; font-size:1.1rem; margin-bottom: 20px;" onclick="reproducirSonido(sfxExito); cambiarPagina('sec-juegos')">Comenzar la aventura</button>
-    <div class="count" role="timer">
+    <button class="btn-accion" style="border-radius:999px; padding:14px 30px; font-size:1.1rem; margin-bottom: 20px;" onclick="playSfx('exito'); cambiarPagina('sec-juegos')">Comenzar la aventura</button>
+    <div class="count" id="timer-count" role="timer">
       <div><b id="d">--</b><span>días</span></div><div><b id="h">--</b><span>horas</span></div><div><b id="m">--</b><span>min</span></div><div><b id="s">--</b><span>seg</span></div>
     </div>
+    <button class="btn-accion" id="btn-reclamar-halloween" style="display:none; font-size:1.5rem; padding:15px 40px; margin-top:20px; box-shadow: 0 0 20px var(--pumpkin); animation: pulse 2s infinite;" onclick="reclamarHalloween()">¡Reclamar 100 🍬!</button>
   </div>
 </main>
 
@@ -481,7 +480,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
           <div class="gd-portal portal-citas-gestos" onclick="abrirSubTienda('tienda-citas-gestos')">
               <h3>🎟 Citas y Gestos 💖</h3>
           </div>
-          <div class="gd-portal portal-amuletos" onclick="abrirSubTienda('tienda-amuletos')">
+          <div class="gd-portal portal-amuletos" onclick="abrirSubTienda('tienda-amuletos', 'ataudIn')">
               <h3>🔮 Amuletos Mágicos</h3>
           </div>
           <div class="gd-portal portal-temas" onclick="abrirSubTienda('tienda-temas')">
@@ -493,7 +492,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   <div id="tienda-citas-gestos" class="tienda-seccion">
       <button class="btn-volver" onclick="cerrarSubTienda()">⬅ Volver al Bazar</button>
       
-      <h3 class="seccion-titulo" style="margin-top: 0;">🎟️ Citas VIP</h3>
+      <h3 class="seccion-titulo" style="margin-top: 0;">🎟 Citas VIP</h3>
       <div class="grid" style="margin-bottom: 40px;">
           <article class="item"><span class="e">🕹️</span><h3>Arcade Solari</h3><button class="btn-accion" onclick="comprarItem(this, 'arcade', 300, 'Arcade Solari', 'cita')">Comprar - 300 🍬</button></article>
           <article class="item"><span class="e">🍿</span><h3>Cineplanet VIP</h3><button class="btn-accion" onclick="comprarItem(this, 'cine', 250, 'Cineplanet VIP', 'cita')">Comprar - 250 🍬</button></article>
@@ -512,7 +511,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   </div>
 
   <div id="tienda-amuletos" class="tienda-seccion">
-      <button class="btn-volver" onclick="cerrarSubTienda()">⬅ Volver al Bazar</button>
+      <button class="btn-volver" onclick="cerrarSubTienda('ataudOut')">⬅ Volver al Bazar</button>
       <h3 class="seccion-titulo" style="margin-top: 0;">🔮 Amuletos de Poder</h3>
       <p style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 20px;">Mejora tus ganancias y desbloquea ventajas permanentes.</p>
       <div class="grid">
@@ -535,11 +534,11 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
       <button class="btn-volver" onclick="cerrarSubTienda()">⬅ Volver al Bazar</button>
       <h3 class="seccion-titulo" style="margin-top: 0;">🎨 Personalización de la App</h3>
       <div class="grid">
-          <article class="item"><span class="e">🦇</span><h3>Tema: Rosa</h3><p>Lluvia de Destellos</p><button class="btn-accion" onclick="comprarItem(this, 'tema-rosa', 50, 'Tema Rosa', 'tema')">Comprar - 50 🍬</button></article>
-          <article class="item"><span class="e">🩸</span><h3>Tema: Sangre</h3><p>Gotas Cayendo</p><button class="btn-accion" onclick="comprarItem(this, 'tema-sangre', 50, 'Tema Sangre', 'tema')">Comprar - 50 🍬</button></article>
-          <article class="item"><span class="e">🏺</span><h3>Tema: Momia</h3><p>Polvo de Arena</p><button class="btn-accion" onclick="comprarItem(this, 'tema-momia', 50, 'Tema Momia', 'tema')">Comprar - 50 🍬</button></article>
-          <article class="item"><span class="e">🎃</span><h3>Tema: Calabaza</h3><p>Brasas Flotantes</p><button class="btn-accion" onclick="comprarItem(this, 'tema-calabaza', 50, 'Tema Calabaza', 'tema')">Comprar - 50 🍬</button></article>
-          <article class="item"><span class="e">🦇</span><h3>Tema: Batman</h3><p>Tonos Oscuros Puros</p><button class="btn-accion" onclick="comprarItem(this, 'tema-batman', 50, 'Tema Batman', 'tema')">Comprar - 50 🍬</button></article>
+          <article class="item"><span class="e">🦇</span><h3>Tema: Rosa</h3><p>Lluvia de Destellos</p><button class="btn-accion" onclick="comprarItem(this, 'tema-rosa', 20, 'Tema Rosa', 'tema')">Comprar - 20 🍬</button></article>
+          <article class="item"><span class="e">🩸</span><h3>Tema: Sangre</h3><p>Gotas Cayendo</p><button class="btn-accion" onclick="comprarItem(this, 'tema-sangre', 20, 'Tema Sangre', 'tema')">Comprar - 20 🍬</button></article>
+          <article class="item"><span class="e">🏺</span><h3>Tema: Momia</h3><p>Polvo de Arena</p><button class="btn-accion" onclick="comprarItem(this, 'tema-momia', 20, 'Tema Momia', 'tema')">Comprar - 20 🍬</button></article>
+          <article class="item"><span class="e">🎃</span><h3>Tema: Calabaza</h3><p>Brasas Flotantes</p><button class="btn-accion" onclick="comprarItem(this, 'tema-calabaza', 20, 'Tema Calabaza', 'tema')">Comprar - 20 🍬</button></article>
+          <article class="item"><span class="e">🦇</span><h3>Tema: Batman</h3><p>Tonos Oscuros Puros</p><button class="btn-accion" onclick="comprarItem(this, 'tema-batman', 20, 'Tema Batman', 'tema')">Comprar - 20 🍬</button></article>
       </div>
   </div>
 </section>
@@ -604,10 +603,6 @@ if(esAdmin) document.getElementById('modo-txt').textContent = "⚠️ MODO ADMIN
 // ========================================================
 // 2. VARIABLES DE ESTADO Y DATOS
 // ========================================================
-const bgMusic = document.getElementById('audio-bg'); bgMusic.volume = 0; bgMusic.muted = true;
-const sfxExito = new Audio('exito.mp3'); sfxExito.volume = 0; sfxExito.muted = true;
-const sfxError = new Audio('error.mp3'); sfxError.volume = 0; sfxError.muted = true;
-
 let dulces = 0; 
 let coleccion = []; 
 let logros = [];
@@ -618,6 +613,7 @@ let diarioVisto = false;
 let pistas = []; 
 let pistasReveladas = []; 
 let temaActivo = 'tema-default';
+let halloweenReclamado = false;
 let appCargada = false;
 
 const catalogo = {
@@ -693,6 +689,7 @@ if(database) {
       pistas = data.pistas || [];
       pistasReveladas = data.pistasReveladas || [];
       temaActivo = data.temaActivo || 'tema-default';
+      halloweenReclamado = data.halloweenReclamado || false;
     }
     if (!coleccion.includes('tema-default')) coleccion.push('tema-default'); 
     aplicarTemaCSS(temaActivo);
@@ -719,33 +716,104 @@ if(database) {
     }, 1500);
 }
 
+// ========================================================
+// 4. NUEVO SISTEMA DE AUDIO PROFESIONAL
+// ========================================================
+const sfxBases = {
+    'musica': { src: 'musica.mp3', vol: 1.0, audio: new Audio('musica.mp3') },
+    'comprar': { src: 'comprar.mp3', vol: 1.0, audio: new Audio('comprar.mp3') },
+    'ataudIn': { src: 'entrarataud.mp3', vol: 1.0, audio: new Audio('entrarataud.mp3') },
+    'ataudOut': { src: 'salirataud.mp3', vol: 1.0, audio: new Audio('salirataud.mp3') },
+    'ataudPremio': { src: 'recompensaataud.mp3', vol: 1.0, audio: new Audio('recompensaataud.mp3') },
+    'juego': { src: 'entrarjuego.mp3', vol: 1.0, audio: new Audio('entrarjuego.mp3') },
+    'logro': { src: 'logro.mp3', vol: 1.0, audio: new Audio('logro.mp3') },
+    'ticket': { src: 'ticketuse.mp3', vol: 1.0, audio: new Audio('ticketuse.mp3') },
+    'cod1': { src: 'codigo1.mp3', vol: 1.0, audio: new Audio('codigo1.mp3') },
+    'cod2': { src: 'codigo2.mp3', vol: 1.0, audio: new Audio('codigo2.mp3') },
+    'cod3': { src: 'codigo3.mp3', vol: 1.0, audio: new Audio('codigo3.mp3') },
+    'exito': { src: 'exito.mp3', vol: 1.0, audio: new Audio('exito.mp3') },
+    'error': { src: 'error.mp3', vol: 1.0, audio: new Audio('error.mp3') }
+};
+
+Object.values(sfxBases).forEach(s => { s.audio.loop = false; });
+sfxBases['musica'].audio.loop = true;
+
+let masterMusica = 0.1;
+let masterSfx = 0.1;
+let sfxMuted = true;
+let musicaMuted = true;
+
+function playSfx(id) {
+    if (sfxMuted || masterSfx <= 0) return;
+    let s = sfxBases[id] || sfxBases['exito'];
+    s.audio.volume = masterSfx * s.vol;
+    s.audio.currentTime = 0;
+    s.audio.play().catch(e=>console.log(e));
+}
+
 function iniciarApp() {
-    sfxExito.muted = false; sfxError.muted = false;
-    sfxExito.volume = 0.1; sfxError.volume = 0.1;
+    sfxMuted = false; musicaMuted = false;
+    masterSfx = 0.1; masterMusica = 0.1;
     document.getElementById('vol-sfx').value = 0.1; document.getElementById('btn-mute-sfx').textContent = '🔊';
+    document.getElementById('vol-musica').value = 0.1; document.getElementById('btn-mute-musica').textContent = '🔊';
 
     const splash = document.getElementById('splash-screen');
     splash.style.pointerEvents = 'none'; splash.style.opacity = '0';
     setTimeout(() => { splash.style.display = 'none'; }, 1500);
     
-    bgMusic.volume = 0; bgMusic.muted = false;
-    document.getElementById('vol-musica').value = 0.1; document.getElementById('btn-mute-musica').textContent = '🔊';
-    bgMusic.play().catch(e=>console.log(e));
-    
-    let currentVol = 0;
-    let fadeAudio = setInterval(() => {
-        if (currentVol < 0.1) { currentVol += 0.01; bgMusic.volume = Math.min(currentVol, 0.1); } 
-        else { clearInterval(fadeAudio); }
-    }, 200);
+    sfxBases['musica'].audio.volume = masterMusica * sfxBases['musica'].vol;
+    sfxBases['musica'].audio.play().catch(e=>console.log(e));
 }
 
+function toggleMuteMusica() {
+    musicaMuted = !musicaMuted; 
+    let vol = parseFloat(document.getElementById('vol-musica').value); 
+    if(!musicaMuted && vol === 0) { document.getElementById('vol-musica').value = 0.1; masterMusica = 0.1; }
+    document.getElementById('btn-mute-musica').textContent = musicaMuted ? '🔇' : '🔊'; 
+    sfxBases['musica'].audio.muted = musicaMuted;
+    if(!musicaMuted) sfxBases['musica'].audio.play().catch(e=>console.log(e)); 
+}
+
+function cambiarVolumenMusica(valor) { 
+    masterMusica = parseFloat(valor);
+    if (musicaMuted && masterMusica > 0) toggleMuteMusica(); 
+    sfxBases['musica'].audio.volume = masterMusica * sfxBases['musica'].vol;
+    if (masterMusica > 0 && sfxBases['musica'].audio.paused) sfxBases['musica'].audio.play().catch(e=>console.log(e)); 
+}
+
+function toggleMuteSfx() { 
+    sfxMuted = !sfxMuted; 
+    let vol = parseFloat(document.getElementById('vol-sfx').value); 
+    if(!sfxMuted && vol === 0) { document.getElementById('vol-sfx').value = 0.1; masterSfx = 0.1; }
+    document.getElementById('btn-mute-sfx').textContent = sfxMuted ? '🔇' : '🔊'; 
+    playSfx('exito');
+}
+
+function cambiarVolumenSfx(valor) { 
+    masterSfx = parseFloat(valor);
+    if (sfxMuted && masterSfx > 0) toggleMuteSfx(); 
+}
+
+// Forzar pausa cuando la pestaña se minimiza
+document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") { sfxBases['musica'].audio.pause(); } 
+    else { if (!musicaMuted && masterMusica > 0) sfxBases['musica'].audio.play().catch(e=>console.log(e)); }
+});
+window.addEventListener('pagehide', () => sfxBases['musica'].audio.pause());
+window.addEventListener('blur', () => sfxBases['musica'].audio.pause());
+window.addEventListener('focus', () => { if (!musicaMuted && masterMusica > 0 && document.visibilityState !== "hidden") sfxBases['musica'].audio.play().catch(e=>console.log(e)); });
+
+// ========================================================
+// 5. DATOS GLOBALES Y LOGROS
+// ========================================================
 function guardarDatos() {
   if (dulces >= 150) checkLogro('ahorro');
   if(database) {
     database.ref(rutaDB).set({ 
       dulces: dulces, coleccion: coleccion, logros: logros, carrito: carrito, codigosUsados: codigosUsados,
       ataudDia: ataudDia, ataudTiempo: ataudTiempo, 
-      diarioVisto: diarioVisto, pistas: pistas, pistasReveladas: pistasReveladas, temaActivo: temaActivo
+      diarioVisto: diarioVisto, pistas: pistas, pistasReveladas: pistasReveladas, temaActivo: temaActivo,
+      halloweenReclamado: halloweenReclamado
     });
   }
   actualizarUI();
@@ -771,7 +839,7 @@ function checkLogro(id) {
     logros.push(id); 
     let ganados = agregarDulces(5); 
     mostrarToast(catalogoLogros[id].nombre, 'logro', ganados);
-    guardarDatos(); reproducirSonido(sfxExito);
+    guardarDatos(); playSfx('logro');
   }
 }
 
@@ -836,25 +904,9 @@ function saltarToast() {
     ocultarToastActual();
 }
 
-// ========================================================
-// 4. LÓGICA DE AUDIO (REFORZADA PARA 2DO PLANO)
-// ========================================================
-function toggleMuteMusica() { bgMusic.muted = !bgMusic.muted; const vol = document.getElementById('vol-musica'); if(!bgMusic.muted && vol.value == 0) { vol.value = 0.1; bgMusic.volume = 0.1; } document.getElementById('btn-mute-musica').textContent = bgMusic.muted ? '🔇' : '🔊'; if(!bgMusic.muted) bgMusic.play().catch(e=>console.log(e)); }
-function cambiarVolumenMusica(valor) { if (bgMusic.muted && valor > 0) toggleMuteMusica(); bgMusic.volume = valor; if (valor > 0 && bgMusic.paused) bgMusic.play().catch(e=>console.log(e)); }
-function toggleMuteSfx() { sfxExito.muted = !sfxExito.muted; sfxError.muted = !sfxError.muted; const vol = document.getElementById('vol-sfx'); if(!sfxExito.muted && vol.value == 0) { vol.value = 0.1; sfxExito.volume = 0.1; sfxError.volume = 0.1; } document.getElementById('btn-mute-sfx').textContent = sfxExito.muted ? '🔇' : '🔊'; if(!sfxExito.muted) reproducirSonido(sfxExito); }
-function cambiarVolumenSfx(valor) { if (sfxExito.muted && valor > 0) toggleMuteSfx(); sfxExito.volume = valor; sfxError.volume = valor; }
-function reproducirSonido(audio) { if(!audio.muted && audio.volume > 0) { audio.currentTime = 0; audio.play().catch(e=>console.log(e)); } }
-
-document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "hidden") { bgMusic.pause(); } 
-    else { if (!bgMusic.muted && document.getElementById('vol-musica').value > 0) bgMusic.play().catch(e=>console.log(e)); }
-});
-window.addEventListener('pagehide', () => bgMusic.pause());
-window.addEventListener('blur', () => bgMusic.pause());
-window.addEventListener('focus', () => { if (!bgMusic.muted && document.getElementById('vol-musica').value > 0 && document.visibilityState !== "hidden") bgMusic.play().catch(e=>console.log(e)); });
 
 // ========================================================
-// 5. ATAÚD DE RECOMPENSA
+// 6. ATAÚD DE RECOMPENSA
 // ========================================================
 function getTiempoEsperaAtaud() { return coleccion.includes('amuleto-reloj') ? 64800000 : 86400000; }
 
@@ -864,8 +916,8 @@ function actualizarEstadoAtaud() {
   else if (listo) { badge.textContent = "¡Caja Lista!"; badge.style.background = "var(--pumpkin)"; } 
   else { badge.textContent = "En espera..."; badge.style.background = "#555"; }
 }
-function abrirAtaud() { document.getElementById('modal-ataud').classList.add('activo'); renderizarGrillaAtaud(); }
-function cerrarAtaud() { document.getElementById('modal-ataud').classList.remove('activo'); }
+function abrirAtaud() { playSfx('ataudIn'); document.getElementById('modal-ataud').classList.add('activo'); renderizarGrillaAtaud(); }
+function cerrarAtaud() { playSfx('ataudOut'); document.getElementById('modal-ataud').classList.remove('activo'); }
 
 function renderizarGrillaAtaud() {
   const grid = document.getElementById('grid-ataud-cajas'); grid.innerHTML = '';
@@ -895,11 +947,8 @@ function reclamarCaja() {
       mostrarToast(`¡Reclamado: ${premio.texto}!`, "logro");
   }
   ataudTiempo = Date.now(); ataudDia++; 
-  
   if (ataudDia > 5) revelarPista('pista_2211'); 
-  
-  guardarDatos(); reproducirSonido(sfxExito); 
-  renderizarGrillaAtaud(); 
+  guardarDatos(); playSfx('ataudPremio'); renderizarGrillaAtaud(); 
 }
 
 function actualizarTimerAtaud() {
@@ -914,15 +963,15 @@ function actualizarTimerAtaud() {
 }
 
 // ========================================================
-// 6. TIENDA MODULAR Y CARRITO
+// 7. TIENDA MODULAR Y CARRITO
 // ========================================================
-function abrirSubTienda(idSub) { document.querySelectorAll('.tienda-seccion').forEach(sec => sec.classList.remove('activa')); document.getElementById(idSub).classList.add('activa'); window.scrollTo(0,0); }
-function cerrarSubTienda() { document.querySelectorAll('.tienda-seccion').forEach(sec => sec.classList.remove('activa')); document.getElementById('tienda-main').classList.add('activa'); window.scrollTo(0,0); }
+function abrirSubTienda(idSub, sfx = 'exito') { playSfx(sfx); document.querySelectorAll('.tienda-seccion').forEach(sec => sec.classList.remove('activa')); document.getElementById(idSub).classList.add('activa'); window.scrollTo(0,0); }
+function cerrarSubTienda(sfx = 'exito') { playSfx(sfx); document.querySelectorAll('.tienda-seccion').forEach(sec => sec.classList.remove('activa')); document.getElementById('tienda-main').classList.add('activa'); window.scrollTo(0,0); }
 
 function comprarItem(boton, idItem, precio, nombreItem, tipo) {
     if ((tipo === 'tema' || tipo === 'amuleto') && coleccion.includes(idItem)) { mostrarToast("Ya tienes este ítem en tu colección.", "info"); return; }
     if (dulces >= precio) {
-        dulces -= precio; reproducirSonido(sfxExito);
+        dulces -= precio; playSfx('comprar');
         
         if (tipo === 'tema' || tipo === 'amuleto') { 
             coleccion.push(idItem); 
@@ -937,12 +986,12 @@ function comprarItem(boton, idItem, precio, nombreItem, tipo) {
             guardarDatos(); mostrarToast(`Compraste: ${nombreItem}. Revisa tu 🛒`, "info"); 
         }
     } else {
-        reproducirSonido(sfxError); boton.classList.add('error-compra'); const txtAnterior = boton.textContent; boton.textContent = "¡Faltan dulces!";
+        playSfx('error'); boton.classList.add('error-compra'); const txtAnterior = boton.textContent; boton.textContent = "¡Faltan dulces!";
         setTimeout(() => { boton.classList.remove('error-compra'); boton.textContent = txtAnterior; }, 800);
     }
 }
 
-function abrirCarrito() { document.getElementById('modal-carrito').classList.add('activo'); renderizarCarrito(); }
+function abrirCarrito() { playSfx('exito'); document.getElementById('modal-carrito').classList.add('activo'); renderizarCarrito(); }
 function cerrarCarrito() { document.getElementById('modal-carrito').classList.remove('activo'); }
 
 function renderizarCarrito() {
@@ -958,7 +1007,7 @@ function renderizarCarrito() {
 
 let indexItemEnUso = -1;
 function abrirUsoItem(index) {
-    indexItemEnUso = index; cerrarCarrito(); 
+    indexItemEnUso = index; cerrarCarrito(); playSfx('exito');
     document.getElementById('txt-codigo-generado').innerText = "¿?¿?¿?";
     document.getElementById('btn-copiar-codigo').innerText = "Generar, Copiar y Usar";
     document.getElementById('modal-usar-item').classList.add('activo');
@@ -971,7 +1020,7 @@ function confirmarUsoItem() {
     const codigoGenerado = "BOO-" + Math.random().toString(36).substr(2, 4).toUpperCase();
     
     carrito[index].codigo = codigoGenerado; carrito[index].usado = true;
-    guardarDatos(); reproducirSonido(sfxExito);
+    guardarDatos(); playSfx('ticket');
     document.getElementById('txt-codigo-generado').innerText = codigoGenerado;
     
     navigator.clipboard.writeText(codigoGenerado).then(() => { document.getElementById('btn-copiar-codigo').innerText = "¡Copiado y Usado!";
@@ -1014,11 +1063,11 @@ function renderizarColeccionYLogros() {
 }
 
 // ========================================================
-// 7. DIARIO Y CÓDIGOS (ANTI-ADIVINACIÓN)
+// 8. DIARIO Y CÓDIGOS (ANTI-ADIVINACIÓN Y ADMIN)
 // ========================================================
 function abrirDiario() {
   const volSlider = parseFloat(document.getElementById('vol-musica').value);
-  if(!bgMusic.muted && volSlider > 0) { bgMusic.volume = volSlider * 0.3; }
+  if(!sfxBases['musica'].audio.muted && volSlider > 0) { sfxBases['musica'].audio.volume = masterMusica * sfxBases['musica'].vol * 0.3; }
   if (!diarioVisto) {
     const overlay = document.getElementById('overlay-diario'); overlay.style.display = 'flex'; 
     setTimeout(() => { overlay.style.opacity = '1'; }, 100);
@@ -1030,7 +1079,7 @@ function abrirDiario() {
 function esconderDiario() {
   document.getElementById('modal-diario').classList.remove('activo');
   const volSlider = parseFloat(document.getElementById('vol-musica').value);
-  if(!bgMusic.muted && volSlider > 0) { bgMusic.volume = volSlider; }
+  if(!sfxBases['musica'].audio.muted && volSlider > 0) { sfxBases['musica'].audio.volume = masterMusica * sfxBases['musica'].vol; }
 }
 
 function renderizarDiario() {
@@ -1056,12 +1105,22 @@ function canjearCodigo() {
   let msjRespuesta = ""; let colorRespuesta = "#4CAF50";
 
   switch(codigo) {
-    case 'GIVE': dulces += 500; msjRespuesta = "[ADMIN] +500 Caramelos."; colorRespuesta = "var(--violet)"; reproducirSonido(sfxExito); break;
+    case 'GIVE': dulces += 500; msjRespuesta = "[ADMIN] +500 Caramelos."; colorRespuesta = "var(--violet)"; playSfx('exito'); break;
     case 'TICKETS': abrirAdminTickets(); msjRespuesta = "[ADMIN] Tickets abiertos."; break;
     case 'CLEANCART': carrito = []; msjRespuesta = "[ADMIN] Carrito vacío."; break;
     case 'UNLOCKTHEMES': coleccion = ['tema-default', 'tema-rosa', 'tema-sangre', 'tema-momia', 'tema-calabaza', 'tema-batman', 'amuleto-moneda', 'amuleto-iman', 'amuleto-reloj']; msjRespuesta = "[ADMIN] Colección max."; break;
-    case 'RESET': dulces = 0; coleccion = ['tema-default']; logros = []; carrito = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; pistasReveladas = []; codigosUsados = []; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Cuenta a cero."; colorRespuesta = "var(--pumpkin)"; break;
+    case 'RESET': dulces = 0; coleccion = ['tema-default']; logros = []; carrito = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; pistasReveladas = []; codigosUsados = []; halloweenReclamado = false; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Cuenta a cero."; colorRespuesta = "var(--pumpkin)"; break;
     case '24H': ataudTiempo = Date.now() - 86400000; msjRespuesta = "[ADMIN] Reloj adelantado."; actualizarUI(); if(document.getElementById('modal-ataud').classList.contains('activo')) renderizarGrillaAtaud(); break;
+    case 'RESETALL':
+        if(esAdmin) {
+            database.ref('greta_partida').set({ dulces: 0, coleccion: ['tema-default'], logros: [], carrito: [], codigosUsados: [], ataudDia: 1, ataudTiempo: 0, diarioVisto: false, pistas: [], pistasReveladas: [], temaActivo: 'tema-default', halloweenReclamado: false });
+            msjRespuesta = "[ADMIN] greta_partida formateada."; colorRespuesta = "var(--pumpkin)";
+        }
+        break;
+    case 'FECHALISTA':
+        activarEventoHalloween(true);
+        msjRespuesta = "[ADMIN] Vista Halloween (20s)."; colorRespuesta = "var(--pumpkin)";
+        break;
   }
 
   if(msjRespuesta !== "") {
@@ -1073,20 +1132,24 @@ function canjearCodigo() {
   if(codigosSecretos[codigo]) {
       const premio = codigosSecretos[codigo];
       if(!pistasReveladas.includes(premio.id)) {
-          msg.style.color = "var(--pumpkin)"; msg.textContent = "Aún no tienes el conocimiento para usar esto..."; reproducirSonido(sfxError);
+          msg.style.color = "var(--pumpkin)"; msg.textContent = "Aún no tienes el conocimiento para usar esto..."; playSfx('error');
       } else if(codigosUsados.includes(codigo)) {
-          msg.style.color = "var(--pumpkin)"; msg.textContent = "Ya resolviste este secreto..."; reproducirSonido(sfxError);
+          msg.style.color = "var(--pumpkin)"; msg.textContent = "Ya resolviste este secreto..."; playSfx('error');
       } else {
           codigosUsados.push(codigo);
           if (!pistas.includes(premio.id)) pistas.push(premio.id); 
           let gananciaExtra = agregarDulces(premio.recompensa);
-          guardarDatos(); input.value = ''; reproducirSonido(sfxExito);
+          guardarDatos(); input.value = ''; 
+          
+          const rng = Math.floor(Math.random() * 3) + 1;
+          playSfx('cod' + rng);
+          
           document.getElementById('icoffin-msg').textContent = premio.msg;
           document.getElementById('icoffin-premio').textContent = gananciaExtra;
           document.getElementById('modal-recompensa-icoffin').classList.add('activo');
       }
   } else {
-      msg.style.color = "var(--pumpkin)"; msg.textContent = "Contraseña incorrecta..."; reproducirSonido(sfxError);
+      msg.style.color = "var(--pumpkin)"; msg.textContent = "Contraseña incorrecta..."; playSfx('error');
   }
   setTimeout(() => { msg.textContent = ''; }, 4000);
 }
@@ -1099,7 +1162,42 @@ function abrirAdminTickets() {
 }
 
 // ========================================================
-// 8. ANIMACIONES Y SISTEMA ANTI-LAG (SEGURO ANTI-SPAM)
+// 9. EVENTO HALLOWEEN (RELOJ Y PREMIO)
+// ========================================================
+function activarEventoHalloween(esSimulacion = false) {
+    document.getElementById('timer-count').style.display = 'none';
+    if(!halloweenReclamado || esSimulacion) {
+        let btn = document.getElementById('btn-reclamar-halloween');
+        btn.style.display = 'inline-block';
+        btn.dataset.simulacion = esSimulacion;
+    }
+    if (esSimulacion) {
+        setTimeout(() => {
+            document.getElementById('timer-count').style.display = 'flex';
+            document.getElementById('btn-reclamar-halloween').style.display = 'none';
+        }, 20000);
+    }
+}
+
+function reclamarHalloween() {
+    let btn = document.getElementById('btn-reclamar-halloween');
+    if (btn.dataset.simulacion === 'true') {
+        mostrarToast("Simulación: ¡Reclamaste 100🍬!", "logro");
+        btn.style.display = 'none';
+        return;
+    }
+    if (!halloweenReclamado) {
+        halloweenReclamado = true;
+        agregarDulces(100);
+        guardarDatos();
+        playSfx('ataudPremio');
+        mostrarToast("¡Reclamaste 100🍬!", "logro");
+        btn.style.display = 'none';
+    }
+}
+
+// ========================================================
+// 10. ANIMACIONES Y SISTEMA ANTI-LAG
 // ========================================================
 function abrirAjustes() { checkLogro('config'); document.getElementById('modal-ajustes').classList.add('activo'); }
 function cerrarAjustes() { document.getElementById('modal-ajustes').classList.remove('activo'); }
@@ -1135,7 +1233,7 @@ function programarSkullette() {
             setTimeout(() => { wrapper.style.opacity = '0'; }, 7200); 
             inner.onpointerdown = () => { 
                 checkLogro('skull'); let g = agregarDulces(2); revelarPista('pista_halloween');
-                guardarDatos(); reproducirSonido(sfxExito); wrapper.remove(); 
+                guardarDatos(); playSfx('exito'); wrapper.remove(); 
             };
             setTimeout(() => { if(wrapper.parentNode) wrapper.remove(); }, 8000);
         }
@@ -1149,13 +1247,14 @@ function probarJuego(idJuego) {
     if(juegoEnProgreso) return; 
     juegoEnProgreso = true;
     
-    if(!bgMusic.muted) bgMusic.pause();
+    if(!sfxBases['musica'].audio.muted) sfxBases['musica'].audio.pause();
+    playSfx('juego'); 
     const overlay = document.getElementById('fade-overlay'); overlay.style.opacity = '1';
     
     setTimeout(() => {
         let g = agregarDulces(5); guardarDatos(); mostrarToast(`Iniciando juego: ${idJuego} (+${g}🍬)`, 'info'); 
         overlay.style.opacity = '0'; 
-        if(!bgMusic.muted && document.getElementById('vol-musica').value > 0) { bgMusic.play().catch(e=>console.log(e)); }
+        if(!sfxBases['musica'].audio.muted && document.getElementById('vol-musica').value > 0) { sfxBases['musica'].audio.play().catch(e=>console.log(e)); }
         juegoEnProgreso = false; 
     }, 1500);
 }
@@ -1165,7 +1264,7 @@ function cambiarPagina(idPagina) {
   document.getElementById(idPagina).classList.add('activa');
   document.querySelectorAll('nav a').forEach(link => link.classList.remove('activo'));
   if(idPagina === 'sec-juegos') document.getElementById('nav-juegos').classList.add('activo');
-  if(idPagina === 'sec-tienda') { document.getElementById('nav-tienda').classList.add('activo'); cerrarSubTienda(); }
+  if(idPagina === 'sec-tienda') { document.getElementById('nav-tienda').classList.add('activo'); cerrarSubTienda('exito'); }
   if(idPagina === 'sec-codigos') document.getElementById('nav-codigos').classList.add('activo');
   const ataud = document.getElementById('btn-ataud-global');
   if(ataud) { if(idPagina === 'sec-home') { ataud.style.display = 'flex'; } else { ataud.style.display = 'none'; } }
@@ -1180,7 +1279,15 @@ function cambiarPagina(idPagina) {
   });
   var end=new Date(2026,9,31,18,0,0).getTime();
   function pad(n){return String(n).padStart(2,'0')}
-  function tick(){ var t=Math.max(0,end-Date.now()),s=Math.floor(t/1000); document.getElementById('d').textContent=pad(Math.floor(s/86400)); document.getElementById('h').textContent=pad(Math.floor(s%86400/3600)); document.getElementById('m').textContent=pad(Math.floor(s%3600/60)); document.getElementById('s').textContent=pad(s%60); }
+  function tick(){ 
+      var t = end - Date.now();
+      if (t <= 0) {
+          activarEventoHalloween(false);
+          return;
+      }
+      var s = Math.floor(t/1000); 
+      document.getElementById('d').textContent=pad(Math.floor(s/86400)); document.getElementById('h').textContent=pad(Math.floor(s%86400/3600)); document.getElementById('m').textContent=pad(Math.floor(s%3600/60)); document.getElementById('s').textContent=pad(s%60); 
+  }
   tick();setInterval(tick,1000); setTimeout(actualizarAnimacionInicio, 1000);
 })();
 </script>
