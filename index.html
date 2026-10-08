@@ -35,7 +35,6 @@
   --glow: rgba(214, 40, 40, 0.25);
   --bg-overlay: rgba(20, 5, 5, 0.85); 
   --borde-estilo: solid;
-  --btn-bg: var(--pumpkin); /* Fondo dinámico para botones sólidos */
   
   box-sizing: border-box;
   padding-top: env(safe-area-inset-top, 0px);
@@ -49,13 +48,23 @@ body.tema-sangre { --bg: #0a0000; --pumpkin: #cc0000; --ember: #660000; --violet
 body.tema-momia { --bg: #1a1610; --pumpkin: #d49a6a; --ember: #8b5a2b; --violet: #e6c280; --card: #2b2218; --glow: rgba(212, 154, 106, 0.2); --bg-overlay: rgba(26, 22, 16, 0.86); --borde-estilo: dashed; } 
 body.tema-calabaza { --bg: #0a140a; --pumpkin: #ff6600; --ember: #cc5200; --violet: #00b33c; --card: #0f1f0f; --glow: rgba(255, 102, 0, 0.25); --bg-overlay: rgba(10, 20, 10, 0.88); }
 body.tema-brujeria { --bg: #0a0014; --pumpkin: #b300ff; --ember: #4d0066; --violet: #d896ff; --card: #140028; --glow: rgba(179, 0, 255, 0.25); --bg-overlay: rgba(10, 0, 20, 0.75); } 
+body.tema-otono { --bg: #1a0a00; --pumpkin: #ff8c00; --ember: #8b4500; --violet: #cd853f; --card: #291400; --glow: rgba(255, 140, 0, 0.25); --bg-overlay: rgba(26, 10, 0, 0.88); }
 
+/* TEMA MEDIANOCHE (Con ajuste de contraste para botones) */
 body.tema-medianoche { 
     --bg: #05051a; --pumpkin: #ffd700; --ember: #000066; --violet: #4169e1; --card: #0a0a29; 
     --glow: rgba(255, 215, 0, 0.25); --bg-overlay: rgba(5, 5, 26, 0.88);
-    --btn-bg: #b8860b; /* Dorado oscuro para mejorar el contraste de las letras blancas */
 }
-body.tema-otono { --bg: #1a0a00; --pumpkin: #ff8c00; --ember: #8b4500; --violet: #cd853f; --card: #291400; --glow: rgba(255, 140, 0, 0.25); --bg-overlay: rgba(26, 10, 0, 0.88); }
+body.tema-medianoche .btn-accion, body.tema-medianoche .btn-cerrar-modal, body.tema-medianoche .ataud-flotante .badge { background-color: #b8860b; color: #ffffff; }
+body.tema-medianoche .btn-accion:hover, body.tema-medianoche .btn-cerrar-modal:hover { background-color: var(--violet); }
+
+/* TEMA CYBER-HACKER (Con ajuste de contraste para botones) */
+body.tema-hacker { 
+    --bg: #000000; --pumpkin: #00ff00; --ember: #003300; --violet: #00cc00; --card: #051005; 
+    --glow: rgba(0, 255, 0, 0.25); --bg-overlay: rgba(0, 0, 0, 0.85); 
+}
+body.tema-hacker .btn-accion, body.tema-hacker .btn-cerrar-modal, body.tema-hacker .ataud-flotante .badge { background-color: #009900; color: #ffffff; }
+body.tema-hacker .btn-accion:hover, body.tema-hacker .btn-cerrar-modal:hover { background-color: var(--violet); }
 
 /* TEMA BATMAN */
 body.tema-batman { 
@@ -63,17 +72,10 @@ body.tema-batman {
     --glow: rgba(79, 209, 197, 0.25); --bg-overlay: rgba(2, 10, 15, 0.92); 
 }
 body.tema-batman .btn-accion, body.tema-batman .btn-cerrar-modal { color: #000000 !important; font-weight: 900; }
-body.tema-batman .btn-accion:hover, body.tema-batman .btn-cerrar-modal:hover { color: #ffffff !important; background: var(--ember) !important; }
+body.tema-batman .btn-accion:hover, body.tema-batman .btn-cerrar-modal:hover { color: #ffffff !important; background-color: var(--ember) !important; }
 body.tema-batman .btn-carrito-tienda { color: var(--pumpkin) !important; border-color: var(--pumpkin) !important; }
 body.tema-batman #toast-logro.is-pista, body.tema-batman #toast-logro.is-pista #toast-sub, body.tema-batman #toast-logro.is-pista #toast-txt { color: #000000 !important; }
 body.tema-batman .ataud-flotante .badge { color: #000000 !important; }
-
-/* TEMA CYBER-HACKER */
-body.tema-hacker { 
-    --bg: #000000; --pumpkin: #00ff00; --ember: #003300; --violet: #00cc00; --card: #051005; 
-    --glow: rgba(0, 255, 0, 0.25); --bg-overlay: rgba(0, 0, 0, 0.85); 
-    --btn-bg: #009900; /* Verde oscuro para mejorar el contraste de las letras blancas */
-}
 
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
 *, *::before, *::after { box-sizing: inherit; }
@@ -115,18 +117,18 @@ a { color: inherit; -webkit-tap-highlight-color: transparent; }
 :focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; }
 
 /* ==========================================
-   PANTALLA DE CARGA Y BOTÓN BOO
+   PANTALLA DE CARGA Y BOTÓN BOO (BLINDADO EN ROJO CLÁSICO)
    ========================================== */
 #splash-screen {
   position: fixed; inset: 0; background: #000000; z-index: 99999;
   display: flex; flex-direction: column; justify-content: center; align-items: center;
   transition: opacity 1.5s ease;
 }
-.splash-loader { color: var(--pumpkin); font-size: 1.5rem; font-weight: 800; animation: pulse 1.5s infinite; letter-spacing: 2px;}
+.splash-loader { color: #d62828 !important; font-size: 1.5rem; font-weight: 800; animation: pulse 1.5s infinite; letter-spacing: 2px;}
 
 #btn-boo {
-  display: none; background: var(--btn-bg) !important; color: #ffffff !important; border: 2px solid var(--ember) !important;
-  font-size: 2.5rem; padding: 20px 60px; border-radius: 999px; box-shadow: 0 0 30px var(--glow);
+  display: none; background-color: #d62828 !important; color: #ffffff !important; border: 2px solid #7a1010 !important;
+  font-size: 2.5rem; padding: 20px 60px; border-radius: 999px; box-shadow: 0 0 30px rgba(214, 40, 40, 0.6) !important;
   transition: transform 0.3s, opacity 1s ease; cursor: pointer; opacity: 0; transform: scale(0.9);
   font-family: inherit; font-weight: 900; -webkit-tap-highlight-color: transparent; outline: none;
 }
@@ -204,20 +206,18 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .modal-box { background: var(--card); border: 1px var(--borde-estilo) var(--ember); border-radius: 18px; padding: 30px; width: 90%; max-width: 450px; text-align: center; position: relative; max-height: 90vh; overflow-y: auto; opacity: 0; }
 .modal-overlay.activo .modal-box { animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
 @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-.btn-cerrar-modal { background: var(--btn-bg); color: #fff; font-weight: 800; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; width: 100%; margin-top: 15px; font-size: 1rem; transition: background 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent;}
-.btn-cerrar-modal:hover { background: var(--violet); }
 
 /* ATAÚD FLOTANTE ARMONIZADO */
 .ataud-flotante { position: fixed; top: 50vh; right: 3vw; transform: translateY(-50%); margin-top: -30px; background: var(--card); border: 2px var(--borde-estilo) var(--violet); border-radius: 15px; padding: 15px; cursor: pointer; font-size: 2rem; z-index: 90; box-shadow: 0 0 15px var(--glow); transition: transform 0.3s, background 0.5s ease; display: flex; flex-direction: column; align-items: center; -webkit-tap-highlight-color: transparent;}
 .ataud-flotante:hover { transform: translateY(-50%) scale(1.1); background: var(--violet); }
-.ataud-flotante .badge { font-size: 0.8rem; background: var(--btn-bg); color: white; border-radius: 999px; padding: 2px 8px; font-weight: bold; margin-top: 5px; font-family: sans-serif; }
+.ataud-flotante .badge { font-size: 0.8rem; background-color: var(--pumpkin); color: white; border-radius: 999px; padding: 2px 8px; font-weight: bold; margin-top: 5px; font-family: sans-serif; }
 .ataud-animado { animation: floatAtaud 4s ease-in-out infinite; }
 @keyframes floatAtaud { 0%, 100% { margin-top: -30px; } 50% { margin-top: -45px; } }
 
 /* CARRUSEL HORIZONTAL PARA RECOMPENSAS DIARIAS */
 .grid-ataud { display: flex; overflow-x: auto; gap: 15px; margin-top: 20px; padding-bottom: 10px; scroll-snap-type: x mandatory; }
 .dia-caja { background: rgba(255,255,255,0.05); border: 1px var(--borde-estilo) var(--ember); border-radius: 10px; padding: 15px 5px; font-weight: bold; position: relative; transition: 0.3s; min-width: 100px; flex-shrink: 0; scroll-snap-align: start; -webkit-tap-highlight-color: transparent; }
-.dia-caja.reclamado { background: var(--violet); border-color: #fff; color: #fff; }
+.dia-caja.reclamado { background-color: var(--violet); border-color: #fff; color: #fff; }
 .dia-caja.actual { border-color: var(--pumpkin); background: var(--glow); cursor: pointer; animation: pulseAtaud 2s infinite; }
 .dia-caja.bloqueado { opacity: 0.5; filter: grayscale(1); }
 @keyframes pulseAtaud { 0% { box-shadow: 0 0 0 0 var(--pumpkin); } 70% { box-shadow: 0 0 0 10px rgba(0,0,0,0); } 100% { box-shadow: 0 0 0 0 rgba(0,0,0,0); } }
@@ -243,10 +243,12 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .item p { margin: 0; font-size: .92rem; opacity: .8; flex-grow: 1; }
 
 /* BOTONES GLOBALES (CONTRASTE SALVADO) */
-.btn-accion { display: inline-block; background: var(--btn-bg); color: #fff; font-weight: 800; padding: 12px 20px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem; margin-top: 10px; transition: all 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent; }
-.btn-accion:hover { background: var(--violet); }
-.btn-jugar { background: var(--ember); }
-.btn-jugar:hover { background: var(--btn-bg); }
+.btn-accion { display: inline-block; background-color: var(--pumpkin); color: #fff; font-weight: 800; padding: 12px 20px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem; margin-top: 10px; transition: all 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent; }
+.btn-accion:hover { background-color: var(--violet); }
+.btn-cerrar-modal { background-color: var(--pumpkin); color: #fff; font-weight: 800; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; width: 100%; margin-top: 15px; font-size: 1rem; transition: background 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent;}
+.btn-cerrar-modal:hover { background-color: var(--violet); }
+.btn-jugar { background-color: var(--ember) !important; }
+.btn-jugar:hover { background-color: var(--pumpkin) !important; }
 .btn-bloqueado { background: rgba(255,255,255,0.05) !important; color: var(--violet) !important; cursor: default !important; border: 1px var(--borde-estilo) var(--ember) !important; opacity: 0.8; }
 
 /* TIENDA Y CARRITO */
@@ -293,7 +295,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .skullette-wrapper { position: fixed; z-index: 90; pointer-events: none; will-change: transform; }
 .skullette-inner { width: 65px; height: 65px; cursor: pointer; filter: drop-shadow(0 0 10px var(--violet)); transition: transform 0.2s; pointer-events: auto; object-fit: contain; -webkit-user-drag: none; }
 .skullette-inner:hover { transform: scale(1.2); }
-.error-compra { animation: shake 0.4s; background: var(--violet) !important; color: #fff !important; pointer-events: none; }
+.error-compra { animation: shake 0.4s; background-color: var(--violet) !important; color: #fff !important; pointer-events: none; }
 @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
 
 /* ESTRELLA FUGAZ PARA TEMA MEDIANOCHE */
@@ -592,7 +594,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
           <h2 style="color:var(--violet);">iCoffin</h2>
           <p style="margin: 10px auto 20px; font-size:0.9rem; opacity:0.8;">Ingresa la contraseña.</p>
           <input type="text" id="input-codigo" placeholder="CONTRASEÑA">
-          <button class="btn-accion" style="background:var(--violet); color:#140505; width:100%; font-size: 1.1rem; padding: 15px;" onclick="canjearCodigo()">Desbloquear</button>
+          <button class="btn-accion" style="background-color:var(--violet); color:#140505; width:100%; font-size: 1.1rem; padding: 15px;" onclick="canjearCodigo()">Desbloquear</button>
           <p id="msg-codigo" style="margin-top: 15px; font-weight: bold; min-height: 24px; font-size: 1rem;"></p>
         </div>
     </div>
@@ -1119,7 +1121,7 @@ function renderizarTiendaTemas() {
             if (equipado) {
                 botonHTML = `<button class="btn-accion btn-bloqueado">Equipado</button>`;
             } else if (yaComprado) {
-                botonHTML = `<button class="btn-accion" style="background:var(--violet);" onclick="equiparTema('${id}')">Equipar</button>`;
+                botonHTML = `<button class="btn-accion" style="background-color:var(--violet);" onclick="equiparTema('${id}')">Equipar</button>`;
             } else {
                 let txtP = item.precio === 0 ? 'Gratis' : `${item.precio} 🍬`;
                 botonHTML = `<button class="btn-accion" onclick="comprarItem('${id}', ${item.precio}, '${item.nombre}', 'tema')">Comprar - ${txtP}</button>`;
@@ -1139,7 +1141,7 @@ function renderizarCarrito() {
     carrito.forEach((item, index) => {
         const estadoClase = item.usado ? 'usado' : '';
         const codTxt = item.codigo ? item.codigo : 'Aún sin canjear';
-        const botonHTML = item.usado ? `<button class="btn-accion btn-bloqueado" style="margin:0; padding: 6px 12px;">USADO</button>` : `<button class="btn-accion" style="margin:0; padding: 6px 12px; background: var(--violet);" onclick="abrirUsoItem(${index})">USAR</button>`;
+        const botonHTML = item.usado ? `<button class="btn-accion btn-bloqueado" style="margin:0; padding: 6px 12px;">USADO</button>` : `<button class="btn-accion" style="margin:0; padding: 6px 12px; background-color: var(--violet);" onclick="abrirUsoItem(${index})">USAR</button>`;
         lista.innerHTML += `<div class="item-carrito ${estadoClase}"><div><h4>${item.nombre}</h4><p style="opacity:0.7;">${codTxt}</p></div>${botonHTML}</div>`;
     });
 }
