@@ -75,7 +75,6 @@ body.tema-batman .ataud-flotante .badge { color: #000000 !important; }
 
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
 *, *::before, *::after { box-sizing: inherit; }
-
 html, body { overscroll-behavior: none; height: 100%; overflow-x: hidden; }
 
 /* PROTECCIÓN ANTI-SELECCIÓN GLOBAL */
@@ -84,7 +83,6 @@ body {
   line-height: 1.6; width: 100vw; max-width: 100%;
   -webkit-user-select: none !important; user-select: none !important; -webkit-touch-callout: none !important;
 }
-/* EXCEPCIÓN PARA INPUTS */
 input { -webkit-user-select: auto !important; user-select: auto !important; }
 
 /* CAPA FANTASMA Y FONDOS DINÁMICOS ONLINE */
@@ -143,9 +141,9 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .btn-col { background: var(--card); border: 1px var(--borde-estilo) var(--pumpkin); color: var(--pumpkin); font-weight: 800; padding: 8px 20px; border-radius: 999px; text-decoration: none; cursor: pointer; transition: all 0.2s; white-space: nowrap; -webkit-tap-highlight-color: transparent;}
 .btn-col:hover { background: var(--pumpkin); color: #000; }
 
-.btn-icono { background: transparent; border: none; cursor: pointer; color: var(--ink); padding: 0; display: flex; align-items: center; justify-content: center; transition: all 0.3s; font-size: 1.6rem; -webkit-tap-highlight-color: transparent;}
+.btn-icono { background: transparent; border: none; cursor: pointer; color: var(--ink); padding: 0; min-width: 40px; min-height: 40px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; font-size: 1.6rem; -webkit-tap-highlight-color: transparent;}
 .btn-icono:hover { color: var(--pumpkin); filter: drop-shadow(0 0 8px var(--glow)); transform: scale(1.1); }
-.btn-icono.tuerca svg { width: 26px; height: 26px; }
+.btn-icono.tuerca svg { width: 26px; height: 26px; overflow: visible; }
 .btn-icono.tuerca:hover svg { animation: spin 2s linear infinite; }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
@@ -278,6 +276,22 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .skullette-inner:hover { transform: scale(1.2); }
 .error-compra { animation: shake 0.4s; background: var(--violet) !important; color: #fff !important; pointer-events: none; }
 @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+
+/* ESTRELLA FUGAZ PARA TEMA MEDIANOCHE */
+.estrella-fugaz {
+    position: absolute;
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,1));
+    transform: rotate(-45deg);
+    animation: fugaz 1.5s linear forwards;
+    pointer-events: none;
+    z-index: -1;
+}
+@keyframes fugaz {
+    0% { transform: translateX(0) translateY(0) rotate(-45deg); opacity: 1; }
+    100% { transform: translateX(-40vw) translateY(40vw) rotate(-45deg); opacity: 0; }
+}
 
 /* ELEMENTOS DEL CARRITO */
 .item-carrito { background: rgba(255,255,255,0.05); border: 1px var(--borde-estilo) var(--ember); border-radius: 10px; padding: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; text-align: left; }
@@ -421,7 +435,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
     <span class="moneda-ui">🍬 <span id="ui-dulces">0</span></span>
     <a class="btn-col" onclick="cambiarPagina('sec-coleccion')" id="nav-coleccion">Nuestra Colección</a>
     <button class="btn-icono tuerca" onclick="abrirAjustes()" title="Ajustes">
-      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
     </button>
   </div>
 </header>
@@ -529,15 +543,15 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
       <div class="grid">
           <article class="item">
               <span class="e">💰</span><h3>Moneda Monstruosa</h3><p>Aumenta un 30% todas tus ganancias de caramelos.</p>
-              <button class="btn-accion" onclick="comprarItem(this, 'amuleto-moneda', 100, 'Moneda Monstruosa', 'amuleto')">Comprar - 100 🍬</button>
+              <button class="btn-accion btn-tienda-amuleto" data-id="amuleto-moneda" onclick="comprarItem(this, 'amuleto-moneda', 100, 'Moneda Monstruosa', 'amuleto')">Comprar - 100 🍬</button>
           </article>
           <article class="item">
               <span class="e">🦇</span><h3>Imán de Skullettes</h3><p>Las Skullettes aparecen el doble de rápido.</p>
-              <button class="btn-accion" onclick="comprarItem(this, 'amuleto-iman', 150, 'Imán de Skullettes', 'amuleto')">Comprar - 150 🍬</button>
+              <button class="btn-accion btn-tienda-amuleto" data-id="amuleto-iman" onclick="comprarItem(this, 'amuleto-iman', 150, 'Imán de Skullettes', 'amuleto')">Comprar - 150 🍬</button>
           </article>
           <article class="item">
               <span class="e">⏳</span><h3>Reloj Vampírico</h3><p>Reduce la espera del Ataúd Diario a 18 horas.</p>
-              <button class="btn-accion" onclick="comprarItem(this, 'amuleto-reloj', 120, 'Reloj Vampírico', 'amuleto')">Comprar - 120 🍬</button>
+              <button class="btn-accion btn-tienda-amuleto" data-id="amuleto-reloj" onclick="comprarItem(this, 'amuleto-reloj', 120, 'Reloj Vampírico', 'amuleto')">Comprar - 120 🍬</button>
           </article>
       </div>
   </div>
@@ -545,17 +559,8 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   <div id="tienda-temas" class="tienda-seccion">
       <button class="btn-volver" onclick="cerrarSubTienda('ataudOut')">⬅ Volver al Bazar</button>
       <h3 class="seccion-titulo" style="margin-top: 0;">🎨 Personalización de la App</h3>
-      <div class="grid">
-          <article class="item"><span class="e">🦇</span><h3>Tema: Clásico</h3><p>El diseño original.</p><button class="btn-accion" onclick="equiparTema('tema-default')">Equipar</button></article>
-          <article class="item"><span class="e">💖</span><h3>Rosa Vampírico</h3><p>Lluvia de destellos.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-rosa', 20, 'Tema Rosa', 'tema')">Comprar - 20 🍬</button></article>
-          <article class="item"><span class="e">🩸</span><h3>Rojo Sangre</h3><p>Gotas cayendo.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-sangre', 20, 'Tema Sangre', 'tema')">Comprar - 20 🍬</button></article>
-          <article class="item"><span class="e">🏺</span><h3>Tema: Momia</h3><p>Polvo de arena.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-momia', 20, 'Tema Momia', 'tema')">Comprar - 20 🍬</button></article>
-          <article class="item"><span class="e">🎃</span><h3>Tema: Calabaza</h3><p>Brasas flotantes.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-calabaza', 20, 'Tema Calabaza', 'tema')">Comprar - 20 🍬</button></article>
-          <article class="item"><span class="e">🦇</span><h3>Tema: Batman</h3><p>Tonos oscuros puros.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-batman', 20, 'Tema Batman', 'tema')">Comprar - 20 🍬</button></article>
-          <article class="item"><span class="e">🧪</span><h3>Tema: Brujería</h3><p>Filtros místicos.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-brujeria', 20, 'Tema Brujería', 'tema')">Comprar - 20 🍬</button></article>
-          <article class="item"><span class="e">💻</span><h3>Tema: Spectro</h3><p>Frío y cibernético.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-spectro', 20, 'Tema Spectro', 'tema')">Comprar - 20 🍬</button></article>
-          <article class="item"><span class="e">🌌</span><h3>Tema: Medianoche</h3><p>Galaxia profunda.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-medianoche', 20, 'Tema Medianoche', 'tema')">Comprar - 20 🍬</button></article>
-          <article class="item"><span class="e">🍂</span><h3>Tema: Otoño Vivo</h3><p>Hojas cayendo.</p><button class="btn-accion" onclick="comprarItem(this, 'tema-otono', 20, 'Tema Otoño', 'tema')">Comprar - 20 🍬</button></article>
+      <div class="grid" id="grid-tienda-temas">
+          <!-- Renderizado dinámicamente en JS -->
       </div>
   </div>
 </section>
@@ -621,6 +626,7 @@ if(esAdmin) document.getElementById('modo-txt').textContent = "⚠️ MODO ADMIN
 // 2. VARIABLES DE ESTADO Y DATOS
 // ========================================================
 let dulces = 0; 
+let dulcesGastados = 0;
 let coleccion = []; 
 let logros = [];
 let carrito = []; 
@@ -635,19 +641,19 @@ let appCargada = false;
 let vueltasDJ = 0;
 
 const catalogo = {
-  'tema-default': { icono: '🦇', nombre: 'Tema: Clásico', desc: 'El diseño original.', tipo: 'tema' },
-  'tema-rosa': { icono: '💖', nombre: 'Tema: Rosa Vampírico', desc: 'Lluvia de destellos.', tipo: 'tema' },
-  'tema-sangre': { icono: '🩸', nombre: 'Tema: Rojo Sangre', desc: 'Gotas cayendo.', tipo: 'tema' },
-  'tema-momia': { icono: '🏺', nombre: 'Tema: Momia', desc: 'Polvo de arena en el viento.', tipo: 'tema' },
-  'tema-calabaza': { icono: '🎃', nombre: 'Tema: Calabaza', desc: 'Brasas flotantes.', tipo: 'tema' },
-  'tema-batman': { icono: '🦇', nombre: 'Tema: Batman', desc: 'Tonos oscuros y contrastados.', tipo: 'tema' },
-  'tema-brujeria': { icono: '🧪', nombre: 'Tema: Brujería', desc: 'Filtros místicos.', tipo: 'tema' },
-  'tema-spectro': { icono: '💻', nombre: 'Tema: Spectro', desc: 'Frío y cibernético.', tipo: 'tema' },
-  'tema-medianoche': { icono: '🌌', nombre: 'Tema: Medianoche', desc: 'Galaxia profunda.', tipo: 'tema' },
-  'tema-otono': { icono: '🍂', nombre: 'Tema: Otoño Vivo', desc: 'Hojas cayendo.', tipo: 'tema' },
-  'amuleto-moneda': { icono: '💰', nombre: 'Moneda Monstruosa', desc: 'Aumenta un 30% todas tus ganancias.', tipo: 'amuleto' },
-  'amuleto-iman': { icono: '🦇', nombre: 'Imán de Skullettes', desc: 'Atrae Skullettes el doble de rápido.', tipo: 'amuleto' },
-  'amuleto-reloj': { icono: '⏳', nombre: 'Reloj Vampírico', desc: 'Reduce el tiempo de espera a 18 horas.', tipo: 'amuleto' }
+  'tema-default': { icono: '🦇', nombre: 'Tema: Clásico', desc: 'El diseño original.', tipo: 'tema', precio: 0 },
+  'tema-rosa': { icono: '💖', nombre: 'Tema: Rosa Vampírico', desc: 'Lluvia de destellos.', tipo: 'tema', precio: 20 },
+  'tema-sangre': { icono: '🩸', nombre: 'Tema: Rojo Sangre', desc: 'Gotas cayendo.', tipo: 'tema', precio: 20 },
+  'tema-momia': { icono: '🏺', nombre: 'Tema: Momia', desc: 'Polvo de arena en el viento.', tipo: 'tema', precio: 20 },
+  'tema-calabaza': { icono: '🎃', nombre: 'Tema: Calabaza', desc: 'Brasas flotantes.', tipo: 'tema', precio: 20 },
+  'tema-batman': { icono: '🦇', nombre: 'Tema: Batman', desc: 'Tonos oscuros y contrastados.', tipo: 'tema', precio: 20 },
+  'tema-brujeria': { icono: '🧪', nombre: 'Tema: Brujería', desc: 'Filtros místicos.', tipo: 'tema', precio: 20 },
+  'tema-spectro': { icono: '💻', nombre: 'Tema: Spectro', desc: 'Frío y cibernético.', tipo: 'tema', precio: 20 },
+  'tema-medianoche': { icono: '🌌', nombre: 'Tema: Medianoche', desc: 'Galaxia profunda.', tipo: 'tema', precio: 20 },
+  'tema-otono': { icono: '🍂', nombre: 'Tema: Otoño Vivo', desc: 'Hojas cayendo.', tipo: 'tema', precio: 20 },
+  'amuleto-moneda': { icono: '💰', nombre: 'Moneda Monstruosa', desc: 'Aumenta un 30% todas tus ganancias.', tipo: 'amuleto', precio: 100 },
+  'amuleto-iman': { icono: '🦇', nombre: 'Imán de Skullettes', desc: 'Atrae Skullettes el doble de rápido.', tipo: 'amuleto', precio: 150 },
+  'amuleto-reloj': { icono: '⏳', nombre: 'Reloj Vampírico', desc: 'Reduce el tiempo de espera a 18 horas.', tipo: 'amuleto', precio: 120 }
 };
 
 const catalogoLogros = {
@@ -659,7 +665,8 @@ const catalogoLogros = {
   'hacker': { icono: '💻', nombre: 'Hacker de Élite', desc: 'Canjeaste 5 códigos correctos en el iCoffin.' },
   'fashionista': { icono: '👗', nombre: 'Fashionista Oscura', desc: 'Tienes 4 temas visuales en tu colección.' },
   'dj': { icono: '🎛️', nombre: 'DJ Monstruoso', desc: 'Jugaste con los controles de audio 10 veces.' },
-  'amor': { icono: '💖', nombre: 'Amor Incondicional', desc: 'El código de la fecha especial fue usado.' }
+  'amor': { icono: '💖', nombre: 'Amor Incondicional', desc: 'El código de la fecha especial fue usado.' },
+  'comprador': { icono: '🛍️', nombre: 'Comprador Compulsivo', desc: 'Gastaste tus primeros 100 dulces en la tienda.' }
 };
 
 const catalogoPistas = {
@@ -748,6 +755,35 @@ function playSfx(id) {
     s.audio.play().catch(e=>console.log(e));
 }
 
+let fadeInterval = null;
+function fadeMusica(targetVolMultiplier, durationMs, pauseAtEnd = false) {
+    let audio = sfxBases['musica'].audio;
+    if(!audio || audio.muted || masterMusica <= 0) {
+         if(pauseAtEnd && audio) audio.pause();
+         return;
+    }
+    let startVol = audio.volume;
+    let endVol = Math.min(1.0, masterMusica * sfxBases['musica'].vol * targetVolMultiplier);
+    let steps = 20;
+    let stepTime = durationMs / steps;
+    let stepVol = (endVol - startVol) / steps;
+    
+    if(fadeInterval) clearInterval(fadeInterval);
+    if(audio.paused && endVol > 0) audio.play().catch(e=>console.log(e));
+
+    let currentStep = 0;
+    fadeInterval = setInterval(() => {
+        currentStep++;
+        let newVol = startVol + (stepVol * currentStep);
+        audio.volume = Math.max(0, Math.min(1, newVol));
+        if(currentStep >= steps) {
+            clearInterval(fadeInterval);
+            audio.volume = endVol;
+            if(pauseAtEnd) audio.pause();
+        }
+    }, stepTime);
+}
+
 // ========================================================
 // 3. SINCRONIZACIÓN FIREBASE Y UI
 // ========================================================
@@ -756,6 +792,7 @@ if(database) {
     const data = snapshot.val();
     if (data) {
       dulces = data.dulces || 0; 
+      dulcesGastados = data.dulcesGastados || 0;
       coleccion = data.coleccion || ['tema-default']; 
       logros = data.logros || [];
       carrito = data.carrito || [];
@@ -809,8 +846,8 @@ function iniciarApp() {
     splash.style.pointerEvents = 'none'; splash.style.opacity = '0';
     setTimeout(() => { splash.style.display = 'none'; }, 1500);
     
-    sfxBases['musica'].audio.volume = Math.min(1.0, masterMusica * sfxBases['musica'].vol);
-    sfxBases['musica'].audio.play().catch(e=>console.log(e));
+    sfxBases['musica'].audio.volume = 0;
+    fadeMusica(1.0, 2000);
 }
 
 function toggleMuteMusica() {
@@ -862,10 +899,12 @@ window.addEventListener('focus', () => { if (!musicaMuted && masterMusica > 0 &&
 function guardarDatos() {
   if (dulces >= 150) checkLogro('ahorro');
   if (dulces >= 500 && !pistasReveladas.includes('pista_fortuna')) revelarPista('pista_fortuna');
+  if (dulcesGastados >= 100 && !logros.includes('comprador')) checkLogro('comprador');
   
   if(database) {
     database.ref(rutaDB).set({ 
-      dulces: dulces, coleccion: coleccion, logros: logros, carrito: carrito, codigosUsados: codigosUsados,
+      dulces: dulces, dulcesGastados: dulcesGastados,
+      coleccion: coleccion, logros: logros, carrito: carrito, codigosUsados: codigosUsados,
       ataudDia: ataudDia, ataudTiempo: ataudTiempo, 
       diarioVisto: diarioVisto, pistas: pistas, pistasReveladas: pistasReveladas, temaActivo: temaActivo,
       halloweenReclamado: halloweenReclamado,
@@ -877,7 +916,10 @@ function guardarDatos() {
 
 function actualizarUI() {
   document.getElementById('ui-dulces').textContent = dulces;
-  renderizarColeccionYLogros(); actualizarEstadoAtaud(); renderizarDiario();
+  renderizarColeccionYLogros(); 
+  actualizarEstadoAtaud(); 
+  renderizarDiario();
+  renderizarTiendaTemas();
 }
 
 function agregarDulces(base) {
@@ -960,7 +1002,6 @@ function saltarToast() {
     ocultarToastActual();
 }
 
-
 // ========================================================
 // 6. ATAÚD DE RECOMPENSA
 // ========================================================
@@ -1025,10 +1066,12 @@ function actualizarTimerAtaud() {
 function abrirSubTienda(idSub, sfx = false) { if(sfx) playSfx(sfx); document.querySelectorAll('.tienda-seccion').forEach(sec => sec.classList.remove('activa')); document.getElementById(idSub).classList.add('activa'); window.scrollTo(0,0); }
 function cerrarSubTienda(sfx = false) { if(sfx) playSfx(sfx); document.querySelectorAll('.tienda-seccion').forEach(sec => sec.classList.remove('activa')); document.getElementById('tienda-main').classList.add('activa'); window.scrollTo(0,0); }
 
-function comprarItem(boton, idItem, precio, nombreItem, tipo) {
+function comprarItem(idItem, precio, nombreItem, tipo) {
     if ((tipo === 'tema' || tipo === 'amuleto') && coleccion.includes(idItem)) { mostrarToast("Ya tienes este ítem en tu colección.", "info"); return; }
     if (dulces >= precio) {
-        dulces -= precio; playSfx('comprar');
+        dulces -= precio; 
+        dulcesGastados += precio;
+        playSfx('comprar');
         
         if (tipo === 'tema' || tipo === 'amuleto') { 
             coleccion.push(idItem); 
@@ -1050,8 +1093,53 @@ function comprarItem(boton, idItem, precio, nombreItem, tipo) {
             guardarDatos(); mostrarToast(`Compraste: ${nombreItem}. Revisa tu 🛒`, "info"); 
         }
     } else {
-        playSfx('error'); boton.classList.add('error-compra'); const txtAnterior = boton.textContent; boton.textContent = "¡Faltan dulces!";
-        setTimeout(() => { boton.classList.remove('error-compra'); boton.textContent = txtAnterior; }, 800);
+        playSfx('error'); mostrarToast("¡No tienes suficientes dulces!", "info");
+    }
+}
+
+// Renderizado Inteligente de Temas
+function renderizarTiendaTemas() {
+    const contenedor = document.getElementById('grid-tienda-temas');
+    if(!contenedor) return;
+    contenedor.innerHTML = '';
+    
+    Object.keys(catalogo).forEach(id => {
+        if(catalogo[id].tipo === 'tema' && id !== 'tema-default') {
+            const item = catalogo[id];
+            let yaComprado = coleccion.includes(id);
+            let equipado = (temaActivo === id);
+            
+            let botonHTML = '';
+            if (equipado) {
+                botonHTML = `<button class="btn-accion btn-bloqueado">Equipado</button>`;
+            } else if (yaComprado) {
+                botonHTML = `<button class="btn-accion" style="background:var(--violet);" onclick="equiparTema('${id}')">Equipar</button>`;
+            } else {
+                botonHTML = `<button class="btn-accion" onclick="comprarItem('${id}', ${item.precio}, '${item.nombre}', 'tema')">Comprar - ${item.precio} 🍬</button>`;
+            }
+            
+            contenedor.innerHTML += `<article class="item"><span class="e">${item.icono}</span><h3>${item.nombre}</h3><p>${item.desc}</p>${botonHTML}</article>`;
+        }
+    });
+}
+
+// Interfaz para amuletos en HTML que usan la nueva firma
+function procesarCompraAmuletoHTML(btn, idItem, precio, nombreItem) {
+    if (dulces < precio) {
+        playSfx('error'); btn.classList.add('error-compra'); const txtAnterior = btn.textContent; btn.textContent = "¡Faltan dulces!";
+        setTimeout(() => { btn.classList.remove('error-compra'); btn.textContent = txtAnterior; }, 800);
+    } else {
+        comprarItem(idItem, precio, nombreItem, 'amuleto');
+    }
+}
+
+// Interfaz para consumibles en HTML que usan la nueva firma
+function procesarCompraConsumibleHTML(btn, idItem, precio, nombreItem, tipo) {
+    if (dulces < precio) {
+        playSfx('error'); btn.classList.add('error-compra'); const txtAnterior = btn.textContent; btn.textContent = "¡Faltan dulces!";
+        setTimeout(() => { btn.classList.remove('error-compra'); btn.textContent = txtAnterior; }, 800);
+    } else {
+        comprarItem(idItem, precio, nombreItem, tipo);
     }
 }
 
@@ -1133,8 +1221,7 @@ function renderizarColeccionYLogros() {
 // 8. DIARIO Y CÓDIGOS (ANTI-ADIVINACIÓN Y ADMIN)
 // ========================================================
 function abrirDiario() {
-  const volSlider = parseFloat(document.getElementById('vol-musica').value);
-  if(!sfxBases['musica'].audio.muted && volSlider > 0) { sfxBases['musica'].audio.volume = Math.min(1.0, masterMusica * sfxBases['musica'].vol * 0.3); }
+  fadeMusica(0.3, 1000);
   if (!diarioVisto) {
     const overlay = document.getElementById('overlay-diario'); overlay.style.display = 'flex'; 
     setTimeout(() => { overlay.style.opacity = '1'; }, 100);
@@ -1145,8 +1232,7 @@ function abrirDiario() {
 
 function esconderDiario() {
   document.getElementById('modal-diario').classList.remove('activo');
-  const volSlider = parseFloat(document.getElementById('vol-musica').value);
-  if(!sfxBases['musica'].audio.muted && volSlider > 0) { sfxBases['musica'].audio.volume = Math.min(1.0, masterMusica * sfxBases['musica'].vol); }
+  fadeMusica(1.0, 1000);
 }
 
 function renderizarDiario() {
@@ -1176,11 +1262,11 @@ function canjearCodigo() {
     case 'TICKETS': abrirAdminTickets(); msjRespuesta = "[ADMIN] Tickets abiertos."; break;
     case 'CLEANCART': carrito = []; msjRespuesta = "[ADMIN] Carrito vacío."; break;
     case 'UNLOCKTHEMES': coleccion = ['tema-default', 'tema-rosa', 'tema-sangre', 'tema-momia', 'tema-calabaza', 'tema-batman', 'tema-brujeria', 'tema-spectro', 'tema-medianoche', 'tema-otono', 'amuleto-moneda', 'amuleto-iman', 'amuleto-reloj']; msjRespuesta = "[ADMIN] Colección max."; break;
-    case 'RESET': dulces = 0; coleccion = ['tema-default']; logros = []; carrito = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; pistasReveladas = []; codigosUsados = []; halloweenReclamado = false; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Cuenta a cero."; colorRespuesta = "var(--pumpkin)"; break;
+    case 'RESET': dulces = 0; dulcesGastados = 0; coleccion = ['tema-default']; logros = []; carrito = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; pistasReveladas = []; codigosUsados = []; halloweenReclamado = false; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Cuenta a cero."; colorRespuesta = "var(--pumpkin)"; break;
     case '24H': ataudTiempo = Date.now() - 86400000; msjRespuesta = "[ADMIN] Reloj adelantado."; actualizarUI(); if(document.getElementById('modal-ataud').classList.contains('activo')) renderizarGrillaAtaud(); break;
     case 'RESETALL':
         if(esAdmin) {
-            database.ref('greta_partida').set({ dulces: 0, coleccion: ['tema-default'], logros: [], carrito: [], codigosUsados: [], ataudDia: 1, ataudTiempo: 0, diarioVisto: false, pistas: [], pistasReveladas: [], temaActivo: 'tema-default', halloweenReclamado: false, volMusica: 0.5, volSfx: 0.5 });
+            database.ref('greta_partida').set({ dulces: 0, dulcesGastados: 0, coleccion: ['tema-default'], logros: [], carrito: [], codigosUsados: [], ataudDia: 1, ataudTiempo: 0, diarioVisto: false, pistas: [], pistasReveladas: [], temaActivo: 'tema-default', halloweenReclamado: false, volMusica: 0.5, volSfx: 0.5 });
             msjRespuesta = "[ADMIN] greta_partida formateada."; colorRespuesta = "var(--pumpkin)";
         }
         break;
@@ -1279,11 +1365,11 @@ setInterval(() => {
     let rand = Math.random();
     
     if(temaActivo === 'tema-rosa') { 
-        wrapper.innerHTML = rand > 0.5 ? '💖' : '🦇'; 
-        wrapper.style.fontSize = Math.floor(Math.random() * 1.5 + 1) + 'rem';
+        wrapper.innerHTML = '<svg viewBox="0 0 24 24" width="100%" height="100%" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>'; 
+        wrapper.style.width = Math.floor(Math.random() * 20 + 15) + 'px';
         wrapper.style.color = '#ff99cc';
         wrapper.style.top = Math.floor(Math.random() * 100) + 'vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; 
-        wrapper.style.textShadow = '0 0 10px rgba(255,51,153,0.8)'; wrapper.style.transition = 'opacity 2s ease'; 
+        wrapper.style.filter = 'drop-shadow(0 0 10px rgba(255,51,153,0.8))'; wrapper.style.transition = 'opacity 2s ease'; 
         document.body.appendChild(wrapper); setTimeout(() => wrapper.style.opacity = '0.7', 100); setTimeout(() => wrapper.style.opacity = '0', 2000); setTimeout(() => wrapper.remove(), 4000); 
     } 
     else if(temaActivo === 'tema-sangre') { 
@@ -1309,7 +1395,7 @@ setInterval(() => {
     }
     else if(temaActivo === 'tema-batman') { 
         wrapper.innerHTML = '🦇'; wrapper.style.fontSize = Math.floor(Math.random() * 5 + 4) + 'rem'; 
-        wrapper.style.filter = 'brightness(0)';
+        wrapper.style.filter = (Math.random() > 0.8) ? 'brightness(0) drop-shadow(0 0 20px rgba(255,255,255,0.8))' : 'brightness(0)';
         wrapper.style.top = Math.floor(Math.random() * 80) + 'vh'; wrapper.style.left = '-20vw'; 
         wrapper.style.transition = 'transform ' + (Math.random() * 5 + 5) + 's linear, opacity 2s'; wrapper.style.opacity = '0.8'; 
         document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = 'translateX(130vw) scale(1.5)', 100); setTimeout(() => wrapper.remove(), 10200); 
@@ -1317,7 +1403,7 @@ setInterval(() => {
     else if(temaActivo === 'tema-brujeria') { 
         if (rand > 0.5) {
             wrapper.innerHTML = '🫧'; 
-            wrapper.style.filter = 'drop-shadow(0 0 8px #b300ff) hue-rotate(270deg)';
+            wrapper.style.filter = 'sepia(1) saturate(5) hue-rotate(240deg) drop-shadow(0 0 8px #b300ff)';
         } else {
             wrapper.innerHTML = '•'; 
             wrapper.style.color = '#d896ff';
@@ -1363,11 +1449,18 @@ setInterval(() => {
         }
     }
     else if(temaActivo === 'tema-medianoche') { 
-        wrapper.innerHTML = rand > 0.7 ? '🌙' : '⭐'; 
-        wrapper.style.fontSize = Math.floor(Math.random() * 1.5 + 1) + 'rem';
-        wrapper.style.top = '-10vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; 
-        wrapper.style.textShadow = '0 0 10px rgba(255,215,0,0.8)'; wrapper.style.transition = 'transform 4s linear, opacity 1s'; wrapper.style.opacity = '0.9'; 
-        document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = `translateY(110vh) translateX(-20vw)`, 100); setTimeout(() => wrapper.remove(), 4200); 
+        if (rand > 0.8) {
+            wrapper.classList.add('estrella-fugaz');
+            wrapper.style.top = Math.floor(Math.random() * 50) + 'vh';
+            wrapper.style.left = '110vw';
+            document.body.appendChild(wrapper); setTimeout(() => wrapper.remove(), 1600);
+        } else {
+            wrapper.innerHTML = rand > 0.5 ? '🌙' : '⭐'; 
+            wrapper.style.fontSize = Math.floor(Math.random() * 1.5 + 1) + 'rem';
+            wrapper.style.top = '-10vh'; wrapper.style.left = Math.floor(Math.random() * 100) + 'vw'; 
+            wrapper.style.textShadow = '0 0 10px rgba(255,215,0,0.8)'; wrapper.style.transition = 'transform 4s linear, opacity 1s'; wrapper.style.opacity = '0.9'; 
+            document.body.appendChild(wrapper); setTimeout(() => wrapper.style.transform = `translateY(110vh) translateX(-20vw)`, 100); setTimeout(() => wrapper.remove(), 4200); 
+        }
     }
     else if(temaActivo === 'tema-otono') { 
         wrapper.innerHTML = '🍁'; 
@@ -1392,7 +1485,7 @@ function programarSkullette() {
             setTimeout(() => { wrapper.style.opacity = '1'; wrapper.style.transform = `translateX(${wrapper.style.left === '-50px' ? '120vw' : '-120vw'}) rotate(360deg)`; }, 100);
             setTimeout(() => { wrapper.style.opacity = '0'; }, 7200); 
             inner.onpointerdown = () => { 
-                checkLogro('skull'); let g = agregarDulces(2); revelarPista('pista_halloween');
+                let g = agregarDulces(2); revelarPista('pista_halloween');
                 guardarDatos(); playSfx('exito'); wrapper.remove(); 
             };
             setTimeout(() => { if(wrapper.parentNode) wrapper.remove(); }, 8000);
@@ -1408,14 +1501,18 @@ function probarJuego(idJuego) {
     juegoEnProgreso = true;
     revelarPista('pista_magia'); 
     
-    if(!sfxBases['musica'].audio.muted) sfxBases['musica'].audio.pause();
+    fadeMusica(0.0, 1500, true);
     playSfx('juego'); 
     const overlay = document.getElementById('fade-overlay'); overlay.style.opacity = '1';
     
     setTimeout(() => {
         let g = agregarDulces(5); guardarDatos(); mostrarToast(`Iniciando juego: ${idJuego} (+${g}🍬)`, 'info'); 
         overlay.style.opacity = '0'; 
-        if(!sfxBases['musica'].audio.muted && document.getElementById('vol-musica').value > 0) { sfxBases['musica'].audio.play().catch(e=>console.log(e)); }
+        if(!musicaMuted && document.getElementById('vol-musica').value > 0) { 
+            sfxBases['musica'].audio.volume = 0;
+            sfxBases['musica'].audio.play().catch(e=>console.log(e));
+            fadeMusica(1.0, 1000); 
+        }
         juegoEnProgreso = false; 
     }, 1500);
 }
