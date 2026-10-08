@@ -35,6 +35,7 @@
   --glow: rgba(214, 40, 40, 0.25);
   --bg-overlay: rgba(20, 5, 5, 0.85); 
   --borde-estilo: solid;
+  --btn-bg: var(--pumpkin); 
   
   box-sizing: border-box;
   padding-top: env(safe-area-inset-top, 0px);
@@ -50,20 +51,22 @@ body.tema-calabaza { --bg: #0a140a; --pumpkin: #ff6600; --ember: #cc5200; --viol
 body.tema-brujeria { --bg: #0a0014; --pumpkin: #b300ff; --ember: #4d0066; --violet: #d896ff; --card: #140028; --glow: rgba(179, 0, 255, 0.25); --bg-overlay: rgba(10, 0, 20, 0.75); } 
 body.tema-otono { --bg: #1a0a00; --pumpkin: #ff8c00; --ember: #8b4500; --violet: #cd853f; --card: #291400; --glow: rgba(255, 140, 0, 0.25); --bg-overlay: rgba(26, 10, 0, 0.88); }
 
-/* TEMA MEDIANOCHE (Con ajuste de contraste para botones) */
+/* TEMA MEDIANOCHE */
 body.tema-medianoche { 
     --bg: #05051a; --pumpkin: #ffd700; --ember: #000066; --violet: #4169e1; --card: #0a0a29; 
     --glow: rgba(255, 215, 0, 0.25); --bg-overlay: rgba(5, 5, 26, 0.88);
+    --btn-bg: #b8860b; 
 }
-body.tema-medianoche .btn-accion, body.tema-medianoche .btn-cerrar-modal, body.tema-medianoche .ataud-flotante .badge { background-color: #b8860b; color: #ffffff; }
+body.tema-medianoche .btn-accion, body.tema-medianoche .btn-cerrar-modal, body.tema-medianoche .ataud-flotante .badge { background-color: var(--btn-bg); color: #ffffff; }
 body.tema-medianoche .btn-accion:hover, body.tema-medianoche .btn-cerrar-modal:hover { background-color: var(--violet); }
 
-/* TEMA CYBER-HACKER (Con ajuste de contraste para botones) */
+/* TEMA CYBER-HACKER */
 body.tema-hacker { 
     --bg: #000000; --pumpkin: #00ff00; --ember: #003300; --violet: #00cc00; --card: #051005; 
     --glow: rgba(0, 255, 0, 0.25); --bg-overlay: rgba(0, 0, 0, 0.85); 
+    --btn-bg: #009900; 
 }
-body.tema-hacker .btn-accion, body.tema-hacker .btn-cerrar-modal, body.tema-hacker .ataud-flotante .badge { background-color: #009900; color: #ffffff; }
+body.tema-hacker .btn-accion, body.tema-hacker .btn-cerrar-modal, body.tema-hacker .ataud-flotante .badge { background-color: var(--btn-bg); color: #ffffff; }
 body.tema-hacker .btn-accion:hover, body.tema-hacker .btn-cerrar-modal:hover { background-color: var(--violet); }
 
 /* TEMA BATMAN */
@@ -71,7 +74,7 @@ body.tema-batman {
     --bg: #020a0f; --pumpkin: #4fd1c5; --ember: #1d3942; --violet: #a0aec0; --card: #07141d; 
     --glow: rgba(79, 209, 197, 0.25); --bg-overlay: rgba(2, 10, 15, 0.92); 
 }
-body.tema-batman .btn-accion, body.tema-batman .btn-cerrar-modal { color: #000000 !important; font-weight: 900; }
+body.tema-batman .btn-accion, body.tema-batman .btn-cerrar-modal { color: #000000 !important; font-weight: 900; background-color: var(--pumpkin); }
 body.tema-batman .btn-accion:hover, body.tema-batman .btn-cerrar-modal:hover { color: #ffffff !important; background-color: var(--ember) !important; }
 body.tema-batman .btn-carrito-tienda { color: var(--pumpkin) !important; border-color: var(--pumpkin) !important; }
 body.tema-batman #toast-logro.is-pista, body.tema-batman #toast-logro.is-pista #toast-sub, body.tema-batman #toast-logro.is-pista #toast-txt { color: #000000 !important; }
@@ -148,7 +151,7 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .btn-col { background: var(--card); border: 1px var(--borde-estilo) var(--pumpkin); color: var(--pumpkin); font-weight: 800; padding: 8px 20px; border-radius: 999px; text-decoration: none; cursor: pointer; transition: all 0.2s; white-space: nowrap; -webkit-tap-highlight-color: transparent;}
 .btn-col:hover { background: var(--pumpkin); color: #000; }
 
-/* LA TUERCA INMORTAL (MÁSCARA PNG DINÁMICA) */
+/* LA TUERCA INMORTAL */
 .btn-icono.tuerca { 
   background: transparent; border: none; cursor: pointer; color: var(--ink); 
   padding: 10px; margin: -10px; 
@@ -156,16 +159,9 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
   transition: all 0.3s; -webkit-tap-highlight-color: transparent; 
   overflow: visible; 
 }
-.tuerca-img {
-  width: 26px; height: 26px; display: block;
-  background-color: currentColor; 
-  -webkit-mask-image: url('tuercamaldita.png'); mask-image: url('tuercamaldita.png');
-  -webkit-mask-size: contain; mask-size: contain;
-  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
-  -webkit-mask-position: center; mask-position: center;
-}
+.btn-icono.tuerca svg { width: 26px; height: 26px; overflow: visible; display: block; }
 .btn-icono.tuerca:hover { color: var(--pumpkin); filter: drop-shadow(0 0 8px var(--glow)); transform: scale(1.1); }
-.btn-icono.tuerca:hover .tuerca-img { animation: spin 2s linear infinite; }
+.btn-icono.tuerca:hover svg { animation: spin 2s linear infinite; }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
 /* ESTRUCTURA DE PÁGINAS */
@@ -210,7 +206,7 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 /* ATAÚD FLOTANTE ARMONIZADO */
 .ataud-flotante { position: fixed; top: 50vh; right: 3vw; transform: translateY(-50%); margin-top: -30px; background: var(--card); border: 2px var(--borde-estilo) var(--violet); border-radius: 15px; padding: 15px; cursor: pointer; font-size: 2rem; z-index: 90; box-shadow: 0 0 15px var(--glow); transition: transform 0.3s, background 0.5s ease; display: flex; flex-direction: column; align-items: center; -webkit-tap-highlight-color: transparent;}
 .ataud-flotante:hover { transform: translateY(-50%) scale(1.1); background: var(--violet); }
-.ataud-flotante .badge { font-size: 0.8rem; background-color: var(--pumpkin); color: white; border-radius: 999px; padding: 2px 8px; font-weight: bold; margin-top: 5px; font-family: sans-serif; }
+.ataud-flotante .badge { font-size: 0.8rem; background-color: var(--btn-bg); color: white; border-radius: 999px; padding: 2px 8px; font-weight: bold; margin-top: 5px; font-family: sans-serif; }
 .ataud-animado { animation: floatAtaud 4s ease-in-out infinite; }
 @keyframes floatAtaud { 0%, 100% { margin-top: -30px; } 50% { margin-top: -45px; } }
 
@@ -242,13 +238,13 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .item h3 { margin: 0; font-size: 1.2rem; color: var(--ink); }
 .item p { margin: 0; font-size: .92rem; opacity: .8; flex-grow: 1; }
 
-/* BOTONES GLOBALES (CONTRASTE SALVADO) */
-.btn-accion { display: inline-block; background-color: var(--pumpkin); color: #fff; font-weight: 800; padding: 12px 20px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem; margin-top: 10px; transition: all 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent; }
+/* BOTONES GLOBALES Y DINÁMICOS */
+.btn-accion { display: inline-block; background-color: var(--btn-bg); color: #fff; font-weight: 800; padding: 12px 20px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem; margin-top: 10px; transition: all 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent; }
 .btn-accion:hover { background-color: var(--violet); }
-.btn-cerrar-modal { background-color: var(--pumpkin); color: #fff; font-weight: 800; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; width: 100%; margin-top: 15px; font-size: 1rem; transition: background 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent;}
+.btn-cerrar-modal { background-color: var(--btn-bg); color: #fff; font-weight: 800; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; width: 100%; margin-top: 15px; font-size: 1rem; transition: background 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent;}
 .btn-cerrar-modal:hover { background-color: var(--violet); }
-.btn-jugar { background-color: var(--ember) !important; }
-.btn-jugar:hover { background-color: var(--pumpkin) !important; }
+.btn-jugar { background-color: var(--ember); }
+.btn-jugar:hover { background-color: var(--btn-bg); }
 .btn-bloqueado { background: rgba(255,255,255,0.05) !important; color: var(--violet) !important; cursor: default !important; border: 1px var(--borde-estilo) var(--ember) !important; opacity: 0.8; }
 
 /* TIENDA Y CARRITO */
@@ -308,6 +304,44 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .item-carrito h4 { margin: 0 0 5px 0; color: var(--pumpkin); }
 .item-carrito p { margin: 0; font-size: 0.8rem; }
 
+/* ==========================================
+   FASE 2: ESTILOS DE LOS MINIJUEGOS ARCADE
+   ========================================== */
+#sec-game-stage { display: none; padding: 20px 5vw; min-height: 100vh; position: relative; }
+#sec-game-stage.activa { display: block; }
+.game-container { display: none; text-align: center; max-width: 800px; margin: 0 auto; padding-bottom: 50px;}
+
+.game-hud { display: flex; justify-content: space-between; align-items: center; background: var(--card); border: 2px var(--borde-estilo) var(--ember); padding: 15px 20px; border-radius: 18px; margin-bottom: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+.game-hud div { font-size: 1.2rem; font-weight: 900; color: var(--pumpkin); }
+.game-hud span { color: var(--ink); font-weight: 500; font-size: 1rem; display: block; }
+
+.game-menu-overlay { position: absolute; inset: 0; background: rgba(20,5,5,0.95); z-index: 50; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 18px; backdrop-filter: blur(5px); }
+.game-title { font-size: 3rem; color: var(--pumpkin); text-shadow: 0 0 15px var(--glow); margin: 0 0 10px; line-height: 1; }
+.game-rules { font-size: 1.1rem; max-width: 400px; margin-bottom: 30px; opacity: 0.9; }
+
+/* 1. Catacumbas */
+.cata-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; max-width: 400px; margin: 0 auto; }
+.cata-cell { background: var(--card); border: 2px var(--borde-estilo) var(--ember); border-radius: 15px; aspect-ratio: 1/1; display: flex; justify-content: center; align-items: center; font-size: 4rem; cursor: pointer; user-select: none; transition: all 0.1s; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); -webkit-tap-highlight-color: transparent;}
+.cata-cell:active { transform: scale(0.95); }
+.cata-cell.has-ghost { background: var(--glow); border-color: var(--pumpkin); animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.cata-cell.has-skull { background: rgba(255,0,0,0.2); border-color: #ff0000; animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+
+/* 2. Memoria Monstruosa */
+.memoria-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 500px; margin: 0 auto; perspective: 1000px; }
+.mem-card { background: var(--card); border: 2px var(--borde-estilo) var(--ember); border-radius: 12px; aspect-ratio: 3/4; display: flex; justify-content: center; align-items: center; font-size: 2.5rem; cursor: pointer; user-select: none; transition: transform 0.4s, background 0.3s; transform-style: preserve-3d; -webkit-tap-highlight-color: transparent;}
+.mem-card.flipped { transform: rotateY(180deg); background: var(--glow); border-color: var(--pumpkin); }
+.mem-card.matched { visibility: hidden; opacity: 0; transition: visibility 0s 0.5s, opacity 0.5s linear; }
+.mem-card .front, .mem-card .back { position: absolute; backface-visibility: hidden; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; }
+.mem-card .front { transform: rotateY(180deg); }
+
+/* 3. Pociones */
+.poc-receta-box { background: rgba(0,0,0,0.5); border: 2px dashed var(--pumpkin); border-radius: 15px; padding: 20px; margin-bottom: 30px; font-size: 3rem; letter-spacing: 15px; display: flex; justify-content: center; min-height: 100px; align-items: center; transition: 0.3s; }
+.poc-receta-box.error { background: rgba(255,0,0,0.3); border-color: red; animation: shake 0.4s; }
+.poc-receta-box.success { background: rgba(0,255,0,0.2); border-color: #00ff00; transform: scale(1.05); }
+.poc-shelf { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+.poc-ing { background: var(--card); border: 2px var(--borde-estilo) var(--ember); border-radius: 50%; width: 70px; height: 70px; display: flex; justify-content: center; align-items: center; font-size: 2.5rem; cursor: pointer; user-select: none; transition: 0.1s; box-shadow: 0 5px 10px rgba(0,0,0,0.5); -webkit-tap-highlight-color: transparent;}
+.poc-ing:active { transform: translateY(5px); box-shadow: 0 0 0 rgba(0,0,0,0); border-color: var(--pumpkin); background: var(--glow); }
+
 @media(max-width: 850px) {
   body:has(#sec-home.activa) { overflow: hidden; position: fixed; width: 100%; height: 100%; }
   header { display: flex; flex-direction: column; gap: 15px; }
@@ -322,6 +356,13 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   .gd-portal-container { grid-template-columns: 1fr; }
   .ataud-flotante { right: 0; left: 0; bottom: 0; top: auto; transform: none; margin: 0; width: 100%; border-radius: 20px 20px 0 0; border-left: none; border-right: none; border-bottom: none; flex-direction: row; justify-content: center; gap: 15px; padding: 12px; }
   .ataud-flotante:hover { transform: none; background: rgba(28, 8, 8, 0.95); }
+  
+  .game-hud { padding: 10px; margin-bottom: 15px; }
+  .game-hud div { font-size: 1rem; }
+  .cata-cell { font-size: 3rem; }
+  .mem-card { font-size: 2rem; }
+  .poc-receta-box { font-size: 2.2rem; letter-spacing: 5px; padding: 15px; }
+  .poc-ing { width: 60px; height: 60px; font-size: 2rem; }
 }
 </style>
 </head>
@@ -472,19 +513,98 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
     <article class="item">
       <span class="e">👻</span><h3>Catacumbas</h3>
       <p>Atrapa a los espíritus traviesos del instituto antes de que escapen.</p>
-      <button class="btn-accion btn-jugar" onclick="probarJuego('catacumbas')">Jugar (+5 🍬)</button>
+      <button class="btn-accion btn-jugar" onclick="iniciarTransicionJuego('catacumbas')">Jugar Arcade</button>
     </article>
     <article class="item">
       <span class="e">📱</span><h3>Memoria Monstruosa</h3>
       <p>Encuentra los pares secretos en los diarios de las chicas.</p>
-      <button class="btn-accion btn-jugar" onclick="probarJuego('memoria')">Jugar (+5 🍬)</button>
+      <button class="btn-accion btn-jugar" onclick="iniciarTransicionJuego('memoria')">Jugar Arcade</button>
     </article>
     <article class="item">
       <span class="e">🧪</span><h3>Biteology: Pociones</h3>
-      <p>Examen de ciencias: Mezcla los ingredientes correctos para mi amor.</p>
-      <button class="btn-accion btn-jugar" onclick="probarJuego('pociones')">Jugar (+5 🍬)</button>
+      <p>Examen de ciencias: Mezcla los ingredientes correctos bajo presión.</p>
+      <button class="btn-accion btn-jugar" onclick="iniciarTransicionJuego('pociones')">Jugar Arcade</button>
     </article>
   </div>
+</section>
+
+<!-- ========================================================
+     FASE 2: DIMENSIÓN ARCADE (JUEGOS)
+     ======================================================== -->
+<section id="sec-game-stage" class="pagina">
+    
+    <!-- JUEGO 1: CATACUMBAS -->
+    <div id="gc-catacumbas" class="game-container">
+        <div class="game-hud">
+            <div>Tiempo: <span id="cata-time">30</span></div>
+            <div>Score: <span id="cata-score">0</span></div>
+            <div>Récord: <span id="cata-record">0</span></div>
+        </div>
+        
+        <div class="cata-grid" id="cata-board">
+            <div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div>
+            <div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div>
+            <div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div>
+        </div>
+
+        <!-- Menú Interno Catacumbas -->
+        <div class="game-menu-overlay" id="menu-catacumbas">
+            <h2 class="game-title">Catacumbas</h2>
+            <p class="game-rules">Toca a los fantasmas (👻) rápido para sumar puntos. ¡Cuidado con las calaveras (☠️), restan 3 segundos!</p>
+            <h3 style="color:var(--pumpkin); margin-bottom: 30px;" id="cata-msg-fin"></h3>
+            <button class="btn-accion" style="font-size: 1.5rem; padding: 15px 40px; margin-bottom: 20px;" onclick="startCatacumbas()">▶️ INICIAR JUEGO</button>
+            <button class="btn-cerrar-modal" style="width: auto; background: transparent; border: 1px solid var(--ember);" onclick="salirJuego()">⬅ Volver a la Tienda</button>
+        </div>
+    </div>
+
+    <!-- JUEGO 2: MEMORIA MONSTRUOSA -->
+    <div id="gc-memoria" class="game-container">
+        <div class="game-hud">
+            <div>Tiempo: <span id="mem-time">40</span></div>
+            <div>Ronda: <span id="mem-ronda">1</span></div>
+            <div>Récord (Ronda): <span id="mem-record">1</span></div>
+        </div>
+        
+        <div class="memoria-grid" id="mem-board"></div>
+
+        <!-- Menú Interno Memoria -->
+        <div class="game-menu-overlay" id="menu-memoria">
+            <h2 class="game-title">Memoria</h2>
+            <p class="game-rules">Encuentra todos los pares antes de que el tiempo llegue a cero. Cada ronda el tablero crece y te da tiempo extra.</p>
+            <h3 style="color:var(--pumpkin); margin-bottom: 30px;" id="mem-msg-fin"></h3>
+            <button class="btn-accion" style="font-size: 1.5rem; padding: 15px 40px; margin-bottom: 20px;" onclick="startMemoria()">▶️ INICIAR JUEGO</button>
+            <button class="btn-cerrar-modal" style="width: auto; background: transparent; border: 1px solid var(--ember);" onclick="salirJuego()">⬅ Volver a la Tienda</button>
+        </div>
+    </div>
+
+    <!-- JUEGO 3: POCIONES -->
+    <div id="gc-pociones" class="game-container">
+        <div class="game-hud">
+            <div>Tiempo Global: <span id="poc-time">30</span></div>
+            <div>Pociones: <span id="poc-score">0</span></div>
+            <div>Récord: <span id="poc-record">0</span></div>
+        </div>
+        
+        <div class="poc-receta-box" id="poc-receta-ui">...</div>
+        
+        <div class="poc-shelf">
+            <div class="poc-ing" onclick="clickIngrediente('🌿')">🌿</div>
+            <div class="poc-ing" onclick="clickIngrediente('🩸')">🩸</div>
+            <div class="poc-ing" onclick="clickIngrediente('👁️')">👁️</div>
+            <div class="poc-ing" onclick="clickIngrediente('🦴')">🦴</div>
+            <div class="poc-ing" onclick="clickIngrediente('🍄')">🍄</div>
+        </div>
+
+        <!-- Menú Interno Pociones -->
+        <div class="game-menu-overlay" id="menu-pociones">
+            <h2 class="game-title">Biteology</h2>
+            <p class="game-rules">Memoriza la receta y toca los ingredientes en el orden exacto. Cada poción perfecta suma +5 segundos. ¡Si fallas pierdes 3s!</p>
+            <h3 style="color:var(--pumpkin); margin-bottom: 30px;" id="poc-msg-fin"></h3>
+            <button class="btn-accion" style="font-size: 1.5rem; padding: 15px 40px; margin-bottom: 20px;" onclick="startPociones()">▶️ INICIAR JUEGO</button>
+            <button class="btn-cerrar-modal" style="width: auto; background: transparent; border: 1px solid var(--ember);" onclick="salirJuego()">⬅ Volver a la Tienda</button>
+        </div>
+    </div>
+
 </section>
 
 <section class="pagina" id="sec-tienda">
@@ -650,6 +770,9 @@ let appCargada = false;
 let vueltasDJ = 0;
 let particulaCounter = 0;
 
+// SISTEMA DE RÉCORDS (FASE 2)
+let records = { catacumbas: 0, memoria: 1, pociones: 0 };
+
 const catalogo = {
   'tema-default': { icono: '🦇', nombre: 'Tema: Clásico', desc: 'El diseño original.', tipo: 'tema', precio: 0 },
   'tema-rosa': { icono: '💖', nombre: 'Tema: Rosa Vampírico', desc: 'Lluvia de destellos.', tipo: 'tema', precio: 20 },
@@ -813,6 +936,7 @@ if(database) {
       pistasReveladas = data.pistasReveladas || [];
       temaActivo = data.temaActivo || 'tema-default';
       halloweenReclamado = data.halloweenReclamado || false;
+      records = data.records || { catacumbas: 0, memoria: 1, pociones: 0 };
       
       if(data.volMusica !== undefined) masterMusica = data.volMusica;
       if(data.volSfx !== undefined) masterSfx = data.volSfx;
@@ -916,7 +1040,7 @@ function guardarDatos() {
       coleccion: coleccion, logros: logros, carrito: carrito, codigosUsados: codigosUsados,
       ataudDia: ataudDia, ataudTiempo: ataudTiempo, 
       diarioVisto: diarioVisto, pistas: pistas, pistasReveladas: pistasReveladas, temaActivo: temaActivo,
-      halloweenReclamado: halloweenReclamado,
+      halloweenReclamado: halloweenReclamado, records: records,
       volMusica: masterMusica, volSfx: masterSfx
     });
   }
@@ -929,6 +1053,11 @@ function actualizarUI() {
   actualizarEstadoAtaud(); 
   renderizarDiario();
   renderizarTiendaTemas();
+  
+  // Actualizar UI records en minijuegos
+  document.getElementById('cata-record').textContent = records.catacumbas;
+  document.getElementById('mem-record').textContent = records.memoria;
+  document.getElementById('poc-record').textContent = records.pociones;
 }
 
 function agregarDulces(base) {
@@ -1252,11 +1381,11 @@ function canjearCodigo() {
     case 'TICKETS': abrirAdminTickets(); msjRespuesta = "[ADMIN] Tickets abiertos."; break;
     case 'CLEANCART': carrito = []; msjRespuesta = "[ADMIN] Carrito vacío."; break;
     case 'UNLOCKTHEMES': coleccion = ['tema-default', 'tema-rosa', 'tema-sangre', 'tema-momia', 'tema-calabaza', 'tema-batman', 'tema-brujeria', 'tema-hacker', 'tema-medianoche', 'tema-otono', 'amuleto-moneda', 'amuleto-iman', 'amuleto-reloj']; msjRespuesta = "[ADMIN] Colección max."; break;
-    case 'RESET': dulces = 0; dulcesGastados = 0; coleccion = ['tema-default']; logros = []; carrito = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; pistasReveladas = []; codigosUsados = []; halloweenReclamado = false; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Cuenta a cero."; colorRespuesta = "var(--pumpkin)"; break;
+    case 'RESET': dulces = 0; dulcesGastados = 0; coleccion = ['tema-default']; logros = []; carrito = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; pistasReveladas = []; codigosUsados = []; halloweenReclamado = false; records = {catacumbas:0, memoria:1, pociones:0}; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Cuenta a cero."; colorRespuesta = "var(--pumpkin)"; break;
     case '24H': ataudTiempo = Date.now() - 86400000; msjRespuesta = "[ADMIN] Reloj adelantado."; actualizarUI(); if(document.getElementById('modal-ataud').classList.contains('activo')) renderizarGrillaAtaud(); break;
     case 'RESETALL':
         if(esAdmin) {
-            database.ref('greta_partida').set({ dulces: 0, dulcesGastados: 0, coleccion: ['tema-default'], logros: [], carrito: [], codigosUsados: [], ataudDia: 1, ataudTiempo: 0, diarioVisto: false, pistas: [], pistasReveladas: [], temaActivo: 'tema-default', halloweenReclamado: false, volMusica: 0.5, volSfx: 0.5 });
+            database.ref('greta_partida').set({ dulces: 0, dulcesGastados: 0, coleccion: ['tema-default'], logros: [], carrito: [], codigosUsados: [], ataudDia: 1, ataudTiempo: 0, diarioVisto: false, pistas: [], pistasReveladas: [], temaActivo: 'tema-default', halloweenReclamado: false, records: {catacumbas:0, memoria:1, pociones:0}, volMusica: 0.5, volSfx: 0.5 });
             msjRespuesta = "[ADMIN] greta_partida formateada."; colorRespuesta = "var(--pumpkin)";
         }
         break;
@@ -1351,6 +1480,7 @@ function actualizarAnimacionInicio() { const batsClasicos = document.getElementB
 
 setInterval(() => {
     if(temaActivo === 'tema-default') return;
+    if(document.getElementById('sec-game-stage').classList.contains('activa')) return; // Pausar partículas en juegos
     
     let isMobile = window.innerWidth <= 850;
     if (isMobile && temaActivo !== 'tema-batman' && Math.random() > 0.5) return; 
@@ -1476,7 +1606,7 @@ function programarSkullette() {
     let baseTime = coleccion.includes('amuleto-iman') ? 6000 : 15000;
     let randomTime = baseTime + Math.random() * 4000;
     setTimeout(() => {
-        const enJuegos = document.getElementById('sec-juegos').classList.contains('activa');
+        const enJuegos = document.getElementById('sec-juegos').classList.contains('activa') || document.getElementById('sec-game-stage').classList.contains('activa');
         if(!enJuegos && Math.random() > 0.3) {
             const wrapper = document.createElement('div'); wrapper.className = 'skullette-wrapper'; wrapper.style.top = Math.floor(Math.random() * 65) + 15 + 'vh'; wrapper.style.left = (Math.random() > 0.5 ? '-50px' : '105vw'); wrapper.style.opacity = '0'; wrapper.style.transition = 'transform 8s linear, opacity 0.8s ease';
             const inner = document.createElement('img'); inner.className = 'skullette-inner'; inner.src = 'logo.png';
@@ -1494,26 +1624,208 @@ function programarSkullette() {
 }
 programarSkullette();
 
+// ========================================================
+// FASE 2: MOTOR DE MINIJUEGOS ARCADE
+// ========================================================
 let juegoEnProgreso = false;
-function probarJuego(idJuego) { 
+let currentInterval = null;
+
+function iniciarTransicionJuego(idJuego) { 
     if(juegoEnProgreso) return; 
     juegoEnProgreso = true;
     revelarPista('pista_magia'); 
     
-    fadeMusica(0.0, 1500, true);
+    fadeMusica(0.0, 1000, true);
     playSfx('juego'); 
     const overlay = document.getElementById('fade-overlay'); overlay.style.opacity = '1';
     
+    // Limpieza de pantalla para evitar distracciones
+    document.querySelectorAll('.particula-deco, .estrella-fugaz, .skullette-wrapper').forEach(el => el.remove());
+    
     setTimeout(() => {
-        let g = agregarDulces(5); guardarDatos(); mostrarToast(`Iniciando juego: ${idJuego} (+${g}🍬)`, 'info'); 
+        cambiarPagina('sec-game-stage');
+        document.querySelectorAll('.game-container').forEach(c => c.style.display = 'none');
+        document.getElementById('gc-' + idJuego).style.display = 'block';
+        
+        // Reset Menus
+        document.getElementById('menu-' + idJuego).style.display = 'flex';
+        document.getElementById(idJuego === 'catacumbas' ? 'cata-msg-fin' : (idJuego === 'memoria' ? 'mem-msg-fin' : 'poc-msg-fin')).textContent = '';
+        
         overlay.style.opacity = '0'; 
+        juegoEnProgreso = false; 
+    }, 5000);
+}
+
+function salirJuego() {
+    if(currentInterval) clearInterval(currentInterval);
+    const overlay = document.getElementById('fade-overlay'); overlay.style.opacity = '1';
+    setTimeout(() => {
         if(!musicaMuted && document.getElementById('vol-musica').value > 0) { 
             sfxBases['musica'].audio.volume = 0;
             sfxBases['musica'].audio.play().catch(e=>console.log(e));
             fadeMusica(1.0, 1000); 
         }
-        juegoEnProgreso = false; 
-    }, 1500);
+        cambiarPagina('sec-juegos');
+        overlay.style.opacity = '0';
+    }, 1000);
+}
+
+function finJuegoGuardar(idJuego, scoreLogico, textoMostrar) {
+    let dulcesGanados = 0;
+    let recordRoto = false;
+    
+    if(idJuego === 'catacumbas') { dulcesGanados = Math.floor(scoreLogico / 10); if(scoreLogico > records.catacumbas) { records.catacumbas = scoreLogico; recordRoto = true; } }
+    if(idJuego === 'memoria') { dulcesGanados = scoreLogico * 5; if(scoreLogico > records.memoria) { records.memoria = scoreLogico; recordRoto = true; } }
+    if(idJuego === 'pociones') { dulcesGanados = scoreLogico * 2; if(scoreLogico > records.pociones) { records.pociones = scoreLogico; recordRoto = true; } }
+    
+    let baseWin = agregarDulces(dulcesGanados);
+    guardarDatos(); playSfx(recordRoto ? 'ataudPremio' : 'logro');
+    
+    document.getElementById('menu-' + idJuego).style.display = 'flex';
+    document.getElementById(idJuego === 'catacumbas' ? 'cata-msg-fin' : (idJuego === 'memoria' ? 'mem-msg-fin' : 'poc-msg-fin')).innerHTML = `${textoMostrar} <br> <span style="color:#fff; font-size:1.2rem;">Ganaste +${baseWin} 🍬</span> ${recordRoto ? '<br>🌟 ¡NUEVO RÉCORD! 🌟' : ''}`;
+}
+
+/* 1. LÓGICA: CATACUMBAS */
+let cataTime, cataScore, cataSpeed;
+function startCatacumbas() {
+    document.getElementById('menu-catacumbas').style.display = 'none';
+    cataTime = 30; cataScore = 0; cataSpeed = 1000;
+    document.getElementById('cata-time').textContent = cataTime; document.getElementById('cata-score').textContent = cataScore;
+    document.querySelectorAll('.cata-cell').forEach(c => { c.innerHTML = ''; c.className = 'cata-cell'; });
+    
+    if(currentInterval) clearInterval(currentInterval);
+    currentInterval = setInterval(tickCata, 1000);
+    spawnCata();
+}
+function tickCata() {
+    cataTime--; document.getElementById('cata-time').textContent = cataTime;
+    if(cataTime <= 0) { clearTimeout(window.cataTimer); clearInterval(currentInterval); document.querySelectorAll('.cata-cell').forEach(c => c.innerHTML = ''); finJuegoGuardar('catacumbas', cataScore, `¡Tiempo Agotado!<br>Puntaje: ${cataScore}`); }
+}
+function spawnCata() {
+    if(cataTime <= 0) return;
+    document.querySelectorAll('.cata-cell').forEach(c => { c.innerHTML = ''; c.className = 'cata-cell'; });
+    const cells = document.querySelectorAll('.cata-cell');
+    let idx = Math.floor(Math.random() * cells.length);
+    let isSkull = Math.random() > 0.8;
+    cells[idx].innerHTML = isSkull ? '☠️' : '👻';
+    cells[idx].classList.add(isSkull ? 'has-skull' : 'has-ghost');
+    
+    cataSpeed = Math.max(400, 1000 - (Math.floor(cataScore/10) * 150));
+    window.cataTimer = setTimeout(spawnCata, cataSpeed);
+}
+function clickCata(cell) {
+    if(cell.innerHTML === '👻') { playSfx('comprar'); cataScore++; document.getElementById('cata-score').textContent = cataScore; cell.innerHTML = '💨'; cell.className = 'cata-cell'; }
+    else if(cell.innerHTML === '☠️') { playSfx('error'); cataTime -= 3; document.getElementById('cata-time').textContent = cataTime; cell.innerHTML = '💥'; cell.className = 'cata-cell'; }
+}
+
+/* 2. LÓGICA: MEMORIA MONSTRUOSA */
+const emojisMem = ['🦇', '🕸️', '🕷️', '🧛', '🖤', '💀', '🎃', '🧟', '🧪', '🔮'];
+let memRonda, memTime, memCards, firstCard, secondCard, lockBoard, paresEncontrados;
+
+function startMemoria() {
+    document.getElementById('menu-memoria').style.display = 'none';
+    memRonda = 1; memTime = 40;
+    document.getElementById('mem-time').textContent = memTime; document.getElementById('mem-ronda').textContent = memRonda;
+    if(currentInterval) clearInterval(currentInterval);
+    currentInterval = setInterval(tickMemoria, 1000);
+    generarTableroMemoria();
+}
+function tickMemoria() {
+    memTime--; document.getElementById('mem-time').textContent = memTime;
+    if(memTime <= 0) { clearInterval(currentInterval); finJuegoGuardar('memoria', memRonda - 1, `¡Te quedaste sin tiempo!<br>Ronda Máxima: ${memRonda - 1}`); }
+}
+function generarTableroMemoria() {
+    const board = document.getElementById('mem-board'); board.innerHTML = '';
+    let pares = memRonda === 1 ? 6 : (memRonda === 2 ? 8 : 10);
+    let cols = memRonda === 1 ? 3 : (memRonda === 2 ? 4 : 5);
+    board.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+    
+    let arr = emojisMem.slice(0, pares);
+    memCards = [...arr, ...arr].sort(() => Math.random() - 0.5);
+    firstCard = null; secondCard = null; lockBoard = false; paresEncontrados = 0;
+    
+    memCards.forEach((emoji, i) => {
+        let c = document.createElement('div'); c.className = 'mem-card'; c.dataset.val = emoji;
+        c.innerHTML = `<div class="front">${emoji}</div><div class="back">❓</div>`;
+        c.onclick = () => flipMem(c);
+        board.appendChild(c);
+    });
+}
+function flipMem(card) {
+    if(lockBoard || card === firstCard || card.classList.contains('flipped')) return;
+    card.classList.add('flipped');
+    if(!firstCard) { firstCard = card; return; }
+    secondCard = card; lockBoard = true;
+    
+    if(firstCard.dataset.val === secondCard.dataset.val) {
+        playSfx('comprar'); paresEncontrados++;
+        setTimeout(() => { firstCard.classList.add('matched'); secondCard.classList.add('matched'); resetMem(); checkWinMem(); }, 500);
+    } else {
+        playSfx('error');
+        setTimeout(() => { firstCard.classList.remove('flipped'); secondCard.classList.remove('flipped'); resetMem(); }, 1000);
+    }
+}
+function resetMem() { firstCard = null; secondCard = null; lockBoard = false; }
+function checkWinMem() {
+    let paresRequeridos = memRonda === 1 ? 6 : (memRonda === 2 ? 8 : 10);
+    if(paresEncontrados >= paresRequeridos) {
+        playSfx('logro');
+        memRonda++; memTime += (memRonda === 2 ? 30 : 40);
+        document.getElementById('mem-ronda').textContent = memRonda; document.getElementById('mem-time').textContent = memTime;
+        if(memRonda > 3) { clearInterval(currentInterval); finJuegoGuardar('memoria', 3, `¡Completaste el juego base!<br>Maestría Total.`); } 
+        else { setTimeout(generarTableroMemoria, 1000); }
+    }
+}
+
+/* 3. LÓGICA: POCIONES */
+const pocIngs = ['🌿', '🩸', '👁️', '🦴', '🍄'];
+let pocTime, pocScore, currentRecipe, currentStep;
+
+function startPociones() {
+    document.getElementById('menu-pociones').style.display = 'none';
+    pocTime = 30; pocScore = 0;
+    document.getElementById('poc-time').textContent = pocTime; document.getElementById('poc-score').textContent = pocScore;
+    if(currentInterval) clearInterval(currentInterval);
+    currentInterval = setInterval(tickPociones, 1000);
+    generarRecetaPocion();
+}
+function tickPociones() {
+    pocTime--; document.getElementById('poc-time').textContent = pocTime;
+    if(pocTime <= 0) { clearInterval(currentInterval); finJuegoGuardar('pociones', pocScore, `¡El caldero explotó!<br>Pociones: ${pocScore}`); }
+}
+function generarRecetaPocion() {
+    let len = pocScore < 3 ? 3 : (pocScore < 8 ? 4 : 5);
+    currentRecipe = []; currentStep = 0;
+    for(let i=0; i<len; i++) { currentRecipe.push(pocIngs[Math.floor(Math.random()*pocIngs.length)]); }
+    renderReceta();
+}
+function renderReceta() {
+    const box = document.getElementById('poc-receta-ui');
+    box.className = 'poc-receta-box';
+    let html = '';
+    currentRecipe.forEach((ing, i) => {
+        if(i < currentStep) html += `<span style="opacity:0.3;">${ing}</span>`;
+        else if (i === currentStep) html += `<span style="color:var(--pumpkin); border-bottom:3px solid var(--pumpkin); padding-bottom:5px;">${ing}</span>`;
+        else html += `<span>${ing}</span>`;
+    });
+    box.innerHTML = html;
+}
+function clickIngrediente(ing) {
+    if(pocTime <= 0) return;
+    const box = document.getElementById('poc-receta-ui');
+    if(ing === currentRecipe[currentStep]) {
+        playSfx('comprar'); currentStep++;
+        if(currentStep >= currentRecipe.length) {
+            pocScore++; pocTime += 5; 
+            document.getElementById('poc-score').textContent = pocScore; document.getElementById('poc-time').textContent = pocTime;
+            box.classList.add('success'); playSfx('logro');
+            setTimeout(generarRecetaPocion, 400);
+        } else { renderReceta(); }
+    } else {
+        playSfx('error'); pocTime -= 3; document.getElementById('poc-time').textContent = pocTime;
+        box.classList.add('error'); currentStep = 0;
+        setTimeout(renderReceta, 400);
+    }
 }
 
 function cambiarPagina(idPagina) {
