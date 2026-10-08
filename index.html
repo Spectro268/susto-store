@@ -150,7 +150,7 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .btn-col { background: var(--card); border: 1px var(--borde-estilo) var(--pumpkin); color: var(--pumpkin); font-weight: 800; padding: 8px 20px; border-radius: 999px; text-decoration: none; cursor: pointer; transition: all 0.2s; white-space: nowrap; -webkit-tap-highlight-color: transparent;}
 .btn-col:hover { background: var(--pumpkin); color: #000; }
 
-/* LA TUERCA INMORTAL (CIRUGÍA MATEMÁTICA -2 -2 28 28) */
+/* LA TUERCA INMORTAL (MÁSCARA PNG DINÁMICA) */
 .btn-icono.tuerca { 
   background: transparent; border: none; cursor: pointer; color: var(--ink); 
   padding: 10px; margin: -10px; /* Colchón invisible */
@@ -158,9 +158,16 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
   transition: all 0.3s; -webkit-tap-highlight-color: transparent; 
   overflow: visible; 
 }
-.btn-icono.tuerca svg { width: 26px; height: 26px; overflow: visible; display: block; }
+.tuerca-img {
+  width: 26px; height: 26px; display: block;
+  background-color: currentColor; /* Absorbe el color del botón */
+  -webkit-mask-image: url('tuercamaldita.png'); mask-image: url('tuercamaldita.png');
+  -webkit-mask-size: contain; mask-size: contain;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center; mask-position: center;
+}
 .btn-icono.tuerca:hover { color: var(--pumpkin); filter: drop-shadow(0 0 8px var(--glow)); transform: scale(1.1); }
-.btn-icono.tuerca:hover svg { animation: spin 2s linear infinite; }
+.btn-icono.tuerca:hover .tuerca-img { animation: spin 2s linear infinite; }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
 /* ESTRUCTURA DE PÁGINAS */
@@ -439,10 +446,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
     <span class="moneda-ui">🍬 <span id="ui-dulces">0</span></span>
     <a class="btn-col" onclick="cambiarPagina('sec-coleccion')" id="nav-coleccion">Nuestra Colección</a>
     <button class="btn-icono tuerca" onclick="abrirAjustes()" title="Ajustes">
-      <svg viewBox="-2 -2 28 28" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="3"></circle>
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-      </svg>
+      <div class="tuerca-img"></div>
     </button>
   </div>
 </header>
