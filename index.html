@@ -35,6 +35,7 @@
   --glow: rgba(214, 40, 40, 0.25);
   --bg-overlay: rgba(20, 5, 5, 0.85); 
   --borde-estilo: solid;
+  --btn-bg: var(--pumpkin); 
   
   box-sizing: border-box;
   padding-top: env(safe-area-inset-top, 0px);
@@ -50,32 +51,34 @@ body.tema-calabaza { --bg: #0a140a; --pumpkin: #ff6600; --ember: #cc5200; --viol
 body.tema-brujeria { --bg: #0a0014; --pumpkin: #b300ff; --ember: #4d0066; --violet: #d896ff; --card: #140028; --glow: rgba(179, 0, 255, 0.25); --bg-overlay: rgba(10, 0, 20, 0.75); } 
 body.tema-otono { --bg: #1a0a00; --pumpkin: #ff8c00; --ember: #8b4500; --violet: #cd853f; --card: #291400; --glow: rgba(255, 140, 0, 0.25); --bg-overlay: rgba(26, 10, 0, 0.88); }
 
-/* TEMA MEDIANOCHE (Ajuste de contraste) */
+/* TEMA MEDIANOCHE */
 body.tema-medianoche { 
     --bg: #05051a; --pumpkin: #ffd700; --ember: #000066; --violet: #4169e1; --card: #0a0a29; 
     --glow: rgba(255, 215, 0, 0.25); --bg-overlay: rgba(5, 5, 26, 0.88);
+    --btn-bg: #b8860b; 
 }
-body.tema-medianoche .btn-accion, body.tema-medianoche .btn-cerrar-modal, body.tema-medianoche .ataud-flotante .badge { background-color: #b8860b !important; color: #ffffff !important; }
-body.tema-medianoche .btn-accion:hover, body.tema-medianoche .btn-cerrar-modal:hover { background-color: var(--violet) !important; }
+body.tema-medianoche .btn-accion, body.tema-medianoche .btn-cerrar-modal, body.tema-medianoche .ataud-flotante .badge { background-color: var(--btn-bg); color: #ffffff; }
+body.tema-medianoche .btn-accion:hover, body.tema-medianoche .btn-cerrar-modal:hover { background-color: var(--violet); }
 
-/* TEMA CYBER-HACKER (Ajuste de contraste) */
+/* TEMA CYBER-HACKER */
 body.tema-hacker { 
     --bg: #000000; --pumpkin: #00ff00; --ember: #003300; --violet: #00cc00; --card: #051005; 
     --glow: rgba(0, 255, 0, 0.25); --bg-overlay: rgba(0, 0, 0, 0.85); 
+    --btn-bg: #009900; 
 }
-body.tema-hacker .btn-accion, body.tema-hacker .btn-cerrar-modal, body.tema-hacker .ataud-flotante .badge { background-color: #009900 !important; color: #ffffff !important; }
-body.tema-hacker .btn-accion:hover, body.tema-hacker .btn-cerrar-modal:hover { background-color: var(--violet) !important; }
+body.tema-hacker .btn-accion, body.tema-hacker .btn-cerrar-modal, body.tema-hacker .ataud-flotante .badge { background-color: var(--btn-bg); color: #ffffff; }
+body.tema-hacker .btn-accion:hover, body.tema-hacker .btn-cerrar-modal:hover { background-color: var(--violet); }
 
 /* TEMA BATMAN */
 body.tema-batman { 
     --bg: #020a0f; --pumpkin: #4fd1c5; --ember: #1d3942; --violet: #a0aec0; --card: #07141d; 
     --glow: rgba(79, 209, 197, 0.25); --bg-overlay: rgba(2, 10, 15, 0.92); 
 }
-body.tema-batman .btn-accion, body.tema-batman .btn-cerrar-modal { background-color: var(--pumpkin) !important; color: #000000 !important; font-weight: 900; }
+body.tema-batman .btn-accion, body.tema-batman .btn-cerrar-modal { background-color: var(--pumpkin); color: #000000 !important; font-weight: 900; }
 body.tema-batman .btn-accion:hover, body.tema-batman .btn-cerrar-modal:hover { color: #ffffff !important; background-color: var(--ember) !important; }
 body.tema-batman .btn-carrito-tienda { color: var(--pumpkin) !important; border-color: var(--pumpkin) !important; }
 body.tema-batman #toast-logro.is-pista, body.tema-batman #toast-logro.is-pista #toast-sub, body.tema-batman #toast-logro.is-pista #toast-txt { color: #000000 !important; }
-body.tema-batman .ataud-flotante .badge { background-color: var(--pumpkin) !important; color: #000000 !important; }
+body.tema-batman .ataud-flotante .badge { background-color: var(--pumpkin); color: #000000 !important; }
 
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
 *, *::before, *::after { box-sizing: inherit; }
@@ -148,17 +151,24 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .btn-col { background: var(--card); border: 1px var(--borde-estilo) var(--pumpkin); color: var(--pumpkin); font-weight: 800; padding: 8px 20px; border-radius: 999px; text-decoration: none; cursor: pointer; transition: all 0.2s; white-space: nowrap; -webkit-tap-highlight-color: transparent;}
 .btn-col:hover { background: var(--pumpkin); color: #000; }
 
-/* LA TUERCA INMORTAL (SVG CON VIEWBOX AJUSTADO) */
-.btn-icono.tuerca {
-  background: transparent; border: none; cursor: pointer; color: var(--pumpkin);
+/* LA TUERCA INMORTAL (MÁSCARA PNG DINÁMICA) */
+.btn-icono.tuerca { 
+  background: transparent; border: none; cursor: pointer; color: var(--ink); 
   padding: 10px; margin: -10px; min-width: 44px; min-height: 44px;
-  display: flex; align-items: center; justify-content: center;
-  transition: color .3s ease, transform .3s ease, filter .3s ease;
-  -webkit-tap-highlight-color: transparent; touch-action: manipulation; overflow: visible;
+  display: flex; align-items: center; justify-content: center; 
+  transition: all 0.3s; -webkit-tap-highlight-color: transparent; 
+  overflow: visible; 
 }
-.btn-icono.tuerca svg { width: 26px; height: 26px; overflow: visible; display: block; flex-shrink: 0; }
-.btn-icono.tuerca:hover { color: var(--violet); filter: drop-shadow(0 0 8px var(--glow)); transform: scale(1.1); }
-.btn-icono.tuerca:hover svg { animation: spin 2s linear infinite; }
+.tuerca-img {
+  width: 26px; height: 26px; display: block; flex-shrink: 0;
+  background-color: currentColor; 
+  -webkit-mask-image: url('tuercamaldita.png'); mask-image: url('tuercamaldita.png');
+  -webkit-mask-size: contain; mask-size: contain;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center; mask-position: center;
+}
+.btn-icono.tuerca:hover { color: var(--pumpkin); filter: drop-shadow(0 0 8px var(--glow)); transform: scale(1.1); }
+.btn-icono.tuerca:hover .tuerca-img { animation: spin 2s linear infinite; }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
 /* ESTRUCTURA DE PÁGINAS */
@@ -220,12 +230,6 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 #toast-logro.visible { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
 #toast-txt { flex-grow: 1; pointer-events: none; }
 
-.game-result-achievements { margin:10px auto 0; max-width:420px; width:100%; font-size:.9rem; text-align:left; }
-.game-result-achievements > strong { display:block; text-align:center; color:var(--pumpkin); margin-bottom:5px; }
-.game-result-achievement { display:flex; align-items:center; gap:7px; padding:4px 8px; margin:3px 0; border-radius:8px; background:rgba(255,255,255,.08); font-size:.82rem; }
-.game-result-achievement span { flex:1; }
-.game-result-achievement small { color:#ffd700; white-space:nowrap; }
-.game-menu-overlay:has(.game-result-achievements) { overflow-y:auto; justify-content:flex-start; padding-top:max(25px, env(safe-area-inset-top)); padding-bottom: max(25px, env(safe-area-inset-bottom)); }
 #fade-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: black; opacity: 0; pointer-events: none; transition: opacity 1s ease-in-out; z-index: 9999; }
 
 /* GRID ELEMENTOS BÁSICOS */
@@ -242,12 +246,12 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .item p { margin: 0; font-size: .92rem; opacity: .8; flex-grow: 1; }
 
 /* BOTONES GLOBALES DINÁMICOS */
-.btn-accion { display: inline-block; background-color: var(--pumpkin); color: #fff; font-weight: 800; padding: 12px 20px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem; margin-top: 10px; transition: all 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent; }
+.btn-accion { display: inline-flex; align-items: center; justify-content: center; background-color: var(--btn-bg); color: #fff; font-weight: 800; padding: 12px 20px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem; margin-top: 10px; transition: all 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent; }
 .btn-accion:hover { background-color: var(--violet); }
-.btn-cerrar-modal { background-color: var(--pumpkin); color: #fff; font-weight: 800; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; width: 100%; margin-top: 15px; font-size: 1rem; transition: background 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent;}
+.btn-cerrar-modal { background-color: var(--btn-bg); color: #fff; font-weight: 800; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; width: 100%; margin-top: 15px; font-size: 1rem; transition: background 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent;}
 .btn-cerrar-modal:hover { background-color: var(--violet); }
 .btn-jugar { background-color: var(--ember); }
-.btn-jugar:hover { background-color: var(--pumpkin); }
+.btn-jugar:hover { background-color: var(--btn-bg); }
 .btn-bloqueado { background: rgba(255,255,255,0.05) !important; color: var(--violet) !important; cursor: default !important; border: 1px var(--borde-estilo) var(--ember) !important; opacity: 0.8; }
 
 /* TIENDA Y CARRITO */
@@ -310,55 +314,57 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 /* ==========================================
    FASE 2: ESTILOS DE LOS MINIJUEGOS ARCADE
    ========================================== */
-#sec-game-stage { display: none; padding: max(10px, env(safe-area-inset-top)) max(12px, 3vw) max(10px, env(safe-area-inset-bottom)); position: fixed; inset: 0; z-index: 500; width: 100%; height: 100vh; height: 100dvh; min-height: 0; overflow: hidden; background: rgba(0,0,0,.36); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); overscroll-behavior: none; touch-action: pan-x pan-y; }
+#sec-game-stage { display: none; padding: max(10px, env(safe-area-inset-top)) max(12px, 3vw) max(10px, env(safe-area-inset-bottom)); position: fixed; inset: 0; z-index: 500; width: 100%; height: 100vh; height: 100dvh; min-height: 0; overflow: hidden; background: rgba(0,0,0,.6); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); overscroll-behavior: none; touch-action: pan-x pan-y; }
 #sec-game-stage.activa { display: block; }
 body.modo-juego { overflow: hidden !important; height: 100%; overscroll-behavior: none; }
 body.modo-juego > header { display: none !important; }
 body.modo-juego .pagina:not(#sec-game-stage) { visibility: hidden; }
 .game-container { display: none; text-align: center; width: min(100%, 800px); max-height: 100%; height: 100%; overflow: hidden; margin: 0 auto; padding: 0 0 max(4px, env(safe-area-inset-bottom)); position: relative; }
 .game-hud { display: flex; justify-content: space-between; align-items: center; background: var(--card); border: 2px var(--borde-estilo) var(--ember); padding: 15px 20px; border-radius: 18px; margin-bottom: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-.game-hud div { font-size: 1.2rem; font-weight: 900; color: var(--pumpkin); }
+.game-hud div { font-size: 1.2rem; font-weight: 900; color: var(--pumpkin); display:flex; align-items:center; gap:5px; }
 .game-hud span { color: var(--ink); font-weight: 500; font-size: 1rem; display: block; }
 
-.game-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.46); z-index: 550; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px; text-align: center; -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); overflow: hidden; }
-.game-menu-overlay .game-title { font-size: clamp(2rem, 7vw, 3rem); }
-.game-menu-overlay .game-rules { font-size: clamp(.95rem, 3vw, 1.1rem); margin-bottom: 18px; }
+.game-menu-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 550; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px; text-align: center; overflow: hidden; }
+.game-menu-overlay .game-title { font-size: clamp(2.5rem, 8vw, 4rem); }
+.game-menu-overlay .game-rules { font-size: clamp(1rem, 3.5vw, 1.2rem); margin-bottom: 18px; max-width: 450px;}
 .game-title { font-size: 3rem; color: var(--pumpkin); text-shadow: 0 0 15px var(--glow); margin: 0 0 10px; line-height: 1; }
-.game-rules { font-size: 1.1rem; max-width: 400px; margin-bottom: 30px; opacity: 0.9; }
 
 /* 1. Catacumbas */
-.cata-board-wrap { position: relative; width: min(100%, 600px); margin: 0 auto; }
+.cata-board-wrap { position: relative; width: min(100%, 600px); margin: 0 auto; display:flex; flex-direction:column; align-items:center;}
 .cata-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(6px, 2vw, 15px); width: min(100%, 400px); margin: 0 auto; }
-.cata-cell { background: var(--card); border: 2px var(--borde-estilo) var(--ember); border-radius: 15px; aspect-ratio: 1/1; min-width: 0; display: flex; justify-content: center; align-items: center; font-size: clamp(2rem, 7vw, 4rem); cursor: pointer; user-select: none; transition: all 0.1s; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); -webkit-tap-highlight-color: transparent;}
+.cata-cell { background: var(--card); border: 2px var(--borde-estilo) var(--ember); border-radius: 15px; aspect-ratio: 1/1; min-width: 0; display: flex; justify-content: center; align-items: center; font-size: clamp(2.5rem, 9vw, 4.5rem); cursor: pointer; user-select: none; transition: all 0.1s; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); -webkit-tap-highlight-color: transparent;}
 .cata-cell:active { transform: scale(0.95); }
 .cata-cell.has-ghost { background: var(--glow); border-color: var(--pumpkin); animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 .cata-cell.has-skull { background: rgba(255,0,0,0.2); border-color: #ff0000; animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-.cata-skullette { display: none; align-items: center; justify-content: center; position: absolute; top: 35%; width: 68px; height: 68px; border: 2px solid var(--pumpkin); border-radius: 50%; background: rgba(0,0,0,.82); box-shadow: 0 0 22px var(--glow); z-index: 5; animation: skulletteBounce .65s ease-in-out infinite alternate; touch-action: manipulation; }
+
+.cata-skullette { display: none; align-items: center; justify-content: center; width: 68px; height: 68px; border: 2px solid var(--pumpkin); border-radius: 50%; background: var(--card); box-shadow: 0 0 15px var(--glow); z-index: 5; margin-bottom: 20px; animation: pop 0.4s ease-out; touch-action: manipulation; }
 .cata-skullette.visible { display: flex; }
 .cata-skullette img { width: 82%; height: 82%; object-fit: contain; }
-.cata-skullette.left { left: 0; transform: translateX(-10%); }
-.cata-skullette.right { right: 0; transform: translateX(10%); }
-@keyframes skulletteBounce { from { margin-top: -8px; } to { margin-top: 8px; } }
-.cata-skullette-note { display: none; font-size: .8rem; color: var(--pumpkin); margin: 5px auto 0; }
+.cata-skullette-note { display: none; font-size: .8rem; color: var(--pumpkin); margin: -15px auto 20px; font-weight:bold;}
 .cata-skullette-note.visible { display: block; }
 .cata-skullette.active-power { box-shadow: 0 0 30px #ffd700; border-color: #ffd700; }
 
 /* 2. Memoria Monstruosa */
 .memoria-tools { display:flex; justify-content:center; align-items:center; gap:10px; margin: 0 auto 8px; flex-wrap:wrap; font-size:.9rem; }
 .memoria-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(0, 1fr); gap: clamp(4px, 1.2vw, 9px); width: min(100%, 560px); height: min(68dvh, 600px); max-height: calc(100dvh - 170px); margin: 0 auto; perspective: 1000px; }
-.mem-card { position: relative; min-width: 0; min-height: 0; overflow: hidden; background: var(--card); border: 2px var(--borde-estilo) var(--ember); border-radius: 12px; aspect-ratio: auto; display: flex; justify-content: center; align-items: center; font-size: clamp(1.2rem, 4vw, 2.5rem); cursor: pointer; user-select: none; transition: transform 0.4s, background 0.3s; transform-style: preserve-3d; -webkit-tap-highlight-color: transparent;}
+.mem-card { position: relative; min-width: 0; min-height: 0; overflow: hidden; background: var(--card); border: 2px var(--borde-estilo) var(--ember); border-radius: 12px; aspect-ratio: auto; display: flex; justify-content: center; align-items: center; font-size: clamp(1.5rem, 5vw, 2.5rem); cursor: pointer; user-select: none; transition: transform 0.4s, background 0.3s; transform-style: preserve-3d; -webkit-tap-highlight-color: transparent;}
 .mem-card.flipped { transform: rotateY(180deg); background: var(--glow); border-color: var(--pumpkin); }
 .mem-card.matched { visibility: hidden; opacity: 0; pointer-events:none; transition: visibility 0s 0.5s, opacity 0.5s linear; }
+.mem-card.magic-pair.flipped { background: var(--violet); border-color: #fff; box-shadow: inset 0 0 20px rgba(255,255,255,0.5); }
 .mem-card .front, .mem-card .back { position: absolute; backface-visibility: hidden; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; }
 .mem-card .front { transform: rotateY(180deg); }
 
 /* 3. Pociones */
-.poc-receta-box { background: rgba(0,0,0,0.5); border: 2px dashed var(--pumpkin); border-radius: 15px; padding: clamp(10px, 2vh, 20px); margin: 0 auto 12px; font-size: clamp(1.6rem, 6vw, 3rem); letter-spacing: clamp(2px, 1.2vw, 12px); display: flex; justify-content: center; flex-wrap: wrap; gap: 2px; min-height: 64px; align-items: center; transition: 0.3s; }
-.poc-receta-box.error { background: rgba(255,0,0,0.3); border-color: red; animation: shake 0.4s; }
-.poc-receta-box.success { background: rgba(0,255,0,0.2); border-color: #00ff00; transform: scale(1.05); }
+.poc-receta-box { background: var(--card); border: 2px dashed var(--pumpkin); border-radius: 15px; padding: clamp(10px, 2vh, 20px); margin: 0 auto 15px; font-size: clamp(2rem, 8vw, 3.5rem); letter-spacing: clamp(5px, 2vw, 15px); display: flex; justify-content: center; flex-wrap: wrap; min-height: 80px; align-items: center; transition: box-shadow 0.3s, border-color 0.3s; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); }
+.poc-receta-box.error { box-shadow: inset 0 0 20px #ff0000, 0 0 20px #ff0000; border-color: #ff0000; animation: shake 0.4s; }
+.poc-receta-box.success { box-shadow: inset 0 0 20px #00ff00, 0 0 20px #00ff00; border-color: #00ff00; }
 .poc-shelf { display: flex; justify-content: center; align-content: center; gap: clamp(6px, 2vw, 15px); flex-wrap: wrap; max-width: 600px; margin: 0 auto; }
-.poc-ing { background: var(--card); border: 2px var(--borde-estilo) var(--ember); border-radius: 50%; width: clamp(48px, 12vw, 70px); height: clamp(48px, 12vw, 70px); display: flex; justify-content: center; align-items: center; font-size: 2.5rem; cursor: pointer; user-select: none; transition: 0.1s; box-shadow: 0 5px 10px rgba(0,0,0,0.5); -webkit-tap-highlight-color: transparent;}
+.poc-ing { background: var(--card); border: 2px var(--borde-estilo) var(--ember); border-radius: 50%; width: clamp(50px, 14vw, 75px); height: clamp(50px, 14vw, 75px); display: flex; justify-content: center; align-items: center; font-size: clamp(1.5rem, 6vw, 2.5rem); cursor: pointer; user-select: none; transition: 0.1s; box-shadow: 0 5px 10px rgba(0,0,0,0.5); -webkit-tap-highlight-color: transparent;}
 .poc-ing:active { transform: translateY(5px); box-shadow: 0 0 0 rgba(0,0,0,0); border-color: var(--pumpkin); background: var(--glow); }
+
+.poc-progress-track { width: 120px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 4px; margin: 20px auto 5px; overflow: hidden; position: relative; }
+.poc-progress-fill { height: 100%; background: var(--pumpkin); width: 0%; transition: width 0.3s ease; box-shadow: 0 0 10px var(--pumpkin);}
+.poc-progress-text { font-size: 0.75rem; color: var(--pumpkin); opacity: 0.8;}
 
 @media(max-width: 850px) {
   body:has(#sec-home.activa) { overflow: hidden; position: fixed; width: 100%; height: 100%; }
@@ -377,32 +383,22 @@ body.modo-juego .pagina:not(#sec-game-stage) { visibility: hidden; }
   
   .game-hud { padding: 10px; margin-bottom: 15px; }
   .game-hud div { font-size: 1rem; }
-  .cata-cell { font-size: 3rem; }
-  .mem-card { font-size: 2rem; }
-  .poc-receta-box { font-size: 2.2rem; letter-spacing: 5px; padding: 15px; }
-  .poc-ing { width: 60px; height: 60px; font-size: 2rem; }
 }
 
-/* EXPERIENCIA ARCADE: MÓVIL, PANTALLA COMPLETA Y SIN SCROLL DE PÁGINA */
+/* EXPERIENCIA ARCADE MÓVIL */
 @media (max-width: 850px) {
   body.modo-juego header { display:none !important; }
   #sec-game-stage { padding: max(6px, env(safe-area-inset-top)) 10px max(6px, env(safe-area-inset-bottom)); }
   .game-container { width:100%; }
-  .game-hud { gap:5px; padding:7px 8px; margin:0 auto 8px; border-radius:12px; }
+  .game-hud { gap:5px; padding:7px 8px; margin:0 auto 12px; border-radius:12px; }
   .game-hud div { font-size:clamp(.75rem, 3.3vw, 1rem); line-height:1.2; }
   .game-hud span { font-size:clamp(.68rem, 2.8vw, .9rem); }
   .cata-board-wrap { width:100%; max-width:420px; }
-  .cata-grid { width:min(100%, 360px); gap:6px; }
-  .cata-cell { border-radius:10px; }
-  .cata-skullette { position:relative; top:auto; left:auto; right:auto; transform:none; width:48px; height:48px; margin:8px auto 0; }
-  .cata-skullette.left, .cata-skullette.right { transform:none; }
-  .cata-skullette-note { margin-top:2px; }
+  .cata-grid { width:min(100%, 360px); gap:8px; }
+  .cata-cell { border-radius:12px; }
   .memoria-tools { margin-bottom:5px; font-size:.78rem; }
   .memoria-grid { width:min(100%, 460px); height:min(63dvh, 500px); max-height:calc(100dvh - 155px); gap:5px; }
   .mem-card { border-radius:8px; border-width:1px; }
-  .poc-receta-box { margin-bottom:10px; }
-  .poc-shelf { gap:7px; max-width:460px; }
-  .poc-ing { width:clamp(44px, 13vw, 60px); height:clamp(44px, 13vw, 60px); font-size:clamp(1.4rem, 6vw, 2rem); }
   .game-menu-overlay { padding:18px; }
   .game-menu-overlay .btn-accion, .game-menu-overlay .btn-cerrar-modal { max-width:min(100%, 320px); font-size:1rem !important; padding:12px 18px !important; margin-bottom:10px !important; }
 }
@@ -410,8 +406,9 @@ body.modo-juego .pagina:not(#sec-game-stage) { visibility: hidden; }
   .game-hud { padding:5px 8px; margin-bottom:5px; }
   .memoria-grid { height:calc(100dvh - 145px); max-height:calc(100dvh - 145px); }
   .cata-grid { width:min(55vh, 360px); }
-  .poc-receta-box { min-height:52px; }
+  .poc-receta-box { min-height:52px; margin-bottom:10px;}
   .poc-ing { width:48px; height:48px; }
+  .poc-progress-track { margin-top: 10px; }
 }
 
 </style>
@@ -535,10 +532,7 @@ body.modo-juego .pagina:not(#sec-game-stage) { visibility: hidden; }
     <span class="moneda-ui">🍬 <span id="ui-dulces">0</span></span>
     <a class="btn-col" onclick="cambiarPagina('sec-coleccion')" id="nav-coleccion">Nuestra Colección</a>
     <button class="btn-icono tuerca" onclick="abrirAjustes()" title="Ajustes" aria-label="Abrir configuración">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <circle cx="12" cy="12" r="3"></circle>
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-      </svg>
+      <div class="tuerca-img"></div>
     </button>
   </div>
 </header>
@@ -566,17 +560,17 @@ body.modo-juego .pagina:not(#sec-game-stage) { visibility: hidden; }
     <article class="item">
       <span class="e">👻</span><h3>Catacumbas</h3>
       <p>Atrapa a los espíritus traviesos del instituto antes de que escapen.</p>
-      <button class="btn-accion btn-jugar" onclick="iniciarTransicionJuego('catacumbas')">Jugar Arcade</button>
+      <button class="btn-accion btn-jugar" onclick="iniciarTransicionJuego('catacumbas')"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="margin-right:6px; vertical-align:middle;"><path d="M8 5v14l11-7z"/></svg> Jugar Arcade</button>
     </article>
     <article class="item">
       <span class="e">📱</span><h3>Memoria Monstruosa</h3>
       <p>Encuentra los pares secretos en los diarios de las chicas.</p>
-      <button class="btn-accion btn-jugar" onclick="iniciarTransicionJuego('memoria')">Jugar Arcade</button>
+      <button class="btn-accion btn-jugar" onclick="iniciarTransicionJuego('memoria')"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="margin-right:6px; vertical-align:middle;"><path d="M8 5v14l11-7z"/></svg> Jugar Arcade</button>
     </article>
     <article class="item">
       <span class="e">🧪</span><h3>Biteology: Pociones</h3>
       <p>Examen de ciencias: Mezcla los ingredientes correctos bajo presión.</p>
-      <button class="btn-accion btn-jugar" onclick="iniciarTransicionJuego('pociones')">Jugar Arcade</button>
+      <button class="btn-accion btn-jugar" onclick="iniciarTransicionJuego('pociones')"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="margin-right:6px; vertical-align:middle;"><path d="M8 5v14l11-7z"/></svg> Jugar Arcade</button>
     </article>
   </div>
 </section>
@@ -592,25 +586,26 @@ body.modo-juego .pagina:not(#sec-game-stage) { visibility: hidden; }
             <div>Tiempo: <span id="cata-time">30</span></div>
             <div>Score: <span id="cata-score">0</span></div>
             <div>Récord: <span id="cata-record">0</span></div>
+            <button class="btn-accion" style="padding: 6px 12px; font-size: 0.85rem; margin: 0; background-color: var(--ember);" onclick="cobrarYSalir('catacumbas')">🚪 Salir</button>
         </div>
         
         <div class="cata-board-wrap">
+          <button type="button" class="cata-skullette" id="cata-skullette" aria-label="Activar multiplicador x2" onclick="activarSkullette()"><img src="logo.png" alt="Skullette especial"></button>
+          <div class="cata-skullette-note" id="cata-skullette-note">¡Skullette! ×2 por 10 s</div>
+          
           <div class="cata-grid" id="cata-board">
             <div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div>
             <div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div>
             <div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div>
           </div>
-          <button type="button" class="cata-skullette" id="cata-skullette" aria-label="Activar multiplicador x2" onclick="activarSkullette()"><img src="logo-hd.png" alt="Skullette especial"></button>
-          <div class="cata-skullette-note" id="cata-skullette-note">¡Skullette! ×2 por 10 s</div>
         </div>
 
-        <!-- Menú Interno Catacumbas -->
         <div class="game-menu-overlay" id="menu-catacumbas">
             <h2 class="game-title">Catacumbas</h2>
             <p class="game-rules">Toca a los fantasmas (👻) rápido para sumar puntos. ¡Cuidado con las calaveras (☠️), restan 3 segundos!</p>
-            <h3 style="color:var(--pumpkin); margin-bottom: 30px;" id="cata-msg-fin"></h3>
-            <button class="btn-accion" style="font-size: 1.5rem; padding: 15px 40px; margin-bottom: 20px;" onclick="startCatacumbas()">▶️ INICIAR JUEGO</button>
-            <button class="btn-cerrar-modal" style="width: auto; background: transparent; border: 1px solid var(--ember);" onclick="salirJuego()">⬅ Volver a la Tienda</button>
+            <h3 style="color:var(--pumpkin); margin-bottom: 30px; font-size: 1.8rem;" id="cata-msg-fin"></h3>
+            <button class="btn-accion" style="font-size: 1.5rem; padding: 15px 40px; margin-bottom: 20px;" onclick="startCatacumbas()"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" style="margin-right:8px; vertical-align:middle;"><path d="M8 5v14l11-7z"/></svg> INICIAR JUEGO</button>
+            <button class="btn-cerrar-modal" style="width: auto; background-color: transparent; border: 1px solid var(--ember);" onclick="salirJuego()">⬅ Volver a la Tienda</button>
         </div>
     </div>
 
@@ -619,42 +614,46 @@ body.modo-juego .pagina:not(#sec-game-stage) { visibility: hidden; }
         <div class="game-hud">
             <div>Tiempo: <span id="mem-time">40</span></div>
             <div>Ronda: <span id="mem-ronda">1</span></div>
-            <div>Récord (Ronda): <span id="mem-record">1</span></div>
+            <div>Récord: <span id="mem-record">1</span></div>
+            <button class="btn-accion" style="padding: 6px 12px; font-size: 0.85rem; margin: 0; background-color: var(--ember);" onclick="cobrarYSalir('memoria')">🚪 Salir</button>
         </div>
         
-        <div class="memoria-tools"><span>Combo: <strong id="mem-combo">0</strong></span><span>Pistas: <strong id="mem-hints">2</strong></span><button type="button" class="btn-col" id="mem-hint-btn" onclick="usarPistaMemoria()" style="padding:6px 12px">💡 Usar pista</button><span>Récord infinito: <strong id="mem-infinite-record">1</strong></span></div>
+        <div class="memoria-tools"><span>Combo: <strong id="mem-combo" style="color:var(--pumpkin);">0</strong></span><span>Pistas: <strong id="mem-hints" style="color:var(--pumpkin);">2</strong></span><button type="button" class="btn-col" id="mem-hint-btn" onclick="usarPistaMemoria()" style="padding:6px 12px; font-size:0.8rem;">💡 Usar pista</button></div>
         <div class="memoria-grid" id="mem-board"></div>
 
-        <!-- Menú Interno Memoria -->
         <div class="game-menu-overlay" id="menu-memoria">
             <h2 class="game-title">Memoria</h2>
-            <p class="game-rules">Encuentra todos los pares antes de que el tiempo llegue a cero. La cuadrícula mantiene un tamaño estable. Supera rondas infinitas, crea combos y usa dos pistas por partida.</p>
-            <h3 style="color:var(--pumpkin); margin-bottom: 30px;" id="mem-msg-fin"></h3>
-            <button class="btn-accion" style="font-size: 1.5rem; padding: 15px 40px; margin-bottom: 20px;" onclick="startMemoria()">▶️ INICIAR JUEGO</button>
-            <button class="btn-cerrar-modal" style="width: auto; background: transparent; border: 1px solid var(--ember);" onclick="salirJuego()">⬅ Volver a la Tienda</button>
+            <p class="game-rules">Encuentra los pares antes de que el tiempo acabe. Cada ronda el tablero crece. <strong>¡Busca la pareja mágica brillante para ganar +5 segundos!</strong></p>
+            <h3 style="color:var(--pumpkin); margin-bottom: 30px; font-size: 1.8rem;" id="mem-msg-fin"></h3>
+            <button class="btn-accion" style="font-size: 1.5rem; padding: 15px 40px; margin-bottom: 20px;" onclick="startMemoria()"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" style="margin-right:8px; vertical-align:middle;"><path d="M8 5v14l11-7z"/></svg> INICIAR JUEGO</button>
+            <button class="btn-cerrar-modal" style="width: auto; background-color: transparent; border: 1px solid var(--ember);" onclick="salirJuego()">⬅ Volver a la Tienda</button>
         </div>
     </div>
 
     <!-- JUEGO 3: POCIONES -->
     <div id="gc-pociones" class="game-container">
         <div class="game-hud">
-            <div>Tiempo Global: <span id="poc-time">30</span></div>
+            <div>Tiempo: <span id="poc-time">30</span></div>
             <div>Pociones: <span id="poc-score">0</span></div>
             <div>Récord: <span id="poc-record">0</span></div>
+            <button class="btn-accion" style="padding: 6px 12px; font-size: 0.85rem; margin: 0; background-color: var(--ember);" onclick="cobrarYSalir('pociones')">🚪 Salir</button>
         </div>
         
         <div class="poc-receta-box" id="poc-receta-ui">...</div>
         
         <div class="poc-shelf" id="poc-shelf" aria-label="Ingredientes disponibles"></div>
-        <p id="poc-progress" style="margin:8px 0 0;font-size:.82rem;color:var(--pumpkin)">Siguiente ingrediente: 10 pociones</p>
+        
+        <div class="poc-progress-track">
+            <div class="poc-progress-fill" id="poc-bar"></div>
+        </div>
+        <div class="poc-progress-text" id="poc-progress">Siguiente ingrediente especial: 10 pociones</div>
 
-        <!-- Menú Interno Pociones -->
         <div class="game-menu-overlay" id="menu-pociones">
             <h2 class="game-title">Biteology</h2>
-            <p class="game-rules">Memoriza la receta y toca los ingredientes en el orden exacto. Cada poción perfecta suma +1 segundo. Cada 10 pociones desbloqueas un ingrediente y ganas 5 caramelos. ¡Si fallas pierdes 3 s!</p>
-            <h3 style="color:var(--pumpkin); margin-bottom: 30px;" id="poc-msg-fin"></h3>
-            <button class="btn-accion" style="font-size: 1.5rem; padding: 15px 40px; margin-bottom: 20px;" onclick="startPociones()">▶️ INICIAR JUEGO</button>
-            <button class="btn-cerrar-modal" style="width: auto; background: transparent; border: 1px solid var(--ember);" onclick="salirJuego()">⬅ Volver a la Tienda</button>
+            <p class="game-rules">Memoriza la receta y toca los ingredientes en el orden exacto. Cada poción suma tiempo extra. ¡Si fallas pierdes 3 segundos!</p>
+            <h3 style="color:var(--pumpkin); margin-bottom: 30px; font-size: 1.8rem;" id="poc-msg-fin"></h3>
+            <button class="btn-accion" style="font-size: 1.5rem; padding: 15px 40px; margin-bottom: 20px;" onclick="startPociones()"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" style="margin-right:8px; vertical-align:middle;"><path d="M8 5v14l11-7z"/></svg> INICIAR JUEGO</button>
+            <button class="btn-cerrar-modal" style="width: auto; background-color: transparent; border: 1px solid var(--ember);" onclick="salirJuego()">⬅ Volver a la Tienda</button>
         </div>
     </div>
 
@@ -1121,7 +1120,6 @@ function actualizarUI() {
   renderizarDiario();
   renderizarTiendaTemas();
   
-  // Actualizar UI records en minijuegos
   document.getElementById('cata-record').textContent = records.catacumbas;
   document.getElementById('mem-record').textContent = records.memoria;
   document.getElementById('poc-record').textContent = records.pociones;
@@ -1697,9 +1695,8 @@ programarSkullette();
 let juegoEnProgreso = false;
 let currentInterval = null;
 let partidaFinalizada = false;
-let gameAchievementsPending = [];
 let cataSpawnTimeout = null, cataSkulletteTimeout = null, cataPowerTimeout = null;
-let cataMultiplierActive = false, cataSkulletteUsed = false, cataGhostsCaught = 0;
+let cataMultiplierActive = false, cataSkulletteUsed = false, cataGhostsCaught = 0, lastCataIndex = -1;
 let memErrors = 0, memCombo = 0, memBestCombo = 0, memHintsLeft = 2, memRoundPerfect = true, memRoundPerfectAchieved = false, memSessionScore = 0;
 let pocIngsUnlocked = 5, pocErrors = 0, pocBestStreak = 0, pocCurrentStreak = 0, pocRewardMilestone = 0;
 
@@ -1754,11 +1751,12 @@ function salirJuego() {
     }, 650);
 }
 
-function desbloquearLogroJuego(id, nuevos) {
-    if (!catalogoLogros[id] || logros.includes(id)) return;
-    logros.push(id);
-    const bonus = agregarDulces(5);
-    nuevos.push({ ...catalogoLogros[id], bonus });
+function cobrarYSalir(idJuego) {
+    let score = 0;
+    if(idJuego === 'catacumbas') score = cataScore;
+    if(idJuego === 'memoria') score = Math.max(0, memRonda - 1);
+    if(idJuego === 'pociones') score = pocScore;
+    finJuegoGuardar(idJuego, score, '🚪 ¡Retirada Táctica!');
 }
 
 function finJuegoGuardar(idJuego, scoreLogico, textoMostrar) {
@@ -1769,53 +1767,52 @@ function finJuegoGuardar(idJuego, scoreLogico, textoMostrar) {
     if(cataSkulletteTimeout) clearTimeout(cataSkulletteTimeout);
     if(cataPowerTimeout) clearTimeout(cataPowerTimeout);
     document.getElementById('cata-skullette')?.classList.remove('visible','active-power');
-    let nuevos = [];
+    
     let dulcesGanados = 0, recordRoto = false;
+    
     if(idJuego === 'catacumbas') {
         dulcesGanados = Math.floor(scoreLogico / 10);
         if(scoreLogico > records.catacumbas) { records.catacumbas = scoreLogico; recordRoto = true; }
-        if(cataGhostsCaught >= 10) desbloquearLogroJuego('cata_cazafantasmas', nuevos);
-        if(cataGhostsCaught >= 30) desbloquearLogroJuego('cata_cazador_maestro', nuevos);
-        if(cataSkulletteUsed) desbloquearLogroJuego('cata_skullette', nuevos);
-        if(scoreLogico >= 20) desbloquearLogroJuego('cata_combo', nuevos);
+        if(cataGhostsCaught >= 10) checkLogro('cata_cazafantasmas');
+        if(cataGhostsCaught >= 30) checkLogro('cata_cazador_maestro');
+        if(cataSkulletteUsed) checkLogro('cata_skullette');
+        if(scoreLogico >= 20) checkLogro('cata_combo');
     }
     if(idJuego === 'memoria') {
         dulcesGanados = Math.max(0, scoreLogico) * 5;
         if(scoreLogico > records.memoria) { records.memoria = scoreLogico; recordRoto = true; }
-        if(memRonda > 1) desbloquearLogroJuego('mem_primera_ronda', nuevos);
-        if(memRoundPerfectAchieved) desbloquearLogroJuego('mem_perfecta', nuevos);
-        if(memBestCombo >= 5) desbloquearLogroJuego('mem_combo', nuevos);
-        if(scoreLogico >= 5) desbloquearLogroJuego('mem_ronda5', nuevos);
-        if(scoreLogico >= 10) desbloquearLogroJuego('mem_ronda10', nuevos);
+        if(memRonda > 1) checkLogro('mem_primera_ronda');
+        if(memRoundPerfectAchieved) checkLogro('mem_perfecta');
+        if(memBestCombo >= 5) checkLogro('mem_combo');
+        if(scoreLogico >= 5) checkLogro('mem_ronda5');
+        if(scoreLogico >= 10) checkLogro('mem_ronda10');
     }
     if(idJuego === 'pociones') {
         dulcesGanados = scoreLogico * 2;
         if(scoreLogico > records.pociones) { records.pociones = scoreLogico; recordRoto = true; }
-        if(pocScore >= 10) desbloquearLogroJuego('poc_10', nuevos);
-        if(pocScore >= 25) desbloquearLogroJuego('poc_25', nuevos);
-        if(pocIngsUnlocked > 5) desbloquearLogroJuego('poc_ingrediente', nuevos);
-        if(pocBestStreak >= 5) desbloquearLogroJuego('poc_sin_errores', nuevos);
-        if(pocScore >= 50) desbloquearLogroJuego('poc_50', nuevos);
+        if(pocScore >= 10) checkLogro('poc_10');
+        if(pocScore >= 25) checkLogro('poc_25');
+        if(pocIngsUnlocked > 5) checkLogro('poc_ingrediente');
+        if(pocBestStreak >= 5) checkLogro('poc_sin_errores');
+        if(pocScore >= 50) checkLogro('poc_50');
     }
+    
     const baseWin = agregarDulces(dulcesGanados);
     guardarDatos(); playSfx(recordRoto ? 'ataudPremio' : 'logro');
     const menu = document.getElementById('menu-' + idJuego);
     menu.style.display = 'flex';
     const msg = document.getElementById(idJuego === 'catacumbas' ? 'cata-msg-fin' : (idJuego === 'memoria' ? 'mem-msg-fin' : 'poc-msg-fin'));
-    const achievementsHtml = nuevos.length ? `<div class="game-result-achievements"><strong>🏅 Logros nuevos</strong>${nuevos.map(a => `<div class="game-result-achievement">${a.icono} <span>${a.nombre}</span> <small>+${a.bonus} 🍬</small></div>`).join('')}</div>` : '<div class="game-result-achievements"><strong>🏅 Sin logros nuevos esta vez</strong></div>';
-    msg.innerHTML = `${textoMostrar}<br><span style="color:#fff;font-size:1.05rem;">Ganaste +${baseWin} 🍬</span>${recordRoto ? '<br>🌟 ¡NUEVO RÉCORD! 🌟' : ''}${achievementsHtml}`;
-    guardarDatos();
+    msg.innerHTML = `${textoMostrar}<br><span style="color:#fff;font-size:1.05rem;">Ganaste +${baseWin} 🍬</span>${recordRoto ? '<br>🌟 ¡NUEVO RÉCORD! 🌟' : ''}`;
 }
 
 /* 1. LÓGICA: CATACUMBAS */
-let cataTime, cataScore, cataSpeed;
 function startCatacumbas() {
-    partidaFinalizada = false; gameAchievementsPending = [];
+    partidaFinalizada = false;
     document.getElementById('menu-catacumbas').style.display = 'none';
-    cataTime = 30; cataScore = 0; cataSpeed = 1000; cataGhostsCaught = 0; cataSkulletteUsed = false; cataMultiplierActive = false;
+    cataTime = 30; cataScore = 0; cataSpeed = 1000; cataGhostsCaught = 0; cataSkulletteUsed = false; cataMultiplierActive = false; lastCataIndex = -1;
     document.getElementById('cata-time').textContent = cataTime; document.getElementById('cata-score').textContent = cataScore;
-    document.querySelectorAll('.cata-cell').forEach(c => { c.innerHTML = ''; c.className = 'cata-cell'; });
-    const skull = document.getElementById('cata-skullette'); skull.classList.remove('visible','active-power'); skull.classList.remove('left','right');
+    document.querySelectorAll('.cata-cell').forEach(c => { c.innerHTML = ''; c.className = 'cata-cell'; c.style.transform = ''; });
+    const skull = document.getElementById('cata-skullette'); skull.classList.remove('visible','active-power');
     if(currentInterval) clearInterval(currentInterval);
     if(cataSpawnTimeout) clearTimeout(cataSpawnTimeout);
     if(cataSkulletteTimeout) clearTimeout(cataSkulletteTimeout);
@@ -1829,13 +1826,18 @@ function tickCata() {
 }
 function spawnCata() {
     if(cataTime <= 0 || partidaFinalizada) return;
-    document.querySelectorAll('.cata-cell').forEach(c => { c.innerHTML = ''; c.className = 'cata-cell'; });
+    document.querySelectorAll('.cata-cell').forEach(c => { c.innerHTML = ''; c.className = 'cata-cell'; c.style.transform = ''; });
     const cells = document.querySelectorAll('.cata-cell');
-    const idx = Math.floor(Math.random() * cells.length);
+    
+    let nextIdx;
+    do { nextIdx = Math.floor(Math.random() * cells.length); } while(nextIdx === lastCataIndex);
+    lastCataIndex = nextIdx;
+    
     const isSkull = Math.random() > 0.82;
-    cells[idx].innerHTML = isSkull ? '☠️' : '👻';
-    cells[idx].classList.add(isSkull ? 'has-skull' : 'has-ghost');
-    cataSpeed = Math.max(420, 1000 - (Math.floor(cataScore / 10) * 90));
+    cells[nextIdx].innerHTML = isSkull ? '☠️' : '👻';
+    cells[nextIdx].classList.add(isSkull ? 'has-skull' : 'has-ghost');
+    
+    cataSpeed = Math.max(450, 1000 - (cataScore * 12));
     cataSpawnTimeout = setTimeout(spawnCata, cataSpeed);
 }
 function clickCata(cell) {
@@ -1845,7 +1847,7 @@ function clickCata(cell) {
         const pts = cataMultiplierActive ? 2 : 1, secs = cataMultiplierActive ? 2 : 1;
         cataScore += pts; cataTime += secs;
         document.getElementById('cata-score').textContent = cataScore; document.getElementById('cata-time').textContent = cataTime;
-        cell.innerHTML = '💨'; cell.className = 'cata-cell';
+        cell.innerHTML = ''; cell.className = 'cata-cell'; cell.style.transform = 'scale(0.8)';
     } else if(cell.innerHTML === '☠️') {
         playSfx('error'); cataTime -= 3; document.getElementById('cata-time').textContent = cataTime; cell.innerHTML = '💥'; cell.className = 'cata-cell';
         if(cataTime <= 0) finJuegoGuardar('catacumbas', cataScore, `¡Las catacumbas te vencieron!<br>Puntaje: ${cataScore}`);
@@ -1857,8 +1859,6 @@ function scheduleCataSkullette() {
     cataSkulletteTimeout = setTimeout(() => {
         if (partidaFinalizada || cataTime <= 0) return;
         const skull = document.getElementById('cata-skullette');
-        if (window.matchMedia('(max-width: 850px)').matches) skull.classList.remove('left','right');
-        else { skull.classList.toggle('left', Math.random() < .5); skull.classList.toggle('right', !skull.classList.contains('left')); }
         skull.classList.add('visible');
         const note = document.getElementById('cata-skullette-note'); if(note) note.classList.add('visible');
         cataSkulletteTimeout = setTimeout(() => { skull.classList.remove('visible'); if(note) note.classList.remove('visible'); scheduleCataSkullette(); }, 4200);
@@ -1876,16 +1876,15 @@ function activarSkullette() {
     scheduleCataSkullette();
 }
 
-/* 2. LÓGICA: MEMORIA MONSTRUOSA — MODO INFINITO */
+/* 2. LÓGICA: MEMORIA MONSTRUOSA */
 const emojisMem = ['🦇', '🕸️', '🕷️', '🧛', '🖤', '💀', '🎃', '🧟', '🧪', '🔮'];
 let memRonda, memTime, memCards, firstCard, secondCard, lockBoard, paresEncontrados;
 function startMemoria() {
-    partidaFinalizada = false; gameAchievementsPending = [];
+    partidaFinalizada = false;
     document.getElementById('menu-memoria').style.display = 'none';
     memRonda = 1; memTime = 50; memErrors = 0; memCombo = 0; memBestCombo = 0; memHintsLeft = 2; memRoundPerfect = true; memRoundPerfectAchieved = false; memSessionScore = 0;
     document.getElementById('mem-time').textContent = memTime; document.getElementById('mem-ronda').textContent = memRonda;
     document.getElementById('mem-combo').textContent = '0'; document.getElementById('mem-hints').textContent = memHintsLeft;
-    document.getElementById('mem-infinite-record').textContent = records.memoria || 1;
     document.getElementById('mem-hint-btn').disabled = false;
     if(currentInterval) clearInterval(currentInterval);
     currentInterval = setInterval(tickMemoria, 1000);
@@ -1901,11 +1900,16 @@ function generarTableroMemoria() {
     const pares = Math.min(6 + memRonda - 1, 10);
     board.style.gridTemplateColumns = 'repeat(4, minmax(0, 1fr))';
     board.style.gridTemplateRows = `repeat(${Math.ceil((pares * 2) / 4)}, minmax(0, 1fr))`;
+    
     const arr = emojisMem.slice(0, pares);
+    const magicEmoji = arr[Math.floor(Math.random() * arr.length)];
+    
     memCards = [...arr, ...arr].sort(() => Math.random() - 0.5);
     firstCard = null; secondCard = null; lockBoard = false; paresEncontrados = 0; memRoundPerfect = true;
     memCards.forEach((emoji) => {
-        const c = document.createElement('button'); c.type = 'button'; c.className = 'mem-card'; c.dataset.val = emoji; c.setAttribute('aria-label','Carta de memoria');
+        const c = document.createElement('button'); c.type = 'button'; c.className = 'mem-card'; c.dataset.val = emoji;
+        if(emoji === magicEmoji) c.classList.add('magic-pair');
+        c.setAttribute('aria-label','Carta de memoria');
         c.innerHTML = `<div class="front">${emoji}</div><div class="back">❓</div>`;
         c.onclick = () => flipMem(c); board.appendChild(c);
     });
@@ -1918,6 +1922,10 @@ function flipMem(card) {
     if(firstCard.dataset.val === secondCard.dataset.val) {
         playSfx('comprar'); paresEncontrados++; memSessionScore++; memCombo++; memBestCombo = Math.max(memBestCombo, memCombo);
         document.getElementById('mem-combo').textContent = memCombo;
+        if(firstCard.classList.contains('magic-pair')) {
+            memTime += 5; document.getElementById('mem-time').textContent = memTime;
+            mostrarToast('+5 Segundos Mágicos', 'info'); playSfx('ataudPremio');
+        }
         const a = firstCard, b = secondCard;
         setTimeout(() => { a.classList.add('matched'); b.classList.add('matched'); resetMem(); checkWinMem(); }, 350);
     } else {
@@ -1946,7 +1954,6 @@ function checkWinMem() {
         playSfx('logro'); memRoundPerfectAchieved = memRoundPerfectAchieved || memRoundPerfect;
         memRonda++; memTime += Math.max(10, 24 - memRonda);
         document.getElementById('mem-ronda').textContent = memRonda; document.getElementById('mem-time').textContent = memTime;
-        document.getElementById('mem-infinite-record').textContent = Math.max(records.memoria || 1, memRonda - 1);
         if (memRonda % 3 === 0 && memTime < 90) memTime += 5;
         document.getElementById('mem-time').textContent = memTime;
         setTimeout(() => { if(!partidaFinalizada) generarTableroMemoria(); }, 550);
@@ -1956,14 +1963,13 @@ function checkWinMem() {
 /* 3. LÓGICA: POCIONES */
 const pocAllIngs = ['🌿', '🩸', '👁️', '🦴', '🍄', '🕷️', '🧿', '🪻', '🐍', '🕯️'];
 let pocIngs = pocAllIngs.slice(0,5);
-let pocTime, pocScore, currentRecipe, currentStep;
 function startPociones() {
-    partidaFinalizada = false; gameAchievementsPending = [];
+    partidaFinalizada = false;
     document.getElementById('menu-pociones').style.display = 'none';
     pocTime = 30; pocScore = 0; pocErrors = 0; pocBestStreak = 0; pocCurrentStreak = 0; pocIngsUnlocked = 5; pocRewardMilestone = 0;
     pocIngs = pocAllIngs.slice(0,5); renderIngredientesPociones();
     document.getElementById('poc-time').textContent = pocTime; document.getElementById('poc-score').textContent = pocScore;
-    document.getElementById('poc-progress').textContent = 'Siguiente ingrediente: 10 pociones';
+    document.getElementById('poc-bar').style.width = '0%';
     if(currentInterval) clearInterval(currentInterval);
     currentInterval = setInterval(tickPociones, 1000);
     generarRecetaPocion();
@@ -2003,8 +2009,13 @@ function clickIngrediente(ing) {
     if(ing === currentRecipe[currentStep]) {
         playSfx('comprar'); currentStep++;
         if(currentStep >= currentRecipe.length) {
-            pocScore++; pocTime += 1; pocCurrentStreak++; pocBestStreak = Math.max(pocBestStreak, pocCurrentStreak);
+            pocScore++; pocTime += Math.floor(Math.random() * 2) + 2; 
+            pocCurrentStreak++; pocBestStreak = Math.max(pocBestStreak, pocCurrentStreak);
             document.getElementById('poc-score').textContent = pocScore; document.getElementById('poc-time').textContent = pocTime;
+            
+            let percentage = (pocScore % 10) * 10;
+            document.getElementById('poc-bar').style.width = percentage + '%';
+            
             const newMilestone = Math.floor(pocScore / 10);
             if(newMilestone > pocRewardMilestone) {
                 pocRewardMilestone = newMilestone;
@@ -2013,12 +2024,8 @@ function clickIngrediente(ing) {
                     pocIngsUnlocked = Math.min(pocAllIngs.length, 5 + newMilestone);
                     pocIngs = pocAllIngs.slice(0, pocIngsUnlocked); renderIngredientesPociones();
                 }
-                const next = (Math.floor(pocScore / 10) + 1) * 10;
-                document.getElementById('poc-progress').textContent = pocIngsUnlocked < pocAllIngs.length ? `+5 🍬 recibidos · Nuevo ingrediente desbloqueado · Siguiente: ${next}` : `+5 🍬 recibidos · Todos los ingredientes desbloqueados · Siguiente: ${next}`;
-            } else {
-                const next = (Math.floor(pocScore / 10) + 1) * 10;
-                document.getElementById('poc-progress').textContent = pocIngsUnlocked < pocAllIngs.length ? `Siguiente ingrediente y +5 🍬: ${next} pociones` : `+5 🍬 cada 10 pociones · Próxima recompensa: ${next}`;
             }
+            
             box.classList.add('success'); playSfx('logro');
             setTimeout(generarRecetaPocion, 350);
         } else renderReceta();
