@@ -456,6 +456,28 @@ body.modo-juego .pagina:not(#sec-game-stage) { display: none !important; }
 .r-ing.active{ opacity:1; transform:scale(1.35); margin:0 6px; filter:drop-shadow(0 0 12px var(--pumpkin)) drop-shadow(0 0 4px var(--pumpkin)); }
 .r-ing.done{ opacity:.25; transform:scale(.8); }
 
+
+/* ===== PARCHE v4 ===== */
+@media (hover:hover) and (pointer:fine){ .grid-ataud{ scroll-snap-type:none; } }
+@media (min-width:851px){
+  .cata-skullette{ left:calc(50% + 330px) !important; top:50% !important; bottom:auto !important; transform:translate(-50%,-50%) !important; }
+}
+
+/* ===== WORDLE MALDITO ===== */
+.wor-board{ --wt:clamp(38px,min(13vw,6.4dvh),60px); display:grid; gap:6px; margin:0 auto; transform:translateZ(0); }
+.wor-row{ display:grid; grid-template-columns:repeat(5,var(--wt)); gap:6px; justify-content:center; }
+.wor-tile{ width:var(--wt); height:var(--wt); display:flex; align-items:center; justify-content:center; font-size:calc(var(--wt)*.55); font-weight:900; color:var(--ink); background:var(--card); border:2px var(--borde-estilo) var(--ember); border-radius:8px; transition:transform .1s; }
+.wor-tile.fill{ border-color:var(--pumpkin); transform:scale(1.06); }
+.wor-tile.w-c, .wor-key.w-c{ background:#2e9e5b; border-color:#2e9e5b; color:#fff; }
+.wor-tile.w-p, .wor-key.w-p{ background:#c9a227; border-color:#c9a227; color:#fff; }
+.wor-tile.w-a, .wor-key.w-a{ background:#3a3a40; border-color:#3a3a40; color:#cfcfd4; }
+.wor-tile.rev{ animation:worFlip .5s ease both; }
+@keyframes worFlip{ 0%{transform:rotateX(0)} 50%{transform:rotateX(90deg)} 100%{transform:rotateX(0)} }
+.wor-row.shake{ animation:hitShake .35s; }
+.wor-kb{ display:flex; flex-direction:column; gap:6px; width:min(100%,520px); align-items:center; }
+.wor-kb-row{ display:flex; gap:5px; justify-content:center; width:100%; }
+.wor-key{ flex:1 1 0; max-width:46px; height:clamp(40px,6.4dvh,52px); border-radius:6px; border:1px var(--borde-estilo) var(--ember); background:var(--card); color:var(--ink); font-weight:800; font-family:inherit; font-size:clamp(.8rem,3.4vw,1.05rem); cursor:pointer; padding:0; -webkit-tap-highlight-color:transparent; }
+.wor-key.wide{ flex:1.6 1 0; max-width:72px; font-size:clamp(.6rem,2.6vw,.8rem); }
 </style>
 </head>
 <body>
@@ -617,6 +639,11 @@ body.modo-juego .pagina:not(#sec-game-stage) { display: none !important; }
       <p>Examen de ciencias: Mezcla los ingredientes correctos bajo presión.</p>
       <button class="btn-accion btn-jugar" onclick="iniciarTransicionJuego('pociones')"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="margin-right:6px; vertical-align:middle;"><path d="M8 5v14l11-7z"/></svg> Jugar Arcade</button>
     </article>
+    <article class="item">
+      <span class="e">🔤</span><h3>Wordle Maldito</h3>
+      <p>Una palabra embrujada nueva cada día. ¡6 intentos para adivinarla!</p>
+      <button class="btn-accion btn-jugar" onclick="iniciarTransicionJuego('wordle')"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="margin-right:6px; vertical-align:middle;"><path d="M8 5v14l11-7z"/></svg> Jugar Arcade</button>
+    </article>
   </div>
 </section>
 
@@ -697,6 +724,25 @@ body.modo-juego .pagina:not(#sec-game-stage) { display: none !important; }
         </div>
     </div>
 
+
+    <!-- JUEGO 4: WORDLE MALDITO -->
+    <div id="gc-wordle" class="game-container">
+        <div class="game-hud">
+            <div>Intento: <span><span id="wor-intento">1</span>/6</span></div>
+            <div>Racha: <span id="wor-racha">0</span></div>
+            <button class="btn-accion" style="padding: 8px 15px; font-size: 0.9rem; margin: 0; background-color: var(--ember); color: #fff !important;" onclick="salirJuego()">🚪 Salir</button>
+        </div>
+        <div class="wor-board" id="wor-board"></div>
+        <div class="wor-kb" id="wor-kb"></div>
+        <div class="game-menu-overlay" id="menu-wordle">
+            <h2 class="game-title">Wordle Maldito</h2>
+            <p class="game-rules">Adivina la palabra embrujada de hoy: 5 letras, 6 intentos. <strong>Verde</strong>: letra bien ubicada. <strong>Amarillo</strong>: está, pero en otro lugar. <strong>Gris</strong>: no está. ¡Hay una palabra nueva cada día!</p>
+            <h3 style="color:var(--pumpkin); margin-bottom: 30px; font-size: 1.5rem;" id="wor-msg-fin"></h3>
+            <button class="btn-accion" id="wor-start" style="font-size: 1.5rem; padding: 15px 40px; margin-bottom: 20px;" onclick="startWordle()">JUGAR</button>
+            <button class="btn-cerrar-modal" style="width: auto; background-color: transparent; border: 1px solid var(--ember);" onclick="salirJuego()">⬅ Volver a la Tienda</button>
+        </div>
+    </div>
+
 </section>
 
 <section class="pagina" id="sec-tienda">
@@ -715,11 +761,11 @@ body.modo-juego .pagina:not(#sec-game-stage) { display: none !important; }
       <div class="caja-snack">
           <h3 class="letrero-neon">Neon Coffin Snacks</h3>
           <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-              <button class="btn-accion" onclick="comprarItem('bonobon', 30, '🍬 Bonobon', 'snack')">Bonobon (30 🍬)</button>
-              <button class="btn-accion" onclick="comprarItem('chifles', 40, '🥔 Chifles', 'snack')">Chifles (40 🍬)</button>
-              <button class="btn-accion" onclick="comprarItem('helado', 50, '🍦 Helado', 'snack')">Helado (50 🍬)</button>
-              <button class="btn-accion" onclick="comprarItem('bebida', 40, '🧃 Bebida', 'snack')">Bebida (40 🍬)</button>
-              <button class="btn-accion" onclick="comprarItem('carretilla', 60, '🌭 Antojo', 'snack')">Antojo (60 🍬)</button>
+              <button class="btn-accion" onclick="comprarItem('bonobon', 100, '🍬 Bonobon', 'snack')">Bonobon (100 🍬)</button>
+              <button class="btn-accion" onclick="comprarItem('chifles', 120, '🥔 Chifles', 'snack')">Chifles (120 🍬)</button>
+              <button class="btn-accion" onclick="comprarItem('helado', 150, '🍦 Helado', 'snack')">Helado (150 🍬)</button>
+              <button class="btn-accion" onclick="comprarItem('bebida', 120, '🧃 Bebida', 'snack')">Bebida (120 🍬)</button>
+              <button class="btn-accion" onclick="comprarItem('carretilla', 180, '🌭 Antojo', 'snack')">Antojo (180 🍬)</button>
           </div>
       </div>
 
@@ -741,19 +787,19 @@ body.modo-juego .pagina:not(#sec-game-stage) { display: none !important; }
       
       <h3 class="seccion-titulo" style="margin-top: 0;">🎟 Citas VIP</h3>
       <div class="grid" style="margin-bottom: 40px;">
-          <article class="item"><span class="e">🕹️</span><h3>Arcade Solari</h3><button class="btn-accion" onclick="comprarItem('arcade', 300, 'Arcade Solari', 'cita')">Comprar - 300 🍬</button></article>
-          <article class="item"><span class="e">🍿</span><h3>Cineplanet VIP</h3><button class="btn-accion" onclick="comprarItem('cine', 250, 'Cineplanet VIP', 'cita')">Comprar - 250 🍬</button></article>
-          <article class="item"><span class="e">🍫</span><h3>Cata a Ciegas</h3><button class="btn-accion" onclick="comprarItem('cata', 150, 'Cata a Ciegas', 'cita')">Comprar - 150 🍬</button></article>
-          <article class="item"><span class="e">🎨</span><h3>Arte Feo</h3><button class="btn-accion" onclick="comprarItem('arte', 100, 'Noche Arte Feo', 'cita')">Comprar - 100 🍬</button></article>
-          <article class="item"><span class="e">🍕</span><h3>Pizzería Casera</h3><button class="btn-accion" onclick="comprarItem('pizza', 200, 'Pizzería Casera', 'cita')">Comprar - 200 🍬</button></article>
+          <article class="item"><span class="e">🕹️</span><h3>Arcade Solari</h3><button class="btn-accion" onclick="comprarItem('arcade', 600, 'Arcade Solari', 'cita')">Comprar - 600 🍬</button></article>
+          <article class="item"><span class="e">🍿</span><h3>Cineplanet VIP</h3><button class="btn-accion" onclick="comprarItem('cine', 500, 'Cineplanet VIP', 'cita')">Comprar - 500 🍬</button></article>
+          <article class="item"><span class="e">🍫</span><h3>Cata a Ciegas</h3><button class="btn-accion" onclick="comprarItem('cata', 300, 'Cata a Ciegas', 'cita')">Comprar - 300 🍬</button></article>
+          <article class="item"><span class="e">🎨</span><h3>Arte Feo</h3><button class="btn-accion" onclick="comprarItem('arte', 200, 'Noche Arte Feo', 'cita')">Comprar - 200 🍬</button></article>
+          <article class="item"><span class="e">🍕</span><h3>Pizzería Casera</h3><button class="btn-accion" onclick="comprarItem('pizza', 400, 'Pizzería Casera', 'cita')">Comprar - 400 🍬</button></article>
       </div>
 
       <h3 class="seccion-titulo" style="margin-top: 0;">💖 Gestos Especiales</h3>
       <div class="grid">
-          <article class="item"><span class="e">💆‍♀️</span><h3>Masaje VIP</h3><button class="btn-accion" onclick="comprarItem('masaje', 200, 'Masaje VIP', 'gesto')">Comprar - 200 🍬</button></article>
-          <article class="item"><span class="e">🧁</span><h3>Repostero Novato</h3><button class="btn-accion" onclick="comprarItem('postre', 150, 'Repostero Novato', 'gesto')">Comprar - 150 🍬</button></article>
-          <article class="item"><span class="e">☕</span><h3>Desayuno Distancia</h3><button class="btn-accion" onclick="comprarItem('desayuno', 180, 'Desayuno Delivery', 'gesto')">Comprar - 180 🍬</button></article>
-          <article class="item"><span class="e">🕊️</span><h3>Pase Anti-Enojo</h3><button class="btn-accion" onclick="comprarItem('enojo', 100, 'Pase Anti-Enojo', 'gesto')">Comprar - 100 🍬</button></article>
+          <article class="item"><span class="e">💆‍♀️</span><h3>Masaje VIP</h3><button class="btn-accion" onclick="comprarItem('masaje', 400, 'Masaje VIP', 'gesto')">Comprar - 400 🍬</button></article>
+          <article class="item"><span class="e">🧁</span><h3>Repostero Novato</h3><button class="btn-accion" onclick="comprarItem('postre', 300, 'Repostero Novato', 'gesto')">Comprar - 300 🍬</button></article>
+          <article class="item"><span class="e">☕</span><h3>Desayuno Distancia</h3><button class="btn-accion" onclick="comprarItem('desayuno', 360, 'Desayuno Delivery', 'gesto')">Comprar - 360 🍬</button></article>
+          <article class="item"><span class="e">🕊️</span><h3>Pase Anti-Enojo</h3><button class="btn-accion" onclick="comprarItem('enojo', 200, 'Pase Anti-Enojo', 'gesto')">Comprar - 200 🍬</button></article>
       </div>
   </div>
 
@@ -764,15 +810,15 @@ body.modo-juego .pagina:not(#sec-game-stage) { display: none !important; }
       <div class="grid">
           <article class="item">
               <span class="e">💰</span><h3>Moneda Monstruosa</h3><p>Aumenta un 30% todas tus ganancias de caramelos.</p>
-              <button class="btn-accion" onclick="comprarItem('amuleto-moneda', 100, 'Moneda Monstruosa', 'amuleto')">Comprar - 100 🍬</button>
+              <button class="btn-accion" onclick="comprarItem('amuleto-moneda', 200, 'Moneda Monstruosa', 'amuleto')">Comprar - 200 🍬</button>
           </article>
           <article class="item">
               <span class="e">🦇</span><h3>Imán de Skullettes</h3><p>Las Skullettes aparecen el doble de rápido.</p>
-              <button class="btn-accion" onclick="comprarItem('amuleto-iman', 150, 'Imán de Skullettes', 'amuleto')">Comprar - 150 🍬</button>
+              <button class="btn-accion" onclick="comprarItem('amuleto-iman', 300, 'Imán de Skullettes', 'amuleto')">Comprar - 300 🍬</button>
           </article>
           <article class="item">
               <span class="e">⏳</span><h3>Reloj Vampírico</h3><p>Reduce la espera del Ataúd Diario a 18 horas.</p>
-              <button class="btn-accion" onclick="comprarItem('amuleto-reloj', 120, 'Reloj Vampírico', 'amuleto')">Comprar - 120 🍬</button>
+              <button class="btn-accion" onclick="comprarItem('amuleto-reloj', 240, 'Reloj Vampírico', 'amuleto')">Comprar - 240 🍬</button>
           </article>
       </div>
   </div>
@@ -860,6 +906,8 @@ let temaActivo = 'tema-default';
 let halloweenReclamado = false;
 let appCargada = false;
 let vueltasDJ = 0;
+let bonobonComprados = 0;
+let wordle = { fecha:'', guesses:[], estado:'', racha:0 };
 let particulaCounter = 0;
 
 // SISTEMA DE RÉCORDS (FASE 2)
@@ -876,9 +924,9 @@ const catalogo = {
   'tema-hacker': { icono: '💻', nombre: 'Tema: Hacker', desc: 'Cyber-código Matrix.', tipo: 'tema', precio: 20 },
   'tema-medianoche': { icono: '🌌', nombre: 'Tema: Medianoche', desc: 'Galaxia profunda.', tipo: 'tema', precio: 20 },
   'tema-otono': { icono: '🍂', nombre: 'Tema: Otoño Vivo', desc: 'Hojas cayendo.', tipo: 'tema', precio: 20 },
-  'amuleto-moneda': { icono: '💰', nombre: 'Moneda Monstruosa', desc: 'Aumenta un 30% todas tus ganancias.', tipo: 'amuleto', precio: 100 },
-  'amuleto-iman': { icono: '🦇', nombre: 'Imán de Skullettes', desc: 'Atrae Skullettes el doble de rápido.', tipo: 'amuleto', precio: 150 },
-  'amuleto-reloj': { icono: '⏳', nombre: 'Reloj Vampírico', desc: 'Reduce el tiempo de espera a 18 horas.', tipo: 'amuleto', precio: 120 }
+  'amuleto-moneda': { icono: '💰', nombre: 'Moneda Monstruosa', desc: 'Aumenta un 30% todas tus ganancias.', tipo: 'amuleto', precio: 200 },
+  'amuleto-iman': { icono: '🦇', nombre: 'Imán de Skullettes', desc: 'Atrae Skullettes el doble de rápido.', tipo: 'amuleto', precio: 300 },
+  'amuleto-reloj': { icono: '⏳', nombre: 'Reloj Vampírico', desc: 'Reduce el tiempo de espera a 18 horas.', tipo: 'amuleto', precio: 240 }
 };
 
 /* LOGROS REBALANCEADOS (NERFEO) */
@@ -905,45 +953,48 @@ const catalogoLogros = {
   'poc_25': { icono: '⚗️', nombre: 'Maestro del Caldero', desc: 'Prepara 75 pociones en una partida.' },
   'poc_ingrediente': { icono: '🍄', nombre: 'Mente Veloz', desc: 'Sobrevive y alcanza 100 pociones en partida.' },
   'poc_sin_errores': { icono: '✨', nombre: 'Alquimista Impecable', desc: 'Prepara 15 pociones seguidas sin fallar.' },
-  'poc_50': { icono: '🔮', nombre: 'Gran Alquimista', desc: 'Acumula 100 pociones en una partida.' }
+  'poc_50': { icono: '🔮', nombre: 'Gran Alquimista', desc: 'Acumula 100 pociones en una partida.' },
+  'wor_gana': { icono: '🔤', nombre: 'Palabra Maldita', desc: 'Adivina tu primera palabra en Wordle Maldito.' },
+  'wor_rapido': { icono: '⚡', nombre: 'Mente Brillante', desc: 'Adivina la palabra en 2 intentos o menos.' },
+  'wor_racha': { icono: '🔥', nombre: 'Racha de Hechiceras', desc: 'Adivina 3 palabras seguidas en Wordle Maldito.' }
 };
 
 const catalogoPistas = {
-  'pista_amor':      { pistaTxt: "El sentimiento que nos une. 4 letras.", desc: "El amor es la chispa mágica que ilumina las catacumbas de mi corazón.", reqTxt: "adquirir una 🎟️ Cita VIP" },
+  'pista_amor':      { pistaTxt: "El sentimiento que nos une. 4 letras.", desc: "El amor es la chispa mágica que ilumina las catacumbas de mi corazón.", reqTxt: "adquirir una 🎟️ Cita" },
   'pista_greta':     { pistaTxt: "La dueña de este rincón oscuro...", desc: "La niña de mis ojos, la dueña de este rincón oscuro.", reqTxt: "equipar el 🦇 Tema: Rosa" },
   'pista_eduardo':   { pistaTxt: "El que siempre cuidará tu corazón...", desc: "Siempre aquí para ti, cuidando tu corazón.", reqTxt: "equipar el 🦇 Tema: Batman" },
-  'pista_boo':       { pistaTxt: "El nombre que le da vida a esta tienda...", desc: "¡Asustame! Espero que te estés divirtiendo.", reqTxt: "comprar cualquier 🍬 Snack" },
+  'pista_boo':       { pistaTxt: "___ Store", desc: "¡Asustame! Espero que te estés divirtiendo.", reqTxt: "comprar cualquier 🍬 Snack" },
   'pista_calabaza':  { pistaTxt: "Dulce o truco, el símbolo naranja...", desc: "Dulce o Truco... ¡Definitivamente dulce!", reqTxt: "equipar el 🎃 Tema: Calabaza" },
   'pista_2211':      { pistaTxt: "Nuestro día especial en números (DDMM)...", desc: "Nuestro día especial. Te amo hoy, mañana y siempre. 💖", reqTxt: "alcanzar el Día 5 de lealtad en el Ataúd Diario" },
   'pista_halloween': { pistaTxt: "La noche más mágica del año...", desc: "La noche más mágica del año. ¡A disfrutar!", reqTxt: "atrapar tu primera 💀 Skullette voladora" },
   'pista_monster':   { pistaTxt: "El instituto donde los monstruos reales...", desc: "¡Bienvenida a Monster High! Desata tu estilo.", reqTxt: "adquirir un 💖 Gesto Especial" },
-  'pista_fortuna':   { pistaTxt: "El número del medio millar...", desc: "La fortuna sonríe a quienes saben ahorrar.", reqTxt: "ahorrar 500 🍬 o más en tu inventario" },
-  'pista_coleccionista': { pistaTxt: "Quien posee las tres reliquias...", desc: "Los tres amuletos de poder son tuyos.", reqTxt: "comprar los 3 Amuletos Mágicos" },
-  'pista_lealtad':   { pistaTxt: "El tercer amanecer trae consigo...", desc: "La constancia es la mejor de las virtudes.", reqTxt: "reclamar la recompensa del Día 3" },
-  'pista_gloton':    { pistaTxt: "Un antojo dulce que cruje...", desc: "No hay nada mejor que un dulce a medianoche.", reqTxt: "comprar el snack Bonobon" },
+  'pista_fortuna':   { pistaTxt: "Aquí todo se compra con una sola cosa", desc: "La fortuna sonríe a quienes saben ahorrar.", reqTxt: "ahorrar 500 🍬 o más en tu inventario" },
+  'pista_coleccionista': { pistaTxt: "Wow, compraste los 3", desc: "Los tres amuletos de poder son tuyos.", reqTxt: "comprar los 3 Amuletos Mágicos" },
+  'pista_lealtad':   { pistaTxt: "Día 5, qué leal es el amor", desc: "La constancia es la mejor de las virtudes.", reqTxt: "reclamar la recompensa del Día 5" },
+  'pista_gloton':    { pistaTxt: "Un antojo dulce que cruje...", desc: "No hay nada mejor que un dulce a medianoche.", reqTxt: "comprar 3 snacks 🍬 Bonobon en total" },
   'pista_bruja':     { pistaTxt: "La magia burbujea en su caldero...", desc: "Morado místico.", reqTxt: "equipar el 🧪 Tema: Brujería" },
-  'pista_hacker':    { pistaTxt: "Vulnera el mainframe digital...", desc: "Bienvenida a la Matrix.", reqTxt: "equipar el 💻 Tema: Hacker" },
-  'pista_magia':     { pistaTxt: "Donde los hechizos cobran vida...", desc: "El salón de juegos es el mejor lugar.", reqTxt: "probar cualquier minijuego por primera vez" },
+  'pista_hacker':    { pistaTxt: "Quién usa trucos", desc: "Bienvenida a la Matrix.", reqTxt: "equipar el 💻 Tema: Hacker" },
+  'pista_magia':     { pistaTxt: "Este mundo está lleno de...", desc: "El salón de juegos es el mejor lugar.", reqTxt: "probar cualquier minijuego por primera vez" },
   'pista_otono':     { pistaTxt: "Las hojas caen y el color dorado domina...", desc: "El viento se lleva las penas.", reqTxt: "equipar el 🍂 Tema: Otoño Vivo" }
 };
 
 const codigosSecretos = {
     'AMOR': { id: 'pista_amor', msg: "El sentimiento que nos une. ¡Has revelado la pista maestra del Diario!", recompensa: 50 },
-    'GRETA': { id: 'pista_greta', msg: "La niña de mis ojos, la dueña de este rincón oscuro.", recompensa: 30 },
-    'EDUARDO': { id: 'pista_eduardo', msg: "Siempre aquí para ti, cuidando tu corazón.", recompensa: 30 },
+    'GRETA': { id: 'pista_greta', msg: "La niña de mis ojos, la dueña de este rincón oscuro.", recompensa: 25 },
+    'EDUARDO': { id: 'pista_eduardo', msg: "Siempre aquí para ti, cuidando tu corazón.", recompensa: 25 },
     'BOO': { id: 'pista_boo', msg: "¡Asustame! Espero que te estés divirtiendo.", recompensa: 15 },
-    'CALABAZA': { id: 'pista_calabaza', msg: "Dulce o Truco... ¡Definitivamente dulce!", recompensa: 10 },
+    'CALABAZA': { id: 'pista_calabaza', msg: "Dulce o Truco... ¡Definitivamente dulce!", recompensa: 25 },
     '2211': { id: 'pista_2211', msg: "Nuestro día especial. Te amo hoy, mañana y siempre. 💖", recompensa: 50 },
     'HALLOWEEN': { id: 'pista_halloween', msg: "La noche más mágica del año. ¡A disfrutar!", recompensa: 20 },
-    'MONSTER': { id: 'pista_monster', msg: "¡Bienvenida a Monster High! Desata tu estilo.", recompensa: 15 },
-    'FORTUNA': { id: 'pista_fortuna', msg: "¡Tienes una fortuna en tus manos!", recompensa: 50 },
-    'COLECCIONISTA': { id: 'pista_coleccionista', msg: "El poder absoluto te pertenece.", recompensa: 40 },
+    'MONSTERHIGH': { id: 'pista_monster', msg: "¡Bienvenida a Monster High! Desata tu estilo.", recompensa: 15 },
+    'CARAMELOS': { id: 'pista_fortuna', msg: "¡Tienes una fortuna en tus manos!", recompensa: 50 },
+    'AMULETOS': { id: 'pista_coleccionista', msg: "El poder absoluto te pertenece.", recompensa: 40 },
     'LEALTAD': { id: 'pista_lealtad', msg: "Gracias por volver cada noche.", recompensa: 30 },
-    'GLOTON': { id: 'pista_gloton', msg: "¡Cuidado con las caries!", recompensa: 20 },
-    'BRUJA': { id: 'pista_bruja', msg: "Doble, doble trabajo y problema...", recompensa: 30 },
-    'HACKER': { id: 'pista_hacker', msg: "Has vulnerado el sistema principal...", recompensa: 30 },
+    'BONOBON': { id: 'pista_gloton', msg: "¡Cuidado con las caries!", recompensa: 20 },
+    'BRUJA': { id: 'pista_bruja', msg: "Doble, doble trabajo y problema...", recompensa: 25 },
+    'HACKER': { id: 'pista_hacker', msg: "Has vulnerado el sistema principal...", recompensa: 25 },
     'MAGIA': { id: 'pista_magia', msg: "¡Que comience la diversión!", recompensa: 40 },
-    'OTOÑO': { id: 'pista_otono', msg: "El cambio de estación trae paz.", recompensa: 20 }
+    'OTOÑO': { id: 'pista_otono', msg: "El cambio de estación trae paz.", recompensa: 25 }
 };
 
 const recompensasDiarias = [
@@ -1104,7 +1155,9 @@ if(database) {
       coleccion = data.coleccion || ['tema-default']; 
       logros = data.logros || [];
       carrito = data.carrito || [];
-      codigosUsados = data.codigosUsados || [];
+      codigosUsados = (data.codigosUsados || []).map(c => ({FORTUNA:'CARAMELOS',COLECCIONISTA:'AMULETOS',GLOTON:'BONOBON',MONSTER:'MONSTERHIGH'}[c] || c));
+      bonobonComprados = data.bonobonComprados || 0;
+      wordle = Object.assign({ fecha:'', guesses:[], estado:'', racha:0 }, data.wordle || {}); wordle.guesses = wordle.guesses || [];
       ataudDia = data.ataudDia || 1; 
       ataudTiempo = data.ataudTiempo || 0;
       diarioVisto = data.diarioVisto || false; 
@@ -1216,7 +1269,7 @@ function guardarDatos() {
       coleccion: coleccion, logros: logros, carrito: carrito, codigosUsados: codigosUsados,
       ataudDia: ataudDia, ataudTiempo: ataudTiempo, 
       diarioVisto: diarioVisto, pistas: pistas, pistasReveladas: pistasReveladas, temaActivo: temaActivo,
-      halloweenReclamado: halloweenReclamado, records: records,
+      halloweenReclamado: halloweenReclamado, records: records, bonobonComprados: bonobonComprados, wordle: wordle,
       volMusica: masterMusica, volSfx: masterSfx
     });
   }
@@ -1357,7 +1410,7 @@ function reclamarCaja() {
       mostrarToast(`¡Reclamado: ${premio.texto}!`, "logro");
   }
   ataudTiempo = Date.now(); ataudDia++; 
-  if (ataudDia > 3) revelarPista('pista_lealtad'); 
+  if (ataudDia > 5) revelarPista('pista_lealtad'); 
   if (ataudDia > 5) revelarPista('pista_2211'); 
   guardarDatos(); playSfx('ataudPremio'); renderizarGrillaAtaud(); 
 }
@@ -1402,7 +1455,7 @@ function comprarItem(idItem, precio, nombreItem, tipo) {
             if(tipo === 'cita') revelarPista('pista_amor');
             if(tipo === 'gesto') revelarPista('pista_monster');
             if(tipo === 'snack') revelarPista('pista_boo');
-            if(idItem === 'bonobon') revelarPista('pista_gloton');
+            if(idItem === 'bonobon') { bonobonComprados++; if(bonobonComprados >= 3) revelarPista('pista_gloton'); }
             guardarDatos(); mostrarToast(`Compraste: ${nombreItem}. Revisa tu 🛒`, "info"); 
         }
     } else {
@@ -1548,7 +1601,7 @@ function renderizarDiario() {
 }
 
 function canjearCodigo() {
-  const input = document.getElementById('input-codigo'); const msg = document.getElementById('msg-codigo'); const codigo = input.value.trim().toUpperCase(); 
+  const input = document.getElementById('input-codigo'); const msg = document.getElementById('msg-codigo'); const codigo = input.value.replace(/\s+/g,'').toUpperCase(); 
   let msjRespuesta = ""; let colorRespuesta = "#4CAF50";
 
   switch(codigo) {
@@ -1556,14 +1609,9 @@ function canjearCodigo() {
     case 'TICKETS': abrirAdminTickets(); msjRespuesta = "[ADMIN] Tickets abiertos."; break;
     case 'CLEANCART': carrito = []; msjRespuesta = "[ADMIN] Carrito vacío."; break;
     case 'UNLOCKTHEMES': coleccion = ['tema-default', 'tema-rosa', 'tema-sangre', 'tema-momia', 'tema-calabaza', 'tema-batman', 'tema-brujeria', 'tema-hacker', 'tema-medianoche', 'tema-otono', 'amuleto-moneda', 'amuleto-iman', 'amuleto-reloj']; msjRespuesta = "[ADMIN] Colección max."; break;
-    case 'RESET': dulces = 0; dulcesGastados = 0; coleccion = ['tema-default']; logros = []; carrito = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; pistasReveladas = []; codigosUsados = []; halloweenReclamado = false; records = {catacumbas:0, memoria:1, pociones:0}; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Cuenta a cero."; colorRespuesta = "var(--pumpkin)"; break;
+    case 'RESET': dulces = 0; dulcesGastados = 0; coleccion = ['tema-default']; logros = []; carrito = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; pistasReveladas = []; codigosUsados = []; halloweenReclamado = false; bonobonComprados = 0; vueltasDJ = 0; wordle = {fecha:'',guesses:[],estado:'',racha:0}; records = {catacumbas:0, memoria:1, pociones:0}; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Cuenta a cero."; colorRespuesta = "var(--pumpkin)"; break;
     case '24H': ataudTiempo = Date.now() - 86400000; msjRespuesta = "[ADMIN] Reloj adelantado."; actualizarUI(); if(document.getElementById('modal-ataud').classList.contains('activo')) renderizarGrillaAtaud(); break;
-    case 'RESETALL':
-        if(esAdmin) {
-            database.ref('greta_partida').set({ dulces: 0, dulcesGastados: 0, coleccion: ['tema-default'], logros: [], carrito: [], codigosUsados: [], ataudDia: 1, ataudTiempo: 0, diarioVisto: false, pistas: [], pistasReveladas: [], temaActivo: 'tema-default', halloweenReclamado: false, records: {catacumbas:0, memoria:1, pociones:0}, volMusica: 0.5, volSfx: 0.5 });
-            msjRespuesta = "[ADMIN] greta_partida formateada."; colorRespuesta = "var(--pumpkin)";
-        }
-        break;
+    case 'NEWWORD': wordle = {fecha:'',guesses:[],estado:'',racha:0}; msjRespuesta = "[ADMIN] Wordle reiniciado."; break;
     case 'FECHALISTA':
         activarEventoHalloween(true);
         msjRespuesta = "[ADMIN] Vista Halloween (20s)."; colorRespuesta = "var(--pumpkin)";
@@ -1618,7 +1666,7 @@ function activarEventoHalloween(esSimulacion = false) {
     document.getElementById('timer-count').style.display = 'none';
     if(!halloweenReclamado || esSimulacion) {
         let btn = document.getElementById('btn-reclamar-halloween');
-        btn.style.display = 'inline-block';
+        btn.style.display = 'flex'; btn.style.margin = '24px auto 0'; btn.style.width = 'fit-content';
         btn.dataset.simulacion = esSimulacion;
     }
     if (esSimulacion) {
@@ -1827,12 +1875,13 @@ function iniciarTransicionJuego(idJuego) {
         document.getElementById('gc-' + idJuego).style.display = 'flex';
         
         document.getElementById('menu-' + idJuego).style.display = 'flex';
-        document.getElementById(idJuego === 'catacumbas' ? 'cata-msg-fin' : (idJuego === 'memoria' ? 'mem-msg-fin' : 'poc-msg-fin')).textContent = '';
+        document.getElementById(({catacumbas:'cata-msg-fin',memoria:'mem-msg-fin',pociones:'poc-msg-fin',wordle:'wor-msg-fin'})[idJuego]).textContent = '';
         document.body.classList.add('modo-juego');
         document.documentElement.style.overflow = 'hidden';
         document.body.style.touchAction = 'none';
         
-        SE.playMusic(idJuego);
+        SE.playMusic(idJuego === 'wordle' ? 'menu' : idJuego);
+        if (idJuego === 'wordle') prepararMenuWordle();
         
         overlay.style.opacity = '0';
         juegoEnProgreso = false; 
@@ -2154,6 +2203,115 @@ function clickIngrediente(ing) {
     if (pocTime <= 0) finJuegoGuardar('pociones', pocScore, `¡El caldero explotó!<br>Pociones: ${pocScore}`);
   }
 }
+
+document.getElementById('grid-ataud-cajas').addEventListener('wheel', function(e){
+  if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { e.preventDefault(); this.scrollLeft += e.deltaY; }
+}, { passive:false });
+
+/* 4. LÓGICA: WORDLE MALDITO (una palabra por día) */
+const WORDLE_PALABRAS = ["BRUJA", "BRUJO", "TUMBA", "MOMIA", "ZOMBI", "NOCHE", "LUNAR", "SUSTO", "TRUCO", "DULCE", "ARAÑA", "VELAS", "GATOS", "HUESO", "MAGIA", "ALMAS", "BRUMA", "GRITO", "FOSAS", "BUHOS", "RATAS", "SAPOS", "HORCA", "ANGEL", "FUEGO", "BESOS", "CITAS", "NOVIA", "NOVIO", "BESAR", "ROSAS", "SUEÑO", "MIMOS", "AMIGO", "JUNTO", "TEAMO", "BODAS", "CHICA", "BELLA", "LINDA", "FELIZ", "CIELO", "CURSI", "AMADA", "AMADO", "CALOR", "ROMEO", "MIEDO", "RISAS", "CELOS", "ENOJO", "PENAS", "ANSIA", "CALMA", "DOLOR", "RABIA", "TEMOR", "GANAS", "CULPA", "ANIMO", "BROMA", "LLORO", "ARDOR", "TACNA", "ARICA", "PISCO", "PALCA", "CHILE", "SOLES", "ZOFRA", "SABOR", "PLAYA", "FERIA", "PLAZA", "ROBUX", "BLOCK", "SKINS", "LOBBY", "NIVEL", "GAMER", "SPAWN", "NOOBS", "MAPAS", "JUEGO", "RONDA", "TURNO", "PUNTO", "VIDAS", "ARENA", "ARMAS", "COMBO", "RANGO", "RETOS", "LOGRO", "STORE", "MUNDO", "BOOST", "COINS", "TIMER", "HEROE"];
+const WOR_PREMIOS = [30, 25, 20, 15, 12, 10];
+let worBuf = '', worLock = false, worAns = '';
+function worHoy() {
+  const d = new Date();
+  const f = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  const dias = Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86400000);
+  return { f, palabra: WORDLE_PALABRAS[(dias * 37) % WORDLE_PALABRAS.length] };
+}
+function worSyncDia() {
+  const h = worHoy(); worAns = h.palabra;
+  if (wordle.fecha !== h.f) { wordle.fecha = h.f; wordle.guesses = []; wordle.estado = 'jugando'; }
+  if (wordle.estado !== 'ganado' && wordle.estado !== 'perdido') wordle.estado = 'jugando';
+}
+function worEval(g, a) {
+  const r = Array(5).fill('a'), rest = {};
+  for (let i = 0; i < 5; i++) { if (g[i] === a[i]) r[i] = 'c'; else rest[a[i]] = (rest[a[i]] || 0) + 1; }
+  for (let i = 0; i < 5; i++) { if (r[i] === 'c') continue; if (rest[g[i]] > 0) { r[i] = 'p'; rest[g[i]]--; } }
+  return r;
+}
+function prepararMenuWordle(extra) {
+  worSyncDia();
+  const menu = document.getElementById('menu-wordle'), msg = document.getElementById('wor-msg-fin'), btn = document.getElementById('wor-start');
+  menu.style.display = 'flex';
+  worRender();
+  if (wordle.estado === 'ganado' || wordle.estado === 'perdido') {
+    btn.style.display = 'none';
+    const base = extra || (wordle.estado === 'ganado' ? '✅ Ya adivinaste la palabra de hoy' : `💀 La palabra de hoy era <b>${worAns}</b>`);
+    msg.innerHTML = base + '<br><span style="color:#fff;font-size:1rem;">Vuelve mañana para una palabra nueva 🌙</span>';
+  } else {
+    btn.style.display = ''; btn.textContent = wordle.guesses.length ? 'CONTINUAR' : 'JUGAR'; msg.textContent = '';
+  }
+}
+function startWordle() {
+  worSyncDia();
+  if (wordle.estado !== 'jugando') { prepararMenuWordle(); return; }
+  partidaFinalizada = false; worBuf = ''; worLock = false;
+  document.getElementById('menu-wordle').style.display = 'none';
+  worRender();
+}
+function worRender(animRow = -1) {
+  const b = document.getElementById('wor-board'); b.innerHTML = '';
+  for (let r = 0; r < 6; r++) {
+    const row = document.createElement('div'); row.className = 'wor-row'; row.id = 'wor-row-' + r;
+    const g = wordle.guesses[r], ev = g ? worEval(g, worAns) : null;
+    const txt = g || (r === wordle.guesses.length ? worBuf : '');
+    for (let i = 0; i < 5; i++) {
+      const t = document.createElement('div'); t.className = 'wor-tile'; t.textContent = txt[i] || '';
+      if (ev) { t.classList.add('w-' + ev[i]); if (r === animRow) { t.classList.add('rev'); t.style.animationDelay = (i * 0.12) + 's'; } }
+      else if (txt[i]) t.classList.add('fill');
+      row.appendChild(t);
+    }
+    b.appendChild(row);
+  }
+  const best = {}, pr = { a:1, p:2, c:3 };
+  wordle.guesses.forEach(g => worEval(g, worAns).forEach((st, i) => { if (!best[g[i]] || pr[st] > pr[best[g[i]]]) best[g[i]] = st; }));
+  const kb = document.getElementById('wor-kb'); kb.innerHTML = '';
+  [[...'QWERTYUIOP'], [...'ASDFGHJKLÑ'], ['ENTER', ...'ZXCVBNM', '⌫']].forEach(fila => {
+    const d = document.createElement('div'); d.className = 'wor-kb-row';
+    fila.forEach(k => {
+      const btn = document.createElement('button'); btn.type = 'button'; btn.tabIndex = -1; btn.textContent = k;
+      btn.className = 'wor-key' + (k.length > 1 || k === '⌫' ? ' wide' : '') + (best[k] ? ' w-' + best[k] : '');
+      btn.addEventListener('mousedown', e => e.preventDefault());
+      btn.onclick = () => worKey(k); d.appendChild(btn);
+    });
+    kb.appendChild(d);
+  });
+  document.getElementById('wor-intento').textContent = Math.min(6, wordle.guesses.length + 1);
+  document.getElementById('wor-racha').textContent = wordle.racha;
+}
+function worKey(k) {
+  if (partidaFinalizada || worLock || wordle.estado !== 'jugando') return;
+  if (k === 'ENTER') return worSubmit();
+  if (k === '⌫') { worBuf = worBuf.slice(0, -1); return worRender(); }
+  if (/^[A-ZÑ]$/.test(k) && worBuf.length < 5) { worBuf += k; worRender(); }
+}
+function worSubmit() {
+  if (worBuf.length < 5) {
+    const row = document.getElementById('wor-row-' + wordle.guesses.length);
+    row.classList.remove('shake'); void row.offsetWidth; row.classList.add('shake'); playSfx('error'); return;
+  }
+  const g = worBuf; worBuf = ''; wordle.guesses.push(g); worLock = true;
+  const n = wordle.guesses.length, win = (g === worAns), lose = !win && n >= 6;
+  let gan = 0;
+  if (win) {
+    wordle.estado = 'ganado'; wordle.racha++; gan = agregarDulces(WOR_PREMIOS[n - 1]);
+    checkLogro('wor_gana'); if (n <= 2) checkLogro('wor_rapido'); if (wordle.racha >= 3) checkLogro('wor_racha');
+  } else if (lose) { wordle.estado = 'perdido'; wordle.racha = 0; }
+  guardarDatos(); playSfx('comprar'); worRender(n - 1);
+  setTimeout(() => {
+    worLock = false;
+    if (win || lose) {
+      partidaFinalizada = true; playSfx(win ? 'ataudPremio' : 'error');
+      prepararMenuWordle(win ? `🎉 ¡Adivinaste en ${n}/6!<br><span style="color:#fff;font-size:1.05rem;">Ganaste +${gan} 🍬</span>` : `💀 La palabra era <b>${worAns}</b>`);
+    } else worRender();
+  }, 900);
+}
+window.addEventListener('keydown', (e) => {
+  if (document.getElementById('gc-wordle').style.display !== 'flex' || document.getElementById('menu-wordle').style.display !== 'none' || e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.key === 'Enter') { e.preventDefault(); worKey('ENTER'); }
+  else if (e.key === 'Backspace') { e.preventDefault(); worKey('⌫'); }
+  else { const k = e.key.toUpperCase(); if (/^[A-ZÑ]$/.test(k)) worKey(k); }
+});
 
 function cambiarPagina(idPagina) {
   if (document.body.classList.contains('modo-juego') && idPagina !== 'sec-game-stage' && idPagina !== 'sec-juegos') return;
