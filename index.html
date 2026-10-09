@@ -478,6 +478,18 @@ body.modo-juego .pagina:not(#sec-game-stage) { display: none !important; }
 .wor-kb-row{ display:flex; gap:5px; justify-content:center; width:100%; }
 .wor-key{ flex:1 1 0; max-width:46px; height:clamp(40px,6.4dvh,52px); border-radius:6px; border:1px var(--borde-estilo) var(--ember); background:var(--card); color:var(--ink); font-weight:800; font-family:inherit; font-size:clamp(.8rem,3.4vw,1.05rem); cursor:pointer; padding:0; -webkit-tap-highlight-color:transparent; }
 .wor-key.wide{ flex:1.6 1 0; max-width:72px; font-size:clamp(.6rem,2.6vw,.8rem); }
+
+/* ===== CARAMELOS MALDITOS ===== */
+.car-board{ --ct:clamp(30px,min(10vw,6.2dvh),58px); display:grid; grid-template-columns:repeat(8,var(--ct)); gap:4px; padding:10px; background:var(--card); border:2px var(--borde-estilo) var(--ember); border-radius:16px; touch-action:none; margin:0 auto; transform:translateZ(0); }
+.car-cell{ width:var(--ct); height:var(--ct); display:flex; align-items:center; justify-content:center; font-size:calc(var(--ct)*.72); border-radius:10px; cursor:pointer; user-select:none; background:rgba(255,255,255,.04); transition:transform .15s; -webkit-tap-highlight-color:transparent; }
+.car-cell.sel{ background:var(--glow); box-shadow:0 0 0 2px var(--pumpkin),0 0 14px var(--pumpkin); transform:scale(1.1); }
+.car-cell.clear{ animation:carClear .22s forwards; }
+@keyframes carClear{ to{ transform:scale(0); opacity:0; } }
+/* ===== MURCIÉLAGOS EN SU CRIPTA ===== */
+.cri-board{ --ct:clamp(32px,min(calc(86vw / var(--n)),calc(50dvh / var(--n))),66px); display:grid; grid-template-columns:repeat(var(--n),var(--ct)); border:3px solid rgba(0,0,0,.65); border-radius:10px; overflow:hidden; margin:0 auto; touch-action:manipulation; transform:translateZ(0); }
+.cri-cell{ width:var(--ct); height:var(--ct); display:flex; align-items:center; justify-content:center; font-size:calc(var(--ct)*.62); cursor:pointer; border-style:solid; border-color:rgba(0,0,0,.55); user-select:none; -webkit-tap-highlight-color:transparent; }
+.cri-cell.bad{ box-shadow:inset 0 0 0 3px #ff2a2a; }
+.cri-tools{ display:flex; gap:12px; justify-content:center; }
 </style>
 </head>
 <body>
@@ -644,6 +656,16 @@ body.modo-juego .pagina:not(#sec-game-stage) { display: none !important; }
       <p>Una palabra embrujada nueva cada día. ¡6 intentos para adivinarla!</p>
       <button class="btn-accion btn-jugar" onclick="iniciarTransicionJuego('wordle')"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="margin-right:6px; vertical-align:middle;"><path d="M8 5v14l11-7z"/></svg> Jugar Arcade</button>
     </article>
+    <article class="item">
+      <span class="e">🍬</span><h3>Caramelos Malditos</h3>
+      <p>Combina 3 o más dulces de Halloween y cumple la meta de cada nivel.</p>
+      <button class="btn-accion btn-jugar" onclick="iniciarTransicionJuego('caramelos')"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="margin-right:6px; vertical-align:middle;"><path d="M8 5v14l11-7z"/></svg> Jugar Arcade</button>
+    </article>
+    <article class="item">
+      <span class="e">🦇</span><h3>Murciélagos en su Cripta</h3>
+      <p>Un murciélago por fila, columna y color. ¡Sin que se toquen!</p>
+      <button class="btn-accion btn-jugar" onclick="iniciarTransicionJuego('cripta')"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="margin-right:6px; vertical-align:middle;"><path d="M8 5v14l11-7z"/></svg> Jugar Arcade</button>
+    </article>
   </div>
 </section>
 
@@ -739,6 +761,46 @@ body.modo-juego .pagina:not(#sec-game-stage) { display: none !important; }
             <p class="game-rules">Adivina la palabra embrujada de hoy: 5 letras, 6 intentos. <strong>Verde</strong>: letra bien ubicada. <strong>Amarillo</strong>: está, pero en otro lugar. <strong>Gris</strong>: no está. ¡Hay una palabra nueva cada día!</p>
             <h3 style="color:var(--pumpkin); margin-bottom: 30px; font-size: 1.5rem;" id="wor-msg-fin"></h3>
             <button class="btn-accion" id="wor-start" style="font-size: 1.5rem; padding: 15px 40px; margin-bottom: 20px;" onclick="startWordle()">JUGAR</button>
+            <button class="btn-cerrar-modal" style="width: auto; background-color: transparent; border: 1px solid var(--ember);" onclick="salirJuego()">⬅ Volver a la Tienda</button>
+        </div>
+    </div>
+
+
+    <!-- JUEGO 5: CARAMELOS MALDITOS -->
+    <div id="gc-caramelos" class="game-container">
+        <div class="game-hud">
+            <div>Nivel: <span id="car-nivel">1</span></div>
+            <div>Puntos: <span><span id="car-score">0</span>/<span id="car-meta">0</span></span></div>
+            <div>Movs: <span id="car-moves">0</span></div>
+            <button class="btn-accion" style="padding: 8px 15px; font-size: 0.9rem; margin: 0; background-color: var(--ember); color: #fff !important;" onclick="salirJuego()">🚪 Salir</button>
+        </div>
+        <div class="car-board" id="car-board"></div>
+        <div class="game-menu-overlay" id="menu-caramelos">
+            <h2 class="game-title">Caramelos Malditos</h2>
+            <p class="game-rules">Toca un dulce y luego uno vecino (o deslízalo) para juntar 3 o más iguales. Llega a la meta de puntos antes de quedarte sin movimientos. ¡Las cascadas valen más!</p>
+            <h3 style="color:var(--pumpkin); margin-bottom: 30px; font-size: 1.4rem;" id="car-msg-fin"></h3>
+            <button class="btn-accion" id="car-start" style="font-size: 1.5rem; padding: 15px 40px; margin-bottom: 20px;" onclick="startCaramelos()">JUGAR</button>
+            <button class="btn-cerrar-modal" style="width: auto; background-color: transparent; border: 1px solid var(--ember);" onclick="salirJuego()">⬅ Volver a la Tienda</button>
+        </div>
+    </div>
+
+    <!-- JUEGO 6: MURCIÉLAGOS EN SU CRIPTA -->
+    <div id="gc-cripta" class="game-container">
+        <div class="game-hud">
+            <div>Nivel: <span id="cri-nivel">1</span></div>
+            <div>🦇 <span id="cri-cont">0/5</span></div>
+            <button class="btn-accion" style="padding: 8px 15px; font-size: 0.9rem; margin: 0; background-color: var(--ember); color: #fff !important;" onclick="salirJuego()">🚪 Salir</button>
+        </div>
+        <div class="cri-board" id="cri-board"></div>
+        <div class="cri-tools">
+            <button type="button" class="btn-col" id="cri-hint-btn" onclick="criPista()" style="padding:8px 16px; font-size:.9rem;">💡 Pista (<span id="cri-hints">2</span>)</button>
+            <button type="button" class="btn-col" onclick="criLimpiar()" style="padding:8px 16px; font-size:.9rem;">🧹 Limpiar</button>
+        </div>
+        <div class="game-menu-overlay" id="menu-cripta">
+            <h2 class="game-title">Murciélagos en su Cripta</h2>
+            <p class="game-rules">Coloca un 🦇 en cada <strong>fila</strong>, cada <strong>columna</strong> y cada <strong>color</strong>: exactamente uno por cada una. Dos murciélagos no pueden tocarse, ni en diagonal. Toca una casilla para poner o quitar un murciélago.</p>
+            <h3 style="color:var(--pumpkin); margin-bottom: 30px; font-size: 1.4rem;" id="cri-msg-fin"></h3>
+            <button class="btn-accion" id="cri-start" style="font-size: 1.5rem; padding: 15px 40px; margin-bottom: 20px;" onclick="startCripta()">JUGAR</button>
             <button class="btn-cerrar-modal" style="width: auto; background-color: transparent; border: 1px solid var(--ember);" onclick="salirJuego()">⬅ Volver a la Tienda</button>
         </div>
     </div>
@@ -908,6 +970,7 @@ let appCargada = false;
 let vueltasDJ = 0;
 let bonobonComprados = 0;
 let wordle = { fecha:'', guesses:[], estado:'', racha:0 };
+let prog = { car:1, cri:1 };
 let particulaCounter = 0;
 
 // SISTEMA DE RÉCORDS (FASE 2)
@@ -956,7 +1019,11 @@ const catalogoLogros = {
   'poc_50': { icono: '🔮', nombre: 'Gran Alquimista', desc: 'Acumula 100 pociones en una partida.' },
   'wor_gana': { icono: '🔤', nombre: 'Palabra Maldita', desc: 'Adivina tu primera palabra en Wordle Maldito.' },
   'wor_rapido': { icono: '⚡', nombre: 'Mente Brillante', desc: 'Adivina la palabra en 2 intentos o menos.' },
-  'wor_racha': { icono: '🔥', nombre: 'Racha de Hechiceras', desc: 'Adivina 3 palabras seguidas en Wordle Maldito.' }
+  'wor_racha': { icono: '🔥', nombre: 'Racha de Hechiceras', desc: 'Adivina 3 palabras seguidas en Wordle Maldito.' },
+  'car_n5': { icono: '🍭', nombre: 'Dulcero Maldito', desc: 'Supera el nivel 5 de Caramelos Malditos.' },
+  'car_cadena': { icono: '⛓️', nombre: 'Reacción en Cadena', desc: 'Logra una cascada de 4 combos en una sola jugada.' },
+  'cri_n5': { icono: '🦇', nombre: 'Guardiana de la Cripta', desc: 'Supera el nivel 5 de Murciélagos en su Cripta.' },
+  'cri_sinpista': { icono: '🧠', nombre: 'Mente Oscura', desc: 'Resuelve un nivel sin pistas a partir del nivel 3 de la Cripta.' }
 };
 
 const catalogoPistas = {
@@ -1158,6 +1225,7 @@ if(database) {
       codigosUsados = (data.codigosUsados || []).map(c => ({FORTUNA:'CARAMELOS',COLECCIONISTA:'AMULETOS',GLOTON:'BONOBON',MONSTER:'MONSTERHIGH'}[c] || c));
       bonobonComprados = data.bonobonComprados || 0;
       wordle = Object.assign({ fecha:'', guesses:[], estado:'', racha:0 }, data.wordle || {}); wordle.guesses = wordle.guesses || [];
+      prog = Object.assign({ car:1, cri:1 }, data.prog || {});
       ataudDia = data.ataudDia || 1; 
       ataudTiempo = data.ataudTiempo || 0;
       diarioVisto = data.diarioVisto || false; 
@@ -1269,7 +1337,7 @@ function guardarDatos() {
       coleccion: coleccion, logros: logros, carrito: carrito, codigosUsados: codigosUsados,
       ataudDia: ataudDia, ataudTiempo: ataudTiempo, 
       diarioVisto: diarioVisto, pistas: pistas, pistasReveladas: pistasReveladas, temaActivo: temaActivo,
-      halloweenReclamado: halloweenReclamado, records: records, bonobonComprados: bonobonComprados, wordle: wordle,
+      halloweenReclamado: halloweenReclamado, records: records, bonobonComprados: bonobonComprados, wordle: wordle, prog: prog,
       volMusica: masterMusica, volSfx: masterSfx
     });
   }
@@ -1609,7 +1677,7 @@ function canjearCodigo() {
     case 'TICKETS': abrirAdminTickets(); msjRespuesta = "[ADMIN] Tickets abiertos."; break;
     case 'CLEANCART': carrito = []; msjRespuesta = "[ADMIN] Carrito vacío."; break;
     case 'UNLOCKTHEMES': coleccion = ['tema-default', 'tema-rosa', 'tema-sangre', 'tema-momia', 'tema-calabaza', 'tema-batman', 'tema-brujeria', 'tema-hacker', 'tema-medianoche', 'tema-otono', 'amuleto-moneda', 'amuleto-iman', 'amuleto-reloj']; msjRespuesta = "[ADMIN] Colección max."; break;
-    case 'RESET': dulces = 0; dulcesGastados = 0; coleccion = ['tema-default']; logros = []; carrito = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; pistasReveladas = []; codigosUsados = []; halloweenReclamado = false; bonobonComprados = 0; vueltasDJ = 0; wordle = {fecha:'',guesses:[],estado:'',racha:0}; records = {catacumbas:0, memoria:1, pociones:0}; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Cuenta a cero."; colorRespuesta = "var(--pumpkin)"; break;
+    case 'RESET': dulces = 0; dulcesGastados = 0; coleccion = ['tema-default']; logros = []; carrito = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; pistasReveladas = []; codigosUsados = []; halloweenReclamado = false; bonobonComprados = 0; vueltasDJ = 0; wordle = {fecha:'',guesses:[],estado:'',racha:0}; prog = {car:1, cri:1}; records = {catacumbas:0, memoria:1, pociones:0}; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Cuenta a cero."; colorRespuesta = "var(--pumpkin)"; break;
     case '24H': ataudTiempo = Date.now() - 86400000; msjRespuesta = "[ADMIN] Reloj adelantado."; actualizarUI(); if(document.getElementById('modal-ataud').classList.contains('activo')) renderizarGrillaAtaud(); break;
     case 'NEWWORD': wordle = {fecha:'',guesses:[],estado:'',racha:0}; msjRespuesta = "[ADMIN] Wordle reiniciado."; break;
     case 'FECHALISTA':
@@ -1875,13 +1943,15 @@ function iniciarTransicionJuego(idJuego) {
         document.getElementById('gc-' + idJuego).style.display = 'flex';
         
         document.getElementById('menu-' + idJuego).style.display = 'flex';
-        document.getElementById(({catacumbas:'cata-msg-fin',memoria:'mem-msg-fin',pociones:'poc-msg-fin',wordle:'wor-msg-fin'})[idJuego]).textContent = '';
+        document.getElementById(({catacumbas:'cata-msg-fin',memoria:'mem-msg-fin',pociones:'poc-msg-fin',wordle:'wor-msg-fin',caramelos:'car-msg-fin',cripta:'cri-msg-fin'})[idJuego]).textContent = '';
         document.body.classList.add('modo-juego');
         document.documentElement.style.overflow = 'hidden';
         document.body.style.touchAction = 'none';
         
-        SE.playMusic(idJuego === 'wordle' ? 'menu' : idJuego);
+        SE.playMusic(['wordle','caramelos','cripta'].includes(idJuego) ? 'menu' : idJuego);
         if (idJuego === 'wordle') prepararMenuWordle();
+        if (idJuego === 'caramelos') prepararMenuCar();
+        if (idJuego === 'cripta') prepararMenuCripta();
         
         overlay.style.opacity = '0';
         juegoEnProgreso = false; 
@@ -2311,6 +2381,237 @@ window.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') { e.preventDefault(); worKey('ENTER'); }
   else if (e.key === 'Backspace') { e.preventDefault(); worKey('⌫'); }
   else { const k = e.key.toUpperCase(); if (/^[A-ZÑ]$/.test(k)) worKey(k); }
+});
+
+/* 5. LÓGICA: CARAMELOS MALDITOS (match-3) y CRIPTA */
+const CAR_N = 8, CAR_EMO = ['🎃','👻','🦇','🍬','🍭','💀'];
+let carG = [], carTypes = 5;
+function carNivelCfg(n) { return { target: 350 + n * 120, moves: Math.min(30, 22 + Math.floor(n / 4)), types: n <= 3 ? 5 : 6 }; }
+function carRand() { return Math.floor(Math.random() * carTypes); }
+function carAdj(a, b) { const N = CAR_N; return Math.abs(a - b) === N || (Math.abs(a - b) === 1 && Math.floor(a / N) === Math.floor(b / N)); }
+function carSwap(a, b) { const t = carG[a]; carG[a] = carG[b]; carG[b] = t; }
+function carMatches() {
+  const m = new Set(), N = CAR_N;
+  for (let r = 0; r < N; r++) for (let c = 0; c < N - 2; c++) { const i = r * N + c, t = carG[i]; if (t >= 0 && carG[i + 1] === t && carG[i + 2] === t) { m.add(i); m.add(i + 1); m.add(i + 2); } }
+  for (let c = 0; c < N; c++) for (let r = 0; r < N - 2; r++) { const i = r * N + c, t = carG[i]; if (t >= 0 && carG[i + N] === t && carG[i + 2 * N] === t) { m.add(i); m.add(i + N); m.add(i + 2 * N); } }
+  return m;
+}
+function carHasMove() {
+  const N = CAR_N;
+  for (let i = 0; i < N * N; i++) for (const j of [i + 1, i + N]) {
+    if (j >= N * N || !carAdj(i, j)) continue;
+    carSwap(i, j); const ok = carMatches().size > 0; carSwap(i, j); if (ok) return true;
+  }
+  return false;
+}
+function carNewBoard() {
+  const N = CAR_N;
+  do {
+    carG = Array(N * N).fill(-1);
+    for (let i = 0; i < N * N; i++) {
+      let t;
+      do { t = carRand(); } while ((i % N >= 2 && carG[i - 1] === t && carG[i - 2] === t) || (i >= 2 * N && carG[i - N] === t && carG[i - 2 * N] === t));
+      carG[i] = t;
+    }
+  } while (!carHasMove());
+}
+function carGravity() {
+  const N = CAR_N;
+  for (let c = 0; c < N; c++) {
+    const col = [];
+    for (let r = N - 1; r >= 0; r--) if (carG[r * N + c] >= 0) col.push(carG[r * N + c]);
+    for (let r = N - 1, k = 0; r >= 0; r--, k++) carG[r * N + c] = k < col.length ? col[k] : carRand();
+  }
+}
+function criSize(n) { return Math.min(7, 5 + Math.floor((n - 1) / 3)); }
+function criQueens(N) {
+  const cols = Array(N).fill(-1);
+  (function bt(r) {
+    if (r === N) return true;
+    const order = [...Array(N).keys()].sort(() => Math.random() - 0.5);
+    for (const c of order) {
+      if (cols.slice(0, r).some((cc, rr) => cc === c || (r - rr === 1 && Math.abs(cc - c) <= 1))) continue;
+      cols[r] = c; if (bt(r + 1)) return true;
+    }
+    cols[r] = -1; return false;
+  })(0);
+  return cols;
+}
+function criRegions(N, q) {
+  const reg = Array(N * N).fill(-1); q.forEach((c, r) => { reg[r * N + c] = r; });
+  let left = N * N - N;
+  while (left > 0) {
+    const cand = [];
+    for (let i = 0; i < N * N; i++) {
+      if (reg[i] >= 0) continue;
+      const r = Math.floor(i / N), c = i % N;
+      [[r - 1, c], [r + 1, c], [r, c - 1], [r, c + 1]].forEach(([rr, cc]) => { if (rr >= 0 && rr < N && cc >= 0 && cc < N && reg[rr * N + cc] >= 0) cand.push([i, reg[rr * N + cc]]); });
+    }
+    const pick = cand[Math.floor(Math.random() * cand.length)]; reg[pick[0]] = pick[1]; left--;
+  }
+  return reg;
+}
+function criCount(N, reg, lim) {
+  let cnt = 0; const cols = [], usedC = Array(N).fill(false), usedG = Array(N).fill(false);
+  (function bt(r) {
+    if (cnt >= lim) return;
+    if (r === N) { cnt++; return; }
+    for (let c = 0; c < N; c++) {
+      if (usedC[c]) continue; const g = reg[r * N + c]; if (usedG[g]) continue;
+      if (r > 0 && Math.abs(cols[r - 1] - c) <= 1) continue;
+      usedC[c] = usedG[g] = true; cols[r] = c; bt(r + 1); usedC[c] = usedG[g] = false;
+    }
+  })(0);
+  return cnt;
+}
+function criGen(N) {
+  let last = null;
+  for (let att = 0; att < 600; att++) {
+    const q = criQueens(N), reg = criRegions(N, q); last = { N, reg, sol: q };
+    if (criCount(N, reg, 2) === 1) return last;
+  }
+  return last;
+}
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+let carSel = null, carDown = null, carLock = true, carRun = 0, carScore = 0, carMoves = 0, carTarget = 0;
+function carRender(clr) {
+  const b = document.getElementById('car-board'); b.innerHTML = '';
+  for (let i = 0; i < CAR_N * CAR_N; i++) {
+    const d = document.createElement('div');
+    d.className = 'car-cell' + (carSel === i ? ' sel' : '') + (clr && clr.has(i) ? ' clear' : '');
+    d.dataset.i = i; d.textContent = carG[i] >= 0 ? CAR_EMO[carG[i]] : ''; b.appendChild(d);
+  }
+  document.getElementById('car-score').textContent = carScore; document.getElementById('car-moves').textContent = carMoves;
+}
+function prepararMenuCar(extra) {
+  const cfg = carNivelCfg(prog.car);
+  document.getElementById('menu-caramelos').style.display = 'flex';
+  document.getElementById('car-msg-fin').innerHTML = (extra ? extra + '<br>' : '') + `<span style="font-size:1.05rem;">Nivel ${prog.car}: ${cfg.target} puntos en ${cfg.moves} movimientos</span>`;
+  document.getElementById('car-start').textContent = 'JUGAR NIVEL ' + prog.car;
+}
+function startCaramelos() {
+  const cfg = carNivelCfg(prog.car);
+  carTarget = cfg.target; carMoves = cfg.moves; carTypes = cfg.types; carScore = 0; carSel = null; carRun++;
+  partidaFinalizada = false;
+  document.getElementById('menu-caramelos').style.display = 'none';
+  document.getElementById('car-nivel').textContent = prog.car; document.getElementById('car-meta').textContent = carTarget;
+  carNewBoard(); carLock = false; carRender();
+}
+async function carTry(a, b) {
+  const run = carRun; carLock = true; carSwap(a, b); carRender(); await sleep(160);
+  if (run !== carRun || partidaFinalizada) return;
+  let ms = carMatches();
+  if (!ms.size) { carSwap(a, b); playSfx('error'); carRender(); await sleep(120); carLock = false; return; }
+  carMoves--; let chain = 0;
+  while (ms.size) {
+    chain++; carScore += ms.size * 10 * chain; playSfx('comprar'); carRender(ms); await sleep(230);
+    if (run !== carRun || partidaFinalizada) return;
+    ms.forEach(i => { carG[i] = -1; }); carGravity(); carRender(); await sleep(200);
+    if (run !== carRun || partidaFinalizada) return;
+    ms = carMatches();
+  }
+  if (chain >= 4) checkLogro('car_cadena');
+  if (carScore >= carTarget) return carGanar();
+  if (carMoves <= 0) return carPerder();
+  if (!carHasMove()) carNewBoard();
+  carLock = false; carRender();
+}
+function carGanar() {
+  partidaFinalizada = true; const n = prog.car;
+  const gan = agregarDulces(Math.min(14, 3 + n) + Math.floor(carMoves / 4));
+  prog.car++; if (n >= 5) checkLogro('car_n5');
+  guardarDatos(); playSfx('ataudPremio'); carRender();
+  setTimeout(() => prepararMenuCar(`🎉 ¡Nivel ${n} superado!<br><span style="color:#fff;font-size:1.05rem;">Ganaste +${gan} 🍬</span>`), 500);
+}
+function carPerder() {
+  partidaFinalizada = true; playSfx('error'); carRender();
+  setTimeout(() => prepararMenuCar(`💀 Te quedaste sin movimientos<br><span style="color:#fff;font-size:1.05rem;">Hiciste ${carScore} de ${carTarget} puntos</span>`), 500);
+}
+(function() {
+  const b = document.getElementById('car-board'), N = CAR_N;
+  b.addEventListener('pointerdown', e => { const c = e.target.closest('.car-cell'); if (!c || carLock || partidaFinalizada) return; carDown = { i: +c.dataset.i, x: e.clientX, y: e.clientY }; });
+  b.addEventListener('pointercancel', () => { carDown = null; });
+  b.addEventListener('pointerup', e => {
+    if (!carDown) return; const d = carDown; carDown = null; if (carLock || partidaFinalizada) return;
+    const dx = e.clientX - d.x, dy = e.clientY - d.y, i = d.i, r = Math.floor(i / N), c = i % N;
+    if (Math.max(Math.abs(dx), Math.abs(dy)) > 16) {
+      let j = -1;
+      if (Math.abs(dx) > Math.abs(dy)) j = dx > 0 ? (c < N - 1 ? i + 1 : -1) : (c > 0 ? i - 1 : -1);
+      else j = dy > 0 ? (r < N - 1 ? i + N : -1) : (r > 0 ? i - N : -1);
+      if (j >= 0) { carSel = null; carTry(i, j); }
+      return;
+    }
+    if (carSel === null) carSel = i;
+    else if (carSel === i) carSel = null;
+    else if (carAdj(carSel, i)) { const a = carSel; carSel = null; carTry(a, i); return; }
+    else carSel = i;
+    carRender();
+  });
+})();
+
+/* 6. MURCIÉLAGOS EN SU CRIPTA */
+const CRI_COL = ['#6cb4dd','#a9d98f','#e6c94e','#68c4bf','#d994b0','#dd88c9','#e8a15f'];
+let criData = null, criBats = new Set(), criHints = 2, criHintsUsed = 0;
+function criConflicts() {
+  const N = criData.N, reg = criData.reg, b = [...criBats], bad = new Set();
+  for (let x = 0; x < b.length; x++) for (let y = x + 1; y < b.length; y++) {
+    const i = b[x], j = b[y], ri = Math.floor(i / N), rj = Math.floor(j / N), ci = i % N, cj = j % N;
+    if (ri === rj || ci === cj || reg[i] === reg[j] || (Math.abs(ri - rj) <= 1 && Math.abs(ci - cj) <= 1)) { bad.add(i); bad.add(j); }
+  }
+  return bad;
+}
+function criRender() {
+  const N = criData.N, reg = criData.reg, b = document.getElementById('cri-board'), bad = criConflicts();
+  b.style.setProperty('--n', N); b.innerHTML = '';
+  for (let i = 0; i < N * N; i++) {
+    const r = Math.floor(i / N), c = i % N;
+    const th = (x, y) => (x < 0 || y < 0 || x >= N || y >= N) ? 0 : (reg[x * N + y] !== reg[i] ? 3 : 1);
+    const d = document.createElement('div'); d.className = 'cri-cell' + (bad.has(i) ? ' bad' : ''); d.dataset.i = i;
+    d.style.background = CRI_COL[reg[i] % CRI_COL.length];
+    d.style.borderWidth = `${th(r - 1, c)}px ${th(r, c + 1)}px ${th(r + 1, c)}px ${th(r, c - 1)}px`;
+    d.textContent = criBats.has(i) ? '🦇' : ''; b.appendChild(d);
+  }
+  document.getElementById('cri-cont').textContent = criBats.size + '/' + N;
+  document.getElementById('cri-hints').textContent = criHints;
+  document.getElementById('cri-nivel').textContent = prog.cri;
+}
+function prepararMenuCripta(extra) {
+  const N = criSize(prog.cri);
+  document.getElementById('menu-cripta').style.display = 'flex';
+  document.getElementById('cri-msg-fin').innerHTML = (extra ? extra + '<br>' : '') + `<span style="font-size:1.05rem;">Nivel ${prog.cri}: tablero de ${N}×${N}</span>`;
+  document.getElementById('cri-start').textContent = 'JUGAR NIVEL ' + prog.cri;
+}
+function startCripta() {
+  criData = criGen(criSize(prog.cri)); criBats = new Set(); criHints = 2; criHintsUsed = 0;
+  partidaFinalizada = false;
+  document.getElementById('menu-cripta').style.display = 'none';
+  criRender();
+}
+function criAfter() {
+  criRender();
+  if (criBats.size === criData.N && criConflicts().size === 0) criGanar();
+}
+function criPista() {
+  if (partidaFinalizada || criHints <= 0) return;
+  const N = criData.N, reg = criData.reg;
+  const t = criData.sol.map((c, r) => r * N + c).find(i => !criBats.has(i)); if (t === undefined) return;
+  const tr = Math.floor(t / N), tc = t % N;
+  [...criBats].forEach(i => { const r = Math.floor(i / N), c = i % N; if (r === tr || c === tc || reg[i] === reg[t] || (Math.abs(r - tr) <= 1 && Math.abs(c - tc) <= 1)) criBats.delete(i); });
+  criBats.add(t); criHints--; criHintsUsed++; playSfx('exito'); criAfter();
+}
+function criLimpiar() { if (partidaFinalizada) return; criBats.clear(); criRender(); }
+function criGanar() {
+  partidaFinalizada = true; const n = prog.cri;
+  const gan = agregarDulces(Math.min(15, 3 + n) + (criHintsUsed === 0 ? 2 : 0));
+  prog.cri++; if (n >= 5) checkLogro('cri_n5'); if (criHintsUsed === 0 && n >= 3) checkLogro('cri_sinpista');
+  guardarDatos(); playSfx('ataudPremio');
+  setTimeout(() => prepararMenuCripta(`🎉 ¡Nivel ${n} resuelto!<br><span style="color:#fff;font-size:1.05rem;">Ganaste +${gan} 🍬</span>`), 700);
+}
+document.getElementById('cri-board').addEventListener('click', e => {
+  const c = e.target.closest('.cri-cell'); if (!c || partidaFinalizada) return;
+  const i = +c.dataset.i; if (criBats.has(i)) criBats.delete(i); else criBats.add(i);
+  playSfx('comprar'); criAfter();
 });
 
 function cambiarPagina(idPagina) {
