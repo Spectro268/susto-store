@@ -35,7 +35,11 @@
   --glow: rgba(214, 40, 40, 0.25);
   --bg-overlay: rgba(20, 5, 5, 0.85); 
   --borde-estilo: solid;
+  
+  /* Variable maestra para los botones purgada de maldiciones rojas */
   --btn-bg: var(--pumpkin); 
+  --btn-hover: var(--violet);
+  --btn-text: #ffffff;
   
   box-sizing: border-box;
   padding-top: env(safe-area-inset-top, 0px);
@@ -51,34 +55,25 @@ body.tema-calabaza { --bg: #0a140a; --pumpkin: #ff6600; --ember: #cc5200; --viol
 body.tema-brujeria { --bg: #0a0014; --pumpkin: #b300ff; --ember: #4d0066; --violet: #d896ff; --card: #140028; --glow: rgba(179, 0, 255, 0.25); --bg-overlay: rgba(10, 0, 20, 0.75); } 
 body.tema-otono { --bg: #1a0a00; --pumpkin: #ff8c00; --ember: #8b4500; --violet: #cd853f; --card: #291400; --glow: rgba(255, 140, 0, 0.25); --bg-overlay: rgba(26, 10, 0, 0.88); }
 
-/* TEMA MEDIANOCHE */
+/* TEMAS CON CONTRASTE ESTRICTO (Heredan limpio mediante variables) */
 body.tema-medianoche { 
     --bg: #05051a; --pumpkin: #ffd700; --ember: #000066; --violet: #4169e1; --card: #0a0a29; 
     --glow: rgba(255, 215, 0, 0.25); --bg-overlay: rgba(5, 5, 26, 0.88);
     --btn-bg: #b8860b; 
 }
-body.tema-medianoche .btn-accion, body.tema-medianoche .btn-cerrar-modal, body.tema-medianoche .ataud-flotante .badge { background-color: var(--btn-bg); color: #ffffff; }
-body.tema-medianoche .btn-accion:hover, body.tema-medianoche .btn-cerrar-modal:hover { background-color: var(--violet); }
-
-/* TEMA CYBER-HACKER */
 body.tema-hacker { 
     --bg: #000000; --pumpkin: #00ff00; --ember: #003300; --violet: #00cc00; --card: #051005; 
     --glow: rgba(0, 255, 0, 0.25); --bg-overlay: rgba(0, 0, 0, 0.85); 
     --btn-bg: #009900; 
 }
-body.tema-hacker .btn-accion, body.tema-hacker .btn-cerrar-modal, body.tema-hacker .ataud-flotante .badge { background-color: var(--btn-bg); color: #ffffff; }
-body.tema-hacker .btn-accion:hover, body.tema-hacker .btn-cerrar-modal:hover { background-color: var(--violet); }
-
-/* TEMA BATMAN */
 body.tema-batman { 
     --bg: #020a0f; --pumpkin: #4fd1c5; --ember: #1d3942; --violet: #a0aec0; --card: #07141d; 
     --glow: rgba(79, 209, 197, 0.25); --bg-overlay: rgba(2, 10, 15, 0.92); 
+    --btn-bg: var(--pumpkin);
+    --btn-text: #000000;
+    --btn-hover: var(--ember);
 }
-body.tema-batman .btn-accion, body.tema-batman .btn-cerrar-modal { background-color: var(--pumpkin); color: #000000 !important; font-weight: 900; }
-body.tema-batman .btn-accion:hover, body.tema-batman .btn-cerrar-modal:hover { color: #ffffff !important; background-color: var(--ember) !important; }
-body.tema-batman .btn-carrito-tienda { color: var(--pumpkin) !important; border-color: var(--pumpkin) !important; }
 body.tema-batman #toast-logro.is-pista, body.tema-batman #toast-logro.is-pista #toast-sub, body.tema-batman #toast-logro.is-pista #toast-txt { color: #000000 !important; }
-body.tema-batman .ataud-flotante .badge { background-color: var(--pumpkin); color: #000000 !important; }
 
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
 *, *::before, *::after { box-sizing: inherit; }
@@ -120,7 +115,7 @@ a { color: inherit; -webkit-tap-highlight-color: transparent; }
 :focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; }
 
 /* ==========================================
-   PANTALLA DE CARGA Y BOTÓN BOO (BLINDADO EN ROJO CLÁSICO)
+   PANTALLA DE CARGA Y BOTÓN BOO
    ========================================== */
 #splash-screen {
   position: fixed; inset: 0; background: #000000; z-index: 99999;
@@ -151,9 +146,9 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .btn-col { background: var(--card); border: 1px var(--borde-estilo) var(--pumpkin); color: var(--pumpkin); font-weight: 800; padding: 8px 20px; border-radius: 999px; text-decoration: none; cursor: pointer; transition: all 0.2s; white-space: nowrap; -webkit-tap-highlight-color: transparent;}
 .btn-col:hover { background: var(--pumpkin); color: #000; }
 
-/* LA TUERCA INMORTAL (MÁSCARA PNG DINÁMICA) */
+/* LA TUERCA INMORTAL (MÁSCARA PNG DINÁMICA PERFECTA) */
 .btn-icono.tuerca { 
-  background: transparent; border: none; cursor: pointer; color: var(--ink); 
+  background: transparent; border: none; cursor: pointer; color: var(--btn-bg); 
   padding: 10px; margin: -10px; min-width: 44px; min-height: 44px;
   display: flex; align-items: center; justify-content: center; 
   transition: all 0.3s; -webkit-tap-highlight-color: transparent; 
@@ -167,7 +162,7 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
   -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
   -webkit-mask-position: center; mask-position: center;
 }
-.btn-icono.tuerca:hover { color: var(--pumpkin); filter: drop-shadow(0 0 8px var(--glow)); transform: scale(1.1); }
+.btn-icono.tuerca:hover { color: var(--btn-hover); filter: drop-shadow(0 0 8px var(--glow)); transform: scale(1.1); }
 .btn-icono.tuerca:hover .tuerca-img { animation: spin 2s linear infinite; }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
@@ -213,7 +208,7 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 /* ATAÚD FLOTANTE */
 .ataud-flotante { position: fixed; top: 50vh; right: 3vw; transform: translateY(-50%); margin-top: -30px; background: var(--card); border: 2px var(--borde-estilo) var(--violet); border-radius: 15px; padding: 15px; cursor: pointer; font-size: 2rem; z-index: 90; box-shadow: 0 0 15px var(--glow); transition: transform 0.3s, background 0.5s ease; display: flex; flex-direction: column; align-items: center; -webkit-tap-highlight-color: transparent;}
 .ataud-flotante:hover { transform: translateY(-50%) scale(1.1); background: var(--violet); }
-.ataud-flotante .badge { font-size: 0.8rem; background-color: var(--pumpkin); color: white; border-radius: 999px; padding: 2px 8px; font-weight: bold; margin-top: 5px; font-family: sans-serif; }
+.ataud-flotante .badge { font-size: 0.8rem; background-color: var(--btn-bg); color: var(--btn-text); border-radius: 999px; padding: 2px 8px; font-weight: bold; margin-top: 5px; font-family: sans-serif; }
 .ataud-animado { animation: floatAtaud 4s ease-in-out infinite; }
 @keyframes floatAtaud { 0%, 100% { margin-top: -30px; } 50% { margin-top: -45px; } }
 
@@ -225,7 +220,7 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .dia-caja.bloqueado { opacity: 0.5; filter: grayscale(1); }
 @keyframes pulseAtaud { 0% { box-shadow: 0 0 0 0 var(--pumpkin); } 70% { box-shadow: 0 0 0 10px rgba(0,0,0,0); } 100% { box-shadow: 0 0 0 0 rgba(0,0,0,0); } }
 
-/* TOAST */
+/* TOAST NATIVO */
 #toast-logro { cursor: pointer; position: fixed; top: 20px; left: 50%; transform: translate(-50%, -20px); opacity: 0; pointer-events: none; background: var(--violet); color: #fff; border-radius: 12px; padding: 15px 20px; display: flex; align-items: center; gap: 15px; font-weight: bold; box-shadow: 0 5px 20px rgba(0,0,0,0.5); z-index: 9999; transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); border: 2px solid #fff; width: 90%; max-width: 400px; text-align: left; -webkit-tap-highlight-color: transparent; }
 #toast-logro.visible { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
 #toast-txt { flex-grow: 1; pointer-events: none; }
@@ -245,12 +240,12 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .item h3 { margin: 0; font-size: 1.2rem; color: var(--ink); }
 .item p { margin: 0; font-size: .92rem; opacity: .8; flex-grow: 1; }
 
-/* BOTONES GLOBALES DINÁMICOS */
-.btn-accion { display: inline-flex; align-items: center; justify-content: center; background-color: var(--btn-bg); color: #fff; font-weight: 800; padding: 12px 20px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem; margin-top: 10px; transition: all 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent; }
-.btn-accion:hover { background-color: var(--violet); }
-.btn-cerrar-modal { background-color: var(--btn-bg); color: #fff; font-weight: 800; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; width: 100%; margin-top: 15px; font-size: 1rem; transition: background 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent;}
-.btn-cerrar-modal:hover { background-color: var(--violet); }
-.btn-jugar { background-color: var(--ember); }
+/* BOTONES GLOBALES PURIFICADOS (Uso de Variables del Sistema) */
+.btn-accion { display: inline-flex; align-items: center; justify-content: center; background-color: var(--btn-bg); color: var(--btn-text); font-weight: 800; padding: 12px 20px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem; margin-top: 10px; transition: all 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent; }
+.btn-accion:hover { background-color: var(--btn-hover); color: #fff !important; }
+.btn-cerrar-modal { background-color: var(--btn-bg); color: var(--btn-text); font-weight: 800; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; width: 100%; margin-top: 15px; font-size: 1rem; transition: background 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent;}
+.btn-cerrar-modal:hover { background-color: var(--btn-hover); color: #fff !important; }
+.btn-jugar { background-color: var(--ember); color: #fff; }
 .btn-jugar:hover { background-color: var(--btn-bg); }
 .btn-bloqueado { background: rgba(255,255,255,0.05) !important; color: var(--violet) !important; cursor: default !important; border: 1px var(--borde-estilo) var(--ember) !important; opacity: 0.8; }
 
@@ -314,14 +309,35 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 /* ==========================================
    FASE 2: ESTILOS DE LOS MINIJUEGOS ARCADE
    ========================================== */
-#sec-game-stage { display: none; padding: max(10px, env(safe-area-inset-top)) max(12px, 3vw) max(10px, env(safe-area-inset-bottom)); position: fixed; inset: 0; z-index: 500; width: 100%; height: 100vh; height: 100dvh; min-height: 0; overflow: hidden; background: rgba(0,0,0,.6); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); overscroll-behavior: none; touch-action: pan-x pan-y; }
+#sec-game-stage { 
+  display: none; 
+  padding: 0; 
+  position: fixed; inset: 0; z-index: 500; 
+  width: 100%; height: 100vh; height: 100dvh; 
+  background: var(--bg-overlay); 
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  overscroll-behavior: none; touch-action: pan-x pan-y;
+  /* ANTIDESGARRO GPU (Hardware Acceleration) */
+  transform: translateZ(0); will-change: transform, opacity; backface-visibility: hidden;
+}
 #sec-game-stage.activa { display: block; }
 body.modo-juego { overflow: hidden !important; height: 100%; overscroll-behavior: none; }
 body.modo-juego > header { display: none !important; }
 body.modo-juego .pagina:not(#sec-game-stage) { visibility: hidden; }
-.game-container { display: none; text-align: center; width: min(100%, 800px); max-height: 100%; height: 100%; overflow: hidden; margin: 0 auto; padding: 0 0 max(4px, env(safe-area-inset-bottom)); position: relative; }
-.game-hud { display: flex; justify-content: space-between; align-items: center; background: var(--card); border: 2px var(--borde-estilo) var(--ember); padding: 15px 20px; border-radius: 18px; margin-bottom: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-.game-hud div { font-size: 1.2rem; font-weight: 900; color: var(--pumpkin); display:flex; align-items:center; gap:5px; }
+
+/* FLEXBOX CENTRADO ABSOLUTO (Elimina el vacío inferior) */
+.game-container { 
+  display: none; 
+  width: min(100%, 800px); height: 100%; 
+  margin: 0 auto; padding: max(10px, env(safe-area-inset-top)) max(12px, 3vw) max(10px, env(safe-area-inset-bottom));
+  flex-direction: column; justify-content: space-between; align-items: center;
+  position: relative;
+  /* ANTIDESGARRO GPU */
+  transform: translateZ(0); will-change: transform; backface-visibility: hidden;
+}
+
+.game-hud { width: 100%; flex-shrink: 0; display: flex; justify-content: space-between; align-items: center; background: var(--card); border: 2px var(--borde-estilo) var(--ember); padding: 15px 20px; border-radius: 18px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+.game-hud div { font-size: 1.2rem; font-weight: 900; color: var(--pumpkin); display:flex; flex-direction: column; align-items:center; gap:2px; }
 .game-hud span { color: var(--ink); font-weight: 500; font-size: 1rem; display: block; }
 
 .game-menu-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 550; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px; text-align: center; overflow: hidden; }
@@ -330,41 +346,50 @@ body.modo-juego .pagina:not(#sec-game-stage) { visibility: hidden; }
 .game-title { font-size: 3rem; color: var(--pumpkin); text-shadow: 0 0 15px var(--glow); margin: 0 0 10px; line-height: 1; }
 
 /* 1. Catacumbas */
-.cata-board-wrap { position: relative; width: min(100%, 600px); margin: 0 auto; display:flex; flex-direction:column; align-items:center;}
-.cata-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(6px, 2vw, 15px); width: min(100%, 400px); margin: 0 auto; }
-.cata-cell { background: var(--card); border: 2px var(--borde-estilo) var(--ember); border-radius: 15px; aspect-ratio: 1/1; min-width: 0; display: flex; justify-content: center; align-items: center; font-size: clamp(2.5rem, 9vw, 4.5rem); cursor: pointer; user-select: none; transition: all 0.1s; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); -webkit-tap-highlight-color: transparent;}
-.cata-cell:active { transform: scale(0.95); }
+.cata-board-wrap { margin: auto; display:flex; flex-direction:column; align-items:center; width: 100%; max-width: 500px; position: relative; }
+.cata-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(8px, 3vw, 15px); width: min(100%, 450px); margin: 0 auto; }
+.cata-cell { background: var(--card); border: 2px var(--borde-estilo) var(--ember); border-radius: 15px; aspect-ratio: 1/1; min-width: 0; display: flex; justify-content: center; align-items: center; font-size: clamp(3rem, 11vw, 5rem); cursor: pointer; user-select: none; transition: all 0.1s; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); -webkit-tap-highlight-color: transparent;}
+.cata-cell:active { transform: scale(0.95) !important; }
 .cata-cell.has-ghost { background: var(--glow); border-color: var(--pumpkin); animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 .cata-cell.has-skull { background: rgba(255,0,0,0.2); border-color: #ff0000; animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 
-.cata-skullette { display: none; align-items: center; justify-content: center; width: 68px; height: 68px; border: 2px solid var(--pumpkin); border-radius: 50%; background: var(--card); box-shadow: 0 0 15px var(--glow); z-index: 5; margin-bottom: 20px; animation: pop 0.4s ease-out; touch-action: manipulation; }
+.cata-skullette { display: none; align-items: center; justify-content: center; width: 68px; height: 68px; border: 2px solid var(--pumpkin); border-radius: 50%; background: transparent; box-shadow: 0 0 15px var(--glow), inset 0 0 15px var(--glow); z-index: 5; margin-top: 30px; animation: pop 0.4s ease-out; touch-action: manipulation; cursor: pointer; }
 .cata-skullette.visible { display: flex; }
-.cata-skullette img { width: 82%; height: 82%; object-fit: contain; }
-.cata-skullette-note { display: none; font-size: .8rem; color: var(--pumpkin); margin: -15px auto 20px; font-weight:bold;}
-.cata-skullette-note.visible { display: block; }
-.cata-skullette.active-power { box-shadow: 0 0 30px #ffd700; border-color: #ffd700; }
+.cata-skullette img { width: 82%; height: 82%; object-fit: contain; filter: drop-shadow(0 0 5px var(--glow));}
+#cata-x2-anim { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); font-size: 6rem; font-weight: 900; color: #ffd700; text-shadow: 0 0 30px rgba(255,215,0,1); pointer-events: none; z-index: 20; opacity: 0; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+#cata-x2-anim.show { transform: translate(-50%, -50%) scale(1); opacity: 1; animation: fadeOutUp 1.5s forwards ease-in; }
+@keyframes fadeOutUp { 0% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 100% { opacity: 0; transform: translate(-50%, -100%) scale(1.5); } }
 
 /* 2. Memoria Monstruosa */
-.memoria-tools { display:flex; justify-content:center; align-items:center; gap:10px; margin: 0 auto 8px; flex-wrap:wrap; font-size:.9rem; }
-.memoria-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(0, 1fr); gap: clamp(4px, 1.2vw, 9px); width: min(100%, 560px); height: min(68dvh, 600px); max-height: calc(100dvh - 170px); margin: 0 auto; perspective: 1000px; }
-.mem-card { position: relative; min-width: 0; min-height: 0; overflow: hidden; background: var(--card); border: 2px var(--borde-estilo) var(--ember); border-radius: 12px; aspect-ratio: auto; display: flex; justify-content: center; align-items: center; font-size: clamp(1.5rem, 5vw, 2.5rem); cursor: pointer; user-select: none; transition: transform 0.4s, background 0.3s; transform-style: preserve-3d; -webkit-tap-highlight-color: transparent;}
-.mem-card.flipped { transform: rotateY(180deg); background: var(--glow); border-color: var(--pumpkin); }
+.memoria-tools { display:flex; justify-content:center; align-items:center; gap:15px; margin: 0 auto 12px; flex-wrap:wrap; font-size:1rem; width: 100%;}
+.memoria-grid { margin: auto; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(0, 1fr); gap: clamp(6px, 1.5vw, 10px); width: min(100%, 560px); height: min(65dvh, 600px); max-height: calc(100dvh - 200px); perspective: 1000px; }
+.mem-card { position: relative; min-width: 0; min-height: 0; background: transparent; border: none; aspect-ratio: auto; display: flex; justify-content: center; align-items: center; font-size: clamp(1.8rem, 6vw, 3rem); cursor: pointer; user-select: none; transform-style: preserve-3d; transition: transform 0.5s; -webkit-tap-highlight-color: transparent;}
+.mem-card.flipped { transform: rotateY(180deg); }
 .mem-card.matched { visibility: hidden; opacity: 0; pointer-events:none; transition: visibility 0s 0.5s, opacity 0.5s linear; }
-.mem-card.magic-pair.flipped { background: var(--violet); border-color: #fff; box-shadow: inset 0 0 20px rgba(255,255,255,0.5); }
-.mem-card .front, .mem-card .back { position: absolute; backface-visibility: hidden; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; }
-.mem-card .front { transform: rotateY(180deg); }
+.mem-card .front, .mem-card .back { position: absolute; backface-visibility: hidden; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; border: 2px var(--borde-estilo) var(--ember); border-radius: 12px; background: var(--card); }
+.mem-card .front { transform: rotateY(180deg); background: var(--glow); border-color: var(--pumpkin); }
+.mem-card.magic-pair .front { background: var(--violet); border-color: #fff; box-shadow: inset 0 0 20px rgba(255,255,255,0.5); }
 
 /* 3. Pociones */
-.poc-receta-box { background: var(--card); border: 2px dashed var(--pumpkin); border-radius: 15px; padding: clamp(10px, 2vh, 20px); margin: 0 auto 15px; font-size: clamp(2rem, 8vw, 3.5rem); letter-spacing: clamp(5px, 2vw, 15px); display: flex; justify-content: center; flex-wrap: wrap; min-height: 80px; align-items: center; transition: box-shadow 0.3s, border-color 0.3s; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); }
-.poc-receta-box.error { box-shadow: inset 0 0 20px #ff0000, 0 0 20px #ff0000; border-color: #ff0000; animation: shake 0.4s; }
-.poc-receta-box.success { box-shadow: inset 0 0 20px #00ff00, 0 0 20px #00ff00; border-color: #00ff00; }
-.poc-shelf { display: flex; justify-content: center; align-content: center; gap: clamp(6px, 2vw, 15px); flex-wrap: wrap; max-width: 600px; margin: 0 auto; }
-.poc-ing { background: var(--card); border: 2px var(--borde-estilo) var(--ember); border-radius: 50%; width: clamp(50px, 14vw, 75px); height: clamp(50px, 14vw, 75px); display: flex; justify-content: center; align-items: center; font-size: clamp(1.5rem, 6vw, 2.5rem); cursor: pointer; user-select: none; transition: 0.1s; box-shadow: 0 5px 10px rgba(0,0,0,0.5); -webkit-tap-highlight-color: transparent;}
+.poc-wrap { margin: auto; display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 600px; }
+.poc-receta-box { background: var(--card); border: 2px dashed var(--pumpkin); border-radius: 15px; padding: clamp(15px, 3vh, 30px); margin: 0 auto 20px; font-size: clamp(2.5rem, 9vw, 4rem); letter-spacing: clamp(10px, 3vw, 20px); display: flex; justify-content: center; flex-wrap: wrap; min-height: 100px; align-items: center; transition: box-shadow 0.3s, border-color 0.3s; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); width: 100%; }
+.poc-receta-box.error { box-shadow: inset 0 0 30px #ff0000, 0 0 20px #ff0000; border-color: #ff0000; animation: shake 0.4s; }
+.poc-receta-box.success { box-shadow: inset 0 0 30px #00ff00, 0 0 20px #00ff00; border-color: #00ff00; }
+.poc-shelf { display: flex; justify-content: center; align-content: center; gap: clamp(8px, 2.5vw, 15px); flex-wrap: wrap; width: 100%; }
+.poc-ing { background: var(--card); border: 2px var(--borde-estilo) var(--ember); border-radius: 50%; width: clamp(55px, 15vw, 80px); height: clamp(55px, 15vw, 80px); display: flex; justify-content: center; align-items: center; font-size: clamp(2rem, 7vw, 3rem); cursor: pointer; user-select: none; transition: 0.1s; box-shadow: 0 5px 10px rgba(0,0,0,0.5); -webkit-tap-highlight-color: transparent;}
 .poc-ing:active { transform: translateY(5px); box-shadow: 0 0 0 rgba(0,0,0,0); border-color: var(--pumpkin); background: var(--glow); }
 
-.poc-progress-track { width: 120px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 4px; margin: 20px auto 5px; overflow: hidden; position: relative; }
+/* Puntos centrados matemáticamente para ingredientes */
+.poc-slot { display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.3s; }
+.poc-slot-emoji { opacity: 0.3; transition: all 0.3s; }
+.poc-slot.active .poc-slot-emoji { opacity: 1; transform: scale(1.1); }
+.poc-slot.solved .poc-slot-emoji { opacity: 1; color: var(--pumpkin); }
+.poc-dot { width: 6px; height: 6px; border-radius: 50%; background: transparent; margin-top: 8px; transition: all 0.3s; }
+.poc-slot.active .poc-dot { background: var(--pumpkin); box-shadow: 0 0 8px var(--pumpkin); }
+
+.poc-progress-track { width: 150px; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; margin: 30px auto 8px; overflow: hidden; position: relative; }
 .poc-progress-fill { height: 100%; background: var(--pumpkin); width: 0%; transition: width 0.3s ease; box-shadow: 0 0 10px var(--pumpkin);}
-.poc-progress-text { font-size: 0.75rem; color: var(--pumpkin); opacity: 0.8;}
+.poc-progress-text { font-size: 0.85rem; color: var(--pumpkin); opacity: 0.8;}
 
 @media(max-width: 850px) {
   body:has(#sec-home.activa) { overflow: hidden; position: fixed; width: 100%; height: 100%; }
@@ -380,35 +405,35 @@ body.modo-juego .pagina:not(#sec-game-stage) { visibility: hidden; }
   .gd-portal-container { grid-template-columns: 1fr; }
   .ataud-flotante { right: 0; left: 0; bottom: 0; top: auto; transform: none; margin: 0; width: 100%; border-radius: 20px 20px 0 0; border-left: none; border-right: none; border-bottom: none; flex-direction: row; justify-content: center; gap: 15px; padding: 12px; }
   .ataud-flotante:hover { transform: none; background: rgba(28, 8, 8, 0.95); }
-  
-  .game-hud { padding: 10px; margin-bottom: 15px; }
-  .game-hud div { font-size: 1rem; }
 }
 
-/* EXPERIENCIA ARCADE MÓVIL */
+/* EXPERIENCIA ARCADE MÓVIL (Centrado y Ajustado) */
 @media (max-width: 850px) {
   body.modo-juego header { display:none !important; }
-  #sec-game-stage { padding: max(6px, env(safe-area-inset-top)) 10px max(6px, env(safe-area-inset-bottom)); }
-  .game-container { width:100%; }
-  .game-hud { gap:5px; padding:7px 8px; margin:0 auto 12px; border-radius:12px; }
-  .game-hud div { font-size:clamp(.75rem, 3.3vw, 1rem); line-height:1.2; }
-  .game-hud span { font-size:clamp(.68rem, 2.8vw, .9rem); }
-  .cata-board-wrap { width:100%; max-width:420px; }
-  .cata-grid { width:min(100%, 360px); gap:8px; }
-  .cata-cell { border-radius:12px; }
-  .memoria-tools { margin-bottom:5px; font-size:.78rem; }
-  .memoria-grid { width:min(100%, 460px); height:min(63dvh, 500px); max-height:calc(100dvh - 155px); gap:5px; }
-  .mem-card { border-radius:8px; border-width:1px; }
+  .game-hud { gap:5px; padding:8px 12px; border-radius:12px; }
+  .game-hud div { font-size:clamp(.8rem, 3.5vw, 1.1rem); line-height:1.2; flex-direction: column; gap: 0;}
+  .game-hud span { font-size:clamp(.7rem, 3vw, .95rem); }
+  
   .game-menu-overlay { padding:18px; }
-  .game-menu-overlay .btn-accion, .game-menu-overlay .btn-cerrar-modal { max-width:min(100%, 320px); font-size:1rem !important; padding:12px 18px !important; margin-bottom:10px !important; }
+  .game-menu-overlay .btn-accion, .game-menu-overlay .btn-cerrar-modal { max-width:min(100%, 320px); font-size:1.1rem !important; padding:15px 20px !important; margin-bottom:10px !important; }
+  
+  .cata-grid { width:min(100%, 380px); gap:10px; }
+  .cata-cell { border-radius:12px; }
+  .memoria-tools { margin-bottom:8px; font-size:.85rem; }
+  .memoria-grid { width:min(100%, 480px); height:min(60dvh, 500px); max-height:calc(100dvh - 170px); gap:6px; }
+  .mem-card .front, .mem-card .back { border-width:1px; border-radius:8px;}
+  
+  .poc-receta-box { margin-bottom:15px; min-height: 80px;}
+  .poc-shelf { gap:10px; }
 }
+
 @media (max-height: 650px) {
-  .game-hud { padding:5px 8px; margin-bottom:5px; }
-  .memoria-grid { height:calc(100dvh - 145px); max-height:calc(100dvh - 145px); }
+  .game-hud { padding:5px 10px; margin-bottom: 0; }
+  .memoria-grid { height:calc(100dvh - 130px); max-height:calc(100dvh - 130px); }
   .cata-grid { width:min(55vh, 360px); }
-  .poc-receta-box { min-height:52px; margin-bottom:10px;}
-  .poc-ing { width:48px; height:48px; }
-  .poc-progress-track { margin-top: 10px; }
+  .poc-receta-box { min-height:60px; margin-bottom:10px; padding: 10px;}
+  .poc-ing { width:55px; height:55px; font-size: 1.8rem;}
+  .poc-progress-track { margin-top: 15px; }
 }
 
 </style>
@@ -424,7 +449,7 @@ body.modo-juego .pagina:not(#sec-game-stage) { visibility: hidden; }
 <div class="bats" id="bats-clasicos" aria-hidden="true"><span class="bat">🦇</span><span class="bat">🦇</span><span class="bat">🦇</span></div>
 <div id="fade-overlay"></div>
 
-<!-- TOAST LOGRO -->
+<!-- TOAST LOGRO NATIVO -->
 <div id="toast-logro" onclick="saltarToast()" title="Haz clic para cerrar esta notificación">
   <span id="toast-icon" style="font-size: 2rem;">🏆</span>
   <div><div id="toast-sub" style="font-size: 0.8rem; opacity: 0.8;">Logro Desbloqueado</div><div id="toast-txt">Título</div><div id="toast-bonus" style="color: #ffd700; font-size: 0.9rem;"></div></div>
@@ -576,7 +601,7 @@ body.modo-juego .pagina:not(#sec-game-stage) { visibility: hidden; }
 </section>
 
 <!-- ========================================================
-     FASE 2: DIMENSIÓN ARCADE (JUEGOS)
+     FASE 2: DIMENSIÓN ARCADE (JUEGOS CENTRADOS Y OPTIMIZADOS)
      ======================================================== -->
 <section id="sec-game-stage" class="pagina">
     
@@ -586,23 +611,22 @@ body.modo-juego .pagina:not(#sec-game-stage) { visibility: hidden; }
             <div>Tiempo: <span id="cata-time">30</span></div>
             <div>Score: <span id="cata-score">0</span></div>
             <div>Récord: <span id="cata-record">0</span></div>
-            <button class="btn-accion" style="padding: 6px 12px; font-size: 0.85rem; margin: 0; background-color: var(--ember);" onclick="cobrarYSalir('catacumbas')">🚪 Salir</button>
+            <button class="btn-accion" style="padding: 8px 15px; font-size: 0.9rem; margin: 0; background-color: var(--ember); color: #fff !important;" onclick="cobrarYSalir('catacumbas')">🚪 Salir</button>
         </div>
         
         <div class="cata-board-wrap">
-          <button type="button" class="cata-skullette" id="cata-skullette" aria-label="Activar multiplicador x2" onclick="activarSkullette()"><img src="logo.png" alt="Skullette especial"></button>
-          <div class="cata-skullette-note" id="cata-skullette-note">¡Skullette! ×2 por 10 s</div>
-          
+          <div id="cata-x2-anim">X2</div>
           <div class="cata-grid" id="cata-board">
             <div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div>
             <div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div>
             <div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div>
           </div>
+          <button type="button" class="cata-skullette" id="cata-skullette" aria-label="Activar multiplicador x2" onclick="activarSkullette()"><img src="logo.png" alt="Skullette especial"></button>
         </div>
 
         <div class="game-menu-overlay" id="menu-catacumbas">
             <h2 class="game-title">Catacumbas</h2>
-            <p class="game-rules">Toca a los fantasmas (👻) rápido para sumar puntos. ¡Cuidado con las calaveras (☠️), restan 3 segundos!</p>
+            <p class="game-rules">Toca a los fantasmas (👻) rápido para sumar puntos. ¡Cuidado con las calaveras (☠️), restan 3 segundos! <em>(PC: Usa la Barra Espaciadora para activar la Skullette).</em></p>
             <h3 style="color:var(--pumpkin); margin-bottom: 30px; font-size: 1.8rem;" id="cata-msg-fin"></h3>
             <button class="btn-accion" style="font-size: 1.5rem; padding: 15px 40px; margin-bottom: 20px;" onclick="startCatacumbas()"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" style="margin-right:8px; vertical-align:middle;"><path d="M8 5v14l11-7z"/></svg> INICIAR JUEGO</button>
             <button class="btn-cerrar-modal" style="width: auto; background-color: transparent; border: 1px solid var(--ember);" onclick="salirJuego()">⬅ Volver a la Tienda</button>
@@ -615,15 +639,15 @@ body.modo-juego .pagina:not(#sec-game-stage) { visibility: hidden; }
             <div>Tiempo: <span id="mem-time">40</span></div>
             <div>Ronda: <span id="mem-ronda">1</span></div>
             <div>Récord: <span id="mem-record">1</span></div>
-            <button class="btn-accion" style="padding: 6px 12px; font-size: 0.85rem; margin: 0; background-color: var(--ember);" onclick="cobrarYSalir('memoria')">🚪 Salir</button>
+            <button class="btn-accion" style="padding: 8px 15px; font-size: 0.9rem; margin: 0; background-color: var(--ember); color: #fff !important;" onclick="cobrarYSalir('memoria')">🚪 Salir</button>
         </div>
         
-        <div class="memoria-tools"><span>Combo: <strong id="mem-combo" style="color:var(--pumpkin);">0</strong></span><span>Pistas: <strong id="mem-hints" style="color:var(--pumpkin);">2</strong></span><button type="button" class="btn-col" id="mem-hint-btn" onclick="usarPistaMemoria()" style="padding:6px 12px; font-size:0.8rem;">💡 Usar pista</button></div>
+        <div class="memoria-tools"><span>Combo: <strong id="mem-combo" style="color:var(--pumpkin);">0</strong></span><span>Pistas: <strong id="mem-hints" style="color:var(--pumpkin);">2</strong></span><button type="button" class="btn-col" id="mem-hint-btn" onclick="usarPistaMemoria()" style="padding:6px 12px; font-size:0.8rem; margin:0;">💡 Usar pista</button></div>
         <div class="memoria-grid" id="mem-board"></div>
 
         <div class="game-menu-overlay" id="menu-memoria">
             <h2 class="game-title">Memoria</h2>
-            <p class="game-rules">Encuentra los pares antes de que el tiempo acabe. Cada ronda el tablero crece. <strong>¡Busca la pareja mágica brillante para ganar +5 segundos!</strong></p>
+            <p class="game-rules">Encuentra los pares antes de que el tiempo acabe. <strong>¡Busca la pareja mágica brillante para ganar +5 segundos extra!</strong></p>
             <h3 style="color:var(--pumpkin); margin-bottom: 30px; font-size: 1.8rem;" id="mem-msg-fin"></h3>
             <button class="btn-accion" style="font-size: 1.5rem; padding: 15px 40px; margin-bottom: 20px;" onclick="startMemoria()"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" style="margin-right:8px; vertical-align:middle;"><path d="M8 5v14l11-7z"/></svg> INICIAR JUEGO</button>
             <button class="btn-cerrar-modal" style="width: auto; background-color: transparent; border: 1px solid var(--ember);" onclick="salirJuego()">⬅ Volver a la Tienda</button>
@@ -636,21 +660,22 @@ body.modo-juego .pagina:not(#sec-game-stage) { visibility: hidden; }
             <div>Tiempo: <span id="poc-time">30</span></div>
             <div>Pociones: <span id="poc-score">0</span></div>
             <div>Récord: <span id="poc-record">0</span></div>
-            <button class="btn-accion" style="padding: 6px 12px; font-size: 0.85rem; margin: 0; background-color: var(--ember);" onclick="cobrarYSalir('pociones')">🚪 Salir</button>
+            <button class="btn-accion" style="padding: 8px 15px; font-size: 0.9rem; margin: 0; background-color: var(--ember); color: #fff !important;" onclick="cobrarYSalir('pociones')">🚪 Salir</button>
         </div>
         
-        <div class="poc-receta-box" id="poc-receta-ui">...</div>
-        
-        <div class="poc-shelf" id="poc-shelf" aria-label="Ingredientes disponibles"></div>
-        
-        <div class="poc-progress-track">
-            <div class="poc-progress-fill" id="poc-bar"></div>
+        <div class="poc-wrap">
+          <div class="poc-receta-box" id="poc-receta-ui">...</div>
+          <div class="poc-shelf" id="poc-shelf" aria-label="Ingredientes disponibles"></div>
+          
+          <div class="poc-progress-track">
+              <div class="poc-progress-fill" id="poc-bar"></div>
+          </div>
+          <div class="poc-progress-text" id="poc-progress">Siguiente ingrediente especial: 10 pociones</div>
         </div>
-        <div class="poc-progress-text" id="poc-progress">Siguiente ingrediente especial: 10 pociones</div>
 
         <div class="game-menu-overlay" id="menu-pociones">
             <h2 class="game-title">Biteology</h2>
-            <p class="game-rules">Memoriza la receta y toca los ingredientes en el orden exacto. Cada poción suma tiempo extra. ¡Si fallas pierdes 3 segundos!</p>
+            <p class="game-rules">Memoriza la receta y toca los ingredientes en orden. <strong>2 pociones perfectas = 1 caramelo.</strong> ¡Si fallas pierdes 3 segundos!</p>
             <h3 style="color:var(--pumpkin); margin-bottom: 30px; font-size: 1.8rem;" id="poc-msg-fin"></h3>
             <button class="btn-accion" style="font-size: 1.5rem; padding: 15px 40px; margin-bottom: 20px;" onclick="startPociones()"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" style="margin-right:8px; vertical-align:middle;"><path d="M8 5v14l11-7z"/></svg> INICIAR JUEGO</button>
             <button class="btn-cerrar-modal" style="width: auto; background-color: transparent; border: 1px solid var(--ember);" onclick="salirJuego()">⬅ Volver a la Tienda</button>
@@ -841,6 +866,7 @@ const catalogo = {
   'amuleto-reloj': { icono: '⏳', nombre: 'Reloj Vampírico', desc: 'Reduce el tiempo de espera a 18 horas.', tipo: 'amuleto', precio: 120 }
 };
 
+/* LOGROS REBALANCEADOS (NERFEO) */
 const catalogoLogros = {
   'config': { icono: '⚙️', nombre: 'Curiosidad Monstruosa', desc: 'Abriste la configuración por primera vez.' },
   'noche': { icono: '🦇', nombre: 'Noctámbula', desc: 'Entraste a la tienda pasada la medianoche.' },
@@ -851,20 +877,20 @@ const catalogoLogros = {
   'dj': { icono: '🎛️', nombre: 'DJ Monstruoso', desc: 'Jugaste con los controles de audio 10 veces.' },
   'amor': { icono: '💖', nombre: 'Amor Incondicional', desc: 'El código de la fecha especial fue usado.' },
   'comprador': { icono: '🛍️', nombre: 'Comprador Compulsivo', desc: 'Gastaste tus primeros 100 dulces en la tienda.' },
-  'cata_cazafantasmas': { icono: '👻', nombre: 'Cazafantasmas', desc: 'Atrapa 10 fantasmas en una partida de Catacumbas.' },
-  'cata_cazador_maestro': { icono: '🏹', nombre: 'Cazador de Catacumbas', desc: 'Atrapa 30 fantasmas en una partida.' },
+  'cata_cazafantasmas': { icono: '👻', nombre: 'Cazafantasmas', desc: 'Atrapa 30 fantasmas en una partida.' },
+  'cata_cazador_maestro': { icono: '🏹', nombre: 'Cazador Experto', desc: 'Atrapa 60 fantasmas en una partida.' },
   'cata_skullette': { icono: '💀', nombre: 'Fortuna Maldita', desc: 'Activa el multiplicador de la Skullette.' },
-  'cata_combo': { icono: '⏳', nombre: 'Contra el Reloj', desc: 'Alcanza 20 puntos en Catacumbas.' },
-  'mem_primera_ronda': { icono: '🧠', nombre: 'Memoria Despierta', desc: 'Completa tu primera ronda de Memoria.' },
+  'cata_combo': { icono: '⏳', nombre: 'Contra el Reloj', desc: 'Alcanza 50 puntos en Catacumbas.' },
+  'mem_primera_ronda': { icono: '🧠', nombre: 'Memoria Despierta', desc: 'Alcanza la Ronda 3 de Memoria.' },
   'mem_perfecta': { icono: '🎯', nombre: 'Memoria Perfecta', desc: 'Completa una ronda sin errores.' },
   'mem_combo': { icono: '⚡', nombre: 'Racha Sobrenatural', desc: 'Encuentra cinco parejas consecutivas.' },
   'mem_ronda5': { icono: '🏆', nombre: 'Mente Monstruosa', desc: 'Alcanza la ronda 5 del modo infinito.' },
   'mem_ronda10': { icono: '🌌', nombre: 'Memoria Legendaria', desc: 'Alcanza la ronda 10 del modo infinito.' },
-  'poc_10': { icono: '🧪', nombre: 'Aprendiz de Brujería', desc: 'Prepara 10 pociones en una partida.' },
-  'poc_25': { icono: '⚗️', nombre: 'Maestro del Caldero', desc: 'Prepara 25 pociones en una partida.' },
-  'poc_ingrediente': { icono: '🍄', nombre: 'Coleccionista de Ingredientes', desc: 'Desbloquea un ingrediente durante una partida.' },
-  'poc_sin_errores': { icono: '✨', nombre: 'Alquimista Impecable', desc: 'Prepara cinco pociones seguidas sin fallar.' },
-  'poc_50': { icono: '🔮', nombre: 'Gran Alquimista', desc: 'Acumula 50 pociones en una partida.' }
+  'poc_10': { icono: '🧪', nombre: 'Aprendiz de Brujería', desc: 'Prepara 30 pociones en una partida.' },
+  'poc_25': { icono: '⚗️', nombre: 'Maestro del Caldero', desc: 'Prepara 75 pociones en una partida.' },
+  'poc_ingrediente': { icono: '🍄', nombre: 'Coleccionista de Ingredientes', desc: 'Desbloquea todos los ingredientes ocultos.' },
+  'poc_sin_errores': { icono: '✨', nombre: 'Alquimista Impecable', desc: 'Prepara 15 pociones seguidas sin fallar.' },
+  'poc_50': { icono: '🔮', nombre: 'Gran Alquimista', desc: 'Acumula 100 pociones en una partida.' }
 };
 
 const catalogoPistas = {
@@ -919,68 +945,122 @@ const recompensasDiarias = [
 ];
 
 // ========================================================
-// 4. NUEVO SISTEMA DE AUDIO PROFESIONAL
+// 4. NUEVO SISTEMA DE AUDIO PROFESIONAL (WEB AUDIO API)
+// Evita notificaciones fantasma en móviles y desincronización
 // ========================================================
-const sfxBases = {
-    'musica': { src: 'musica.mp3', vol: 0.15, audio: new Audio('musica.mp3') },
-    'comprar': { src: 'comprar.mp3', vol: 0.7, audio: new Audio('comprar.mp3') },
-    'ataudIn': { src: 'entrarataud.mp3', vol: 1.0, audio: new Audio('entrarataud.mp3') },
-    'ataudOut': { src: 'salirataud.mp3', vol: 1.0, audio: new Audio('salirataud.mp3') },
-    'ataudPremio': { src: 'recompensaataud.mp3', vol: 1.0, audio: new Audio('recompensaataud.mp3') },
-    'juego': { src: 'entrarjuego.mp3', vol: 0.7, audio: new Audio('entrarjuego.mp3') },
-    'logro': { src: 'logro.mp3', vol: 0.7, audio: new Audio('logro.mp3') },
-    'ticket': { src: 'ticketuse.mp3', vol: 1.0, audio: new Audio('ticketuse.mp3') },
-    'cod1': { src: 'codigo1.mp3', vol: 1.0, audio: new Audio('codigo1.mp3') },
-    'cod2': { src: 'codigo2.mp3', vol: 1.0, audio: new Audio('codigo2.mp3') },
-    'cod3': { src: 'codigo3.mp3', vol: 1.0, audio: new Audio('codigo3.mp3') },
-    'exito': { src: 'exito.mp3', vol: 0.5, audio: new Audio('exito.mp3') },
-    'error': { src: 'error.mp3', vol: 0.5, audio: new Audio('error.mp3') }
-};
-
-Object.values(sfxBases).forEach(s => { s.audio.loop = false; });
-sfxBases['musica'].audio.loop = true;
-
 let masterMusica = 0.5;
 let masterSfx = 0.5;
 let sfxMuted = true;
 let musicaMuted = true;
 
-function playSfx(id) {
-    if (sfxMuted || masterSfx <= 0 || !id) return;
-    let s = sfxBases[id] || sfxBases['exito'];
-    s.audio.volume = Math.min(1.0, masterSfx * s.vol);
-    s.audio.currentTime = 0;
-    s.audio.play().catch(e=>console.log(e));
-}
-
-let fadeInterval = null;
-function fadeMusica(targetVolMultiplier, durationMs, pauseAtEnd = false) {
-    let audio = sfxBases['musica'].audio;
-    if(!audio || audio.muted || masterMusica <= 0) {
-         if(pauseAtEnd && audio) audio.pause();
-         return;
+class BooSoundEngine {
+    constructor() {
+        this.sfxPaths = {
+            'comprar': 'comprar.mp3', 'ataudIn': 'entrarataud.mp3', 'ataudOut': 'salirataud.mp3',
+            'ataudPremio': 'recompensaataud.mp3', 'juego': 'entrarjuego.mp3', 'logro': 'logro.mp3',
+            'ticket': 'ticketuse.mp3', 'cod1': 'codigo1.mp3', 'cod2': 'codigo2.mp3', 'cod3': 'codigo3.mp3',
+            'exito': 'exito.mp3', 'error': 'error.mp3'
+        };
+        this.musicPath = 'musica.mp3';
+        this.ctx = null;
+        this.buffers = {};
+        this.htmlFallback = {}; 
+        this.musicGain = null;
+        this.musicSource = null;
+        this.musicHtmlFallback = new Audio('musica.mp3');
+        this.musicHtmlFallback.loop = true;
+        this.initialized = false;
+        this.useWebAudio = false;
     }
-    let startVol = audio.volume;
-    let endVol = Math.min(1.0, masterMusica * sfxBases['musica'].vol * targetVolMultiplier);
-    let steps = 20;
-    let stepTime = durationMs / steps;
-    let stepVol = (endVol - startVol) / steps;
-    
-    if(fadeInterval) clearInterval(fadeInterval);
-    if(audio.paused && endVol > 0) audio.play().catch(e=>console.log(e));
 
-    let currentStep = 0;
-    fadeInterval = setInterval(() => {
-        currentStep++;
-        let newVol = startVol + (stepVol * currentStep);
-        audio.volume = Math.max(0, Math.min(1, newVol));
-        if(currentStep >= steps) {
-            clearInterval(fadeInterval);
-            audio.volume = endVol;
-            if(pauseAtEnd) audio.pause();
+    async init() {
+        if(this.initialized) return;
+        try {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            this.ctx = new AudioContext();
+            this.useWebAudio = true;
+            
+            const loadBuffer = async (id, url) => {
+                try {
+                    const res = await fetch(url);
+                    const buf = await res.arrayBuffer();
+                    this.buffers[id] = await this.ctx.decodeAudioData(buf);
+                } catch(e) { this.htmlFallback[id] = new Audio(url); } // Si fetch falla (ej. red local), fallback
+            };
+            
+            let promises = Object.keys(this.sfxPaths).map(k => loadBuffer(k, this.sfxPaths[k]));
+            promises.push(loadBuffer('musica', this.musicPath));
+            await Promise.all(promises);
+            this.initialized = true;
+        } catch(e) {
+            // Falla total de Web Audio, usar HTML5 clásico
+            Object.keys(this.sfxPaths).forEach(k => { this.htmlFallback[k] = new Audio(this.sfxPaths[k]); });
+            this.useWebAudio = false;
+            this.initialized = true;
         }
-    }, stepTime);
+    }
+
+    playSfx(id, volRaw = 1.0) {
+        if(sfxMuted || masterSfx <= 0) return;
+        const volFinal = masterSfx * volRaw;
+        
+        if(this.useWebAudio && this.buffers[id]) {
+            if(this.ctx.state === 'suspended') this.ctx.resume();
+            const source = this.ctx.createBufferSource();
+            source.buffer = this.buffers[id];
+            const gain = this.ctx.createGain();
+            gain.gain.value = volFinal;
+            source.connect(gain);
+            gain.connect(this.ctx.destination);
+            source.start();
+        } else if(this.htmlFallback[id]) {
+            this.htmlFallback[id].volume = Math.min(1.0, volFinal);
+            this.htmlFallback[id].currentTime = 0;
+            this.htmlFallback[id].play().catch(()=>{});
+        }
+    }
+
+    playMusic() {
+        if(musicaMuted || masterMusica <= 0) return;
+        const volFinal = masterMusica * 0.15; // Volumen base de la música
+        
+        if(this.useWebAudio && this.buffers['musica']) {
+            if(this.ctx.state === 'suspended') this.ctx.resume();
+            if(this.musicSource) this.musicSource.stop();
+            this.musicSource = this.ctx.createBufferSource();
+            this.musicSource.buffer = this.buffers['musica'];
+            this.musicSource.loop = true;
+            this.musicGain = this.ctx.createGain();
+            this.musicGain.gain.value = volFinal;
+            this.musicSource.connect(this.musicGain);
+            this.musicGain.connect(this.ctx.destination);
+            this.musicSource.start();
+        } else {
+            this.musicHtmlFallback.volume = Math.min(1.0, volFinal);
+            this.musicHtmlFallback.play().catch(()=>{});
+        }
+    }
+
+    stopMusic() {
+        if(this.musicSource) { this.musicSource.stop(); this.musicSource = null; }
+        this.musicHtmlFallback.pause();
+    }
+
+    fadeMusic(multiplier, durationMs) {
+        const volFinal = masterMusica * 0.15 * multiplier;
+        if(this.useWebAudio && this.musicGain) {
+            const now = this.ctx.currentTime;
+            this.musicGain.gain.cancelScheduledValues(now);
+            this.musicGain.gain.linearRampToValueAtTime(volFinal, now + (durationMs / 1000));
+        } else {
+            this.musicHtmlFallback.volume = Math.min(1.0, volFinal);
+        }
+    }
 }
+const SE = new BooSoundEngine();
+
+function playSfx(id) { SE.playSfx(id, (id==='comprar'||id==='juego'||id==='logro') ? 0.7 : 1.0); }
+function fadeMusica(multiplier, ms) { SE.fadeMusic(multiplier, ms); }
 
 // ========================================================
 // 3. SINCRONIZACIÓN FIREBASE Y UI
@@ -1045,8 +1125,11 @@ function iniciarApp() {
     splash.style.pointerEvents = 'none'; splash.style.opacity = '0';
     setTimeout(() => { splash.style.display = 'none'; }, 1500);
     
-    sfxBases['musica'].audio.volume = 0;
-    fadeMusica(1.0, 2000);
+    SE.init().then(() => {
+        SE.playMusic();
+        fadeMusica(0, 0); // Empieza en 0
+        setTimeout(() => fadeMusica(1.0, 2000), 100);
+    });
 }
 
 function toggleMuteMusica() {
@@ -1054,16 +1137,15 @@ function toggleMuteMusica() {
     let vol = parseFloat(document.getElementById('vol-musica').value); 
     if(!musicaMuted && vol === 0) { document.getElementById('vol-musica').value = 0.5; masterMusica = 0.5; }
     document.getElementById('btn-mute-musica').textContent = musicaMuted ? '🔇' : '🔊'; 
-    sfxBases['musica'].audio.muted = musicaMuted;
-    if(!musicaMuted) sfxBases['musica'].audio.play().catch(e=>console.log(e)); 
+    if(musicaMuted) SE.stopMusic(); else SE.playMusic();
     guardarDatos();
 }
 
 function cambiarVolumenMusica(valor) { 
     masterMusica = parseFloat(valor);
     if (musicaMuted && masterMusica > 0) toggleMuteMusica(); 
-    sfxBases['musica'].audio.volume = Math.min(1.0, masterMusica * sfxBases['musica'].vol);
-    if (masterMusica > 0 && sfxBases['musica'].audio.paused) sfxBases['musica'].audio.play().catch(e=>console.log(e)); 
+    if (!musicaMuted && masterMusica > 0 && !SE.musicSource && SE.musicHtmlFallback.paused) SE.playMusic();
+    fadeMusica(1.0, 100);
     vueltasDJ++; if(vueltasDJ >= 10 && !logros.includes('dj')) checkLogro('dj');
     guardarDatos();
 }
@@ -1085,12 +1167,9 @@ function cambiarVolumenSfx(valor) {
 }
 
 document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "hidden") { sfxBases['musica'].audio.pause(); } 
-    else { if (!musicaMuted && masterMusica > 0) sfxBases['musica'].audio.play().catch(e=>console.log(e)); }
+    if (document.visibilityState === "hidden") { SE.stopMusic(); } 
+    else { if (!musicaMuted && masterMusica > 0 && !juegoEnProgreso) SE.playMusic(); }
 });
-window.addEventListener('pagehide', () => sfxBases['musica'].audio.pause());
-window.addEventListener('blur', () => sfxBases['musica'].audio.pause());
-window.addEventListener('focus', () => { if (!musicaMuted && masterMusica > 0 && document.visibilityState !== "hidden") sfxBases['musica'].audio.play().catch(e=>console.log(e)); });
 
 // ========================================================
 // 5. DATOS GLOBALES Y LOGROS
@@ -1402,7 +1481,7 @@ function renderizarColeccionYLogros() {
 }
 
 // ========================================================
-// 8. DIARIO Y CÓDIGOS (ANTI-ADIVINACIÓN Y ADMIN)
+// 8. DIARIO Y CÓDIGOS
 // ========================================================
 function abrirDiario() {
   fadeMusica(0.3, 1000);
@@ -1537,7 +1616,7 @@ function reclamarHalloween() {
 }
 
 // ========================================================
-// 10. ANIMACIONES Y SISTEMA ANTI-LAG (DISTRIBUCIÓN ZONAL)
+// 10. ANIMACIONES ZONALES
 // ========================================================
 function abrirAjustes() { checkLogro('config'); document.getElementById('modal-ajustes').classList.add('activo'); }
 function cerrarAjustes() { document.getElementById('modal-ajustes').classList.remove('activo'); }
@@ -1545,7 +1624,7 @@ function actualizarAnimacionInicio() { const batsClasicos = document.getElementB
 
 setInterval(() => {
     if(temaActivo === 'tema-default') return;
-    if(document.getElementById('sec-game-stage').classList.contains('activa')) return; // Pausar partículas en juegos
+    if(document.getElementById('sec-game-stage').classList.contains('activa')) return; 
     
     let isMobile = window.innerWidth <= 850;
     if (isMobile && temaActivo !== 'tema-batman' && Math.random() > 0.5) return; 
@@ -1705,7 +1784,7 @@ function iniciarTransicionJuego(idJuego) {
     juegoEnProgreso = true;
     revelarPista('pista_magia'); 
     
-    fadeMusica(0.0, 1000, true);
+    fadeMusica(0.0, 1000);
     playSfx('juego'); 
     const overlay = document.getElementById('fade-overlay'); overlay.style.opacity = '1';
     
@@ -1714,7 +1793,7 @@ function iniciarTransicionJuego(idJuego) {
     setTimeout(() => {
         cambiarPagina('sec-game-stage');
         document.querySelectorAll('.game-container').forEach(c => c.style.display = 'none');
-        document.getElementById('gc-' + idJuego).style.display = 'block';
+        document.getElementById('gc-' + idJuego).style.display = 'flex'; // Usar Flexbox para centrado
         
         document.getElementById('menu-' + idJuego).style.display = 'flex';
         document.getElementById(idJuego === 'catacumbas' ? 'cata-msg-fin' : (idJuego === 'memoria' ? 'mem-msg-fin' : 'poc-msg-fin')).textContent = '';
@@ -1741,11 +1820,9 @@ function salirJuego() {
         document.querySelectorAll('.game-container').forEach(c => c.style.display = 'none');
         document.querySelectorAll('.game-menu-overlay').forEach(m => m.style.display = 'flex');
         document.getElementById('cata-skullette')?.classList.remove('visible','active-power');
-        if(!musicaMuted && document.getElementById('vol-musica').value > 0) {
-            sfxBases['musica'].audio.volume = 0;
-            sfxBases['musica'].audio.play().catch(e=>console.log(e));
-            fadeMusica(1.0, 1000);
-        }
+        
+        if(!musicaMuted && masterMusica > 0) { fadeMusica(1.0, 1000); }
+        
         cambiarPagina('sec-juegos');
         overlay.style.opacity = '0';
     }, 650);
@@ -1773,28 +1850,28 @@ function finJuegoGuardar(idJuego, scoreLogico, textoMostrar) {
     if(idJuego === 'catacumbas') {
         dulcesGanados = Math.floor(scoreLogico / 10);
         if(scoreLogico > records.catacumbas) { records.catacumbas = scoreLogico; recordRoto = true; }
-        if(cataGhostsCaught >= 10) checkLogro('cata_cazafantasmas');
-        if(cataGhostsCaught >= 30) checkLogro('cata_cazador_maestro');
+        if(cataGhostsCaught >= 30) checkLogro('cata_cazafantasmas');
+        if(cataGhostsCaught >= 60) checkLogro('cata_cazador_maestro');
         if(cataSkulletteUsed) checkLogro('cata_skullette');
-        if(scoreLogico >= 20) checkLogro('cata_combo');
+        if(scoreLogico >= 50) checkLogro('cata_combo');
     }
     if(idJuego === 'memoria') {
         dulcesGanados = Math.max(0, scoreLogico) * 5;
         if(scoreLogico > records.memoria) { records.memoria = scoreLogico; recordRoto = true; }
-        if(memRonda > 1) checkLogro('mem_primera_ronda');
+        if(memRonda > 2) checkLogro('mem_primera_ronda');
         if(memRoundPerfectAchieved) checkLogro('mem_perfecta');
         if(memBestCombo >= 5) checkLogro('mem_combo');
         if(scoreLogico >= 5) checkLogro('mem_ronda5');
         if(scoreLogico >= 10) checkLogro('mem_ronda10');
     }
     if(idJuego === 'pociones') {
-        dulcesGanados = scoreLogico * 2;
+        dulcesGanados = Math.floor(scoreLogico / 2); // 2 pociones = 1 caramelo
         if(scoreLogico > records.pociones) { records.pociones = scoreLogico; recordRoto = true; }
-        if(pocScore >= 10) checkLogro('poc_10');
-        if(pocScore >= 25) checkLogro('poc_25');
-        if(pocIngsUnlocked > 5) checkLogro('poc_ingrediente');
-        if(pocBestStreak >= 5) checkLogro('poc_sin_errores');
-        if(pocScore >= 50) checkLogro('poc_50');
+        if(pocScore >= 30) checkLogro('poc_10');
+        if(pocScore >= 75) checkLogro('poc_25');
+        if(pocIngsUnlocked >= pocAllIngs.length) checkLogro('poc_ingrediente');
+        if(pocBestStreak >= 15) checkLogro('poc_sin_errores');
+        if(pocScore >= 100) checkLogro('poc_50');
     }
     
     const baseWin = agregarDulces(dulcesGanados);
@@ -1837,11 +1914,12 @@ function spawnCata() {
     cells[nextIdx].innerHTML = isSkull ? '☠️' : '👻';
     cells[nextIdx].classList.add(isSkull ? 'has-skull' : 'has-ghost');
     
-    cataSpeed = Math.max(450, 1000 - (cataScore * 12));
+    // Suavizamos el límite máximo de velocidad para que no sea inclickeable
+    cataSpeed = Math.max(550, 1000 - (cataScore * 8)); 
     cataSpawnTimeout = setTimeout(spawnCata, cataSpeed);
 }
 function clickCata(cell) {
-    if (partidaFinalizada || !juegoEnProgreso && !document.body.classList.contains('modo-juego') || !cell.innerHTML) return;
+    if (partidaFinalizada || (!juegoEnProgreso && !document.body.classList.contains('modo-juego')) || !cell.innerHTML) return;
     if(cell.innerHTML === '👻') {
         playSfx('comprar'); cataGhostsCaught++;
         const pts = cataMultiplierActive ? 2 : 1, secs = cataMultiplierActive ? 2 : 1;
@@ -1855,26 +1933,40 @@ function clickCata(cell) {
 }
 function scheduleCataSkullette() {
     if (partidaFinalizada || cataTime <= 0) return;
-    const delay = 6500 + Math.random() * 6500;
+    const delay = 10000 + Math.random() * 8000; // Más rara
     cataSkulletteTimeout = setTimeout(() => {
         if (partidaFinalizada || cataTime <= 0) return;
         const skull = document.getElementById('cata-skullette');
         skull.classList.add('visible');
-        const note = document.getElementById('cata-skullette-note'); if(note) note.classList.add('visible');
-        cataSkulletteTimeout = setTimeout(() => { skull.classList.remove('visible'); if(note) note.classList.remove('visible'); scheduleCataSkullette(); }, 4200);
+        cataSkulletteTimeout = setTimeout(() => { skull.classList.remove('visible'); scheduleCataSkullette(); }, 3500);
     }, delay);
 }
 function activarSkullette() {
     if (partidaFinalizada || cataTime <= 0) return;
     const skull = document.getElementById('cata-skullette');
     if (!skull.classList.contains('visible')) return;
+    
     skull.classList.remove('visible'); skull.classList.add('active-power');
-    const note = document.getElementById('cata-skullette-note'); if(note) { note.classList.add('visible'); note.textContent = '×2 ACTIVADO · 10 s'; }
     cataSkulletteUsed = true; cataMultiplierActive = true; playSfx('exito');
+    
+    // Animación Gigante X2
+    const animX2 = document.getElementById('cata-x2-anim');
+    animX2.classList.remove('show');
+    void animX2.offsetWidth; // Force reflow
+    animX2.classList.add('show');
+    
     if(cataPowerTimeout) clearTimeout(cataPowerTimeout);
-    cataPowerTimeout = setTimeout(() => { cataMultiplierActive = false; skull.classList.remove('active-power'); if(note) { note.classList.remove('visible'); note.textContent = '¡Skullette! ×2 por 10 s'; } }, 10000);
+    cataPowerTimeout = setTimeout(() => { cataMultiplierActive = false; skull.classList.remove('active-power'); }, 10000);
     scheduleCataSkullette();
 }
+
+// Escuchar barra espaciadora para la Skullette
+window.addEventListener('keydown', (e) => {
+    if(e.code === 'Space' && document.getElementById('gc-catacumbas').style.display === 'flex' && !partidaFinalizada) {
+        e.preventDefault();
+        activarSkullette();
+    }
+});
 
 /* 2. LÓGICA: MEMORIA MONSTRUOSA */
 const emojisMem = ['🦇', '🕸️', '🕷️', '🧛', '🖤', '💀', '🎃', '🧟', '🧪', '🔮'];
@@ -1910,7 +2002,8 @@ function generarTableroMemoria() {
         const c = document.createElement('button'); c.type = 'button'; c.className = 'mem-card'; c.dataset.val = emoji;
         if(emoji === magicEmoji) c.classList.add('magic-pair');
         c.setAttribute('aria-label','Carta de memoria');
-        c.innerHTML = `<div class="front">${emoji}</div><div class="back">❓</div>`;
+        // Arquitectura 3D Restaurada con emojis
+        c.innerHTML = `<div class="back">❓</div><div class="front">${emoji}</div>`;
         c.onclick = () => flipMem(c); board.appendChild(c);
     });
 }
@@ -1948,6 +2041,7 @@ function usarPistaMemoria() {
     lockBoard = true;
     setTimeout(() => { pair.slice(0,2).forEach(c => c.classList.remove('flipped')); lockBoard = false; }, 850);
 }
+
 function checkWinMem() {
     const paresRequeridos = Math.min(6 + memRonda - 1, 10);
     if(paresEncontrados >= paresRequeridos) {
@@ -1988,7 +2082,7 @@ function renderIngredientesPociones() {
 }
 function generarRecetaPocion() {
     if(partidaFinalizada) return;
-    const len = pocScore < 3 ? 3 : (pocScore < 8 ? 4 : (pocScore < 18 ? 5 : 6));
+    const len = pocScore < 5 ? 3 : (pocScore < 15 ? 4 : (pocScore < 30 ? 5 : 6));
     currentRecipe = []; currentStep = 0;
     for(let i=0; i<len; i++) currentRecipe.push(pocIngs[Math.floor(Math.random()*pocIngs.length)]);
     renderReceta();
@@ -1997,9 +2091,14 @@ function renderReceta() {
     const box = document.getElementById('poc-receta-ui'); box.className = 'poc-receta-box';
     let html = '';
     currentRecipe.forEach((ing, i) => {
-        if(i < currentStep) html += `<span style="opacity:.3">${ing}</span>`;
-        else if(i === currentStep) html += `<span style="color:var(--pumpkin);border-bottom:3px solid var(--pumpkin);padding-bottom:4px">${ing}</span>`;
-        else html += `<span>${ing}</span>`;
+        let active = i === currentStep;
+        let solved = i < currentStep;
+        
+        // Punto centrado matemáticamente debajo del ingrediente
+        html += `<div class="poc-slot ${active ? 'active' : ''} ${solved ? 'solved' : ''}">
+                    <span class="poc-slot-emoji">${ing}</span>
+                    <div class="poc-dot"></div>
+                 </div>`;
     });
     box.innerHTML = html;
 }
@@ -2009,7 +2108,7 @@ function clickIngrediente(ing) {
     if(ing === currentRecipe[currentStep]) {
         playSfx('comprar'); currentStep++;
         if(currentStep >= currentRecipe.length) {
-            pocScore++; pocTime += Math.floor(Math.random() * 2) + 2; 
+            pocScore++; pocTime += Math.floor(Math.random() * 2) + 2; // +2 o +3 segundos (balanceado)
             pocCurrentStreak++; pocBestStreak = Math.max(pocBestStreak, pocCurrentStreak);
             document.getElementById('poc-score').textContent = pocScore; document.getElementById('poc-time').textContent = pocTime;
             
@@ -2019,7 +2118,6 @@ function clickIngrediente(ing) {
             const newMilestone = Math.floor(pocScore / 10);
             if(newMilestone > pocRewardMilestone) {
                 pocRewardMilestone = newMilestone;
-                agregarDulces(5); guardarDatos(); playSfx('ataudPremio');
                 if(pocIngsUnlocked < pocAllIngs.length) {
                     pocIngsUnlocked = Math.min(pocAllIngs.length, 5 + newMilestone);
                     pocIngs = pocAllIngs.slice(0, pocIngsUnlocked); renderIngredientesPociones();
@@ -2050,7 +2148,6 @@ function cambiarPagina(idPagina) {
 }
 
 document.addEventListener('touchmove', function(e) { if (document.body.classList.contains('modo-juego') && !e.target.closest('.cata-cell, .mem-card, .poc-ing, button')) e.preventDefault(); }, { passive:false });
-window.addEventListener('keydown', function(e) { if (document.body.classList.contains('modo-juego') && (e.key === 'Escape' || e.key === 'Backspace')) { e.preventDefault(); } });
 
 (function(){
   let ticking = false;
