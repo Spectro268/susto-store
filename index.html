@@ -425,6 +425,37 @@ body.modo-juego .pagina:not(#sec-game-stage) { display: none !important; }
   .poc-progress-track { margin-top: 15px; }
 }
 
+
+/* ===== PARCHE v3 ===== */
+@media (max-width:850px){ .btn-icono.tuerca{ margin:0 -9px 0 0; padding:0; } }
+.game-container{ justify-content:center !important; gap:clamp(12px,3dvh,24px); }
+.cata-board-wrap, .memoria-grid, .poc-wrap{ margin:0 auto !important; }
+.grid-ataud{ padding:18px 22px 24px; scroll-padding:0 22px; }
+.cata-board-wrap, .cata-grid, .memoria-grid, .poc-wrap{ transform:translateZ(0); will-change:transform; }
+#sec-game-stage{ backdrop-filter:none !important; -webkit-backdrop-filter:none !important; }
+.cata-lives{ display:flex; gap:6px; justify-content:center; font-size:1.6rem; min-height:2rem; }
+.cata-lives .off{ filter:grayscale(1); opacity:.25; }
+.cata-skullette{ position:fixed !important; top:auto !important; left:50% !important; bottom:calc(env(safe-area-inset-bottom,0px) + 7dvh) !important; transform:translateX(-50%) !important; animation:none !important; z-index:600; }
+#cata-x2-anim{ position:fixed !important; top:50%; left:50%; transform:translate(-50%,-50%); font-size:clamp(6rem,28vw,14rem); font-weight:900; color:var(--pumpkin); text-shadow:0 0 40px var(--pumpkin),0 0 90px var(--glow); opacity:0; pointer-events:none; z-index:700; transition:none; }
+#cata-x2-anim.show{ animation:holo 1.4s ease-out forwards; }
+@keyframes holo{ 0%{opacity:0;transform:translate(-50%,-50%) scale(.6)} 20%{opacity:.9;transform:translate(-50%,-50%) scale(1)} 100%{opacity:0;transform:translate(-50%,-50%) scale(1.15)} }
+@keyframes hitShake{ 0%,100%{transform:translateX(0)} 25%{transform:translateX(-10px)} 50%{transform:translateX(10px)} 75%{transform:translateX(-6px)} }
+@keyframes flashOut{ from{opacity:1} to{opacity:0} }
+#gc-catacumbas.hit .cata-grid{ animation:hitShake .35s; }
+#gc-catacumbas.hit::after{ content:""; position:fixed; inset:0; pointer-events:none; z-index:650; box-shadow:inset 0 0 90px 12px rgba(255,0,0,.6); animation:flashOut .45s forwards; }
+.memoria-tools{ margin:28px auto 26px; }
+.mem-card{ transition:transform .25s; }
+.mem-card .front, .mem-card .back{ -webkit-backface-visibility:hidden; backface-visibility:hidden; }
+.mem-card.magic-pair .front{ background:var(--glow); border-color:var(--pumpkin); box-shadow:0 0 18px 4px var(--pumpkin), inset 0 0 14px var(--pumpkin); }
+#mem-combo{ display:inline-block; }
+#mem-combo.combo-hot{ color:#fff; text-shadow:0 0 10px var(--pumpkin),0 0 24px var(--pumpkin); animation:comboShake .4s; }
+@keyframes comboShake{ 0%,100%{transform:scale(1) rotate(0)} 20%{transform:scale(1.5) rotate(-8deg)} 40%{transform:scale(1.4) rotate(8deg)} 60%{transform:scale(1.5) rotate(-5deg)} 80%{transform:scale(1.3) rotate(5deg)} }
+.poc-wrap{ padding:28px 16px; }
+.poc-receta-box{ letter-spacing:0; gap:6px 16px; margin-bottom:24px; }
+.r-ing{ display:inline-block; opacity:.75; transition:all .25s; }
+.r-ing.active{ opacity:1; transform:scale(1.35); margin:0 6px; filter:drop-shadow(0 0 12px var(--pumpkin)) drop-shadow(0 0 4px var(--pumpkin)); }
+.r-ing.done{ opacity:.25; transform:scale(.8); }
+
 </style>
 </head>
 <body>
@@ -572,7 +603,7 @@ body.modo-juego .pagina:not(#sec-game-stage) { display: none !important; }
   <p class="sub">Juega para ganar dulces mágicos y desbloquear sorpresas.</p>
   <div class="grid">
     <article class="item">
-      <span class="e">👻</span><h3>Catacumbas</h3>
+      <span class="e">👻</span><h3>Cazafantasmas</h3>
       <p>Atrapa a los espíritus traviesos del instituto antes de que escapen.</p>
       <button class="btn-accion btn-jugar" onclick="iniciarTransicionJuego('catacumbas')"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="margin-right:6px; vertical-align:middle;"><path d="M8 5v14l11-7z"/></svg> Jugar Arcade</button>
     </article>
@@ -597,27 +628,22 @@ body.modo-juego .pagina:not(#sec-game-stage) { display: none !important; }
     <!-- JUEGO 1: CATACUMBAS -->
     <div id="gc-catacumbas" class="game-container">
         <div class="game-hud">
-            <div>Tiempo: <span id="cata-time">30</span></div>
+            <div>Tiempo: <span id="cata-time">15</span></div>
             <div>Score: <span id="cata-score">0</span></div>
             <div>Récord: <span id="cata-record">0</span></div>
             <button class="btn-accion" style="padding: 8px 15px; font-size: 0.9rem; margin: 0; background-color: var(--ember); color: #fff !important;" onclick="cobrarYSalir('catacumbas')">🚪 Salir</button>
         </div>
-        
+        <div class="cata-lives" id="cata-lives"></div>
         <div class="cata-board-wrap">
-          <div id="cata-x2-anim">X2</div>
-          <div class="cata-grid" id="cata-board">
-            <div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div>
-            <div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div>
-            <div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div>
-          </div>
-          <button type="button" class="cata-skullette" id="cata-skullette" aria-label="Activar multiplicador x2" onclick="activarSkullette()"><img src="logo.png" alt="Skullette especial"></button>
+          <div class="cata-grid" id="cata-board"><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div></div>
         </div>
-
+        <div id="cata-x2-anim">X2</div>
+        <button type="button" class="cata-skullette" id="cata-skullette" aria-label="Activar multiplicador x2" onpointerdown="event.stopPropagation()" onclick="event.stopPropagation();activarSkullette()"><img src="logo.png" alt="Skullette especial"></button>
         <div class="game-menu-overlay" id="menu-catacumbas">
-            <h2 class="game-title">Catacumbas</h2>
-            <p class="game-rules">Toca a los fantasmas (👻) rápido para sumar puntos. ¡Cuidado con las calaveras (☠️), restan 3 segundos! <em>(PC: Usa la Barra Espaciadora para activar la Skullette).</em></p>
+            <h2 class="game-title">Cazafantasmas</h2>
+            <p class="game-rules">Toca los fantasmas (👻) para sumar puntos y +1s (máx. 15s). Las calaveras (☠️) te quitan 1 de tus 5 vidas. <em>(PC: Barra Espaciadora activa la Skullette).</em></p>
             <h3 style="color:var(--pumpkin); margin-bottom: 30px; font-size: 1.8rem;" id="cata-msg-fin"></h3>
-            <button class="btn-accion" style="font-size: 1.5rem; padding: 15px 40px; margin-bottom: 20px;" onclick="startCatacumbas()"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" style="margin-right:8px; vertical-align:middle;"><path d="M8 5v14l11-7z"/></svg> INICIAR JUEGO</button>
+            <button class="btn-accion" style="font-size: 1.5rem; padding: 15px 40px; margin-bottom: 20px;" onclick="startCatacumbas()">INICIAR JUEGO</button>
             <button class="btn-cerrar-modal" style="width: auto; background-color: transparent; border: 1px solid var(--ember);" onclick="salirJuego()">⬅ Volver a la Tienda</button>
         </div>
     </div>
@@ -869,7 +895,7 @@ const catalogoLogros = {
   'cata_cazafantasmas': { icono: '👻', nombre: 'Cazafantasmas', desc: 'Atrapa 30 fantasmas en una partida.' },
   'cata_cazador_maestro': { icono: '🏹', nombre: 'Cazador Experto', desc: 'Atrapa 60 fantasmas en una partida.' },
   'cata_skullette': { icono: '💀', nombre: 'Fortuna Maldita', desc: 'Activa el multiplicador de la Skullette.' },
-  'cata_combo': { icono: '⏳', nombre: 'Contra el Reloj', desc: 'Alcanza 50 puntos en Catacumbas.' },
+  'cata_combo': { icono: '⏳', nombre: 'Contra el Reloj', desc: 'Alcanza 50 puntos en Cazafantasmas.' },
   'mem_primera_ronda': { icono: '🧠', nombre: 'Memoria Despierta', desc: 'Alcanza la Ronda 3 de Memoria.' },
   'mem_perfecta': { icono: '🎯', nombre: 'Memoria Perfecta', desc: 'Completa una ronda sin errores.' },
   'mem_combo': { icono: '⚡', nombre: 'Racha Sobrenatural', desc: 'Encuentra cinco parejas consecutivas.' },
@@ -953,8 +979,8 @@ class BooSoundEngine {
         this.musicPaths = {
             'menu': 'musica.mp3',
             'catacumbas': 'Ghostbusters.mp3',
-            'memoria': 'Monster.mp3',
-            'pociones': 'Lonbon.mp3'
+            'memoria': 'monster.mp3',
+            'pociones': 'Loonboon.mp3'
         };
         this.ctx = null;
         this.buffers = {};
@@ -962,13 +988,7 @@ class BooSoundEngine {
         this.musicGain = null;
         this.musicSource = null;
         
-        this.musicHtmlFallback = {
-            'menu': new Audio('musica.mp3'),
-            'catacumbas': new Audio('Ghostbusters.mp3'),
-            'memoria': new Audio('Monster.mp3'),
-            'pociones': new Audio('Lonbon.mp3')
-        };
-        Object.values(this.musicHtmlFallback).forEach(a => { a.loop = true; });
+        this.musicHtmlFallback = {};
         
         this.currentMusicId = 'menu';
         this.initialized = false;
@@ -990,7 +1010,7 @@ class BooSoundEngine {
                     this.buffers[id] = await this.ctx.decodeAudioData(buf);
                 } catch(e) { 
                     console.warn(`Audio no encontrado o error de red: ${url}. Se usará respaldo HTML5.`); 
-                    this.htmlFallback[id] = new Audio(url); 
+                    this.htmlFallback[id] = new Audio(url); if (this.musicPaths[id]) { const a = new Audio(url); a.loop = true; this.musicHtmlFallback[id] = a; } 
                 } 
             };
             
@@ -1154,7 +1174,7 @@ function toggleMuteMusica() {
 function cambiarVolumenMusica(valor) { 
     masterMusica = parseFloat(valor);
     if (musicaMuted && masterMusica > 0) toggleMuteMusica(); 
-    if (!musicaMuted && masterMusica > 0 && !SE.musicSource && SE.musicHtmlFallback[SE.currentMusicId].paused) SE.playMusic();
+    if (!musicaMuted && masterMusica > 0 && !SE.musicSource && (!SE.musicHtmlFallback[SE.currentMusicId] || SE.musicHtmlFallback[SE.currentMusicId].paused)) SE.playMusic();
     fadeMusica(1.0, 100);
     vueltasDJ++; if(vueltasDJ >= 10 && !logros.includes('dj')) checkLogro('dj');
     guardarDatos();
@@ -1177,9 +1197,10 @@ function cambiarVolumenSfx(valor) {
 }
 
 document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "hidden") { SE.stopMusic(); } 
-    else { if (!musicaMuted && masterMusica > 0 && !juegoEnProgreso) SE.playMusic(); }
+    if (document.hidden) { SE.stopMusic(); SE.ctx?.suspend?.(); }
+    else { SE.ctx?.resume?.(); if (!musicaMuted && masterMusica > 0 && !juegoEnProgreso) SE.playMusic(); }
 });
+window.addEventListener('pagehide', () => SE.stopMusic());
 
 // ========================================================
 // 5. DATOS GLOBALES Y LOGROS
@@ -1899,79 +1920,77 @@ function finJuegoGuardar(idJuego, scoreLogico, textoMostrar) {
 }
 
 /* 1. LÓGICA: CATACUMBAS */
+const CATA_MAX_TIME = 15, CATA_MAX_LIVES = 5, PARES_MEM = 8;
+let cataLives = CATA_MAX_LIVES, pocOrder = [];
+function limpiarTimersCata(){ clearInterval(currentInterval); clearTimeout(cataSpawnTimeout); clearTimeout(cataSkulletteTimeout); clearTimeout(cataPowerTimeout); }
+function renderVidasCata(){ document.getElementById('cata-lives').innerHTML = Array.from({length:CATA_MAX_LIVES},(_,i)=>`<span class="${i<cataLives?'':'off'}">❤️</span>`).join(''); }
 function startCatacumbas() {
-    partidaFinalizada = false;
-    document.getElementById('menu-catacumbas').style.display = 'none';
-    cataTime = 30; cataScore = 0; cataSpeed = 1000; cataGhostsCaught = 0; cataSkulletteUsed = false; cataMultiplierActive = false; lastCataIndex = -1;
-    document.getElementById('cata-time').textContent = cataTime; document.getElementById('cata-score').textContent = cataScore;
-    document.querySelectorAll('.cata-cell').forEach(c => { c.innerHTML = ''; c.className = 'cata-cell'; c.style.transform = ''; });
-    const skull = document.getElementById('cata-skullette'); skull.classList.remove('visible','active-power');
-    if(currentInterval) clearInterval(currentInterval);
-    if(cataSpawnTimeout) clearTimeout(cataSpawnTimeout);
-    if(cataSkulletteTimeout) clearTimeout(cataSkulletteTimeout);
-    currentInterval = setInterval(tickCata, 1000);
-    spawnCata(); scheduleCataSkullette();
+  partidaFinalizada = false; limpiarTimersCata();
+  document.getElementById('menu-catacumbas').style.display = 'none';
+  cataTime = CATA_MAX_TIME; cataScore = 0; cataSpeed = 1000; cataGhostsCaught = 0;
+  cataSkulletteUsed = false; cataMultiplierActive = false; lastCataIndex = -1; cataLives = CATA_MAX_LIVES;
+  document.getElementById('cata-time').textContent = cataTime; document.getElementById('cata-score').textContent = cataScore;
+  document.querySelectorAll('.cata-cell').forEach(c => { c.innerHTML = ''; c.className = 'cata-cell'; c.style.transform = ''; });
+  document.getElementById('cata-skullette').classList.remove('visible','active-power');
+  renderVidasCata();
+  currentInterval = setInterval(tickCata, 1000);
+  spawnCata(); scheduleCataSkullette();
 }
 function tickCata() {
-    if (partidaFinalizada) return;
-    cataTime--; document.getElementById('cata-time').textContent = cataTime;
-    if(cataTime <= 0) { clearInterval(currentInterval); document.querySelectorAll('.cata-cell').forEach(c => c.innerHTML = ''); finJuegoGuardar('catacumbas', cataScore, `¡Tiempo agotado!<br>Puntaje: ${cataScore}`); }
+  if (partidaFinalizada) return;
+  cataTime--; document.getElementById('cata-time').textContent = cataTime;
+  if (cataTime <= 0) { limpiarTimersCata(); document.querySelectorAll('.cata-cell').forEach(c => c.innerHTML = ''); finJuegoGuardar('catacumbas', cataScore, `¡Tiempo agotado!<br>Puntaje: ${cataScore}`); }
 }
 function spawnCata() {
-    if(cataTime <= 0 || partidaFinalizada) return;
-    document.querySelectorAll('.cata-cell').forEach(c => { c.innerHTML = ''; c.className = 'cata-cell'; c.style.transform = ''; });
-    const cells = document.querySelectorAll('.cata-cell');
-    
-    let nextIdx;
-    do { nextIdx = Math.floor(Math.random() * cells.length); } while(nextIdx === lastCataIndex);
-    lastCataIndex = nextIdx;
-    
-    const isSkull = Math.random() > 0.82;
-    cells[nextIdx].innerHTML = isSkull ? '☠️' : '👻';
-    cells[nextIdx].classList.add(isSkull ? 'has-skull' : 'has-ghost');
-    
-    cataSpeed = Math.max(550, 1000 - (cataScore * 8)); 
-    cataSpawnTimeout = setTimeout(spawnCata, cataSpeed);
+  if (cataTime <= 0 || partidaFinalizada) return;
+  document.querySelectorAll('.cata-cell').forEach(c => { c.innerHTML = ''; c.className = 'cata-cell'; c.style.transform = ''; });
+  const cells = document.querySelectorAll('.cata-cell');
+  let nextIdx; do { nextIdx = Math.floor(Math.random() * cells.length); } while (nextIdx === lastCataIndex);
+  lastCataIndex = nextIdx;
+  const isSkull = Math.random() > 0.82;
+  cells[nextIdx].innerHTML = isSkull ? '☠️' : '👻';
+  cells[nextIdx].classList.add(isSkull ? 'has-skull' : 'has-ghost');
+  cataSpeed = Math.max(650, 1000 - cataScore * 7);
+  cataSpawnTimeout = setTimeout(spawnCata, cataSpeed);
 }
 function clickCata(cell) {
-    if (partidaFinalizada || (!juegoEnProgreso && !document.body.classList.contains('modo-juego')) || !cell.innerHTML) return;
-    if(cell.innerHTML === '👻') {
-        playSfx('comprar'); cataGhostsCaught++;
-        const pts = cataMultiplierActive ? 2 : 1, secs = cataMultiplierActive ? 2 : 1;
-        cataScore += pts; cataTime += secs;
-        document.getElementById('cata-score').textContent = cataScore; document.getElementById('cata-time').textContent = cataTime;
-        cell.innerHTML = ''; cell.className = 'cata-cell'; cell.style.transform = 'scale(0.8)';
-    } else if(cell.innerHTML === '☠️') {
-        playSfx('error'); cataTime -= 3; document.getElementById('cata-time').textContent = cataTime; cell.innerHTML = '💥'; cell.className = 'cata-cell';
-        if(cataTime <= 0) finJuegoGuardar('catacumbas', cataScore, `¡Las catacumbas te vencieron!<br>Puntaje: ${cataScore}`);
-    }
+  if (partidaFinalizada || !cell.innerHTML) return;
+  if (cell.innerHTML === '👻') {
+    playSfx('comprar'); cataGhostsCaught++;
+    const m = cataMultiplierActive ? 2 : 1;
+    cataScore += m; cataTime = Math.min(CATA_MAX_TIME, cataTime + m);
+    document.getElementById('cata-score').textContent = cataScore; document.getElementById('cata-time').textContent = cataTime;
+    cell.innerHTML = ''; cell.className = 'cata-cell'; cell.style.transform = 'scale(0.8)';
+    if (cataGhostsCaught >= 30) checkLogro('cata_cazafantasmas');
+    if (cataGhostsCaught >= 60) checkLogro('cata_cazador_maestro');
+    if (cataScore >= 50) checkLogro('cata_combo');
+  } else if (cell.innerHTML === '☠️') {
+    playSfx('error'); cataLives--; renderVidasCata();
+    cell.innerHTML = '💥'; cell.className = 'cata-cell';
+    const gc = document.getElementById('gc-catacumbas'); gc.classList.remove('hit'); void gc.offsetWidth; gc.classList.add('hit');
+    if (cataLives <= 0) { limpiarTimersCata(); finJuegoGuardar('catacumbas', cataScore, `¡Sin vidas!<br>Puntaje: ${cataScore}`); }
+  }
 }
 function scheduleCataSkullette() {
-    if (partidaFinalizada || cataTime <= 0) return;
-    const delay = 25000 + Math.random() * 10000;
-    cataSkulletteTimeout = setTimeout(() => {
-        if (partidaFinalizada || cataTime <= 0) return;
-        const skull = document.getElementById('cata-skullette');
-        skull.classList.add('visible');
-        cataSkulletteTimeout = setTimeout(() => { skull.classList.remove('visible'); scheduleCataSkullette(); }, 3500);
-    }, delay);
+  clearTimeout(cataSkulletteTimeout);
+  if (partidaFinalizada || cataTime <= 0) return;
+  const skull = document.getElementById('cata-skullette');
+  cataSkulletteTimeout = setTimeout(() => {
+    if (partidaFinalizada) return;
+    skull.classList.add('visible');
+    cataSkulletteTimeout = setTimeout(() => { skull.classList.remove('visible'); scheduleCataSkullette(); }, 4000);
+  }, 35000 + Math.random() * 5000);
 }
 function activarSkullette() {
-    if (partidaFinalizada || cataTime <= 0) return;
-    const skull = document.getElementById('cata-skullette');
-    if (!skull.classList.contains('visible')) return;
-    
-    skull.classList.remove('visible'); skull.classList.add('active-power');
-    cataSkulletteUsed = true; cataMultiplierActive = true; playSfx('exito');
-    
-    const animX2 = document.getElementById('cata-x2-anim');
-    animX2.classList.remove('show');
-    void animX2.offsetWidth;
-    animX2.classList.add('show');
-    
-    if(cataPowerTimeout) clearTimeout(cataPowerTimeout);
-    cataPowerTimeout = setTimeout(() => { cataMultiplierActive = false; skull.classList.remove('active-power'); }, 10000);
-    scheduleCataSkullette();
+  if (partidaFinalizada || cataTime <= 0) return;
+  const skull = document.getElementById('cata-skullette');
+  if (!skull.classList.contains('visible')) return;
+  skull.classList.remove('visible');
+  cataSkulletteUsed = true; cataMultiplierActive = true; playSfx('exito'); checkLogro('cata_skullette');
+  const x2 = document.getElementById('cata-x2-anim'); x2.classList.remove('show'); void x2.offsetWidth; x2.classList.add('show');
+  clearTimeout(cataPowerTimeout);
+  cataPowerTimeout = setTimeout(() => { cataMultiplierActive = false; }, 10000);
+  scheduleCataSkullette();
 }
 
 window.addEventListener('keydown', (e) => {
@@ -2001,43 +2020,44 @@ function tickMemoria() {
     if(memTime <= 0) { clearInterval(currentInterval); finJuegoGuardar('memoria', Math.max(0, memRonda - 1), `¡Se acabó el tiempo!<br>Ronda alcanzada: ${memRonda}`); }
 }
 function generarTableroMemoria() {
-    const board = document.getElementById('mem-board'); board.innerHTML = '';
-    const pares = memRonda === 1 ? 6 : (memRonda === 2 ? 8 : 10);
-    board.style.gridTemplateColumns = 'repeat(4, minmax(0, 1fr))';
-    board.style.gridTemplateRows = `repeat(${Math.ceil((pares * 2) / 4)}, minmax(0, 1fr))`;
-    
-    const arr = emojisMem.slice(0, pares);
-    const magicEmoji = arr[Math.floor(Math.random() * arr.length)];
-    
-    memCards = [...arr, ...arr].sort(() => Math.random() - 0.5);
-    firstCard = null; secondCard = null; lockBoard = false; paresEncontrados = 0; memRoundPerfect = true;
-    memCards.forEach((emoji) => {
-        const c = document.createElement('button'); c.type = 'button'; c.className = 'mem-card'; c.dataset.val = emoji;
-        if(emoji === magicEmoji) c.classList.add('magic-pair');
-        c.setAttribute('aria-label','Carta de memoria');
-        c.innerHTML = `<div class="back">❓</div><div class="front">${emoji}</div>`;
-        c.onclick = () => flipMem(c); board.appendChild(c);
-    });
+  const board = document.getElementById('mem-board'); board.innerHTML = '';
+  board.style.gridTemplateColumns = 'repeat(4, minmax(0, 1fr))';
+  board.style.gridTemplateRows = 'repeat(4, minmax(0, 1fr))';
+  const arr = [...emojisMem].sort(() => Math.random() - 0.5).slice(0, PARES_MEM);
+  const magicEmoji = arr[Math.floor(Math.random() * arr.length)];
+  memCards = [...arr, ...arr].sort(() => Math.random() - 0.5);
+  firstCard = null; secondCard = null; lockBoard = false; paresEncontrados = 0; memRoundPerfect = true;
+  memCards.forEach((emoji) => {
+    const c = document.createElement('div'); c.setAttribute('role', 'button'); c.tabIndex = 0;
+    c.className = 'mem-card'; c.dataset.val = emoji;
+    if (emoji === magicEmoji) c.classList.add('magic-pair');
+    c.setAttribute('aria-label', 'Carta de memoria');
+    c.innerHTML = `<div class="back">❓</div><div class="front">${emoji}</div>`;
+    c.onclick = () => flipMem(c); board.appendChild(c);
+  });
 }
 function flipMem(card) {
-    if(partidaFinalizada || lockBoard || card === firstCard || card.classList.contains('flipped') || card.classList.contains('matched')) return;
-    card.classList.add('flipped');
-    if(!firstCard) { firstCard = card; return; }
-    secondCard = card; lockBoard = true;
-    if(firstCard.dataset.val === secondCard.dataset.val) {
-        playSfx('comprar'); paresEncontrados++; memSessionScore++; memCombo++; memBestCombo = Math.max(memBestCombo, memCombo);
-        document.getElementById('mem-combo').textContent = memCombo;
-        if(firstCard.classList.contains('magic-pair')) {
-            memTime += 5; document.getElementById('mem-time').textContent = memTime;
-            mostrarToast('+5 Segundos Mágicos', 'info'); playSfx('ataudPremio');
-        }
-        const a = firstCard, b = secondCard;
-        setTimeout(() => { a.classList.add('matched'); b.classList.add('matched'); resetMem(); checkWinMem(); }, 350);
-    } else {
-        playSfx('error'); memErrors++; memRoundPerfect = false; memCombo = 0; document.getElementById('mem-combo').textContent = '0';
-        const a = firstCard, b = secondCard;
-        setTimeout(() => { a.classList.remove('flipped'); b.classList.remove('flipped'); resetMem(); }, Math.max(450, 850 - memRonda * 25));
+  if (partidaFinalizada || lockBoard || card === firstCard || card.classList.contains('flipped') || card.classList.contains('matched')) return;
+  card.classList.add('flipped');
+  if (!firstCard) { firstCard = card; return; }
+  secondCard = card; lockBoard = true;
+  const cb = document.getElementById('mem-combo');
+  if (firstCard.dataset.val === secondCard.dataset.val) {
+    playSfx('comprar'); paresEncontrados++; memSessionScore++; memCombo++; memBestCombo = Math.max(memBestCombo, memCombo);
+    cb.textContent = memCombo;
+    if (memCombo >= 2) { cb.classList.remove('combo-hot'); void cb.offsetWidth; cb.classList.add('combo-hot'); }
+    if (memBestCombo >= 5) checkLogro('mem_combo');
+    if (firstCard.classList.contains('magic-pair')) {
+      memTime += 5; document.getElementById('mem-time').textContent = memTime;
+      mostrarToast('+5 Segundos Mágicos', 'info'); playSfx('ataudPremio');
     }
+    const a = firstCard, b = secondCard;
+    setTimeout(() => { a.classList.add('matched'); b.classList.add('matched'); resetMem(); checkWinMem(); }, 200);
+  } else {
+    playSfx('error'); memErrors++; memRoundPerfect = false; memCombo = 0; cb.textContent = '0'; cb.classList.remove('combo-hot');
+    const a = firstCard, b = secondCard;
+    setTimeout(() => { a.classList.remove('flipped'); b.classList.remove('flipped'); resetMem(); }, 300);
+  }
 }
 function resetMem() { firstCard = null; secondCard = null; lockBoard = false; }
 function usarPistaMemoria() {
@@ -2055,37 +2075,36 @@ function usarPistaMemoria() {
 }
 
 function checkWinMem() {
-    const paresRequeridos = memRonda === 1 ? 6 : (memRonda === 2 ? 8 : 10);
-    if(paresEncontrados >= paresRequeridos) {
-        playSfx('logro'); memRoundPerfectAchieved = memRoundPerfectAchieved || memRoundPerfect;
-        memRonda++; memTime += Math.max(10, 24 - memRonda);
-        document.getElementById('mem-ronda').textContent = memRonda; document.getElementById('mem-time').textContent = memTime;
-        if (memRonda % 3 === 0 && memTime < 90) memTime += 5;
-        document.getElementById('mem-time').textContent = memTime;
-        setTimeout(() => { if(!partidaFinalizada) generarTableroMemoria(); }, 550);
-    }
+  if (paresEncontrados >= PARES_MEM) {
+    playSfx('logro'); memRoundPerfectAchieved = memRoundPerfectAchieved || memRoundPerfect;
+    memRonda++; memTime += Math.max(10, 24 - memRonda);
+    if (memRonda % 3 === 0 && memTime < 90) memTime += 5;
+    document.getElementById('mem-ronda').textContent = memRonda; document.getElementById('mem-time').textContent = memTime;
+    if (memRonda >= 3) checkLogro('mem_primera_ronda');
+    if (memRonda >= 5) checkLogro('mem_ronda5');
+    if (memRonda >= 10) checkLogro('mem_ronda10');
+    setTimeout(() => { if (!partidaFinalizada) generarTableroMemoria(); }, 550);
+  }
 }
 
 /* 3. LÓGICA: POCIONES (FITOLOGY) */
 const pocAllIngs = ['🌿', '🩸', '👁️', '🦴', '🍄', '🕷️', '🧿', '🪻', '🐍', '🕯️'];
 let pocIngs = [];
+function pocTamMesa(){ return pocScore < 30 ? 5 : Math.min(10, 5 + Math.floor((pocScore - 30) / 10) + 1); }
 let currentRecipe, currentStep;
 
 function startPociones() {
-    partidaFinalizada = false;
-    document.getElementById('menu-pociones').style.display = 'none';
-    pocTime = 30; pocScore = 0; pocErrors = 0; pocBestStreak = 0; pocCurrentStreak = 0;
-    
-    // Baraja aleatoriamente los ingredientes disponibles para esta partida limitando a 5
-    let shuffled = [...pocAllIngs].sort(() => Math.random() - 0.5);
-    pocIngs = shuffled.slice(0, 5);
-    
-    renderIngredientesPociones();
-    document.getElementById('poc-time').textContent = pocTime; document.getElementById('poc-score').textContent = pocScore;
-    document.getElementById('poc-bar').style.width = '0%';
-    if(currentInterval) clearInterval(currentInterval);
-    currentInterval = setInterval(tickPociones, 1000);
-    generarRecetaPocion();
+  partidaFinalizada = false;
+  document.getElementById('menu-pociones').style.display = 'none';
+  pocTime = 30; pocScore = 0; pocErrors = 0; pocBestStreak = 0; pocCurrentStreak = 0;
+  pocOrder = [...pocAllIngs].sort(() => Math.random() - 0.5);
+  pocIngs = pocOrder.slice(0, 5);
+  renderIngredientesPociones();
+  document.getElementById('poc-time').textContent = pocTime; document.getElementById('poc-score').textContent = pocScore;
+  document.getElementById('poc-bar').style.width = '0%';
+  if (currentInterval) clearInterval(currentInterval);
+  currentInterval = setInterval(tickPociones, 1000);
+  generarRecetaPocion();
 }
 function tickPociones() {
     if(partidaFinalizada) return;
@@ -2100,50 +2119,40 @@ function renderIngredientesPociones() {
     });
 }
 function generarRecetaPocion() {
-    if(partidaFinalizada) return;
-    const len = pocScore < 5 ? 3 : (pocScore < 15 ? 4 : (pocScore < 30 ? 5 : 6));
-    currentRecipe = []; currentStep = 0;
-    for(let i=0; i<len; i++) currentRecipe.push(pocIngs[Math.floor(Math.random()*pocIngs.length)]);
-    renderReceta();
+  if (partidaFinalizada) return;
+  const n = pocTamMesa();
+  if (n !== pocIngs.length) { pocIngs = pocOrder.slice(0, n); renderIngredientesPociones(); }
+  const len = pocScore < 15 ? 3 : 4;
+  currentRecipe = []; currentStep = 0;
+  for (let i = 0; i < len; i++) currentRecipe.push(pocIngs[Math.floor(Math.random() * pocIngs.length)]);
+  renderReceta();
 }
 function renderReceta() {
-    const box = document.getElementById('poc-receta-ui'); box.className = 'poc-receta-box';
-    let html = '';
-    currentRecipe.forEach((ing, i) => {
-        let active = i === currentStep;
-        let solved = i < currentStep;
-        
-        if (solved) {
-            html += `<span style="opacity: 0.3; transition: all 0.3s; transform: scale(0.9); margin: 0 4px;">${ing}</span>`;
-        } else if (active) {
-            html += `<span style="opacity: 1; transform: scale(1.35); filter: drop-shadow(0 0 10px var(--pumpkin)); transition: all 0.3s; margin: 0 10px; z-index: 2;">${ing}</span>`;
-        } else {
-            html += `<span style="opacity: 0.8; transition: all 0.3s; transform: scale(1); margin: 0 4px;">${ing}</span>`;
-        }
-    });
-    box.innerHTML = html;
+  const box = document.getElementById('poc-receta-ui'); box.className = 'poc-receta-box';
+  box.innerHTML = currentRecipe.map((ing, i) => `<span class="r-ing ${i < currentStep ? 'done' : (i === currentStep ? 'active' : '')}">${ing}</span>`).join('');
 }
 function clickIngrediente(ing) {
-    if(partidaFinalizada || pocTime <= 0) return;
-    const box = document.getElementById('poc-receta-ui');
-    if(ing === currentRecipe[currentStep]) {
-        playSfx('comprar'); currentStep++;
-        if(currentStep >= currentRecipe.length) {
-            pocScore++; pocTime += Math.floor(Math.random() * 2) + 2; 
-            pocCurrentStreak++; pocBestStreak = Math.max(pocBestStreak, pocCurrentStreak);
-            document.getElementById('poc-score').textContent = pocScore; document.getElementById('poc-time').textContent = pocTime;
-            
-            let percentage = (pocScore % 10) * 10;
-            document.getElementById('poc-bar').style.width = percentage + '%';
-            
-            box.classList.add('success'); playSfx('logro');
-            setTimeout(generarRecetaPocion, 350);
-        } else renderReceta();
-    } else {
-        playSfx('error'); pocErrors++; pocCurrentStreak = 0; pocTime -= 3; document.getElementById('poc-time').textContent = pocTime;
-        box.classList.add('error'); currentStep = 0; setTimeout(renderReceta, 400);
-        if(pocTime <= 0) finJuegoGuardar('pociones', pocScore, `¡El caldero explotó!<br>Pociones: ${pocScore}`);
-    }
+  if (partidaFinalizada || pocTime <= 0) return;
+  const box = document.getElementById('poc-receta-ui');
+  if (ing === currentRecipe[currentStep]) {
+    playSfx('comprar'); currentStep++;
+    if (currentStep >= currentRecipe.length) {
+      pocScore++; pocTime += Math.floor(Math.random() * 2) + 2;
+      pocCurrentStreak++; pocBestStreak = Math.max(pocBestStreak, pocCurrentStreak);
+      document.getElementById('poc-score').textContent = pocScore; document.getElementById('poc-time').textContent = pocTime;
+      document.getElementById('poc-bar').style.width = ((pocScore % 10) * 10) + '%';
+      if (pocScore >= 30) checkLogro('poc_10');
+      if (pocScore >= 75) checkLogro('poc_25');
+      if (pocScore >= 100) { checkLogro('poc_ingrediente'); checkLogro('poc_50'); }
+      if (pocBestStreak >= 15) checkLogro('poc_sin_errores');
+      box.classList.add('success'); playSfx('logro');
+      setTimeout(generarRecetaPocion, 350);
+    } else renderReceta();
+  } else {
+    playSfx('error'); pocErrors++; pocCurrentStreak = 0; pocTime -= 3; document.getElementById('poc-time').textContent = pocTime;
+    box.classList.add('error'); currentStep = 0; setTimeout(renderReceta, 400);
+    if (pocTime <= 0) finJuegoGuardar('pociones', pocScore, `¡El caldero explotó!<br>Pociones: ${pocScore}`);
+  }
 }
 
 function cambiarPagina(idPagina) {
