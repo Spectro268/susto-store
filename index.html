@@ -36,11 +36,6 @@
   --bg-overlay: rgba(20, 5, 5, 0.85); 
   --borde-estilo: solid;
   
-  /* Variable maestra para los botones purgada de maldiciones rojas */
-  --btn-bg: var(--pumpkin); 
-  --btn-hover: var(--violet);
-  --btn-text: #ffffff;
-  
   box-sizing: border-box;
   padding-top: env(safe-area-inset-top, 0px);
   padding-bottom: env(safe-area-inset-bottom, 0px);
@@ -55,25 +50,31 @@ body.tema-calabaza { --bg: #0a140a; --pumpkin: #ff6600; --ember: #cc5200; --viol
 body.tema-brujeria { --bg: #0a0014; --pumpkin: #b300ff; --ember: #4d0066; --violet: #d896ff; --card: #140028; --glow: rgba(179, 0, 255, 0.25); --bg-overlay: rgba(10, 0, 20, 0.75); } 
 body.tema-otono { --bg: #1a0a00; --pumpkin: #ff8c00; --ember: #8b4500; --violet: #cd853f; --card: #291400; --glow: rgba(255, 140, 0, 0.25); --bg-overlay: rgba(26, 10, 0, 0.88); }
 
-/* TEMAS CON CONTRASTE ESTRICTO (Heredan limpio mediante variables) */
+/* TEMAS CON CONTRASTE ESTRICTO */
 body.tema-medianoche { 
     --bg: #05051a; --pumpkin: #ffd700; --ember: #000066; --violet: #4169e1; --card: #0a0a29; 
     --glow: rgba(255, 215, 0, 0.25); --bg-overlay: rgba(5, 5, 26, 0.88);
-    --btn-bg: #b8860b; 
 }
+body.tema-medianoche .btn-accion, body.tema-medianoche .btn-cerrar-modal, body.tema-medianoche .ataud-flotante .badge { background-color: #b8860b; color: #ffffff; }
+body.tema-medianoche .btn-accion:hover, body.tema-medianoche .btn-cerrar-modal:hover { background-color: var(--violet); color: #ffffff; }
+
 body.tema-hacker { 
     --bg: #000000; --pumpkin: #00ff00; --ember: #003300; --violet: #00cc00; --card: #051005; 
     --glow: rgba(0, 255, 0, 0.25); --bg-overlay: rgba(0, 0, 0, 0.85); 
-    --btn-bg: #009900; 
 }
+body.tema-hacker .btn-accion, body.tema-hacker .btn-cerrar-modal, body.tema-hacker .ataud-flotante .badge { background-color: #009900; color: #ffffff; }
+body.tema-hacker .btn-accion:hover, body.tema-hacker .btn-cerrar-modal:hover { background-color: var(--violet); color: #ffffff; }
+
 body.tema-batman { 
     --bg: #020a0f; --pumpkin: #4fd1c5; --ember: #1d3942; --violet: #a0aec0; --card: #07141d; 
     --glow: rgba(79, 209, 197, 0.25); --bg-overlay: rgba(2, 10, 15, 0.92); 
-    --btn-bg: var(--pumpkin);
-    --btn-text: #000000;
-    --btn-hover: var(--ember);
 }
+body.tema-batman .btn-accion, body.tema-batman .btn-cerrar-modal, body.tema-batman .ataud-flotante .badge { background-color: var(--pumpkin); color: #000000; font-weight: 900; }
+body.tema-batman .btn-accion:hover, body.tema-batman .btn-cerrar-modal:hover { background-color: var(--ember); color: #ffffff !important; }
+body.tema-batman .btn-carrito-tienda { color: var(--pumpkin) !important; border-color: var(--pumpkin) !important; }
 body.tema-batman #toast-logro.is-pista, body.tema-batman #toast-logro.is-pista #toast-sub, body.tema-batman #toast-logro.is-pista #toast-txt { color: #000000 !important; }
+body.tema-batman .game-menu-overlay .btn-cerrar-modal { color: #ffffff !important; border: 1px solid #ffffff; background-color: transparent !important; }
+body.tema-batman .game-menu-overlay .btn-cerrar-modal:hover { background-color: #ffffff !important; color: #000000 !important; }
 
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
 *, *::before, *::after { box-sizing: inherit; }
@@ -122,11 +123,11 @@ a { color: inherit; -webkit-tap-highlight-color: transparent; }
   display: flex; flex-direction: column; justify-content: center; align-items: center;
   transition: opacity 1.5s ease;
 }
-.splash-loader { color: #d62828 !important; font-size: 1.5rem; font-weight: 800; animation: pulse 1.5s infinite; letter-spacing: 2px;}
+.splash-loader { color: var(--pumpkin); font-size: 1.5rem; font-weight: 800; animation: pulse 1.5s infinite; letter-spacing: 2px;}
 
 #btn-boo {
-  display: none; background-color: #d62828 !important; color: #ffffff !important; border: 2px solid #7a1010 !important;
-  font-size: 2.5rem; padding: 20px 60px; border-radius: 999px; box-shadow: 0 0 30px rgba(214, 40, 40, 0.6) !important;
+  display: none; background-color: var(--pumpkin) !important; color: #ffffff !important; border: 2px solid var(--ember) !important;
+  font-size: 2.5rem; padding: 20px 60px; border-radius: 999px; box-shadow: 0 0 30px var(--glow) !important;
   transition: transform 0.3s, opacity 1s ease; cursor: pointer; opacity: 0; transform: scale(0.9);
   font-family: inherit; font-weight: 900; -webkit-tap-highlight-color: transparent; outline: none;
 }
@@ -148,7 +149,7 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 
 /* LA TUERCA INMORTAL (MÁSCARA PNG DINÁMICA PERFECTA) */
 .btn-icono.tuerca { 
-  background: transparent; border: none; cursor: pointer; color: var(--btn-bg); 
+  background: transparent; border: none; cursor: pointer; color: var(--pumpkin); 
   padding: 10px; margin: -10px; min-width: 44px; min-height: 44px;
   display: flex; align-items: center; justify-content: center; 
   transition: all 0.3s; -webkit-tap-highlight-color: transparent; 
@@ -162,7 +163,7 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
   -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
   -webkit-mask-position: center; mask-position: center;
 }
-.btn-icono.tuerca:hover { color: var(--btn-hover); filter: drop-shadow(0 0 8px var(--glow)); transform: scale(1.1); }
+.btn-icono.tuerca:hover { color: var(--violet); filter: drop-shadow(0 0 8px var(--glow)); transform: scale(1.1); }
 .btn-icono.tuerca:hover .tuerca-img { animation: spin 2s linear infinite; }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
@@ -208,13 +209,13 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 /* ATAÚD FLOTANTE */
 .ataud-flotante { position: fixed; top: 50vh; right: 3vw; transform: translateY(-50%); margin-top: -30px; background: var(--card); border: 2px var(--borde-estilo) var(--violet); border-radius: 15px; padding: 15px; cursor: pointer; font-size: 2rem; z-index: 90; box-shadow: 0 0 15px var(--glow); transition: transform 0.3s, background 0.5s ease; display: flex; flex-direction: column; align-items: center; -webkit-tap-highlight-color: transparent;}
 .ataud-flotante:hover { transform: translateY(-50%) scale(1.1); background: var(--violet); }
-.ataud-flotante .badge { font-size: 0.8rem; background-color: var(--btn-bg); color: var(--btn-text); border-radius: 999px; padding: 2px 8px; font-weight: bold; margin-top: 5px; font-family: sans-serif; }
+.ataud-flotante .badge { font-size: 0.8rem; background-color: var(--pumpkin); color: #fff; border-radius: 999px; padding: 2px 8px; font-weight: bold; margin-top: 5px; font-family: sans-serif; }
 .ataud-animado { animation: floatAtaud 4s ease-in-out infinite; }
 @keyframes floatAtaud { 0%, 100% { margin-top: -30px; } 50% { margin-top: -45px; } }
 
 /* CARRUSEL HORIZONTAL PARA RECOMPENSAS DIARIAS */
-.grid-ataud { display: flex; overflow-x: auto; gap: 15px; margin-top: 20px; padding-bottom: 10px; scroll-snap-type: x mandatory; }
-.dia-caja { background: rgba(255,255,255,0.05); border: 1px var(--borde-estilo) var(--ember); border-radius: 10px; padding: 15px 5px; font-weight: bold; position: relative; transition: 0.3s; min-width: 100px; flex-shrink: 0; scroll-snap-align: start; -webkit-tap-highlight-color: transparent; }
+.grid-ataud { display: flex; overflow-x: auto; gap: 15px; margin-top: 20px; padding: 15px 5px; scroll-snap-type: x mandatory; }
+.dia-caja { background: rgba(255,255,255,0.05); border: 1px var(--borde-estilo) var(--ember); border-radius: 12px; padding: 15px 5px; font-weight: bold; position: relative; transition: 0.3s; min-width: 100px; flex-shrink: 0; scroll-snap-align: start; -webkit-tap-highlight-color: transparent; }
 .dia-caja.reclamado { background-color: var(--violet); border-color: #fff; color: #fff; }
 .dia-caja.actual { border-color: var(--pumpkin); background: var(--glow); cursor: pointer; animation: pulseAtaud 2s infinite; }
 .dia-caja.bloqueado { opacity: 0.5; filter: grayscale(1); }
@@ -241,12 +242,12 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 .item p { margin: 0; font-size: .92rem; opacity: .8; flex-grow: 1; }
 
 /* BOTONES GLOBALES PURIFICADOS (Uso de Variables del Sistema) */
-.btn-accion { display: inline-flex; align-items: center; justify-content: center; background-color: var(--btn-bg); color: var(--btn-text); font-weight: 800; padding: 12px 20px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem; margin-top: 10px; transition: all 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent; }
-.btn-accion:hover { background-color: var(--btn-hover); color: #fff !important; }
-.btn-cerrar-modal { background-color: var(--btn-bg); color: var(--btn-text); font-weight: 800; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; width: 100%; margin-top: 15px; font-size: 1rem; transition: background 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent;}
-.btn-cerrar-modal:hover { background-color: var(--btn-hover); color: #fff !important; }
+.btn-accion { display: inline-flex; align-items: center; justify-content: center; background-color: var(--pumpkin); color: #fff; font-weight: 800; padding: 12px 20px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem; margin-top: 10px; transition: all 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent; }
+.btn-accion:hover { background-color: var(--violet); color: #fff !important; }
+.btn-cerrar-modal { background-color: var(--pumpkin); color: #fff; font-weight: 800; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; width: 100%; margin-top: 15px; font-size: 1rem; transition: background 0.2s; font-family: inherit; -webkit-tap-highlight-color: transparent;}
+.btn-cerrar-modal:hover { background-color: var(--violet); color: #fff !important; }
 .btn-jugar { background-color: var(--ember); color: #fff; }
-.btn-jugar:hover { background-color: var(--btn-bg); }
+.btn-jugar:hover { background-color: var(--pumpkin); }
 .btn-bloqueado { background: rgba(255,255,255,0.05) !important; color: var(--violet) !important; cursor: default !important; border: 1px var(--borde-estilo) var(--ember) !important; opacity: 0.8; }
 
 /* TIENDA Y CARRITO */
@@ -317,13 +318,11 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   background: var(--bg-overlay); 
   backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
   overscroll-behavior: none; touch-action: pan-x pan-y;
-  /* ANTIDESGARRO GPU (Hardware Acceleration) */
-  transform: translateZ(0); will-change: transform, opacity; backface-visibility: hidden;
 }
 #sec-game-stage.activa { display: block; }
 body.modo-juego { overflow: hidden !important; height: 100%; overscroll-behavior: none; }
 body.modo-juego > header { display: none !important; }
-body.modo-juego .pagina:not(#sec-game-stage) { visibility: hidden; }
+body.modo-juego .pagina:not(#sec-game-stage) { display: none !important; }
 
 /* FLEXBOX CENTRADO ABSOLUTO (Elimina el vacío inferior) */
 .game-container { 
@@ -332,15 +331,13 @@ body.modo-juego .pagina:not(#sec-game-stage) { visibility: hidden; }
   margin: 0 auto; padding: max(10px, env(safe-area-inset-top)) max(12px, 3vw) max(10px, env(safe-area-inset-bottom));
   flex-direction: column; justify-content: space-between; align-items: center;
   position: relative;
-  /* ANTIDESGARRO GPU */
-  transform: translateZ(0); will-change: transform; backface-visibility: hidden;
 }
 
 .game-hud { width: 100%; flex-shrink: 0; display: flex; justify-content: space-between; align-items: center; background: var(--card); border: 2px var(--borde-estilo) var(--ember); padding: 15px 20px; border-radius: 18px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
 .game-hud div { font-size: 1.2rem; font-weight: 900; color: var(--pumpkin); display:flex; flex-direction: column; align-items:center; gap:2px; }
 .game-hud span { color: var(--ink); font-weight: 500; font-size: 1rem; display: block; }
 
-.game-menu-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 550; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px; text-align: center; overflow: hidden; }
+.game-menu-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); z-index: 550; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px; text-align: center; overflow: hidden; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
 .game-menu-overlay .game-title { font-size: clamp(2.5rem, 8vw, 4rem); }
 .game-menu-overlay .game-rules { font-size: clamp(1rem, 3.5vw, 1.2rem); margin-bottom: 18px; max-width: 450px;}
 .game-title { font-size: 3rem; color: var(--pumpkin); text-shadow: 0 0 15px var(--glow); margin: 0 0 10px; line-height: 1; }
@@ -353,7 +350,7 @@ body.modo-juego .pagina:not(#sec-game-stage) { visibility: hidden; }
 .cata-cell.has-ghost { background: var(--glow); border-color: var(--pumpkin); animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 .cata-cell.has-skull { background: rgba(255,0,0,0.2); border-color: #ff0000; animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 
-.cata-skullette { display: none; align-items: center; justify-content: center; width: 68px; height: 68px; border: 2px solid var(--pumpkin); border-radius: 50%; background: transparent; box-shadow: 0 0 15px var(--glow), inset 0 0 15px var(--glow); z-index: 5; margin-top: 30px; animation: pop 0.4s ease-out; touch-action: manipulation; cursor: pointer; }
+.cata-skullette { display: none; align-items: center; justify-content: center; width: 68px; height: 68px; border: 2px solid var(--pumpkin); border-radius: 50%; background: transparent; box-shadow: 0 0 15px var(--glow), inset 0 0 15px var(--glow); z-index: 5; animation: pop 0.4s ease-out; touch-action: manipulation; cursor: pointer; position: absolute; bottom: -85px; left: 50%; transform: translateX(-50%); }
 .cata-skullette.visible { display: flex; }
 .cata-skullette img { width: 82%; height: 82%; object-fit: contain; filter: drop-shadow(0 0 5px var(--glow));}
 #cata-x2-anim { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); font-size: 6rem; font-weight: 900; color: #ffd700; text-shadow: 0 0 30px rgba(255,215,0,1); pointer-events: none; z-index: 20; opacity: 0; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
@@ -361,8 +358,8 @@ body.modo-juego .pagina:not(#sec-game-stage) { visibility: hidden; }
 @keyframes fadeOutUp { 0% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 100% { opacity: 0; transform: translate(-50%, -100%) scale(1.5); } }
 
 /* 2. Memoria Monstruosa */
-.memoria-tools { display:flex; justify-content:center; align-items:center; gap:15px; margin: 0 auto 12px; flex-wrap:wrap; font-size:1rem; width: 100%;}
-.memoria-grid { margin: auto; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(0, 1fr); gap: clamp(6px, 1.5vw, 10px); width: min(100%, 560px); height: min(65dvh, 600px); max-height: calc(100dvh - 200px); perspective: 1000px; }
+.memoria-tools { display:flex; justify-content:center; align-items:center; gap:15px; margin: 25px auto 20px; flex-wrap:wrap; font-size:1rem; width: 100%;}
+.memoria-grid { margin: auto; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(6px, 1.5vw, 10px); width: min(100%, 560px); height: min(65dvh, 600px); max-height: calc(100dvh - 200px); perspective: 1000px; }
 .mem-card { position: relative; min-width: 0; min-height: 0; background: transparent; border: none; aspect-ratio: auto; display: flex; justify-content: center; align-items: center; font-size: clamp(1.8rem, 6vw, 3rem); cursor: pointer; user-select: none; transform-style: preserve-3d; transition: transform 0.5s; -webkit-tap-highlight-color: transparent;}
 .mem-card.flipped { transform: rotateY(180deg); }
 .mem-card.matched { visibility: hidden; opacity: 0; pointer-events:none; transition: visibility 0s 0.5s, opacity 0.5s linear; }
@@ -378,14 +375,6 @@ body.modo-juego .pagina:not(#sec-game-stage) { visibility: hidden; }
 .poc-shelf { display: flex; justify-content: center; align-content: center; gap: clamp(8px, 2.5vw, 15px); flex-wrap: wrap; width: 100%; }
 .poc-ing { background: var(--card); border: 2px var(--borde-estilo) var(--ember); border-radius: 50%; width: clamp(55px, 15vw, 80px); height: clamp(55px, 15vw, 80px); display: flex; justify-content: center; align-items: center; font-size: clamp(2rem, 7vw, 3rem); cursor: pointer; user-select: none; transition: 0.1s; box-shadow: 0 5px 10px rgba(0,0,0,0.5); -webkit-tap-highlight-color: transparent;}
 .poc-ing:active { transform: translateY(5px); box-shadow: 0 0 0 rgba(0,0,0,0); border-color: var(--pumpkin); background: var(--glow); }
-
-/* Puntos centrados matemáticamente para ingredientes */
-.poc-slot { display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.3s; }
-.poc-slot-emoji { opacity: 0.3; transition: all 0.3s; }
-.poc-slot.active .poc-slot-emoji { opacity: 1; transform: scale(1.1); }
-.poc-slot.solved .poc-slot-emoji { opacity: 1; color: var(--pumpkin); }
-.poc-dot { width: 6px; height: 6px; border-radius: 50%; background: transparent; margin-top: 8px; transition: all 0.3s; }
-.poc-slot.active .poc-dot { background: var(--pumpkin); box-shadow: 0 0 8px var(--pumpkin); }
 
 .poc-progress-track { width: 150px; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; margin: 30px auto 8px; overflow: hidden; position: relative; }
 .poc-progress-fill { height: 100%; background: var(--pumpkin); width: 0%; transition: width 0.3s ease; box-shadow: 0 0 10px var(--pumpkin);}
@@ -419,7 +408,7 @@ body.modo-juego .pagina:not(#sec-game-stage) { visibility: hidden; }
   
   .cata-grid { width:min(100%, 380px); gap:10px; }
   .cata-cell { border-radius:12px; }
-  .memoria-tools { margin-bottom:8px; font-size:.85rem; }
+  .memoria-tools { margin-bottom:12px; font-size:.85rem; }
   .memoria-grid { width:min(100%, 480px); height:min(60dvh, 500px); max-height:calc(100dvh - 170px); gap:6px; }
   .mem-card .front, .mem-card .back { border-width:1px; border-radius:8px;}
   
@@ -670,7 +659,7 @@ body.modo-juego .pagina:not(#sec-game-stage) { visibility: hidden; }
           <div class="poc-progress-track">
               <div class="poc-progress-fill" id="poc-bar"></div>
           </div>
-          <div class="poc-progress-text" id="poc-progress">Siguiente ingrediente especial: 10 pociones</div>
+          <div class="poc-progress-text" id="poc-progress">+5 🍬 cada 10 pociones</div>
         </div>
 
         <div class="game-menu-overlay" id="menu-pociones">
@@ -888,7 +877,7 @@ const catalogoLogros = {
   'mem_ronda10': { icono: '🌌', nombre: 'Memoria Legendaria', desc: 'Alcanza la ronda 10 del modo infinito.' },
   'poc_10': { icono: '🧪', nombre: 'Aprendiz de Brujería', desc: 'Prepara 30 pociones en una partida.' },
   'poc_25': { icono: '⚗️', nombre: 'Maestro del Caldero', desc: 'Prepara 75 pociones en una partida.' },
-  'poc_ingrediente': { icono: '🍄', nombre: 'Coleccionista de Ingredientes', desc: 'Desbloquea todos los ingredientes ocultos.' },
+  'poc_ingrediente': { icono: '🍄', nombre: 'Mente Veloz', desc: 'Sobrevive y alcanza 100 pociones en partida.' },
   'poc_sin_errores': { icono: '✨', nombre: 'Alquimista Impecable', desc: 'Prepara 15 pociones seguidas sin fallar.' },
   'poc_50': { icono: '🔮', nombre: 'Gran Alquimista', desc: 'Acumula 100 pociones en una partida.' }
 };
@@ -961,14 +950,27 @@ class BooSoundEngine {
             'ticket': 'ticketuse.mp3', 'cod1': 'codigo1.mp3', 'cod2': 'codigo2.mp3', 'cod3': 'codigo3.mp3',
             'exito': 'exito.mp3', 'error': 'error.mp3'
         };
-        this.musicPath = 'musica.mp3';
+        this.musicPaths = {
+            'menu': 'musica.mp3',
+            'catacumbas': 'Ghostbusters.mp3',
+            'memoria': 'Monster.mp3',
+            'pociones': 'Lonbon.mp3'
+        };
         this.ctx = null;
         this.buffers = {};
         this.htmlFallback = {}; 
         this.musicGain = null;
         this.musicSource = null;
-        this.musicHtmlFallback = new Audio('musica.mp3');
-        this.musicHtmlFallback.loop = true;
+        
+        this.musicHtmlFallback = {
+            'menu': new Audio('musica.mp3'),
+            'catacumbas': new Audio('Ghostbusters.mp3'),
+            'memoria': new Audio('Monster.mp3'),
+            'pociones': new Audio('Lonbon.mp3')
+        };
+        Object.values(this.musicHtmlFallback).forEach(a => { a.loop = true; });
+        
+        this.currentMusicId = 'menu';
         this.initialized = false;
         this.useWebAudio = false;
     }
@@ -983,17 +985,21 @@ class BooSoundEngine {
             const loadBuffer = async (id, url) => {
                 try {
                     const res = await fetch(url);
+                    if(!res.ok) throw new Error("Not found");
                     const buf = await res.arrayBuffer();
                     this.buffers[id] = await this.ctx.decodeAudioData(buf);
-                } catch(e) { this.htmlFallback[id] = new Audio(url); } // Si fetch falla (ej. red local), fallback
+                } catch(e) { 
+                    console.warn(`Audio no encontrado o error de red: ${url}. Se usará respaldo HTML5.`); 
+                    this.htmlFallback[id] = new Audio(url); 
+                } 
             };
             
             let promises = Object.keys(this.sfxPaths).map(k => loadBuffer(k, this.sfxPaths[k]));
-            promises.push(loadBuffer('musica', this.musicPath));
-            await Promise.all(promises);
+            let musicPromises = Object.keys(this.musicPaths).map(k => loadBuffer(k, this.musicPaths[k]));
+            
+            await Promise.all([...promises, ...musicPromises]);
             this.initialized = true;
         } catch(e) {
-            // Falla total de Web Audio, usar HTML5 clásico
             Object.keys(this.sfxPaths).forEach(k => { this.htmlFallback[k] = new Audio(this.sfxPaths[k]); });
             this.useWebAudio = false;
             this.initialized = true;
@@ -1020,30 +1026,34 @@ class BooSoundEngine {
         }
     }
 
-    playMusic() {
-        if(musicaMuted || masterMusica <= 0) return;
-        const volFinal = masterMusica * 0.15; // Volumen base de la música
+    playMusic(id = null) {
+        if(id) this.currentMusicId = id;
         
-        if(this.useWebAudio && this.buffers['musica']) {
+        if(musicaMuted || masterMusica <= 0) return;
+        const volFinal = masterMusica * 0.15; 
+        
+        if(this.musicSource) { this.musicSource.stop(); this.musicSource = null; }
+        Object.values(this.musicHtmlFallback).forEach(a => a.pause());
+        
+        if(this.useWebAudio && this.buffers[this.currentMusicId]) {
             if(this.ctx.state === 'suspended') this.ctx.resume();
-            if(this.musicSource) this.musicSource.stop();
             this.musicSource = this.ctx.createBufferSource();
-            this.musicSource.buffer = this.buffers['musica'];
+            this.musicSource.buffer = this.buffers[this.currentMusicId];
             this.musicSource.loop = true;
             this.musicGain = this.ctx.createGain();
             this.musicGain.gain.value = volFinal;
             this.musicSource.connect(this.musicGain);
             this.musicGain.connect(this.ctx.destination);
             this.musicSource.start();
-        } else {
-            this.musicHtmlFallback.volume = Math.min(1.0, volFinal);
-            this.musicHtmlFallback.play().catch(()=>{});
+        } else if (this.musicHtmlFallback[this.currentMusicId]) {
+            this.musicHtmlFallback[this.currentMusicId].volume = Math.min(1.0, volFinal);
+            this.musicHtmlFallback[this.currentMusicId].play().catch(()=>{});
         }
     }
 
     stopMusic() {
         if(this.musicSource) { this.musicSource.stop(); this.musicSource = null; }
-        this.musicHtmlFallback.pause();
+        Object.values(this.musicHtmlFallback).forEach(a => a.pause());
     }
 
     fadeMusic(multiplier, durationMs) {
@@ -1052,8 +1062,8 @@ class BooSoundEngine {
             const now = this.ctx.currentTime;
             this.musicGain.gain.cancelScheduledValues(now);
             this.musicGain.gain.linearRampToValueAtTime(volFinal, now + (durationMs / 1000));
-        } else {
-            this.musicHtmlFallback.volume = Math.min(1.0, volFinal);
+        } else if (this.musicHtmlFallback[this.currentMusicId]) {
+            this.musicHtmlFallback[this.currentMusicId].volume = Math.min(1.0, volFinal);
         }
     }
 }
@@ -1126,7 +1136,7 @@ function iniciarApp() {
     setTimeout(() => { splash.style.display = 'none'; }, 1500);
     
     SE.init().then(() => {
-        SE.playMusic();
+        SE.playMusic('menu');
         fadeMusica(0, 0); // Empieza en 0
         setTimeout(() => fadeMusica(1.0, 2000), 100);
     });
@@ -1144,7 +1154,7 @@ function toggleMuteMusica() {
 function cambiarVolumenMusica(valor) { 
     masterMusica = parseFloat(valor);
     if (musicaMuted && masterMusica > 0) toggleMuteMusica(); 
-    if (!musicaMuted && masterMusica > 0 && !SE.musicSource && SE.musicHtmlFallback.paused) SE.playMusic();
+    if (!musicaMuted && masterMusica > 0 && !SE.musicSource && SE.musicHtmlFallback[SE.currentMusicId].paused) SE.playMusic();
     fadeMusica(1.0, 100);
     vueltasDJ++; if(vueltasDJ >= 10 && !logros.includes('dj')) checkLogro('dj');
     guardarDatos();
@@ -1777,14 +1787,14 @@ let partidaFinalizada = false;
 let cataSpawnTimeout = null, cataSkulletteTimeout = null, cataPowerTimeout = null;
 let cataMultiplierActive = false, cataSkulletteUsed = false, cataGhostsCaught = 0, lastCataIndex = -1;
 let memErrors = 0, memCombo = 0, memBestCombo = 0, memHintsLeft = 2, memRoundPerfect = true, memRoundPerfectAchieved = false, memSessionScore = 0;
-let pocIngsUnlocked = 5, pocErrors = 0, pocBestStreak = 0, pocCurrentStreak = 0, pocRewardMilestone = 0;
+let pocScore = 0, pocTime = 30, pocErrors = 0, pocBestStreak = 0, pocCurrentStreak = 0;
 
 function iniciarTransicionJuego(idJuego) { 
     if(juegoEnProgreso) return; 
     juegoEnProgreso = true;
     revelarPista('pista_magia'); 
     
-    fadeMusica(0.0, 1000);
+    SE.stopMusic();
     playSfx('juego'); 
     const overlay = document.getElementById('fade-overlay'); overlay.style.opacity = '1';
     
@@ -1793,13 +1803,16 @@ function iniciarTransicionJuego(idJuego) {
     setTimeout(() => {
         cambiarPagina('sec-game-stage');
         document.querySelectorAll('.game-container').forEach(c => c.style.display = 'none');
-        document.getElementById('gc-' + idJuego).style.display = 'flex'; // Usar Flexbox para centrado
+        document.getElementById('gc-' + idJuego).style.display = 'flex';
         
         document.getElementById('menu-' + idJuego).style.display = 'flex';
         document.getElementById(idJuego === 'catacumbas' ? 'cata-msg-fin' : (idJuego === 'memoria' ? 'mem-msg-fin' : 'poc-msg-fin')).textContent = '';
         document.body.classList.add('modo-juego');
         document.documentElement.style.overflow = 'hidden';
         document.body.style.touchAction = 'none';
+        
+        SE.playMusic(idJuego);
+        
         overlay.style.opacity = '0';
         juegoEnProgreso = false; 
     }, 5000);
@@ -1812,7 +1825,10 @@ function salirJuego() {
     if(cataSkulletteTimeout) clearTimeout(cataSkulletteTimeout);
     if(cataPowerTimeout) clearTimeout(cataPowerTimeout);
     partidaFinalizada = true;
+    
+    fadeMusica(0.0, 500);
     const overlay = document.getElementById('fade-overlay'); overlay.style.opacity = '1';
+    
     setTimeout(() => {
         document.body.classList.remove('modo-juego');
         document.documentElement.style.overflow = '';
@@ -1821,7 +1837,7 @@ function salirJuego() {
         document.querySelectorAll('.game-menu-overlay').forEach(m => m.style.display = 'flex');
         document.getElementById('cata-skullette')?.classList.remove('visible','active-power');
         
-        if(!musicaMuted && masterMusica > 0) { fadeMusica(1.0, 1000); }
+        SE.playMusic('menu');
         
         cambiarPagina('sec-juegos');
         overlay.style.opacity = '0';
@@ -1865,11 +1881,11 @@ function finJuegoGuardar(idJuego, scoreLogico, textoMostrar) {
         if(scoreLogico >= 10) checkLogro('mem_ronda10');
     }
     if(idJuego === 'pociones') {
-        dulcesGanados = Math.floor(scoreLogico / 2); // 2 pociones = 1 caramelo
+        dulcesGanados = Math.floor(scoreLogico / 2);
         if(scoreLogico > records.pociones) { records.pociones = scoreLogico; recordRoto = true; }
         if(pocScore >= 30) checkLogro('poc_10');
         if(pocScore >= 75) checkLogro('poc_25');
-        if(pocIngsUnlocked >= pocAllIngs.length) checkLogro('poc_ingrediente');
+        if(pocScore >= 100) checkLogro('poc_ingrediente'); // Nerfed requirement
         if(pocBestStreak >= 15) checkLogro('poc_sin_errores');
         if(pocScore >= 100) checkLogro('poc_50');
     }
@@ -1914,7 +1930,6 @@ function spawnCata() {
     cells[nextIdx].innerHTML = isSkull ? '☠️' : '👻';
     cells[nextIdx].classList.add(isSkull ? 'has-skull' : 'has-ghost');
     
-    // Suavizamos el límite máximo de velocidad para que no sea inclickeable
     cataSpeed = Math.max(550, 1000 - (cataScore * 8)); 
     cataSpawnTimeout = setTimeout(spawnCata, cataSpeed);
 }
@@ -1933,7 +1948,7 @@ function clickCata(cell) {
 }
 function scheduleCataSkullette() {
     if (partidaFinalizada || cataTime <= 0) return;
-    const delay = 10000 + Math.random() * 8000; // Más rara
+    const delay = 25000 + Math.random() * 10000;
     cataSkulletteTimeout = setTimeout(() => {
         if (partidaFinalizada || cataTime <= 0) return;
         const skull = document.getElementById('cata-skullette');
@@ -1949,10 +1964,9 @@ function activarSkullette() {
     skull.classList.remove('visible'); skull.classList.add('active-power');
     cataSkulletteUsed = true; cataMultiplierActive = true; playSfx('exito');
     
-    // Animación Gigante X2
     const animX2 = document.getElementById('cata-x2-anim');
     animX2.classList.remove('show');
-    void animX2.offsetWidth; // Force reflow
+    void animX2.offsetWidth;
     animX2.classList.add('show');
     
     if(cataPowerTimeout) clearTimeout(cataPowerTimeout);
@@ -1960,7 +1974,6 @@ function activarSkullette() {
     scheduleCataSkullette();
 }
 
-// Escuchar barra espaciadora para la Skullette
 window.addEventListener('keydown', (e) => {
     if(e.code === 'Space' && document.getElementById('gc-catacumbas').style.display === 'flex' && !partidaFinalizada) {
         e.preventDefault();
@@ -1989,7 +2002,7 @@ function tickMemoria() {
 }
 function generarTableroMemoria() {
     const board = document.getElementById('mem-board'); board.innerHTML = '';
-    const pares = Math.min(6 + memRonda - 1, 10);
+    const pares = memRonda === 1 ? 6 : (memRonda === 2 ? 8 : 10);
     board.style.gridTemplateColumns = 'repeat(4, minmax(0, 1fr))';
     board.style.gridTemplateRows = `repeat(${Math.ceil((pares * 2) / 4)}, minmax(0, 1fr))`;
     
@@ -2002,7 +2015,6 @@ function generarTableroMemoria() {
         const c = document.createElement('button'); c.type = 'button'; c.className = 'mem-card'; c.dataset.val = emoji;
         if(emoji === magicEmoji) c.classList.add('magic-pair');
         c.setAttribute('aria-label','Carta de memoria');
-        // Arquitectura 3D Restaurada con emojis
         c.innerHTML = `<div class="back">❓</div><div class="front">${emoji}</div>`;
         c.onclick = () => flipMem(c); board.appendChild(c);
     });
@@ -2043,7 +2055,7 @@ function usarPistaMemoria() {
 }
 
 function checkWinMem() {
-    const paresRequeridos = Math.min(6 + memRonda - 1, 10);
+    const paresRequeridos = memRonda === 1 ? 6 : (memRonda === 2 ? 8 : 10);
     if(paresEncontrados >= paresRequeridos) {
         playSfx('logro'); memRoundPerfectAchieved = memRoundPerfectAchieved || memRoundPerfect;
         memRonda++; memTime += Math.max(10, 24 - memRonda);
@@ -2054,14 +2066,21 @@ function checkWinMem() {
     }
 }
 
-/* 3. LÓGICA: POCIONES */
+/* 3. LÓGICA: POCIONES (FITOLOGY) */
 const pocAllIngs = ['🌿', '🩸', '👁️', '🦴', '🍄', '🕷️', '🧿', '🪻', '🐍', '🕯️'];
-let pocIngs = pocAllIngs.slice(0,5);
+let pocIngs = [];
+let currentRecipe, currentStep;
+
 function startPociones() {
     partidaFinalizada = false;
     document.getElementById('menu-pociones').style.display = 'none';
-    pocTime = 30; pocScore = 0; pocErrors = 0; pocBestStreak = 0; pocCurrentStreak = 0; pocIngsUnlocked = 5; pocRewardMilestone = 0;
-    pocIngs = pocAllIngs.slice(0,5); renderIngredientesPociones();
+    pocTime = 30; pocScore = 0; pocErrors = 0; pocBestStreak = 0; pocCurrentStreak = 0;
+    
+    // Baraja aleatoriamente los ingredientes disponibles para esta partida limitando a 5
+    let shuffled = [...pocAllIngs].sort(() => Math.random() - 0.5);
+    pocIngs = shuffled.slice(0, 5);
+    
+    renderIngredientesPociones();
     document.getElementById('poc-time').textContent = pocTime; document.getElementById('poc-score').textContent = pocScore;
     document.getElementById('poc-bar').style.width = '0%';
     if(currentInterval) clearInterval(currentInterval);
@@ -2094,11 +2113,13 @@ function renderReceta() {
         let active = i === currentStep;
         let solved = i < currentStep;
         
-        // Punto centrado matemáticamente debajo del ingrediente
-        html += `<div class="poc-slot ${active ? 'active' : ''} ${solved ? 'solved' : ''}">
-                    <span class="poc-slot-emoji">${ing}</span>
-                    <div class="poc-dot"></div>
-                 </div>`;
+        if (solved) {
+            html += `<span style="opacity: 0.3; transition: all 0.3s; transform: scale(0.9); margin: 0 4px;">${ing}</span>`;
+        } else if (active) {
+            html += `<span style="opacity: 1; transform: scale(1.35); filter: drop-shadow(0 0 10px var(--pumpkin)); transition: all 0.3s; margin: 0 10px; z-index: 2;">${ing}</span>`;
+        } else {
+            html += `<span style="opacity: 0.8; transition: all 0.3s; transform: scale(1); margin: 0 4px;">${ing}</span>`;
+        }
     });
     box.innerHTML = html;
 }
@@ -2108,21 +2129,12 @@ function clickIngrediente(ing) {
     if(ing === currentRecipe[currentStep]) {
         playSfx('comprar'); currentStep++;
         if(currentStep >= currentRecipe.length) {
-            pocScore++; pocTime += Math.floor(Math.random() * 2) + 2; // +2 o +3 segundos (balanceado)
+            pocScore++; pocTime += Math.floor(Math.random() * 2) + 2; 
             pocCurrentStreak++; pocBestStreak = Math.max(pocBestStreak, pocCurrentStreak);
             document.getElementById('poc-score').textContent = pocScore; document.getElementById('poc-time').textContent = pocTime;
             
             let percentage = (pocScore % 10) * 10;
             document.getElementById('poc-bar').style.width = percentage + '%';
-            
-            const newMilestone = Math.floor(pocScore / 10);
-            if(newMilestone > pocRewardMilestone) {
-                pocRewardMilestone = newMilestone;
-                if(pocIngsUnlocked < pocAllIngs.length) {
-                    pocIngsUnlocked = Math.min(pocAllIngs.length, 5 + newMilestone);
-                    pocIngs = pocAllIngs.slice(0, pocIngsUnlocked); renderIngredientesPociones();
-                }
-            }
             
             box.classList.add('success'); playSfx('logro');
             setTimeout(generarRecetaPocion, 350);
