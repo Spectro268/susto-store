@@ -149,15 +149,15 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 .btn-col:hover { background: var(--pumpkin); color: #000; }
 
 /* LA TUERCA INMORTAL (SVG CON VIEWBOX AJUSTADO) */
-.btn-icono.tuerca { 
-  background: transparent; border: none; cursor: pointer; color: var(--ink); 
-  padding: 10px; margin: -10px; 
-  display: flex; align-items: center; justify-content: center; 
-  transition: all 0.3s; -webkit-tap-highlight-color: transparent; 
-  overflow: visible; 
+.btn-icono.tuerca {
+  background: transparent; border: none; cursor: pointer; color: var(--pumpkin);
+  padding: 10px; margin: -10px; min-width: 44px; min-height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  transition: color .3s ease, transform .3s ease, filter .3s ease;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation; overflow: visible;
 }
-.btn-icono.tuerca svg { width: 26px; height: 26px; overflow: visible; display: block; }
-.btn-icono.tuerca:hover { color: var(--pumpkin); filter: drop-shadow(0 0 8px var(--glow)); transform: scale(1.1); }
+.btn-icono.tuerca svg { width: 26px; height: 26px; overflow: visible; display: block; flex-shrink: 0; }
+.btn-icono.tuerca:hover { color: var(--violet); filter: drop-shadow(0 0 8px var(--glow)); transform: scale(1.1); }
 .btn-icono.tuerca:hover svg { animation: spin 2s linear infinite; }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
@@ -220,6 +220,12 @@ nav a:hover, nav a.activo { color: var(--pumpkin); border-bottom: 2px solid var(
 #toast-logro.visible { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
 #toast-txt { flex-grow: 1; pointer-events: none; }
 
+.game-result-achievements { margin:10px auto 0; max-width:420px; width:100%; font-size:.9rem; text-align:left; }
+.game-result-achievements > strong { display:block; text-align:center; color:var(--pumpkin); margin-bottom:5px; }
+.game-result-achievement { display:flex; align-items:center; gap:7px; padding:4px 8px; margin:3px 0; border-radius:8px; background:rgba(255,255,255,.08); font-size:.82rem; }
+.game-result-achievement span { flex:1; }
+.game-result-achievement small { color:#ffd700; white-space:nowrap; }
+.game-menu-overlay:has(.game-result-achievements) { overflow-y:auto; justify-content:flex-start; padding-top:max(25px, env(safe-area-inset-top)); padding-bottom: max(25px, env(safe-area-inset-bottom)); }
 #fade-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: black; opacity: 0; pointer-events: none; transition: opacity 1s ease-in-out; z-index: 9999; }
 
 /* GRID ELEMENTOS BÁSICOS */
@@ -304,39 +310,54 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
 /* ==========================================
    FASE 2: ESTILOS DE LOS MINIJUEGOS ARCADE
    ========================================== */
-#sec-game-stage { display: none; padding: 20px 5vw; min-height: 100vh; position: relative; }
+#sec-game-stage { display: none; padding: max(10px, env(safe-area-inset-top)) max(12px, 3vw) max(10px, env(safe-area-inset-bottom)); position: fixed; inset: 0; z-index: 500; width: 100%; height: 100vh; height: 100dvh; min-height: 0; overflow: hidden; background: rgba(0,0,0,.36); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); overscroll-behavior: none; touch-action: pan-x pan-y; }
 #sec-game-stage.activa { display: block; }
-.game-container { display: none; text-align: center; max-width: 800px; margin: 0 auto; padding-bottom: 50px;}
-
+body.modo-juego { overflow: hidden !important; height: 100%; overscroll-behavior: none; }
+body.modo-juego > header { display: none !important; }
+body.modo-juego .pagina:not(#sec-game-stage) { visibility: hidden; }
+.game-container { display: none; text-align: center; width: min(100%, 800px); max-height: 100%; height: 100%; overflow: hidden; margin: 0 auto; padding: 0 0 max(4px, env(safe-area-inset-bottom)); position: relative; }
 .game-hud { display: flex; justify-content: space-between; align-items: center; background: var(--card); border: 2px var(--borde-estilo) var(--ember); padding: 15px 20px; border-radius: 18px; margin-bottom: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
 .game-hud div { font-size: 1.2rem; font-weight: 900; color: var(--pumpkin); }
 .game-hud span { color: var(--ink); font-weight: 500; font-size: 1rem; display: block; }
 
-.game-menu-overlay { position: absolute; inset: 0; background: rgba(20,5,5,0.95); z-index: 50; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 18px; backdrop-filter: blur(5px); }
+.game-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.46); z-index: 550; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px; text-align: center; -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); overflow: hidden; }
+.game-menu-overlay .game-title { font-size: clamp(2rem, 7vw, 3rem); }
+.game-menu-overlay .game-rules { font-size: clamp(.95rem, 3vw, 1.1rem); margin-bottom: 18px; }
 .game-title { font-size: 3rem; color: var(--pumpkin); text-shadow: 0 0 15px var(--glow); margin: 0 0 10px; line-height: 1; }
 .game-rules { font-size: 1.1rem; max-width: 400px; margin-bottom: 30px; opacity: 0.9; }
 
 /* 1. Catacumbas */
-.cata-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; max-width: 400px; margin: 0 auto; }
-.cata-cell { background: var(--card); border: 2px var(--borde-estilo) var(--ember); border-radius: 15px; aspect-ratio: 1/1; display: flex; justify-content: center; align-items: center; font-size: 4rem; cursor: pointer; user-select: none; transition: all 0.1s; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); -webkit-tap-highlight-color: transparent;}
+.cata-board-wrap { position: relative; width: min(100%, 600px); margin: 0 auto; }
+.cata-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(6px, 2vw, 15px); width: min(100%, 400px); margin: 0 auto; }
+.cata-cell { background: var(--card); border: 2px var(--borde-estilo) var(--ember); border-radius: 15px; aspect-ratio: 1/1; min-width: 0; display: flex; justify-content: center; align-items: center; font-size: clamp(2rem, 7vw, 4rem); cursor: pointer; user-select: none; transition: all 0.1s; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); -webkit-tap-highlight-color: transparent;}
 .cata-cell:active { transform: scale(0.95); }
 .cata-cell.has-ghost { background: var(--glow); border-color: var(--pumpkin); animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 .cata-cell.has-skull { background: rgba(255,0,0,0.2); border-color: #ff0000; animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.cata-skullette { display: none; align-items: center; justify-content: center; position: absolute; top: 35%; width: 68px; height: 68px; border: 2px solid var(--pumpkin); border-radius: 50%; background: rgba(0,0,0,.82); box-shadow: 0 0 22px var(--glow); z-index: 5; animation: skulletteBounce .65s ease-in-out infinite alternate; touch-action: manipulation; }
+.cata-skullette.visible { display: flex; }
+.cata-skullette img { width: 82%; height: 82%; object-fit: contain; }
+.cata-skullette.left { left: 0; transform: translateX(-10%); }
+.cata-skullette.right { right: 0; transform: translateX(10%); }
+@keyframes skulletteBounce { from { margin-top: -8px; } to { margin-top: 8px; } }
+.cata-skullette-note { display: none; font-size: .8rem; color: var(--pumpkin); margin: 5px auto 0; }
+.cata-skullette-note.visible { display: block; }
+.cata-skullette.active-power { box-shadow: 0 0 30px #ffd700; border-color: #ffd700; }
 
 /* 2. Memoria Monstruosa */
-.memoria-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 500px; margin: 0 auto; perspective: 1000px; }
-.mem-card { background: var(--card); border: 2px var(--borde-estilo) var(--ember); border-radius: 12px; aspect-ratio: 3/4; display: flex; justify-content: center; align-items: center; font-size: 2.5rem; cursor: pointer; user-select: none; transition: transform 0.4s, background 0.3s; transform-style: preserve-3d; -webkit-tap-highlight-color: transparent;}
+.memoria-tools { display:flex; justify-content:center; align-items:center; gap:10px; margin: 0 auto 8px; flex-wrap:wrap; font-size:.9rem; }
+.memoria-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(0, 1fr); gap: clamp(4px, 1.2vw, 9px); width: min(100%, 560px); height: min(68dvh, 600px); max-height: calc(100dvh - 170px); margin: 0 auto; perspective: 1000px; }
+.mem-card { position: relative; min-width: 0; min-height: 0; overflow: hidden; background: var(--card); border: 2px var(--borde-estilo) var(--ember); border-radius: 12px; aspect-ratio: auto; display: flex; justify-content: center; align-items: center; font-size: clamp(1.2rem, 4vw, 2.5rem); cursor: pointer; user-select: none; transition: transform 0.4s, background 0.3s; transform-style: preserve-3d; -webkit-tap-highlight-color: transparent;}
 .mem-card.flipped { transform: rotateY(180deg); background: var(--glow); border-color: var(--pumpkin); }
-.mem-card.matched { visibility: hidden; opacity: 0; transition: visibility 0s 0.5s, opacity 0.5s linear; }
+.mem-card.matched { visibility: hidden; opacity: 0; pointer-events:none; transition: visibility 0s 0.5s, opacity 0.5s linear; }
 .mem-card .front, .mem-card .back { position: absolute; backface-visibility: hidden; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; }
 .mem-card .front { transform: rotateY(180deg); }
 
 /* 3. Pociones */
-.poc-receta-box { background: rgba(0,0,0,0.5); border: 2px dashed var(--pumpkin); border-radius: 15px; padding: 20px; margin-bottom: 30px; font-size: 3rem; letter-spacing: 15px; display: flex; justify-content: center; min-height: 100px; align-items: center; transition: 0.3s; }
+.poc-receta-box { background: rgba(0,0,0,0.5); border: 2px dashed var(--pumpkin); border-radius: 15px; padding: clamp(10px, 2vh, 20px); margin: 0 auto 12px; font-size: clamp(1.6rem, 6vw, 3rem); letter-spacing: clamp(2px, 1.2vw, 12px); display: flex; justify-content: center; flex-wrap: wrap; gap: 2px; min-height: 64px; align-items: center; transition: 0.3s; }
 .poc-receta-box.error { background: rgba(255,0,0,0.3); border-color: red; animation: shake 0.4s; }
 .poc-receta-box.success { background: rgba(0,255,0,0.2); border-color: #00ff00; transform: scale(1.05); }
-.poc-shelf { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-.poc-ing { background: var(--card); border: 2px var(--borde-estilo) var(--ember); border-radius: 50%; width: 70px; height: 70px; display: flex; justify-content: center; align-items: center; font-size: 2.5rem; cursor: pointer; user-select: none; transition: 0.1s; box-shadow: 0 5px 10px rgba(0,0,0,0.5); -webkit-tap-highlight-color: transparent;}
+.poc-shelf { display: flex; justify-content: center; align-content: center; gap: clamp(6px, 2vw, 15px); flex-wrap: wrap; max-width: 600px; margin: 0 auto; }
+.poc-ing { background: var(--card); border: 2px var(--borde-estilo) var(--ember); border-radius: 50%; width: clamp(48px, 12vw, 70px); height: clamp(48px, 12vw, 70px); display: flex; justify-content: center; align-items: center; font-size: 2.5rem; cursor: pointer; user-select: none; transition: 0.1s; box-shadow: 0 5px 10px rgba(0,0,0,0.5); -webkit-tap-highlight-color: transparent;}
 .poc-ing:active { transform: translateY(5px); box-shadow: 0 0 0 rgba(0,0,0,0); border-color: var(--pumpkin); background: var(--glow); }
 
 @media(max-width: 850px) {
@@ -361,6 +382,38 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   .poc-receta-box { font-size: 2.2rem; letter-spacing: 5px; padding: 15px; }
   .poc-ing { width: 60px; height: 60px; font-size: 2rem; }
 }
+
+/* EXPERIENCIA ARCADE: MÓVIL, PANTALLA COMPLETA Y SIN SCROLL DE PÁGINA */
+@media (max-width: 850px) {
+  body.modo-juego header { display:none !important; }
+  #sec-game-stage { padding: max(6px, env(safe-area-inset-top)) 10px max(6px, env(safe-area-inset-bottom)); }
+  .game-container { width:100%; }
+  .game-hud { gap:5px; padding:7px 8px; margin:0 auto 8px; border-radius:12px; }
+  .game-hud div { font-size:clamp(.75rem, 3.3vw, 1rem); line-height:1.2; }
+  .game-hud span { font-size:clamp(.68rem, 2.8vw, .9rem); }
+  .cata-board-wrap { width:100%; max-width:420px; }
+  .cata-grid { width:min(100%, 360px); gap:6px; }
+  .cata-cell { border-radius:10px; }
+  .cata-skullette { position:relative; top:auto; left:auto; right:auto; transform:none; width:48px; height:48px; margin:8px auto 0; }
+  .cata-skullette.left, .cata-skullette.right { transform:none; }
+  .cata-skullette-note { margin-top:2px; }
+  .memoria-tools { margin-bottom:5px; font-size:.78rem; }
+  .memoria-grid { width:min(100%, 460px); height:min(63dvh, 500px); max-height:calc(100dvh - 155px); gap:5px; }
+  .mem-card { border-radius:8px; border-width:1px; }
+  .poc-receta-box { margin-bottom:10px; }
+  .poc-shelf { gap:7px; max-width:460px; }
+  .poc-ing { width:clamp(44px, 13vw, 60px); height:clamp(44px, 13vw, 60px); font-size:clamp(1.4rem, 6vw, 2rem); }
+  .game-menu-overlay { padding:18px; }
+  .game-menu-overlay .btn-accion, .game-menu-overlay .btn-cerrar-modal { max-width:min(100%, 320px); font-size:1rem !important; padding:12px 18px !important; margin-bottom:10px !important; }
+}
+@media (max-height: 650px) {
+  .game-hud { padding:5px 8px; margin-bottom:5px; }
+  .memoria-grid { height:calc(100dvh - 145px); max-height:calc(100dvh - 145px); }
+  .cata-grid { width:min(55vh, 360px); }
+  .poc-receta-box { min-height:52px; }
+  .poc-ing { width:48px; height:48px; }
+}
+
 </style>
 </head>
 <body>
@@ -481,8 +534,8 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
   <div class="header-right">
     <span class="moneda-ui">🍬 <span id="ui-dulces">0</span></span>
     <a class="btn-col" onclick="cambiarPagina('sec-coleccion')" id="nav-coleccion">Nuestra Colección</a>
-    <button class="btn-icono tuerca" onclick="abrirAjustes()" title="Ajustes">
-      <svg viewBox="-2 -2 28 28" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <button class="btn-icono tuerca" onclick="abrirAjustes()" title="Ajustes" aria-label="Abrir configuración">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <circle cx="12" cy="12" r="3"></circle>
         <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
       </svg>
@@ -541,10 +594,14 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
             <div>Récord: <span id="cata-record">0</span></div>
         </div>
         
-        <div class="cata-grid" id="cata-board">
+        <div class="cata-board-wrap">
+          <div class="cata-grid" id="cata-board">
             <div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div>
             <div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div>
             <div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div>
+          </div>
+          <button type="button" class="cata-skullette" id="cata-skullette" aria-label="Activar multiplicador x2" onclick="activarSkullette()"><img src="logo-hd.png" alt="Skullette especial"></button>
+          <div class="cata-skullette-note" id="cata-skullette-note">¡Skullette! ×2 por 10 s</div>
         </div>
 
         <!-- Menú Interno Catacumbas -->
@@ -565,12 +622,13 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
             <div>Récord (Ronda): <span id="mem-record">1</span></div>
         </div>
         
+        <div class="memoria-tools"><span>Combo: <strong id="mem-combo">0</strong></span><span>Pistas: <strong id="mem-hints">2</strong></span><button type="button" class="btn-col" id="mem-hint-btn" onclick="usarPistaMemoria()" style="padding:6px 12px">💡 Usar pista</button><span>Récord infinito: <strong id="mem-infinite-record">1</strong></span></div>
         <div class="memoria-grid" id="mem-board"></div>
 
         <!-- Menú Interno Memoria -->
         <div class="game-menu-overlay" id="menu-memoria">
             <h2 class="game-title">Memoria</h2>
-            <p class="game-rules">Encuentra todos los pares antes de que el tiempo llegue a cero. Cada ronda el tablero crece y te da tiempo extra.</p>
+            <p class="game-rules">Encuentra todos los pares antes de que el tiempo llegue a cero. La cuadrícula mantiene un tamaño estable. Supera rondas infinitas, crea combos y usa dos pistas por partida.</p>
             <h3 style="color:var(--pumpkin); margin-bottom: 30px;" id="mem-msg-fin"></h3>
             <button class="btn-accion" style="font-size: 1.5rem; padding: 15px 40px; margin-bottom: 20px;" onclick="startMemoria()">▶️ INICIAR JUEGO</button>
             <button class="btn-cerrar-modal" style="width: auto; background: transparent; border: 1px solid var(--ember);" onclick="salirJuego()">⬅ Volver a la Tienda</button>
@@ -587,18 +645,13 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 0 0 8px; c
         
         <div class="poc-receta-box" id="poc-receta-ui">...</div>
         
-        <div class="poc-shelf">
-            <div class="poc-ing" onclick="clickIngrediente('🌿')">🌿</div>
-            <div class="poc-ing" onclick="clickIngrediente('🩸')">🩸</div>
-            <div class="poc-ing" onclick="clickIngrediente('👁️')">👁️</div>
-            <div class="poc-ing" onclick="clickIngrediente('🦴')">🦴</div>
-            <div class="poc-ing" onclick="clickIngrediente('🍄')">🍄</div>
-        </div>
+        <div class="poc-shelf" id="poc-shelf" aria-label="Ingredientes disponibles"></div>
+        <p id="poc-progress" style="margin:8px 0 0;font-size:.82rem;color:var(--pumpkin)">Siguiente ingrediente: 10 pociones</p>
 
         <!-- Menú Interno Pociones -->
         <div class="game-menu-overlay" id="menu-pociones">
             <h2 class="game-title">Biteology</h2>
-            <p class="game-rules">Memoriza la receta y toca los ingredientes en el orden exacto. Cada poción perfecta suma +5 segundos. ¡Si fallas pierdes 3s!</p>
+            <p class="game-rules">Memoriza la receta y toca los ingredientes en el orden exacto. Cada poción perfecta suma +1 segundo. Cada 10 pociones desbloqueas un ingrediente y ganas 5 caramelos. ¡Si fallas pierdes 3 s!</p>
             <h3 style="color:var(--pumpkin); margin-bottom: 30px;" id="poc-msg-fin"></h3>
             <button class="btn-accion" style="font-size: 1.5rem; padding: 15px 40px; margin-bottom: 20px;" onclick="startPociones()">▶️ INICIAR JUEGO</button>
             <button class="btn-cerrar-modal" style="width: auto; background: transparent; border: 1px solid var(--ember);" onclick="salirJuego()">⬅ Volver a la Tienda</button>
@@ -798,7 +851,21 @@ const catalogoLogros = {
   'fashionista': { icono: '👗', nombre: 'Fashionista Oscura', desc: 'Tienes 4 temas visuales en tu colección.' },
   'dj': { icono: '🎛️', nombre: 'DJ Monstruoso', desc: 'Jugaste con los controles de audio 10 veces.' },
   'amor': { icono: '💖', nombre: 'Amor Incondicional', desc: 'El código de la fecha especial fue usado.' },
-  'comprador': { icono: '🛍️', nombre: 'Comprador Compulsivo', desc: 'Gastaste tus primeros 100 dulces en la tienda.' }
+  'comprador': { icono: '🛍️', nombre: 'Comprador Compulsivo', desc: 'Gastaste tus primeros 100 dulces en la tienda.' },
+  'cata_cazafantasmas': { icono: '👻', nombre: 'Cazafantasmas', desc: 'Atrapa 10 fantasmas en una partida de Catacumbas.' },
+  'cata_cazador_maestro': { icono: '🏹', nombre: 'Cazador de Catacumbas', desc: 'Atrapa 30 fantasmas en una partida.' },
+  'cata_skullette': { icono: '💀', nombre: 'Fortuna Maldita', desc: 'Activa el multiplicador de la Skullette.' },
+  'cata_combo': { icono: '⏳', nombre: 'Contra el Reloj', desc: 'Alcanza 20 puntos en Catacumbas.' },
+  'mem_primera_ronda': { icono: '🧠', nombre: 'Memoria Despierta', desc: 'Completa tu primera ronda de Memoria.' },
+  'mem_perfecta': { icono: '🎯', nombre: 'Memoria Perfecta', desc: 'Completa una ronda sin errores.' },
+  'mem_combo': { icono: '⚡', nombre: 'Racha Sobrenatural', desc: 'Encuentra cinco parejas consecutivas.' },
+  'mem_ronda5': { icono: '🏆', nombre: 'Mente Monstruosa', desc: 'Alcanza la ronda 5 del modo infinito.' },
+  'mem_ronda10': { icono: '🌌', nombre: 'Memoria Legendaria', desc: 'Alcanza la ronda 10 del modo infinito.' },
+  'poc_10': { icono: '🧪', nombre: 'Aprendiz de Brujería', desc: 'Prepara 10 pociones en una partida.' },
+  'poc_25': { icono: '⚗️', nombre: 'Maestro del Caldero', desc: 'Prepara 25 pociones en una partida.' },
+  'poc_ingrediente': { icono: '🍄', nombre: 'Coleccionista de Ingredientes', desc: 'Desbloquea un ingrediente durante una partida.' },
+  'poc_sin_errores': { icono: '✨', nombre: 'Alquimista Impecable', desc: 'Prepara cinco pociones seguidas sin fallar.' },
+  'poc_50': { icono: '🔮', nombre: 'Gran Alquimista', desc: 'Acumula 50 pociones en una partida.' }
 };
 
 const catalogoPistas = {
@@ -1629,6 +1696,12 @@ programarSkullette();
 // ========================================================
 let juegoEnProgreso = false;
 let currentInterval = null;
+let partidaFinalizada = false;
+let gameAchievementsPending = [];
+let cataSpawnTimeout = null, cataSkulletteTimeout = null, cataPowerTimeout = null;
+let cataMultiplierActive = false, cataSkulletteUsed = false, cataGhostsCaught = 0;
+let memErrors = 0, memCombo = 0, memBestCombo = 0, memHintsLeft = 2, memRoundPerfect = true, memRoundPerfectAchieved = false, memSessionScore = 0;
+let pocIngsUnlocked = 5, pocErrors = 0, pocBestStreak = 0, pocCurrentStreak = 0, pocRewardMilestone = 0;
 
 function iniciarTransicionJuego(idJuego) { 
     if(juegoEnProgreso) return; 
@@ -1648,185 +1721,316 @@ function iniciarTransicionJuego(idJuego) {
         
         document.getElementById('menu-' + idJuego).style.display = 'flex';
         document.getElementById(idJuego === 'catacumbas' ? 'cata-msg-fin' : (idJuego === 'memoria' ? 'mem-msg-fin' : 'poc-msg-fin')).textContent = '';
-        
-        overlay.style.opacity = '0'; 
+        document.body.classList.add('modo-juego');
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.touchAction = 'none';
+        overlay.style.opacity = '0';
         juegoEnProgreso = false; 
     }, 5000);
 }
 
 function salirJuego() {
+    if (juegoEnProgreso) return;
     if(currentInterval) clearInterval(currentInterval);
+    if(cataSpawnTimeout) clearTimeout(cataSpawnTimeout);
+    if(cataSkulletteTimeout) clearTimeout(cataSkulletteTimeout);
+    if(cataPowerTimeout) clearTimeout(cataPowerTimeout);
+    partidaFinalizada = true;
     const overlay = document.getElementById('fade-overlay'); overlay.style.opacity = '1';
     setTimeout(() => {
-        if(!musicaMuted && document.getElementById('vol-musica').value > 0) { 
+        document.body.classList.remove('modo-juego');
+        document.documentElement.style.overflow = '';
+        document.body.style.touchAction = '';
+        document.querySelectorAll('.game-container').forEach(c => c.style.display = 'none');
+        document.querySelectorAll('.game-menu-overlay').forEach(m => m.style.display = 'flex');
+        document.getElementById('cata-skullette')?.classList.remove('visible','active-power');
+        if(!musicaMuted && document.getElementById('vol-musica').value > 0) {
             sfxBases['musica'].audio.volume = 0;
             sfxBases['musica'].audio.play().catch(e=>console.log(e));
-            fadeMusica(1.0, 1000); 
+            fadeMusica(1.0, 1000);
         }
         cambiarPagina('sec-juegos');
         overlay.style.opacity = '0';
-    }, 1000);
+    }, 650);
+}
+
+function desbloquearLogroJuego(id, nuevos) {
+    if (!catalogoLogros[id] || logros.includes(id)) return;
+    logros.push(id);
+    const bonus = agregarDulces(5);
+    nuevos.push({ ...catalogoLogros[id], bonus });
 }
 
 function finJuegoGuardar(idJuego, scoreLogico, textoMostrar) {
-    let dulcesGanados = 0;
-    let recordRoto = false;
-    
-    if(idJuego === 'catacumbas') { dulcesGanados = Math.floor(scoreLogico / 10); if(scoreLogico > records.catacumbas) { records.catacumbas = scoreLogico; recordRoto = true; } }
-    if(idJuego === 'memoria') { dulcesGanados = scoreLogico * 5; if(scoreLogico > records.memoria) { records.memoria = scoreLogico; recordRoto = true; } }
-    if(idJuego === 'pociones') { dulcesGanados = scoreLogico * 2; if(scoreLogico > records.pociones) { records.pociones = scoreLogico; recordRoto = true; } }
-    
-    let baseWin = agregarDulces(dulcesGanados);
+    if (partidaFinalizada) return;
+    partidaFinalizada = true;
+    if(currentInterval) clearInterval(currentInterval);
+    if(cataSpawnTimeout) clearTimeout(cataSpawnTimeout);
+    if(cataSkulletteTimeout) clearTimeout(cataSkulletteTimeout);
+    if(cataPowerTimeout) clearTimeout(cataPowerTimeout);
+    document.getElementById('cata-skullette')?.classList.remove('visible','active-power');
+    let nuevos = [];
+    let dulcesGanados = 0, recordRoto = false;
+    if(idJuego === 'catacumbas') {
+        dulcesGanados = Math.floor(scoreLogico / 10);
+        if(scoreLogico > records.catacumbas) { records.catacumbas = scoreLogico; recordRoto = true; }
+        if(cataGhostsCaught >= 10) desbloquearLogroJuego('cata_cazafantasmas', nuevos);
+        if(cataGhostsCaught >= 30) desbloquearLogroJuego('cata_cazador_maestro', nuevos);
+        if(cataSkulletteUsed) desbloquearLogroJuego('cata_skullette', nuevos);
+        if(scoreLogico >= 20) desbloquearLogroJuego('cata_combo', nuevos);
+    }
+    if(idJuego === 'memoria') {
+        dulcesGanados = Math.max(0, scoreLogico) * 5;
+        if(scoreLogico > records.memoria) { records.memoria = scoreLogico; recordRoto = true; }
+        if(memRonda > 1) desbloquearLogroJuego('mem_primera_ronda', nuevos);
+        if(memRoundPerfectAchieved) desbloquearLogroJuego('mem_perfecta', nuevos);
+        if(memBestCombo >= 5) desbloquearLogroJuego('mem_combo', nuevos);
+        if(scoreLogico >= 5) desbloquearLogroJuego('mem_ronda5', nuevos);
+        if(scoreLogico >= 10) desbloquearLogroJuego('mem_ronda10', nuevos);
+    }
+    if(idJuego === 'pociones') {
+        dulcesGanados = scoreLogico * 2;
+        if(scoreLogico > records.pociones) { records.pociones = scoreLogico; recordRoto = true; }
+        if(pocScore >= 10) desbloquearLogroJuego('poc_10', nuevos);
+        if(pocScore >= 25) desbloquearLogroJuego('poc_25', nuevos);
+        if(pocIngsUnlocked > 5) desbloquearLogroJuego('poc_ingrediente', nuevos);
+        if(pocBestStreak >= 5) desbloquearLogroJuego('poc_sin_errores', nuevos);
+        if(pocScore >= 50) desbloquearLogroJuego('poc_50', nuevos);
+    }
+    const baseWin = agregarDulces(dulcesGanados);
     guardarDatos(); playSfx(recordRoto ? 'ataudPremio' : 'logro');
-    
-    document.getElementById('menu-' + idJuego).style.display = 'flex';
-    document.getElementById(idJuego === 'catacumbas' ? 'cata-msg-fin' : (idJuego === 'memoria' ? 'mem-msg-fin' : 'poc-msg-fin')).innerHTML = `${textoMostrar} <br> <span style="color:#fff; font-size:1.2rem;">Ganaste +${baseWin} 🍬</span> ${recordRoto ? '<br>🌟 ¡NUEVO RÉCORD! 🌟' : ''}`;
+    const menu = document.getElementById('menu-' + idJuego);
+    menu.style.display = 'flex';
+    const msg = document.getElementById(idJuego === 'catacumbas' ? 'cata-msg-fin' : (idJuego === 'memoria' ? 'mem-msg-fin' : 'poc-msg-fin'));
+    const achievementsHtml = nuevos.length ? `<div class="game-result-achievements"><strong>🏅 Logros nuevos</strong>${nuevos.map(a => `<div class="game-result-achievement">${a.icono} <span>${a.nombre}</span> <small>+${a.bonus} 🍬</small></div>`).join('')}</div>` : '<div class="game-result-achievements"><strong>🏅 Sin logros nuevos esta vez</strong></div>';
+    msg.innerHTML = `${textoMostrar}<br><span style="color:#fff;font-size:1.05rem;">Ganaste +${baseWin} 🍬</span>${recordRoto ? '<br>🌟 ¡NUEVO RÉCORD! 🌟' : ''}${achievementsHtml}`;
+    guardarDatos();
 }
 
 /* 1. LÓGICA: CATACUMBAS */
 let cataTime, cataScore, cataSpeed;
 function startCatacumbas() {
+    partidaFinalizada = false; gameAchievementsPending = [];
     document.getElementById('menu-catacumbas').style.display = 'none';
-    cataTime = 30; cataScore = 0; cataSpeed = 1000;
+    cataTime = 30; cataScore = 0; cataSpeed = 1000; cataGhostsCaught = 0; cataSkulletteUsed = false; cataMultiplierActive = false;
     document.getElementById('cata-time').textContent = cataTime; document.getElementById('cata-score').textContent = cataScore;
     document.querySelectorAll('.cata-cell').forEach(c => { c.innerHTML = ''; c.className = 'cata-cell'; });
-    
+    const skull = document.getElementById('cata-skullette'); skull.classList.remove('visible','active-power'); skull.classList.remove('left','right');
     if(currentInterval) clearInterval(currentInterval);
+    if(cataSpawnTimeout) clearTimeout(cataSpawnTimeout);
+    if(cataSkulletteTimeout) clearTimeout(cataSkulletteTimeout);
     currentInterval = setInterval(tickCata, 1000);
-    spawnCata();
+    spawnCata(); scheduleCataSkullette();
 }
 function tickCata() {
+    if (partidaFinalizada) return;
     cataTime--; document.getElementById('cata-time').textContent = cataTime;
-    if(cataTime <= 0) { clearTimeout(window.cataTimer); clearInterval(currentInterval); document.querySelectorAll('.cata-cell').forEach(c => c.innerHTML = ''); finJuegoGuardar('catacumbas', cataScore, `¡Tiempo Agotado!<br>Puntaje: ${cataScore}`); }
+    if(cataTime <= 0) { clearInterval(currentInterval); document.querySelectorAll('.cata-cell').forEach(c => c.innerHTML = ''); finJuegoGuardar('catacumbas', cataScore, `¡Tiempo agotado!<br>Puntaje: ${cataScore}`); }
 }
 function spawnCata() {
-    if(cataTime <= 0) return;
+    if(cataTime <= 0 || partidaFinalizada) return;
     document.querySelectorAll('.cata-cell').forEach(c => { c.innerHTML = ''; c.className = 'cata-cell'; });
     const cells = document.querySelectorAll('.cata-cell');
-    let idx = Math.floor(Math.random() * cells.length);
-    let isSkull = Math.random() > 0.8;
+    const idx = Math.floor(Math.random() * cells.length);
+    const isSkull = Math.random() > 0.82;
     cells[idx].innerHTML = isSkull ? '☠️' : '👻';
     cells[idx].classList.add(isSkull ? 'has-skull' : 'has-ghost');
-    
-    cataSpeed = Math.max(400, 1000 - (Math.floor(cataScore/10) * 150));
-    window.cataTimer = setTimeout(spawnCata, cataSpeed);
+    cataSpeed = Math.max(420, 1000 - (Math.floor(cataScore / 10) * 90));
+    cataSpawnTimeout = setTimeout(spawnCata, cataSpeed);
 }
 function clickCata(cell) {
-    if(cell.innerHTML === '👻') { playSfx('comprar'); cataScore++; document.getElementById('cata-score').textContent = cataScore; cell.innerHTML = '💨'; cell.className = 'cata-cell'; }
-    else if(cell.innerHTML === '☠️') { playSfx('error'); cataTime -= 3; document.getElementById('cata-time').textContent = cataTime; cell.innerHTML = '💥'; cell.className = 'cata-cell'; }
+    if (partidaFinalizada || !juegoEnProgreso && !document.body.classList.contains('modo-juego') || !cell.innerHTML) return;
+    if(cell.innerHTML === '👻') {
+        playSfx('comprar'); cataGhostsCaught++;
+        const pts = cataMultiplierActive ? 2 : 1, secs = cataMultiplierActive ? 2 : 1;
+        cataScore += pts; cataTime += secs;
+        document.getElementById('cata-score').textContent = cataScore; document.getElementById('cata-time').textContent = cataTime;
+        cell.innerHTML = '💨'; cell.className = 'cata-cell';
+    } else if(cell.innerHTML === '☠️') {
+        playSfx('error'); cataTime -= 3; document.getElementById('cata-time').textContent = cataTime; cell.innerHTML = '💥'; cell.className = 'cata-cell';
+        if(cataTime <= 0) finJuegoGuardar('catacumbas', cataScore, `¡Las catacumbas te vencieron!<br>Puntaje: ${cataScore}`);
+    }
+}
+function scheduleCataSkullette() {
+    if (partidaFinalizada || cataTime <= 0) return;
+    const delay = 6500 + Math.random() * 6500;
+    cataSkulletteTimeout = setTimeout(() => {
+        if (partidaFinalizada || cataTime <= 0) return;
+        const skull = document.getElementById('cata-skullette');
+        if (window.matchMedia('(max-width: 850px)').matches) skull.classList.remove('left','right');
+        else { skull.classList.toggle('left', Math.random() < .5); skull.classList.toggle('right', !skull.classList.contains('left')); }
+        skull.classList.add('visible');
+        const note = document.getElementById('cata-skullette-note'); if(note) note.classList.add('visible');
+        cataSkulletteTimeout = setTimeout(() => { skull.classList.remove('visible'); if(note) note.classList.remove('visible'); scheduleCataSkullette(); }, 4200);
+    }, delay);
+}
+function activarSkullette() {
+    if (partidaFinalizada || cataTime <= 0) return;
+    const skull = document.getElementById('cata-skullette');
+    if (!skull.classList.contains('visible')) return;
+    skull.classList.remove('visible'); skull.classList.add('active-power');
+    const note = document.getElementById('cata-skullette-note'); if(note) { note.classList.add('visible'); note.textContent = '×2 ACTIVADO · 10 s'; }
+    cataSkulletteUsed = true; cataMultiplierActive = true; playSfx('exito');
+    if(cataPowerTimeout) clearTimeout(cataPowerTimeout);
+    cataPowerTimeout = setTimeout(() => { cataMultiplierActive = false; skull.classList.remove('active-power'); if(note) { note.classList.remove('visible'); note.textContent = '¡Skullette! ×2 por 10 s'; } }, 10000);
+    scheduleCataSkullette();
 }
 
-/* 2. LÓGICA: MEMORIA MONSTRUOSA */
+/* 2. LÓGICA: MEMORIA MONSTRUOSA — MODO INFINITO */
 const emojisMem = ['🦇', '🕸️', '🕷️', '🧛', '🖤', '💀', '🎃', '🧟', '🧪', '🔮'];
 let memRonda, memTime, memCards, firstCard, secondCard, lockBoard, paresEncontrados;
-
 function startMemoria() {
+    partidaFinalizada = false; gameAchievementsPending = [];
     document.getElementById('menu-memoria').style.display = 'none';
-    memRonda = 1; memTime = 40;
+    memRonda = 1; memTime = 50; memErrors = 0; memCombo = 0; memBestCombo = 0; memHintsLeft = 2; memRoundPerfect = true; memRoundPerfectAchieved = false; memSessionScore = 0;
     document.getElementById('mem-time').textContent = memTime; document.getElementById('mem-ronda').textContent = memRonda;
+    document.getElementById('mem-combo').textContent = '0'; document.getElementById('mem-hints').textContent = memHintsLeft;
+    document.getElementById('mem-infinite-record').textContent = records.memoria || 1;
+    document.getElementById('mem-hint-btn').disabled = false;
     if(currentInterval) clearInterval(currentInterval);
     currentInterval = setInterval(tickMemoria, 1000);
     generarTableroMemoria();
 }
 function tickMemoria() {
+    if (partidaFinalizada) return;
     memTime--; document.getElementById('mem-time').textContent = memTime;
-    if(memTime <= 0) { clearInterval(currentInterval); finJuegoGuardar('memoria', memRonda - 1, `¡Te quedaste sin tiempo!<br>Ronda Máxima: ${memRonda - 1}`); }
+    if(memTime <= 0) { clearInterval(currentInterval); finJuegoGuardar('memoria', Math.max(0, memRonda - 1), `¡Se acabó el tiempo!<br>Ronda alcanzada: ${memRonda}`); }
 }
 function generarTableroMemoria() {
     const board = document.getElementById('mem-board'); board.innerHTML = '';
-    let pares = memRonda === 1 ? 6 : (memRonda === 2 ? 8 : 10);
-    let cols = memRonda === 1 ? 3 : (memRonda === 2 ? 4 : 5);
-    board.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-    
-    let arr = emojisMem.slice(0, pares);
+    const pares = Math.min(6 + memRonda - 1, 10);
+    board.style.gridTemplateColumns = 'repeat(4, minmax(0, 1fr))';
+    board.style.gridTemplateRows = `repeat(${Math.ceil((pares * 2) / 4)}, minmax(0, 1fr))`;
+    const arr = emojisMem.slice(0, pares);
     memCards = [...arr, ...arr].sort(() => Math.random() - 0.5);
-    firstCard = null; secondCard = null; lockBoard = false; paresEncontrados = 0;
-    
-    memCards.forEach((emoji, i) => {
-        let c = document.createElement('div'); c.className = 'mem-card'; c.dataset.val = emoji;
+    firstCard = null; secondCard = null; lockBoard = false; paresEncontrados = 0; memRoundPerfect = true;
+    memCards.forEach((emoji) => {
+        const c = document.createElement('button'); c.type = 'button'; c.className = 'mem-card'; c.dataset.val = emoji; c.setAttribute('aria-label','Carta de memoria');
         c.innerHTML = `<div class="front">${emoji}</div><div class="back">❓</div>`;
-        c.onclick = () => flipMem(c);
-        board.appendChild(c);
+        c.onclick = () => flipMem(c); board.appendChild(c);
     });
 }
 function flipMem(card) {
-    if(lockBoard || card === firstCard || card.classList.contains('flipped')) return;
+    if(partidaFinalizada || lockBoard || card === firstCard || card.classList.contains('flipped') || card.classList.contains('matched')) return;
     card.classList.add('flipped');
     if(!firstCard) { firstCard = card; return; }
     secondCard = card; lockBoard = true;
-    
     if(firstCard.dataset.val === secondCard.dataset.val) {
-        playSfx('comprar'); paresEncontrados++;
-        setTimeout(() => { firstCard.classList.add('matched'); secondCard.classList.add('matched'); resetMem(); checkWinMem(); }, 500);
+        playSfx('comprar'); paresEncontrados++; memSessionScore++; memCombo++; memBestCombo = Math.max(memBestCombo, memCombo);
+        document.getElementById('mem-combo').textContent = memCombo;
+        const a = firstCard, b = secondCard;
+        setTimeout(() => { a.classList.add('matched'); b.classList.add('matched'); resetMem(); checkWinMem(); }, 350);
     } else {
-        playSfx('error');
-        setTimeout(() => { firstCard.classList.remove('flipped'); secondCard.classList.remove('flipped'); resetMem(); }, 1000);
+        playSfx('error'); memErrors++; memRoundPerfect = false; memCombo = 0; document.getElementById('mem-combo').textContent = '0';
+        const a = firstCard, b = secondCard;
+        setTimeout(() => { a.classList.remove('flipped'); b.classList.remove('flipped'); resetMem(); }, Math.max(450, 850 - memRonda * 25));
     }
 }
 function resetMem() { firstCard = null; secondCard = null; lockBoard = false; }
+function usarPistaMemoria() {
+    if (partidaFinalizada || lockBoard || memHintsLeft <= 0) return;
+    const unmatched = [...document.querySelectorAll('#mem-board .mem-card:not(.matched):not(.flipped)')];
+    const pairs = {};
+    unmatched.forEach(c => (pairs[c.dataset.val] ||= []).push(c));
+    const pair = Object.values(pairs).find(a => a.length >= 2);
+    if (!pair) return;
+    memHintsLeft--; document.getElementById('mem-hints').textContent = memHintsLeft;
+    if (memHintsLeft <= 0) document.getElementById('mem-hint-btn').disabled = true;
+    pair.slice(0,2).forEach(c => c.classList.add('flipped'));
+    lockBoard = true;
+    setTimeout(() => { pair.slice(0,2).forEach(c => c.classList.remove('flipped')); lockBoard = false; }, 850);
+}
 function checkWinMem() {
-    let paresRequeridos = memRonda === 1 ? 6 : (memRonda === 2 ? 8 : 10);
+    const paresRequeridos = Math.min(6 + memRonda - 1, 10);
     if(paresEncontrados >= paresRequeridos) {
-        playSfx('logro');
-        memRonda++; memTime += (memRonda === 2 ? 30 : 40);
+        playSfx('logro'); memRoundPerfectAchieved = memRoundPerfectAchieved || memRoundPerfect;
+        memRonda++; memTime += Math.max(10, 24 - memRonda);
         document.getElementById('mem-ronda').textContent = memRonda; document.getElementById('mem-time').textContent = memTime;
-        if(memRonda > 3) { clearInterval(currentInterval); finJuegoGuardar('memoria', 3, `¡Completaste el juego base!<br>Maestría Total.`); } 
-        else { setTimeout(generarTableroMemoria, 1000); }
+        document.getElementById('mem-infinite-record').textContent = Math.max(records.memoria || 1, memRonda - 1);
+        if (memRonda % 3 === 0 && memTime < 90) memTime += 5;
+        document.getElementById('mem-time').textContent = memTime;
+        setTimeout(() => { if(!partidaFinalizada) generarTableroMemoria(); }, 550);
     }
 }
 
 /* 3. LÓGICA: POCIONES */
-const pocIngs = ['🌿', '🩸', '👁️', '🦴', '🍄'];
+const pocAllIngs = ['🌿', '🩸', '👁️', '🦴', '🍄', '🕷️', '🧿', '🪻', '🐍', '🕯️'];
+let pocIngs = pocAllIngs.slice(0,5);
 let pocTime, pocScore, currentRecipe, currentStep;
-
 function startPociones() {
+    partidaFinalizada = false; gameAchievementsPending = [];
     document.getElementById('menu-pociones').style.display = 'none';
-    pocTime = 30; pocScore = 0;
+    pocTime = 30; pocScore = 0; pocErrors = 0; pocBestStreak = 0; pocCurrentStreak = 0; pocIngsUnlocked = 5; pocRewardMilestone = 0;
+    pocIngs = pocAllIngs.slice(0,5); renderIngredientesPociones();
     document.getElementById('poc-time').textContent = pocTime; document.getElementById('poc-score').textContent = pocScore;
+    document.getElementById('poc-progress').textContent = 'Siguiente ingrediente: 10 pociones';
     if(currentInterval) clearInterval(currentInterval);
     currentInterval = setInterval(tickPociones, 1000);
     generarRecetaPocion();
 }
 function tickPociones() {
+    if(partidaFinalizada) return;
     pocTime--; document.getElementById('poc-time').textContent = pocTime;
     if(pocTime <= 0) { clearInterval(currentInterval); finJuegoGuardar('pociones', pocScore, `¡El caldero explotó!<br>Pociones: ${pocScore}`); }
 }
+function renderIngredientesPociones() {
+    const shelf = document.getElementById('poc-shelf'); if(!shelf) return;
+    shelf.innerHTML = '';
+    pocIngs.forEach(ing => {
+        const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'poc-ing'; btn.textContent = ing; btn.setAttribute('aria-label', 'Ingrediente ' + ing); btn.onclick = () => clickIngrediente(ing); shelf.appendChild(btn);
+    });
+}
 function generarRecetaPocion() {
-    let len = pocScore < 3 ? 3 : (pocScore < 8 ? 4 : 5);
+    if(partidaFinalizada) return;
+    const len = pocScore < 3 ? 3 : (pocScore < 8 ? 4 : (pocScore < 18 ? 5 : 6));
     currentRecipe = []; currentStep = 0;
-    for(let i=0; i<len; i++) { currentRecipe.push(pocIngs[Math.floor(Math.random()*pocIngs.length)]); }
+    for(let i=0; i<len; i++) currentRecipe.push(pocIngs[Math.floor(Math.random()*pocIngs.length)]);
     renderReceta();
 }
 function renderReceta() {
-    const box = document.getElementById('poc-receta-ui');
-    box.className = 'poc-receta-box';
+    const box = document.getElementById('poc-receta-ui'); box.className = 'poc-receta-box';
     let html = '';
     currentRecipe.forEach((ing, i) => {
-        if(i < currentStep) html += `<span style="opacity:0.3;">${ing}</span>`;
-        else if (i === currentStep) html += `<span style="color:var(--pumpkin); border-bottom:3px solid var(--pumpkin); padding-bottom:5px;">${ing}</span>`;
+        if(i < currentStep) html += `<span style="opacity:.3">${ing}</span>`;
+        else if(i === currentStep) html += `<span style="color:var(--pumpkin);border-bottom:3px solid var(--pumpkin);padding-bottom:4px">${ing}</span>`;
         else html += `<span>${ing}</span>`;
     });
     box.innerHTML = html;
 }
 function clickIngrediente(ing) {
-    if(pocTime <= 0) return;
+    if(partidaFinalizada || pocTime <= 0) return;
     const box = document.getElementById('poc-receta-ui');
     if(ing === currentRecipe[currentStep]) {
         playSfx('comprar'); currentStep++;
         if(currentStep >= currentRecipe.length) {
-            pocScore++; pocTime += 5; 
+            pocScore++; pocTime += 1; pocCurrentStreak++; pocBestStreak = Math.max(pocBestStreak, pocCurrentStreak);
             document.getElementById('poc-score').textContent = pocScore; document.getElementById('poc-time').textContent = pocTime;
+            const newMilestone = Math.floor(pocScore / 10);
+            if(newMilestone > pocRewardMilestone) {
+                pocRewardMilestone = newMilestone;
+                agregarDulces(5); guardarDatos(); playSfx('ataudPremio');
+                if(pocIngsUnlocked < pocAllIngs.length) {
+                    pocIngsUnlocked = Math.min(pocAllIngs.length, 5 + newMilestone);
+                    pocIngs = pocAllIngs.slice(0, pocIngsUnlocked); renderIngredientesPociones();
+                }
+                const next = (Math.floor(pocScore / 10) + 1) * 10;
+                document.getElementById('poc-progress').textContent = pocIngsUnlocked < pocAllIngs.length ? `+5 🍬 recibidos · Nuevo ingrediente desbloqueado · Siguiente: ${next}` : `+5 🍬 recibidos · Todos los ingredientes desbloqueados · Siguiente: ${next}`;
+            } else {
+                const next = (Math.floor(pocScore / 10) + 1) * 10;
+                document.getElementById('poc-progress').textContent = pocIngsUnlocked < pocAllIngs.length ? `Siguiente ingrediente y +5 🍬: ${next} pociones` : `+5 🍬 cada 10 pociones · Próxima recompensa: ${next}`;
+            }
             box.classList.add('success'); playSfx('logro');
-            setTimeout(generarRecetaPocion, 400);
-        } else { renderReceta(); }
+            setTimeout(generarRecetaPocion, 350);
+        } else renderReceta();
     } else {
-        playSfx('error'); pocTime -= 3; document.getElementById('poc-time').textContent = pocTime;
-        box.classList.add('error'); currentStep = 0;
-        setTimeout(renderReceta, 400);
+        playSfx('error'); pocErrors++; pocCurrentStreak = 0; pocTime -= 3; document.getElementById('poc-time').textContent = pocTime;
+        box.classList.add('error'); currentStep = 0; setTimeout(renderReceta, 400);
+        if(pocTime <= 0) finJuegoGuardar('pociones', pocScore, `¡El caldero explotó!<br>Pociones: ${pocScore}`);
     }
 }
 
 function cambiarPagina(idPagina) {
+  if (document.body.classList.contains('modo-juego') && idPagina !== 'sec-game-stage' && idPagina !== 'sec-juegos') return;
   document.querySelectorAll('.pagina').forEach(pag => pag.classList.remove('activa'));
   document.getElementById(idPagina).classList.add('activa');
   document.querySelectorAll('nav a').forEach(link => link.classList.remove('activo'));
@@ -1837,6 +2041,9 @@ function cambiarPagina(idPagina) {
   if(ataud) { if(idPagina === 'sec-home') { ataud.style.display = 'flex'; } else { ataud.style.display = 'none'; } }
   window.scrollTo(0,0);
 }
+
+document.addEventListener('touchmove', function(e) { if (document.body.classList.contains('modo-juego') && !e.target.closest('.cata-cell, .mem-card, .poc-ing, button')) e.preventDefault(); }, { passive:false });
+window.addEventListener('keydown', function(e) { if (document.body.classList.contains('modo-juego') && (e.key === 'Escape' || e.key === 'Backspace')) { e.preventDefault(); } });
 
 (function(){
   let ticking = false;
