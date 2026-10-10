@@ -490,6 +490,27 @@ body.modo-juego .pagina:not(#sec-game-stage) { display: none !important; }
 .cri-cell{ width:var(--ct); height:var(--ct); display:flex; align-items:center; justify-content:center; font-size:calc(var(--ct)*.62); cursor:pointer; border-style:solid; border-color:rgba(0,0,0,.55); user-select:none; -webkit-tap-highlight-color:transparent; }
 .cri-cell.bad{ box-shadow:inset 0 0 0 3px #ff2a2a; }
 .cri-tools{ display:flex; gap:12px; justify-content:center; }
+
+/* ===== PARCHE v6 ===== */
+@media (min-width:851px){ #sec-juegos .grid{ grid-template-columns:repeat(3,minmax(0,1fr)); } }
+.logro-cat{ margin:26px 0 10px; font-size:1.15rem; color:var(--violet); }
+.cri-board{ gap:clamp(4px,1.2vw,8px); border:none; border-radius:0; overflow:visible; }
+.cri-cell{ border:2px var(--borde-estilo) var(--rc,#888) !important; border-radius:12px; background-color:var(--card); box-shadow:inset 0 0 18px rgba(0,0,0,.75); transition:transform .1s; }
+.cri-cell:active{ transform:scale(.94); }
+.cri-cell.bad{ box-shadow:inset 0 0 0 3px #ff2a2a, 0 0 12px #ff2a2a; }
+.cri-cell.x{ color:var(--ink); opacity:.85; font-size:calc(var(--ct)*.42); }
+/* ===== TUTORIAL DEL FANTASMITA ===== */
+#tutorial-fantasma{ position:fixed; inset:0; z-index:100000; display:none; flex-direction:column; align-items:center; justify-content:center; gap:18px; padding:20px; background:radial-gradient(circle at 50% 35%, rgba(255,255,255,.08), #000 65%); }
+.tf-ghost{ font-size:clamp(6rem,26vw,10rem); line-height:1; opacity:0; transform:scale(.4); filter:drop-shadow(0 0 30px rgba(255,255,255,.55)); }
+.tf-ghost.in{ animation:tfIn 3s ease-out forwards, tfFloat 4s ease-in-out 3s infinite; }
+.tf-ghost.out{ animation:tfOut 3s ease-in forwards; }
+@keyframes tfIn{ to{ opacity:.95; transform:scale(1); } }
+@keyframes tfFloat{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-14px); } }
+@keyframes tfOut{ from{ opacity:.95; transform:scale(1); } to{ opacity:0; transform:translateY(-70px) scale(1.25); } }
+.tf-bubble{ width:min(92vw,520px); background:var(--card); border:2px var(--borde-estilo) var(--pumpkin); border-radius:18px; padding:20px; text-align:center; opacity:0; transition:opacity 1s; box-shadow:0 0 25px var(--glow); }
+.tf-name{ font-weight:900; color:var(--pumpkin); margin-bottom:6px; }
+#tf-text{ min-height:6.5em; font-size:1.05rem; line-height:1.5; margin:8px 0 12px; }
+#blackout{ position:fixed; inset:0; background:#000; z-index:2147483647; opacity:0; pointer-events:none; transition:opacity .5s ease; }
 </style>
 </head>
 <body>
@@ -502,6 +523,15 @@ body.modo-juego .pagina:not(#sec-game-stage) { display: none !important; }
 
 <div class="bats" id="bats-clasicos" aria-hidden="true"><span class="bat">🦇</span><span class="bat">🦇</span><span class="bat">🦇</span></div>
 <div id="fade-overlay"></div>
+<div id="tutorial-fantasma">
+  <div class="tf-ghost" id="tf-ghost">👻</div>
+  <div class="tf-bubble" id="tf-bubble">
+    <div class="tf-name">Fantasmita Guía 👻</div>
+    <div id="tf-text"></div>
+    <button class="btn-accion" id="tf-btn" onclick="tfSiguiente()">Siguiente ▶</button>
+  </div>
+</div>
+<div id="blackout"></div>
 
 <!-- TOAST LOGRO NATIVO -->
 <div id="toast-logro" onclick="saltarToast()" title="Haz clic para cerrar esta notificación">
@@ -750,7 +780,7 @@ body.modo-juego .pagina:not(#sec-game-stage) { display: none !important; }
     <!-- JUEGO 4: WORDLE MALDITO -->
     <div id="gc-wordle" class="game-container">
         <div class="game-hud">
-            <div>Intento: <span><span id="wor-intento">1</span>/6</span></div>
+            <div>Intento: <span id="wor-intento">1/6</span></div>
             <div>Racha: <span id="wor-racha">0</span></div>
             <button class="btn-accion" style="padding: 8px 15px; font-size: 0.9rem; margin: 0; background-color: var(--ember); color: #fff !important;" onclick="salirJuego()">🚪 Salir</button>
         </div>
@@ -770,7 +800,7 @@ body.modo-juego .pagina:not(#sec-game-stage) { display: none !important; }
     <div id="gc-caramelos" class="game-container">
         <div class="game-hud">
             <div>Nivel: <span id="car-nivel">1</span></div>
-            <div>Puntos: <span><span id="car-score">0</span>/<span id="car-meta">0</span></span></div>
+            <div>Puntos: <span id="car-pts">0 / 0</span></div>
             <div>Movs: <span id="car-moves">0</span></div>
             <button class="btn-accion" style="padding: 8px 15px; font-size: 0.9rem; margin: 0; background-color: var(--ember); color: #fff !important;" onclick="salirJuego()">🚪 Salir</button>
         </div>
@@ -798,7 +828,7 @@ body.modo-juego .pagina:not(#sec-game-stage) { display: none !important; }
         </div>
         <div class="game-menu-overlay" id="menu-cripta">
             <h2 class="game-title">Murciélagos en su Cripta</h2>
-            <p class="game-rules">Coloca un 🦇 en cada <strong>fila</strong>, cada <strong>columna</strong> y cada <strong>color</strong>: exactamente uno por cada una. Dos murciélagos no pueden tocarse, ni en diagonal. Toca una casilla para poner o quitar un murciélago.</p>
+            <p class="game-rules">Coloca un 🦇 en cada <strong>fila</strong>, cada <strong>columna</strong> y cada <strong>color</strong>: exactamente uno por cada una. Dos murciélagos no pueden tocarse, ni en diagonal. <strong>Un toque</strong> marca una ✕ (aquí no hay murciélago) y <strong>doble toque</strong> coloca el murciélago.</p>
             <h3 style="color:var(--pumpkin); margin-bottom: 30px; font-size: 1.4rem;" id="cri-msg-fin"></h3>
             <button class="btn-accion" id="cri-start" style="font-size: 1.5rem; padding: 15px 40px; margin-bottom: 20px;" onclick="startCripta()">JUGAR</button>
             <button class="btn-cerrar-modal" style="width: auto; background-color: transparent; border: 1px solid var(--ember);" onclick="salirJuego()">⬅ Volver a la Tienda</button>
@@ -902,8 +932,8 @@ body.modo-juego .pagina:not(#sec-game-stage) { display: none !important; }
   <div class="grid" id="contenedor-amuletos"></div>
   <h3 class="seccion-titulo">Personalización de Interfaz</h3>
   <div class="grid" id="contenedor-coleccion"></div>
-  <h3 class="seccion-titulo">En el menú (Logros)</h3>
-  <div class="grid" id="contenedor-logros"></div>
+  <h3 class="seccion-titulo" id="titulo-logros">🏆 Logros</h3>
+  <div id="contenedor-logros"></div>
 </section>
 
 <!-- CÓDIGOS E ICOFFIN -->
@@ -971,6 +1001,7 @@ let vueltasDJ = 0;
 let bonobonComprados = 0;
 let wordle = { fecha:'', guesses:[], estado:'', racha:0 };
 let prog = { car:1, cri:1 };
+let tutorialVisto = false, tutorialActivo = false;
 let particulaCounter = 0;
 
 // SISTEMA DE RÉCORDS (FASE 2)
@@ -1092,7 +1123,7 @@ class BooSoundEngine {
             'comprar': 'comprar.mp3', 'ataudIn': 'entrarataud.mp3', 'ataudOut': 'salirataud.mp3',
             'ataudPremio': 'recompensaataud.mp3', 'juego': 'entrarjuego.mp3', 'logro': 'logro.mp3',
             'ticket': 'ticketuse.mp3', 'cod1': 'codigo1.mp3', 'cod2': 'codigo2.mp3', 'cod3': 'codigo3.mp3',
-            'exito': 'exito.mp3', 'error': 'error.mp3'
+            'exito': 'exito.mp3', 'error': 'error.mp3', 'fdialogo': 'fantasmadialogo.mp3', 'fsalida': 'fantasmasalida.mp3'
         };
         this.musicPaths = {
             'menu': 'musica.mp3',
@@ -1164,6 +1195,21 @@ class BooSoundEngine {
         }
     }
 
+    playVoice(id, onEnd) {
+        let done = false; const fin = () => { if (!done) { done = true; if (onEnd) onEnd(); } };
+        const vol = Math.min(1, Math.max(0.6, masterSfx));
+        if (this.useWebAudio && this.buffers[id]) {
+            if (this.ctx.state === 'suspended') this.ctx.resume();
+            const src = this.ctx.createBufferSource(); src.buffer = this.buffers[id];
+            const g = this.ctx.createGain(); g.gain.value = vol;
+            src.connect(g); g.connect(this.ctx.destination); src.onended = fin; src.start();
+            setTimeout(fin, this.buffers[id].duration * 1000 + 1500);
+        } else if (this.htmlFallback[id]) {
+            const a = this.htmlFallback[id]; a.volume = vol; a.currentTime = 0;
+            a.onended = fin; a.onerror = fin; a.play().catch(fin); setTimeout(fin, 8000);
+        } else setTimeout(fin, 3500);
+    }
+
     playMusic(id = null) {
         if(id) this.currentMusicId = id;
         
@@ -1226,6 +1272,7 @@ if(database) {
       bonobonComprados = data.bonobonComprados || 0;
       wordle = Object.assign({ fecha:'', guesses:[], estado:'', racha:0 }, data.wordle || {}); wordle.guesses = wordle.guesses || [];
       prog = Object.assign({ car:1, cri:1 }, data.prog || {});
+      tutorialVisto = data.tutorialVisto === true;
       ataudDia = data.ataudDia || 1; 
       ataudTiempo = data.ataudTiempo || 0;
       diarioVisto = data.diarioVisto || false; 
@@ -1271,16 +1318,73 @@ function iniciarApp() {
     sfxMuted = false; musicaMuted = false;
     document.getElementById('btn-mute-sfx').textContent = '🔊';
     document.getElementById('btn-mute-musica').textContent = '🔊';
-
+    if (!tutorialVisto) {
+        tutorialActivo = true;
+        document.getElementById('btn-boo').style.display = 'none';
+        const l = document.getElementById('txt-cargando'); l.style.display = 'block'; l.textContent = 'Invocando al fantasmita...';
+        SE.init().then(() => { l.style.display = 'none'; iniciarTutorialFantasma(); });
+        return;
+    }
     const splash = document.getElementById('splash-screen');
     splash.style.pointerEvents = 'none'; splash.style.opacity = '0';
     setTimeout(() => { splash.style.display = 'none'; }, 1500);
-    
     SE.init().then(() => {
         SE.playMusic('menu');
-        fadeMusica(0, 0); // Empieza en 0
+        fadeMusica(0, 0);
         setTimeout(() => fadeMusica(1.0, 2000), 100);
     });
+}
+
+
+/* ===== TUTORIAL DEL FANTASMITA (primera vez) ===== */
+const TF_LINEAS = [
+  "¡Buuu! 👻 ...Tranquila, Greta, soy un fantasmita buena onda. Vengo del más allá con un encargo importantísimo: darte la bienvenida a Boo! Store.",
+  "Este rincón oscuro lo armó un humano muy enamorado solo para ti. Yo solo cobro en abrazos... y en caramelos, no te voy a mentir. 🍬",
+  "Los caramelos 🍬 son la moneda de este mundo. Se ganan jugando en el menú Juegos: cazar fantasmas (perdona a mis primos), memoria, pociones, palabras, dulces y murciélagos. ¡Hay de todo!",
+  "Con tus caramelos te vas a la Tienda 🛍️: snacks, citas y gestos especiales de los de verdad, amuletos que mejoran tus ganancias y temas para disfrazar toda la app. Hasta yo quiero uno.",
+  "Lo que compras se guarda en tu Inventario 🛒. Cuando quieras usarlo, aprietas USAR, te sale un código y se lo muestras a tu novio. Sin firmar con sangre, lo prometo.",
+  "Ese ataúd ⚰️ de la pantalla principal es tu recompensa diaria. Ábrelo cada día: aquí la lealtad se premia, y los vampiros no pagan impuestos.",
+  "En Códigos hay un iCoffin 🔐 donde se escriben contraseñas secretas que dan más caramelos. Las pistas aparecen en el Diario cuando haces ciertas cosas. ¡A investigar, detective!",
+  "Si ves pasar volando una calavera 💀, atrápala. Y en Nuestra Colección 🏆 están tus temas, tus amuletos y todos tus logros, con lo que hay que hacer para cada uno.",
+  "Ah, y el 31 de octubre hay sorpresa. No te digo más porque los fantasmas también sabemos guardar secretos. 🎃 ¡Ahora sí, a divertirte!"
+];
+let tfI = 0, tfTyping = false, tfTimer = null;
+function iniciarTutorialFantasma() {
+  document.getElementById('tutorial-fantasma').style.display = 'flex';
+  setTimeout(() => { document.getElementById('tf-ghost').classList.add('in'); SE.playVoice('fdialogo'); }, 300);
+  setTimeout(() => { document.getElementById('tf-bubble').style.opacity = '1'; tfMostrar(0); }, 2800);
+}
+function tfMostrar(i) {
+  tfI = i; const t = document.getElementById('tf-text'), btn = document.getElementById('tf-btn');
+  const chars = Array.from(TF_LINEAS[i]); let k = 0; tfTyping = true; t.textContent = ''; btn.textContent = 'Siguiente ▶';
+  clearInterval(tfTimer);
+  tfTimer = setInterval(() => { k++; t.textContent = chars.slice(0, k).join(''); if (k >= chars.length) tfFinTipeo(); }, 24);
+}
+function tfFinTipeo() {
+  clearInterval(tfTimer); tfTyping = false;
+  document.getElementById('tf-text').textContent = TF_LINEAS[tfI];
+  document.getElementById('tf-btn').textContent = tfI === TF_LINEAS.length - 1 ? 'Gracias amiguito 💖' : 'Siguiente ▶';
+}
+function tfSiguiente() {
+  if (tfTyping) { tfFinTipeo(); return; }
+  if (tfI < TF_LINEAS.length - 1) { playSfx('comprar'); tfMostrar(tfI + 1); } else tfDespedida();
+}
+function tfDespedida() {
+  document.getElementById('tf-btn').style.display = 'none';
+  tutorialVisto = true; guardarDatos();
+  document.getElementById('tf-text').textContent = '¡Hasta pronto Gretaaaaa! 👻💖';
+  const g = document.getElementById('tf-ghost'); g.classList.remove('in'); void g.offsetWidth; g.classList.add('out');
+  SE.playVoice('fsalida', terminarTutorial);
+}
+function terminarTutorial() {
+  const bo = document.getElementById('blackout'); bo.style.transition = 'opacity .5s ease'; bo.style.opacity = '1';
+  setTimeout(() => {
+    document.getElementById('tutorial-fantasma').style.display = 'none';
+    document.getElementById('splash-screen').style.display = 'none';
+    tutorialActivo = false;
+    SE.playMusic('menu'); fadeMusica(0, 0); setTimeout(() => fadeMusica(1.0, 2000), 100);
+    bo.style.transition = 'opacity 1.6s ease'; bo.style.opacity = '0';
+  }, 700);
 }
 
 function toggleMuteMusica() {
@@ -1319,7 +1423,7 @@ function cambiarVolumenSfx(valor) {
 
 document.addEventListener("visibilitychange", () => {
     if (document.hidden) { SE.stopMusic(); SE.ctx?.suspend?.(); }
-    else { SE.ctx?.resume?.(); if (!musicaMuted && masterMusica > 0 && !juegoEnProgreso) SE.playMusic(); }
+    else { SE.ctx?.resume?.(); if (!musicaMuted && masterMusica > 0 && !juegoEnProgreso && !tutorialActivo) SE.playMusic(); }
 });
 window.addEventListener('pagehide', () => SE.stopMusic());
 
@@ -1337,7 +1441,7 @@ function guardarDatos() {
       coleccion: coleccion, logros: logros, carrito: carrito, codigosUsados: codigosUsados,
       ataudDia: ataudDia, ataudTiempo: ataudTiempo, 
       diarioVisto: diarioVisto, pistas: pistas, pistasReveladas: pistasReveladas, temaActivo: temaActivo,
-      halloweenReclamado: halloweenReclamado, records: records, bonobonComprados: bonobonComprados, wordle: wordle, prog: prog,
+      halloweenReclamado: halloweenReclamado, records: records, bonobonComprados: bonobonComprados, wordle: wordle, prog: prog, tutorialVisto: tutorialVisto,
       volMusica: masterMusica, volSfx: masterSfx
     });
   }
@@ -1605,8 +1709,34 @@ function equiparTema(idTema) {
     if(idTema === 'tema-otono') revelarPista('pista_otono');
     guardarDatos(); 
 }
-function aplicarTemaCSS(tema) { document.body.className = ''; if(tema && tema !== 'tema-default') { document.body.classList.add('tema-' + tema.replace('tema-', '')); } }
+function aplicarTemaCSS(tema) {
+  [...document.body.classList].forEach(c => { if (c.startsWith('tema-')) document.body.classList.remove(c); });
+  if (tema && tema !== 'tema-default') document.body.classList.add('tema-' + tema.replace('tema-', ''));
+}
 
+const LOGRO_GRUPOS = [
+  ['⚙️ General', ['config','noche','ahorro','diario','hacker','fashionista','dj','amor','comprador']],
+  ['👻 Cazafantasmas', ['cata_cazafantasmas','cata_cazador_maestro','cata_skullette','cata_combo']],
+  ['📱 Memoria Monstruosa', ['mem_primera_ronda','mem_perfecta','mem_combo','mem_ronda5','mem_ronda10']],
+  ['🧪 Biteology', ['poc_10','poc_25','poc_ingrediente','poc_sin_errores','poc_50']],
+  ['🔤 Wordle Maldito', ['wor_gana','wor_rapido','wor_racha']],
+  ['🍬 Caramelos Malditos', ['car_n5','car_cadena']],
+  ['🦇 Murciélagos en su Cripta', ['cri_n5','cri_sinpista']]
+];
+function renderizarLogros(div) {
+  const grupos = LOGRO_GRUPOS.map(g => [g[0], g[1].filter(id => catalogoLogros[id])]);
+  const usados = new Set(grupos.flatMap(g => g[1])), resto = Object.keys(catalogoLogros).filter(id => !usados.has(id));
+  if (resto.length) grupos.push(['✨ Otros', resto]);
+  const total = Object.keys(catalogoLogros).length, ganados = Object.keys(catalogoLogros).filter(id => logros.includes(id)).length;
+  const tit = document.getElementById('titulo-logros'); if (tit) tit.textContent = `🏆 Logros (${ganados}/${total})`;
+  div.innerHTML = grupos.map(([nombre, ids]) => {
+    const n = ids.filter(id => logros.includes(id)).length;
+    return `<h4 class="logro-cat">${nombre} · ${n}/${ids.length}</h4><div class="grid">` + ids.map(id => {
+      const l = catalogoLogros[id], ok = logros.includes(id);
+      return `<article class="item" style="padding:15px; flex-direction:row; align-items:center; text-align:left; ${ok ? 'border-color:var(--pumpkin); background:var(--glow);' : 'opacity:.75;'}"><span style="font-size:2rem; min-width:40px; ${ok ? '' : 'filter:grayscale(1);'}">${l.icono}</span><div><h3 style="font-size:1rem; margin-bottom:3px;">${ok ? '✅' : '🔒'} ${l.nombre}</h3><p style="font-size:.8rem; margin:0;">${l.desc}</p></div></article>`;
+    }).join('') + '</div>';
+  }).join('');
+}
 function renderizarColeccionYLogros() {
   const divColeccion = document.getElementById('contenedor-coleccion'); const divLogros = document.getElementById('contenedor-logros'); const divAmuletos = document.getElementById('contenedor-amuletos');
   if(!divColeccion || !divAmuletos) return;
@@ -1625,11 +1755,7 @@ function renderizarColeccionYLogros() {
   
   if (divAmuletos.innerHTML === '') divAmuletos.innerHTML = `<p style="grid-column: 1/-1; opacity:0.6; text-align:center;">No tienes amuletos activos.</p>`;
   
-  divLogros.innerHTML = '';
-  Object.keys(catalogoLogros).forEach(key => {
-    const l = catalogoLogros[key]; const ganado = logros.includes(key);
-    divLogros.innerHTML += `<article class="item" style="padding:15px; flex-direction:row; align-items:center; text-align:left; ${ganado ? 'border-color:var(--pumpkin); background:var(--glow);' : 'opacity:0.6; filter:grayscale(1);'}"><span style="font-size:2rem; min-width:40px;">${l.icono}</span><div><h3 style="font-size:1rem; margin-bottom:3px;">${ganado ? l.nombre : '???'}</h3><p style="font-size:0.8rem; margin:0;">${ganado ? l.desc : 'Secreto...'}</p></div></article>`;
-  });
+  renderizarLogros(divLogros);
 }
 
 // ========================================================
@@ -1672,13 +1798,16 @@ function canjearCodigo() {
   const input = document.getElementById('input-codigo'); const msg = document.getElementById('msg-codigo'); const codigo = input.value.replace(/\s+/g,'').toUpperCase(); 
   let msjRespuesta = ""; let colorRespuesta = "#4CAF50";
 
-  switch(codigo) {
+  switch(esAdmin ? codigo : '') {
     case 'GIVE': dulces += 500; msjRespuesta = "[ADMIN] +500 Caramelos."; colorRespuesta = "var(--violet)"; playSfx('exito'); break;
     case 'TICKETS': abrirAdminTickets(); msjRespuesta = "[ADMIN] Tickets abiertos."; break;
     case 'CLEANCART': carrito = []; msjRespuesta = "[ADMIN] Carrito vacío."; break;
     case 'UNLOCKTHEMES': coleccion = ['tema-default', 'tema-rosa', 'tema-sangre', 'tema-momia', 'tema-calabaza', 'tema-batman', 'tema-brujeria', 'tema-hacker', 'tema-medianoche', 'tema-otono', 'amuleto-moneda', 'amuleto-iman', 'amuleto-reloj']; msjRespuesta = "[ADMIN] Colección max."; break;
-    case 'RESET': dulces = 0; dulcesGastados = 0; coleccion = ['tema-default']; logros = []; carrito = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; pistasReveladas = []; codigosUsados = []; halloweenReclamado = false; bonobonComprados = 0; vueltasDJ = 0; wordle = {fecha:'',guesses:[],estado:'',racha:0}; prog = {car:1, cri:1}; records = {catacumbas:0, memoria:1, pociones:0}; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Cuenta a cero."; colorRespuesta = "var(--pumpkin)"; break;
+    case 'RESET': dulces = 0; dulcesGastados = 0; coleccion = ['tema-default']; logros = []; carrito = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; pistasReveladas = []; codigosUsados = []; halloweenReclamado = false; bonobonComprados = 0; vueltasDJ = 0; wordle = {fecha:'',guesses:[],estado:'',racha:0}; tutorialVisto = false; prog = {car:1, cri:1}; records = {catacumbas:0, memoria:1, pociones:0}; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Cuenta a cero."; colorRespuesta = "var(--pumpkin)"; break;
     case '24H': ataudTiempo = Date.now() - 86400000; msjRespuesta = "[ADMIN] Reloj adelantado."; actualizarUI(); if(document.getElementById('modal-ataud').classList.contains('activo')) renderizarGrillaAtaud(); break;
+    case 'RESETCUENTA1':
+        if (database) database.ref('greta_partida').set({ dulces: 0, dulcesGastados: 0, coleccion: ['tema-default'], logros: [], carrito: [], codigosUsados: [], ataudDia: 1, ataudTiempo: 0, diarioVisto: false, pistas: [], pistasReveladas: [], temaActivo: 'tema-default', halloweenReclamado: false, records: {catacumbas:0, memoria:1, pociones:0}, bonobonComprados: 0, wordle: {fecha:'',guesses:[],estado:'',racha:0}, prog: {car:1, cri:1}, tutorialVisto: false, volMusica: 0.5, volSfx: 0.5 });
+        msjRespuesta = "[ADMIN] Cuenta de Greta formateada (el tutorial saldrá de nuevo)."; colorRespuesta = "var(--pumpkin)"; break;
     case 'NEWWORD': wordle = {fecha:'',guesses:[],estado:'',racha:0}; msjRespuesta = "[ADMIN] Wordle reiniciado."; break;
     case 'FECHALISTA':
         activarEventoHalloween(true);
@@ -2346,7 +2475,7 @@ function worRender(animRow = -1) {
     });
     kb.appendChild(d);
   });
-  document.getElementById('wor-intento').textContent = Math.min(6, wordle.guesses.length + 1);
+  document.getElementById('wor-intento').textContent = Math.min(6, wordle.guesses.length + 1) + '/6';
   document.getElementById('wor-racha').textContent = wordle.racha;
 }
 function worKey(k) {
@@ -2482,7 +2611,7 @@ function carRender(clr) {
     d.className = 'car-cell' + (carSel === i ? ' sel' : '') + (clr && clr.has(i) ? ' clear' : '');
     d.dataset.i = i; d.textContent = carG[i] >= 0 ? CAR_EMO[carG[i]] : ''; b.appendChild(d);
   }
-  document.getElementById('car-score').textContent = carScore; document.getElementById('car-moves').textContent = carMoves;
+  document.getElementById('car-pts').textContent = carScore + ' / ' + carTarget; document.getElementById('car-moves').textContent = carMoves;
 }
 function prepararMenuCar(extra) {
   const cfg = carNivelCfg(prog.car);
@@ -2495,7 +2624,7 @@ function startCaramelos() {
   carTarget = cfg.target; carMoves = cfg.moves; carTypes = cfg.types; carScore = 0; carSel = null; carRun++;
   partidaFinalizada = false;
   document.getElementById('menu-caramelos').style.display = 'none';
-  document.getElementById('car-nivel').textContent = prog.car; document.getElementById('car-meta').textContent = carTarget;
+  document.getElementById('car-nivel').textContent = prog.car;
   carNewBoard(); carLock = false; carRender();
 }
 async function carTry(a, b) {
@@ -2551,8 +2680,8 @@ function carPerder() {
 })();
 
 /* 6. MURCIÉLAGOS EN SU CRIPTA */
-const CRI_COL = ['#6cb4dd','#a9d98f','#e6c94e','#68c4bf','#d994b0','#dd88c9','#e8a15f'];
-let criData = null, criBats = new Set(), criHints = 2, criHintsUsed = 0;
+const CRI_COL = [[45,156,219],[39,174,96],[242,201,76],[26,188,156],[235,90,140],[187,107,217],[242,153,74]];
+let criData = null, criBats = new Set(), criMarks = new Set(), criLast = { i:-1, t:0, prev:'e' }, criHints = 2, criHintsUsed = 0;
 function criConflicts() {
   const N = criData.N, reg = criData.reg, b = [...criBats], bad = new Set();
   for (let x = 0; x < b.length; x++) for (let y = x + 1; y < b.length; y++) {
@@ -2565,12 +2694,13 @@ function criRender() {
   const N = criData.N, reg = criData.reg, b = document.getElementById('cri-board'), bad = criConflicts();
   b.style.setProperty('--n', N); b.innerHTML = '';
   for (let i = 0; i < N * N; i++) {
-    const r = Math.floor(i / N), c = i % N;
-    const th = (x, y) => (x < 0 || y < 0 || x >= N || y >= N) ? 0 : (reg[x * N + y] !== reg[i] ? 3 : 1);
-    const d = document.createElement('div'); d.className = 'cri-cell' + (bad.has(i) ? ' bad' : ''); d.dataset.i = i;
-    d.style.background = CRI_COL[reg[i] % CRI_COL.length];
-    d.style.borderWidth = `${th(r - 1, c)}px ${th(r, c + 1)}px ${th(r + 1, c)}px ${th(r, c - 1)}px`;
-    d.textContent = criBats.has(i) ? '🦇' : ''; b.appendChild(d);
+    const c = CRI_COL[reg[i] % CRI_COL.length];
+    const d = document.createElement('div');
+    d.className = 'cri-cell' + (bad.has(i) ? ' bad' : '') + (criMarks.has(i) ? ' x' : '');
+    d.dataset.i = i; d.style.setProperty('--rc', `rgb(${c})`);
+    d.style.backgroundImage = `linear-gradient(rgba(${c},.42),rgba(${c},.42))`;
+    d.textContent = criBats.has(i) ? '🦇' : (criMarks.has(i) ? '✕' : '');
+    b.appendChild(d);
   }
   document.getElementById('cri-cont').textContent = criBats.size + '/' + N;
   document.getElementById('cri-hints').textContent = criHints;
@@ -2583,8 +2713,8 @@ function prepararMenuCripta(extra) {
   document.getElementById('cri-start').textContent = 'JUGAR NIVEL ' + prog.cri;
 }
 function startCripta() {
-  criData = criGen(criSize(prog.cri)); criBats = new Set(); criHints = 2; criHintsUsed = 0;
-  partidaFinalizada = false;
+  criData = criGen(criSize(prog.cri)); criBats = new Set(); criMarks = new Set(); criLast = { i:-1, t:0, prev:'e' };
+  criHints = 2; criHintsUsed = 0; partidaFinalizada = false;
   document.getElementById('menu-cripta').style.display = 'none';
   criRender();
 }
@@ -2598,9 +2728,9 @@ function criPista() {
   const t = criData.sol.map((c, r) => r * N + c).find(i => !criBats.has(i)); if (t === undefined) return;
   const tr = Math.floor(t / N), tc = t % N;
   [...criBats].forEach(i => { const r = Math.floor(i / N), c = i % N; if (r === tr || c === tc || reg[i] === reg[t] || (Math.abs(r - tr) <= 1 && Math.abs(c - tc) <= 1)) criBats.delete(i); });
-  criBats.add(t); criHints--; criHintsUsed++; playSfx('exito'); criAfter();
+  criBats.add(t); criMarks.delete(t); criHints--; criHintsUsed++; playSfx('exito'); criAfter();
 }
-function criLimpiar() { if (partidaFinalizada) return; criBats.clear(); criRender(); }
+function criLimpiar() { if (partidaFinalizada) return; criBats.clear(); criMarks.clear(); criRender(); }
 function criGanar() {
   partidaFinalizada = true; const n = prog.cri;
   const gan = agregarDulces(Math.min(15, 3 + n) + (criHintsUsed === 0 ? 2 : 0));
@@ -2608,10 +2738,16 @@ function criGanar() {
   guardarDatos(); playSfx('ataudPremio');
   setTimeout(() => prepararMenuCripta(`🎉 ¡Nivel ${n} resuelto!<br><span style="color:#fff;font-size:1.05rem;">Ganaste +${gan} 🍬</span>`), 700);
 }
+function criSet(i, st) { criBats.delete(i); criMarks.delete(i); if (st === 'b') criBats.add(i); else if (st === 'x') criMarks.add(i); }
 document.getElementById('cri-board').addEventListener('click', e => {
   const c = e.target.closest('.cri-cell'); if (!c || partidaFinalizada) return;
-  const i = +c.dataset.i; if (criBats.has(i)) criBats.delete(i); else criBats.add(i);
-  playSfx('comprar'); criAfter();
+  const i = +c.dataset.i, now = Date.now(), cur = criBats.has(i) ? 'b' : (criMarks.has(i) ? 'x' : 'e');
+  if (criLast.i === i && now - criLast.t < 320) {          // doble clic: murciélago
+    criSet(i, criLast.prev === 'b' ? 'e' : 'b'); criLast = { i:-1, t:0, prev:'e' }; playSfx('comprar');
+  } else {                                                 // un clic: ✕ (o quitar)
+    criLast = { i, t: now, prev: cur }; criSet(i, cur === 'e' ? 'x' : 'e');
+  }
+  criAfter();
 });
 
 function cambiarPagina(idPagina) {
