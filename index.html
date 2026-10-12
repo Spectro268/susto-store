@@ -511,6 +511,15 @@ body.modo-juego .pagina:not(#sec-game-stage) { display: none !important; }
 .tf-name{ font-weight:900; color:var(--pumpkin); margin-bottom:6px; }
 #tf-text{ min-height:6.5em; font-size:1.05rem; line-height:1.5; margin:8px 0 12px; }
 #blackout{ position:fixed; inset:0; background:#000; z-index:2147483647; opacity:0; pointer-events:none; transition:opacity .5s ease; }
+
+/* ===== PARCHE v7: respuesta inmediata en Cazafantasmas ===== */
+.cata-cell{ transition:none !important; touch-action:manipulation; }
+.cata-cell:active{ transform:none !important; }
+.cata-cell.has-ghost, .cata-cell.has-skull{ animation:none !important; }
+.bal-row{ display:grid; grid-template-columns:minmax(0,1.1fr) auto minmax(0,1.4fr) 3.2em; gap:8px; align-items:center; margin:6px 0; font-size:.78rem; }
+.bal-name{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.bal-row input[type=range]{ width:100%; accent-color:var(--pumpkin); }
+.bal-val{ text-align:right; font-weight:800; color:var(--pumpkin); }
 </style>
 </head>
 <body>
@@ -553,6 +562,11 @@ body.modo-juego .pagina:not(#sec-game-stage) { display: none !important; }
         <button class="btn-mute" id="btn-mute-musica" onclick="toggleMuteMusica()">🔇</button>
         <input type="range" id="vol-musica" min="0" max="1" step="0.01" value="0.5" oninput="cambiarVolumenMusica(this.value)">
       </div>
+      <label style="font-weight: 800; display:block; margin-bottom:5px; margin-top:15px;">Música de Juegos</label>
+      <div class="control-audio">
+        <button class="btn-mute" id="btn-mute-juegos" onclick="toggleMuteJuegos()">🔇</button>
+        <input type="range" id="vol-juegos" min="0" max="1" step="0.01" value="0.5" oninput="cambiarVolumenJuegos(this.value)">
+      </div>
       <label style="font-weight: 800; display:block; margin-bottom:5px; margin-top:15px;">Efectos (SFX)</label>
       <div class="control-audio">
         <button class="btn-mute" id="btn-mute-sfx" onclick="toggleMuteSfx()">🔇</button>
@@ -560,7 +574,18 @@ body.modo-juego .pagina:not(#sec-game-stage) { display: none !important; }
       </div>
     </div>
     <p id="modo-txt" style="color:var(--violet); font-size:0.8rem; font-weight:bold;"></p>
+    <button class="btn-accion" id="btn-avanzada" style="display:none; width:100%; margin-bottom:8px;" onclick="abrirAvanzada()">🎚️ Configuración avanzada (balance de audio)</button>
     <button class="btn-cerrar-modal" onclick="cerrarAjustes()">Guardar</button>
+  </div>
+</div>
+
+<!-- MODAL CONFIGURACIÓN AVANZADA (solo modo prueba) -->
+<div class="modal-overlay" id="modal-avanzada">
+  <div class="modal-box" style="max-width:520px; text-align:left;">
+    <h3 style="justify-content:center; text-align:center;">🎚️ Balance de audio</h3>
+    <p style="font-size:.8rem; opacity:.8; margin-top:0; text-align:center;">Volumen relativo de cada audio (100% = original). Se guarda en ambas cuentas. ▶ para probar.</p>
+    <div id="lista-balance"></div>
+    <button class="btn-cerrar-modal" onclick="cerrarAvanzada()">Cerrar</button>
   </div>
 </div>
 
@@ -714,7 +739,7 @@ body.modo-juego .pagina:not(#sec-game-stage) { display: none !important; }
         </div>
         <div class="cata-lives" id="cata-lives"></div>
         <div class="cata-board-wrap">
-          <div class="cata-grid" id="cata-board"><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div><div class="cata-cell" onclick="clickCata(this)"></div></div>
+          <div class="cata-grid" id="cata-board"><div class="cata-cell" onpointerdown="clickCata(this)"></div><div class="cata-cell" onpointerdown="clickCata(this)"></div><div class="cata-cell" onpointerdown="clickCata(this)"></div><div class="cata-cell" onpointerdown="clickCata(this)"></div><div class="cata-cell" onpointerdown="clickCata(this)"></div><div class="cata-cell" onpointerdown="clickCata(this)"></div><div class="cata-cell" onpointerdown="clickCata(this)"></div><div class="cata-cell" onpointerdown="clickCata(this)"></div><div class="cata-cell" onpointerdown="clickCata(this)"></div></div>
         </div>
         <div id="cata-x2-anim">X2</div>
         <button type="button" class="cata-skullette" id="cata-skullette" aria-label="Activar multiplicador x2" onpointerdown="event.stopPropagation()" onclick="event.stopPropagation();activarSkullette()"><img src="logo.png" alt="Skullette especial"></button>
@@ -980,6 +1005,7 @@ const esAdmin = urlParams.get('modo') === 'prueba';
 const rutaDB = esAdmin ? 'admin_partida' : 'greta_partida';
 
 if(esAdmin) document.getElementById('modo-txt').textContent = "⚠️ MODO ADMINISTRADOR ACTIVADO";
+if(esAdmin) document.getElementById('btn-avanzada').style.display = '';
 
 // ========================================================
 // 2. VARIABLES DE ESTADO Y DATOS
@@ -1002,6 +1028,7 @@ let bonobonComprados = 0;
 let wordle = { fecha:'', guesses:[], estado:'', racha:0 };
 let prog = { car:1, cri:1 };
 let tutorialVisto = false, tutorialActivo = false;
+let stats = { ajustes:0, comprados:[], temasCar:[], criSinX:0 };
 let particulaCounter = 0;
 
 // SISTEMA DE RÉCORDS (FASE 2)
@@ -1030,16 +1057,16 @@ const catalogoLogros = {
   'ahorro': { icono: '💰', nombre: 'Bolsillos Llenos', desc: 'Lograste ahorrar 150 dulces.' },
   'diario': { icono: '📖', nombre: 'Cazadora de Secretos', desc: 'Encontraste y abriste el Diario de Pistas.' },
   'hacker': { icono: '💻', nombre: 'Hacker de Élite', desc: 'Canjeaste 5 códigos correctos en el iCoffin.' },
-  'fashionista': { icono: '👗', nombre: 'Fashionista Oscura', desc: 'Tienes 4 temas visuales en tu colección.' },
-  'dj': { icono: '🎛️', nombre: 'DJ Monstruoso', desc: 'Jugaste con los controles de audio 10 veces.' },
+  'fashionista': { icono: '👗', nombre: 'Fashionista Oscura', desc: 'Consigue todos los temas visuales.' },
+  'dj': { icono: '🎛️', nombre: 'DJ Monstruoso', desc: 'Abre la configuración 10 veces.' },
   'amor': { icono: '💖', nombre: 'Amor Incondicional', desc: 'El código de la fecha especial fue usado.' },
   'comprador': { icono: '🛍️', nombre: 'Comprador Compulsivo', desc: 'Gastaste tus primeros 100 dulces en la tienda.' },
   'cata_cazafantasmas': { icono: '👻', nombre: 'Cazafantasmas', desc: 'Atrapa 30 fantasmas en una partida.' },
   'cata_cazador_maestro': { icono: '🏹', nombre: 'Cazador Experto', desc: 'Atrapa 60 fantasmas en una partida.' },
-  'cata_skullette': { icono: '💀', nombre: 'Fortuna Maldita', desc: 'Activa el multiplicador de la Skullette.' },
+  'cata_skullette': { icono: '💀', nombre: 'Fortuna Maldita', desc: 'Activa 5 multiplicadores de la Skullette en una partida.' },
   'cata_combo': { icono: '⏳', nombre: 'Contra el Reloj', desc: 'Alcanza 50 puntos en Cazafantasmas.' },
   'mem_primera_ronda': { icono: '🧠', nombre: 'Memoria Despierta', desc: 'Alcanza la Ronda 3 de Memoria.' },
-  'mem_perfecta': { icono: '🎯', nombre: 'Memoria Perfecta', desc: 'Completa una ronda sin errores.' },
+  'mem_perfecta': { icono: '🎯', nombre: 'Memoria Perfecta', desc: 'Encuentra 3 parejas consecutivas.' },
   'mem_combo': { icono: '⚡', nombre: 'Racha Sobrenatural', desc: 'Encuentra cinco parejas consecutivas.' },
   'mem_ronda5': { icono: '🏆', nombre: 'Mente Monstruosa', desc: 'Alcanza la ronda 5 del modo infinito.' },
   'mem_ronda10': { icono: '🌌', nombre: 'Memoria Legendaria', desc: 'Alcanza la ronda 10 del modo infinito.' },
@@ -1047,14 +1074,24 @@ const catalogoLogros = {
   'poc_25': { icono: '⚗️', nombre: 'Maestro del Caldero', desc: 'Prepara 75 pociones en una partida.' },
   'poc_ingrediente': { icono: '🍄', nombre: 'Mente Veloz', desc: 'Sobrevive y alcanza 100 pociones en partida.' },
   'poc_sin_errores': { icono: '✨', nombre: 'Alquimista Impecable', desc: 'Prepara 15 pociones seguidas sin fallar.' },
-  'poc_50': { icono: '🔮', nombre: 'Gran Alquimista', desc: 'Acumula 100 pociones en una partida.' },
+  'poc_50': { icono: '⌛', nombre: 'Paciente', desc: 'Espera 10 segundos antes de empezar una poción.' },
   'wor_gana': { icono: '🔤', nombre: 'Palabra Maldita', desc: 'Adivina tu primera palabra en Wordle Maldito.' },
-  'wor_rapido': { icono: '⚡', nombre: 'Mente Brillante', desc: 'Adivina la palabra en 2 intentos o menos.' },
+  'wor_rapido': { icono: '⚡', nombre: 'Mente Brillante', desc: 'Adivina la palabra en 3 intentos o menos.' },
   'wor_racha': { icono: '🔥', nombre: 'Racha de Hechiceras', desc: 'Adivina 3 palabras seguidas en Wordle Maldito.' },
   'car_n5': { icono: '🍭', nombre: 'Dulcero Maldito', desc: 'Supera el nivel 5 de Caramelos Malditos.' },
   'car_cadena': { icono: '⛓️', nombre: 'Reacción en Cadena', desc: 'Logra una cascada de 4 combos en una sola jugada.' },
   'cri_n5': { icono: '🦇', nombre: 'Guardiana de la Cripta', desc: 'Supera el nivel 5 de Murciélagos en su Cripta.' },
-  'cri_sinpista': { icono: '🧠', nombre: 'Mente Oscura', desc: 'Resuelve un nivel sin pistas a partir del nivel 3 de la Cripta.' }
+  'cri_sinpista': { icono: '🧠', nombre: 'Mente Oscura', desc: 'Resuelve un nivel sin pistas a partir del nivel 3 de la Cripta.' },
+  'cata_ultima_vida': { icono: '💔', nombre: 'Último Aliento', desc: 'Atrapa 10 fantasmas teniendo una sola vida.' },
+  'tienda_completa': { icono: '🛒', nombre: 'Tienda Vacía', desc: 'Compra al menos una vez todo lo que se pueda comprar.' },
+  'wor_numerologo': { icono: '🔢', nombre: 'Numerólogo Terco', desc: 'Entra a Wordle Maldito a las 12:34 (margen de 1 minuto).' },
+  'wor_narcisista': { icono: '🪞', nombre: 'Narcisista', desc: 'Escribe GRETA como intento en el Wordle.' },
+  'car_candy': { icono: '🍭', nombre: 'Candy Crush', desc: 'Llega al nivel 10 de Caramelos Malditos.' },
+  'car_conspiracion': { icono: '🌌', nombre: 'Conspiración Universal', desc: 'Supera un nivel con menos de 5 movimientos restantes.' },
+  'car_colores': { icono: '🎨', nombre: 'Colores Malditos', desc: 'Juega Caramelos Malditos con cada uno de los temas del juego.' },
+  'cri_ocupado': { icono: '🚫', nombre: '¡Ocupado!', desc: 'Llena todas las casillas de un tablero con ✕.' },
+  'cri_alojo': { icono: '👁️', nombre: 'Al Ojo', desc: 'Resuelve 3 niveles seguidos sin usar ninguna ✕.' },
+  'cri_controlz': { icono: '↩️', nombre: 'Control Z', desc: 'Usa una pista y luego limpia el tablero (en ese orden) en el mismo nivel.' }
 };
 
 const catalogoPistas = {
@@ -1114,6 +1151,8 @@ const recompensasDiarias = [
 // ========================================================
 let masterMusica = 0.5;
 let masterSfx = 0.5;
+let masterJuegos = 0.5, juegosMuted = true;
+let balanceAudio = {};
 let sfxMuted = true;
 let musicaMuted = true;
 
@@ -1123,13 +1162,21 @@ class BooSoundEngine {
             'comprar': 'comprar.mp3', 'ataudIn': 'entrarataud.mp3', 'ataudOut': 'salirataud.mp3',
             'ataudPremio': 'recompensaataud.mp3', 'juego': 'entrarjuego.mp3', 'logro': 'logro.mp3',
             'ticket': 'ticketuse.mp3', 'cod1': 'codigo1.mp3', 'cod2': 'codigo2.mp3', 'cod3': 'codigo3.mp3',
-            'exito': 'exito.mp3', 'error': 'error.mp3', 'fdialogo': 'fantasmadialogo.mp3', 'fsalida': 'fantasmasalida.mp3'
+            'exito': 'exito.mp3', 'error': 'error.mp3', 'fdialogo': 'fantasmadialogo.mp3', 'fsalida': 'fantasmasalida.mp3',
+            'sjuego': 'salirjuego.mp3', 'nivelok': 'nivelcompletado.mp3',
+            'fant1': 'fantasmaatrapado1.mp3', 'fant2': 'fantasmaatrapado2.mp3', 'calavera': 'calavera.mp3',
+            'parejaok': 'parejacorrecta.mp3', 'parejamal': 'parejaequivocada.mp3',
+            'gota1': 'gota1.mp3', 'gota2': 'gota2.mp3', 'gota3': 'gota3.mp3', 'gota4': 'gota4.mp3', 'gota5': 'gota5.mp3',
+            'ingmal': 'ingredientemal.mp3', 'wordfallo': 'wordfallar.mp3',
+            'candy1': 'candy1.mp3', 'candy2': 'candy2.mp3', 'candy3': 'candy3.mp3', 'cambioinc': 'cambioincorrecto.mp3',
+            'murcpuesto': 'murcielagopuesto.mp3'
         };
         this.musicPaths = {
             'menu': 'musica.mp3',
             'catacumbas': 'Ghostbusters.mp3',
             'memoria': 'monster.mp3',
-            'pociones': 'Loonboon.mp3'
+            'pociones': 'deadbyglamour.mp3',
+            'wordle': 'wordjuego.mp3', 'caramelos': 'caramelojuego.mp3', 'cripta': 'criptajuego.mp3'
         };
         this.ctx = null;
         this.buffers = {};
@@ -1164,7 +1211,7 @@ class BooSoundEngine {
             };
             
             let promises = Object.keys(this.sfxPaths).map(k => loadBuffer(k, this.sfxPaths[k]));
-            let musicPromises = Object.keys(this.musicPaths).map(k => loadBuffer(k, this.musicPaths[k]));
+            this._loadBuffer = loadBuffer; let musicPromises = ['menu'].map(k => loadBuffer(k, this.musicPaths[k]));
             
             await Promise.all([...promises, ...musicPromises]);
             this.initialized = true;
@@ -1177,7 +1224,7 @@ class BooSoundEngine {
 
     playSfx(id, volRaw = 1.0) {
         if(sfxMuted || masterSfx <= 0) return;
-        const volFinal = masterSfx * volRaw;
+        const volFinal = masterSfx * volRaw * this.bal(id);
         
         if(this.useWebAudio && this.buffers[id]) {
             if(this.ctx.state === 'suspended') this.ctx.resume();
@@ -1195,9 +1242,48 @@ class BooSoundEngine {
         }
     }
 
+    bal(id) { const v = balanceAudio[id]; return typeof v === 'number' ? v : 1; }
+    musicaOff() { return this.currentMusicId === 'menu' ? (musicaMuted || masterMusica <= 0) : (juegosMuted || masterJuegos <= 0); }
+    volMusica() { return (this.currentMusicId === 'menu' ? masterMusica : masterJuegos) * 0.15 * this.bal(this.currentMusicId); }
+    async ensureMusic(id) {
+        if (id === 'menu' || !this.musicPaths[id] || this.buffers[id] || this.musicHtmlFallback[id] || !this._loadBuffer) return;
+        await this._loadBuffer(id, this.musicPaths[id]);
+    }
+    playLoop(id) {
+        this.stopLoop();
+        const vol = Math.max(0.6, masterSfx) * this.bal(id);
+        if (this.useWebAudio && this.buffers[id]) {
+            if (this.ctx.state === 'suspended') this.ctx.resume();
+            const src = this.ctx.createBufferSource(); src.buffer = this.buffers[id]; src.loop = true;
+            const g = this.ctx.createGain(); g.gain.value = vol; src.connect(g); g.connect(this.ctx.destination); src.start();
+            this.loopSrc = src;
+        } else if (this.htmlFallback[id]) {
+            const a = this.htmlFallback[id]; a.loop = true; a.volume = Math.min(1, vol); a.currentTime = 0; a.play().catch(() => {}); this.loopAudio = a;
+        }
+    }
+    stopLoop() {
+        if (this.loopSrc) { try { this.loopSrc.stop(); } catch (e) {} this.loopSrc = null; }
+        if (this.loopAudio) { this.loopAudio.pause(); this.loopAudio.loop = false; this.loopAudio = null; }
+    }
+    playSfxCb(id, cb) {
+        let done = false; const fin = () => { if (!done) { done = true; if (cb) cb(); } };
+        if (sfxMuted || masterSfx <= 0) { setTimeout(fin, 600); return 0.6; }
+        const vol = masterSfx * this.bal(id);
+        if (this.useWebAudio && this.buffers[id]) {
+            if (this.ctx.state === 'suspended') this.ctx.resume();
+            const src = this.ctx.createBufferSource(); src.buffer = this.buffers[id];
+            const g = this.ctx.createGain(); g.gain.value = vol; src.connect(g); g.connect(this.ctx.destination);
+            src.onended = fin; src.start(); setTimeout(fin, this.buffers[id].duration * 1000 + 800);
+            return this.buffers[id].duration;
+        } else if (this.htmlFallback[id]) {
+            const a = this.htmlFallback[id]; a.volume = Math.min(1, vol); a.currentTime = 0; a.onended = fin; a.onerror = fin; a.play().catch(fin);
+            setTimeout(fin, 3000); return 1.2;
+        }
+        setTimeout(fin, 600); return 0.6;
+    }
     playVoice(id, onEnd) {
         let done = false; const fin = () => { if (!done) { done = true; if (onEnd) onEnd(); } };
-        const vol = Math.min(1, Math.max(0.6, masterSfx));
+        const vol = Math.max(0.6, masterSfx) * this.bal(id);
         if (this.useWebAudio && this.buffers[id]) {
             if (this.ctx.state === 'suspended') this.ctx.resume();
             const src = this.ctx.createBufferSource(); src.buffer = this.buffers[id];
@@ -1205,7 +1291,7 @@ class BooSoundEngine {
             src.connect(g); g.connect(this.ctx.destination); src.onended = fin; src.start();
             setTimeout(fin, this.buffers[id].duration * 1000 + 1500);
         } else if (this.htmlFallback[id]) {
-            const a = this.htmlFallback[id]; a.volume = vol; a.currentTime = 0;
+            const a = this.htmlFallback[id]; a.volume = Math.min(1, vol); a.currentTime = 0;
             a.onended = fin; a.onerror = fin; a.play().catch(fin); setTimeout(fin, 8000);
         } else setTimeout(fin, 3500);
     }
@@ -1213,8 +1299,8 @@ class BooSoundEngine {
     playMusic(id = null) {
         if(id) this.currentMusicId = id;
         
-        if(musicaMuted || masterMusica <= 0) return;
-        const volFinal = masterMusica * 0.15; 
+        if (this.musicaOff()) return;
+        const volFinal = this.volMusica(); 
         
         if(this.musicSource) { this.musicSource.stop(); this.musicSource = null; }
         Object.values(this.musicHtmlFallback).forEach(a => a.pause());
@@ -1241,7 +1327,7 @@ class BooSoundEngine {
     }
 
     fadeMusic(multiplier, durationMs) {
-        const volFinal = masterMusica * 0.15 * multiplier;
+        const volFinal = this.volMusica() * multiplier;
         if(this.useWebAudio && this.musicGain) {
             const now = this.ctx.currentTime;
             this.musicGain.gain.cancelScheduledValues(now);
@@ -1273,6 +1359,8 @@ if(database) {
       wordle = Object.assign({ fecha:'', guesses:[], estado:'', racha:0 }, data.wordle || {}); wordle.guesses = wordle.guesses || [];
       prog = Object.assign({ car:1, cri:1 }, data.prog || {});
       tutorialVisto = data.tutorialVisto === true;
+      balanceAudio = data.balanceAudio || {};
+      stats = Object.assign({ ajustes:0, comprados:[], temasCar:[], criSinX:0 }, data.stats || {}); stats.comprados = stats.comprados || []; stats.temasCar = stats.temasCar || [];
       ataudDia = data.ataudDia || 1; 
       ataudTiempo = data.ataudTiempo || 0;
       diarioVisto = data.diarioVisto || false; 
@@ -1284,10 +1372,11 @@ if(database) {
       
       if(data.volMusica !== undefined) masterMusica = data.volMusica;
       if(data.volSfx !== undefined) masterSfx = data.volSfx;
+      if(data.volJuegos !== undefined) masterJuegos = data.volJuegos;
     }
     
     document.getElementById('vol-musica').value = masterMusica;
-    document.getElementById('vol-sfx').value = masterSfx;
+    document.getElementById('vol-sfx').value = masterSfx; document.getElementById('vol-juegos').value = masterJuegos;
 
     if (!coleccion.includes('tema-default')) coleccion.push('tema-default'); 
     aplicarTemaCSS(temaActivo);
@@ -1318,6 +1407,7 @@ function iniciarApp() {
     sfxMuted = false; musicaMuted = false;
     document.getElementById('btn-mute-sfx').textContent = '🔊';
     document.getElementById('btn-mute-musica').textContent = '🔊';
+    juegosMuted = false; document.getElementById('btn-mute-juegos').textContent = '🔊';
     if (!tutorialVisto) {
         tutorialActivo = true;
         document.getElementById('btn-boo').style.display = 'none';
@@ -1351,7 +1441,7 @@ const TF_LINEAS = [
 let tfI = 0, tfTyping = false, tfTimer = null;
 function iniciarTutorialFantasma() {
   document.getElementById('tutorial-fantasma').style.display = 'flex';
-  setTimeout(() => { document.getElementById('tf-ghost').classList.add('in'); SE.playVoice('fdialogo'); }, 300);
+  setTimeout(() => { document.getElementById('tf-ghost').classList.add('in'); SE.playLoop('fdialogo'); }, 300);
   setTimeout(() => { document.getElementById('tf-bubble').style.opacity = '1'; tfMostrar(0); }, 2800);
 }
 function tfMostrar(i) {
@@ -1367,14 +1457,14 @@ function tfFinTipeo() {
 }
 function tfSiguiente() {
   if (tfTyping) { tfFinTipeo(); return; }
-  if (tfI < TF_LINEAS.length - 1) { playSfx('comprar'); tfMostrar(tfI + 1); } else tfDespedida();
+  if (tfI < TF_LINEAS.length - 1) { tfMostrar(tfI + 1); } else tfDespedida();
 }
 function tfDespedida() {
   document.getElementById('tf-btn').style.display = 'none';
   tutorialVisto = true; guardarDatos();
   document.getElementById('tf-text').textContent = '¡Hasta pronto Gretaaaaa! 👻💖';
   const g = document.getElementById('tf-ghost'); g.classList.remove('in'); void g.offsetWidth; g.classList.add('out');
-  SE.playVoice('fsalida', terminarTutorial);
+  SE.stopLoop(); SE.playVoice('fsalida', terminarTutorial);
 }
 function terminarTutorial() {
   const bo = document.getElementById('blackout'); bo.style.transition = 'opacity .5s ease'; bo.style.opacity = '1';
@@ -1387,6 +1477,44 @@ function terminarTutorial() {
   }, 700);
 }
 
+function renderBalance() {
+  const fila = (id, archivo, tipo) => { const v = Math.round(SE.bal(id) * 100);
+    return `<div class="bal-row"><span class="bal-name">${archivo}</span><button type="button" class="btn-mute" onclick="balProbar('${id}','${tipo}')">▶</button><input type="range" min="0" max="200" step="5" value="${v}" oninput="balCambiar('${id}', this.value)" onchange="guardarBalance()"><span class="bal-val" id="bal-v-${id}">${v}%</span></div>`; };
+  document.getElementById('lista-balance').innerHTML =
+    '<h4 class="logro-cat">🎵 Música</h4>' + Object.keys(SE.musicPaths).map(id => fila(id, SE.musicPaths[id], 'm')).join('') +
+    '<h4 class="logro-cat">🔊 Efectos y voces</h4>' + Object.keys(SE.sfxPaths).map(id => fila(id, SE.sfxPaths[id], 's')).join('');
+}
+function abrirAvanzada() { if (!esAdmin) return; cerrarAjustes(); renderBalance(); document.getElementById('modal-avanzada').classList.add('activo'); }
+function cerrarAvanzada() {
+  document.getElementById('modal-avanzada').classList.remove('activo');
+  if (SE.currentMusicId !== 'menu') SE.playMusic('menu');
+}
+function balCambiar(id, v) {
+  balanceAudio[id] = v / 100; document.getElementById('bal-v-' + id).textContent = v + '%';
+  if (SE.currentMusicId === id) fadeMusica(1.0, 50);
+}
+function guardarBalance() {
+  guardarDatos();
+  if (database) { const otra = (rutaDB === 'greta_partida') ? 'admin_partida' : 'greta_partida'; database.ref(otra + '/balanceAudio').set(balanceAudio); }
+}
+function balProbar(id, tipo) {
+  if (tipo === 'm') { SE.ensureMusic(id).then(() => SE.playMusic(id)); return; }
+  if (id === 'fdialogo' || id === 'fsalida') SE.playVoice(id);
+  else if (id === 'sjuego') SE.playSfxCb(id);
+  else playSfx(id);
+}
+function toggleMuteJuegos() {
+  juegosMuted = !juegosMuted;
+  const r = document.getElementById('vol-juegos');
+  if (!juegosMuted && parseFloat(r.value) === 0) { r.value = 0.5; masterJuegos = 0.5; }
+  document.getElementById('btn-mute-juegos').textContent = juegosMuted ? '🔇' : '🔊';
+  guardarDatos();
+}
+function cambiarVolumenJuegos(v) {
+  masterJuegos = parseFloat(v);
+  if (juegosMuted && masterJuegos > 0) { juegosMuted = false; document.getElementById('btn-mute-juegos').textContent = '🔊'; }
+  guardarDatos();
+}
 function toggleMuteMusica() {
     musicaMuted = !musicaMuted; 
     let vol = parseFloat(document.getElementById('vol-musica').value); 
@@ -1401,7 +1529,7 @@ function cambiarVolumenMusica(valor) {
     if (musicaMuted && masterMusica > 0) toggleMuteMusica(); 
     if (!musicaMuted && masterMusica > 0 && !SE.musicSource && (!SE.musicHtmlFallback[SE.currentMusicId] || SE.musicHtmlFallback[SE.currentMusicId].paused)) SE.playMusic();
     fadeMusica(1.0, 100);
-    vueltasDJ++; if(vueltasDJ >= 10 && !logros.includes('dj')) checkLogro('dj');
+    
     guardarDatos();
 }
 
@@ -1417,13 +1545,13 @@ function toggleMuteSfx() {
 function cambiarVolumenSfx(valor) { 
     masterSfx = parseFloat(valor);
     if (sfxMuted && masterSfx > 0) toggleMuteSfx(); 
-    vueltasDJ++; if(vueltasDJ >= 10 && !logros.includes('dj')) checkLogro('dj');
+    
     guardarDatos();
 }
 
 document.addEventListener("visibilitychange", () => {
     if (document.hidden) { SE.stopMusic(); SE.ctx?.suspend?.(); }
-    else { SE.ctx?.resume?.(); if (!musicaMuted && masterMusica > 0 && !juegoEnProgreso && !tutorialActivo) SE.playMusic(); }
+    else { SE.ctx?.resume?.(); if (!juegoEnProgreso && !tutorialActivo) SE.playMusic(); }
 });
 window.addEventListener('pagehide', () => SE.stopMusic());
 
@@ -1432,6 +1560,8 @@ window.addEventListener('pagehide', () => SE.stopMusic());
 // ========================================================
 function guardarDatos() {
   if (dulces >= 150) checkLogro('ahorro');
+  { const have = new Set([...stats.comprados, ...coleccion]);
+    if (['bonobon','chifles','helado','bebida','carretilla','arcade','cine','cata','arte','pizza','masaje','postre','desayuno','enojo','amuleto-moneda','amuleto-iman','amuleto-reloj','tema-rosa','tema-sangre','tema-momia','tema-calabaza','tema-batman','tema-brujeria','tema-hacker','tema-medianoche','tema-otono'].every(id => have.has(id))) checkLogro('tienda_completa'); }
   if (dulces >= 500 && !pistasReveladas.includes('pista_fortuna')) revelarPista('pista_fortuna');
   if (dulcesGastados >= 100 && !logros.includes('comprador')) checkLogro('comprador');
   
@@ -1441,8 +1571,8 @@ function guardarDatos() {
       coleccion: coleccion, logros: logros, carrito: carrito, codigosUsados: codigosUsados,
       ataudDia: ataudDia, ataudTiempo: ataudTiempo, 
       diarioVisto: diarioVisto, pistas: pistas, pistasReveladas: pistasReveladas, temaActivo: temaActivo,
-      halloweenReclamado: halloweenReclamado, records: records, bonobonComprados: bonobonComprados, wordle: wordle, prog: prog, tutorialVisto: tutorialVisto,
-      volMusica: masterMusica, volSfx: masterSfx
+      halloweenReclamado: halloweenReclamado, records: records, bonobonComprados: bonobonComprados, wordle: wordle, prog: prog, tutorialVisto: tutorialVisto, stats: stats, balanceAudio: balanceAudio,
+      volMusica: masterMusica, volSfx: masterSfx, volJuegos: masterJuegos
     });
   }
   actualizarUI();
@@ -1608,14 +1738,14 @@ function comprarItem(idItem, precio, nombreItem, tipo) {
     if ((tipo === 'tema' || tipo === 'amuleto') && coleccion.includes(idItem)) { mostrarToast("Ya tienes este ítem en tu colección.", "info"); return; }
     if (dulces >= precio) {
         dulces -= precio; 
-        dulcesGastados += precio;
+        dulcesGastados += precio; if (!stats.comprados.includes(idItem)) stats.comprados.push(idItem);
         playSfx('comprar');
         
         if (tipo === 'tema' || tipo === 'amuleto') { 
             coleccion.push(idItem); 
             
             let countTemas = coleccion.filter(i => i.startsWith('tema-')).length;
-            if(countTemas >= 4 && !logros.includes('fashionista')) checkLogro('fashionista');
+            if(countTemas >= 10 && !logros.includes('fashionista')) checkLogro('fashionista');
             
             if (coleccion.includes('amuleto-moneda') && coleccion.includes('amuleto-iman') && coleccion.includes('amuleto-reloj')) revelarPista('pista_coleccionista');
             
@@ -1715,13 +1845,13 @@ function aplicarTemaCSS(tema) {
 }
 
 const LOGRO_GRUPOS = [
-  ['⚙️ General', ['config','noche','ahorro','diario','hacker','fashionista','dj','amor','comprador']],
-  ['👻 Cazafantasmas', ['cata_cazafantasmas','cata_cazador_maestro','cata_skullette','cata_combo']],
+  ['⚙️ General', ['config','noche','ahorro','diario','hacker','fashionista','dj','amor','comprador','tienda_completa']],
+  ['👻 Cazafantasmas', ['cata_cazafantasmas','cata_cazador_maestro','cata_skullette','cata_combo','cata_ultima_vida']],
   ['📱 Memoria Monstruosa', ['mem_primera_ronda','mem_perfecta','mem_combo','mem_ronda5','mem_ronda10']],
   ['🧪 Biteology', ['poc_10','poc_25','poc_ingrediente','poc_sin_errores','poc_50']],
-  ['🔤 Wordle Maldito', ['wor_gana','wor_rapido','wor_racha']],
-  ['🍬 Caramelos Malditos', ['car_n5','car_cadena']],
-  ['🦇 Murciélagos en su Cripta', ['cri_n5','cri_sinpista']]
+  ['🔤 Wordle Maldito', ['wor_gana','wor_rapido','wor_racha','wor_numerologo','wor_narcisista']],
+  ['🍬 Caramelos Malditos', ['car_n5','car_cadena','car_candy','car_conspiracion','car_colores']],
+  ['🦇 Murciélagos en su Cripta', ['cri_n5','cri_sinpista','cri_ocupado','cri_alojo','cri_controlz']]
 ];
 function renderizarLogros(div) {
   const grupos = LOGRO_GRUPOS.map(g => [g[0], g[1].filter(id => catalogoLogros[id])]);
@@ -1803,10 +1933,10 @@ function canjearCodigo() {
     case 'TICKETS': abrirAdminTickets(); msjRespuesta = "[ADMIN] Tickets abiertos."; break;
     case 'CLEANCART': carrito = []; msjRespuesta = "[ADMIN] Carrito vacío."; break;
     case 'UNLOCKTHEMES': coleccion = ['tema-default', 'tema-rosa', 'tema-sangre', 'tema-momia', 'tema-calabaza', 'tema-batman', 'tema-brujeria', 'tema-hacker', 'tema-medianoche', 'tema-otono', 'amuleto-moneda', 'amuleto-iman', 'amuleto-reloj']; msjRespuesta = "[ADMIN] Colección max."; break;
-    case 'RESET': dulces = 0; dulcesGastados = 0; coleccion = ['tema-default']; logros = []; carrito = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; pistasReveladas = []; codigosUsados = []; halloweenReclamado = false; bonobonComprados = 0; vueltasDJ = 0; wordle = {fecha:'',guesses:[],estado:'',racha:0}; tutorialVisto = false; prog = {car:1, cri:1}; records = {catacumbas:0, memoria:1, pociones:0}; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Cuenta a cero."; colorRespuesta = "var(--pumpkin)"; break;
+    case 'RESET': dulces = 0; dulcesGastados = 0; coleccion = ['tema-default']; logros = []; carrito = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; pistasReveladas = []; codigosUsados = []; halloweenReclamado = false; bonobonComprados = 0; vueltasDJ = 0; wordle = {fecha:'',guesses:[],estado:'',racha:0}; stats = {ajustes:0, comprados:[], temasCar:[], criSinX:0}; tutorialVisto = false; prog = {car:1, cri:1}; records = {catacumbas:0, memoria:1, pociones:0}; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Cuenta a cero."; colorRespuesta = "var(--pumpkin)"; break;
     case '24H': ataudTiempo = Date.now() - 86400000; msjRespuesta = "[ADMIN] Reloj adelantado."; actualizarUI(); if(document.getElementById('modal-ataud').classList.contains('activo')) renderizarGrillaAtaud(); break;
     case 'RESETCUENTA1':
-        if (database) database.ref('greta_partida').set({ dulces: 0, dulcesGastados: 0, coleccion: ['tema-default'], logros: [], carrito: [], codigosUsados: [], ataudDia: 1, ataudTiempo: 0, diarioVisto: false, pistas: [], pistasReveladas: [], temaActivo: 'tema-default', halloweenReclamado: false, records: {catacumbas:0, memoria:1, pociones:0}, bonobonComprados: 0, wordle: {fecha:'',guesses:[],estado:'',racha:0}, prog: {car:1, cri:1}, tutorialVisto: false, volMusica: 0.5, volSfx: 0.5 });
+        if (database) database.ref('greta_partida').set({ dulces: 0, dulcesGastados: 0, coleccion: ['tema-default'], logros: [], carrito: [], codigosUsados: [], ataudDia: 1, ataudTiempo: 0, diarioVisto: false, pistas: [], pistasReveladas: [], temaActivo: 'tema-default', halloweenReclamado: false, records: {catacumbas:0, memoria:1, pociones:0}, bonobonComprados: 0, wordle: {fecha:'',guesses:[],estado:'',racha:0}, prog: {car:1, cri:1}, stats: {ajustes:0, comprados:[], temasCar:[], criSinX:0}, tutorialVisto: false, volMusica: 0.5, volSfx: 0.5, volJuegos: 0.5, balanceAudio: balanceAudio });
         msjRespuesta = "[ADMIN] Cuenta de Greta formateada (el tutorial saldrá de nuevo)."; colorRespuesta = "var(--pumpkin)"; break;
     case 'NEWWORD': wordle = {fecha:'',guesses:[],estado:'',racha:0}; msjRespuesta = "[ADMIN] Wordle reiniciado."; break;
     case 'FECHALISTA':
@@ -1894,7 +2024,11 @@ function reclamarHalloween() {
 // ========================================================
 // 10. ANIMACIONES ZONALES
 // ========================================================
-function abrirAjustes() { checkLogro('config'); document.getElementById('modal-ajustes').classList.add('activo'); }
+function abrirAjustes() {
+  checkLogro('config'); stats.ajustes++;
+  if (stats.ajustes >= 10) checkLogro('dj'); else guardarDatos();
+  document.getElementById('modal-ajustes').classList.add('activo');
+}
 function cerrarAjustes() { document.getElementById('modal-ajustes').classList.remove('activo'); }
 function actualizarAnimacionInicio() { const batsClasicos = document.getElementById('bats-clasicos'); if(batsClasicos) { batsClasicos.style.display = (temaActivo === 'tema-default') ? 'block' : 'none'; } }
 
@@ -2058,7 +2192,7 @@ let pocScore = 0, pocTime = 30, pocErrors = 0, pocBestStreak = 0, pocCurrentStre
 function iniciarTransicionJuego(idJuego) { 
     if(juegoEnProgreso) return; 
     juegoEnProgreso = true;
-    revelarPista('pista_magia'); 
+    revelarPista('pista_magia'); SE.ensureMusic(idJuego); 
     
     SE.stopMusic();
     playSfx('juego'); 
@@ -2077,7 +2211,7 @@ function iniciarTransicionJuego(idJuego) {
         document.documentElement.style.overflow = 'hidden';
         document.body.style.touchAction = 'none';
         
-        SE.playMusic(['wordle','caramelos','cripta'].includes(idJuego) ? 'menu' : idJuego);
+        SE.playMusic(idJuego);
         if (idJuego === 'wordle') prepararMenuWordle();
         if (idJuego === 'caramelos') prepararMenuCar();
         if (idJuego === 'cripta') prepararMenuCripta();
@@ -2087,30 +2221,21 @@ function iniciarTransicionJuego(idJuego) {
     }, 5000);
 }
 
+let saliendoJuego = false;
 function salirJuego() {
-    if (juegoEnProgreso) return;
-    if(currentInterval) clearInterval(currentInterval);
-    if(cataSpawnTimeout) clearTimeout(cataSpawnTimeout);
-    if(cataSkulletteTimeout) clearTimeout(cataSkulletteTimeout);
-    if(cataPowerTimeout) clearTimeout(cataPowerTimeout);
-    partidaFinalizada = true;
-    
-    fadeMusica(0.0, 500);
-    const overlay = document.getElementById('fade-overlay'); overlay.style.opacity = '1';
-    
-    setTimeout(() => {
-        document.body.classList.remove('modo-juego');
-        document.documentElement.style.overflow = '';
-        document.body.style.touchAction = '';
-        document.querySelectorAll('.game-container').forEach(c => c.style.display = 'none');
-        document.querySelectorAll('.game-menu-overlay').forEach(m => m.style.display = 'flex');
-        document.getElementById('cata-skullette')?.classList.remove('visible','active-power');
-        
-        SE.playMusic('menu');
-        
-        cambiarPagina('sec-juegos');
-        overlay.style.opacity = '0';
-    }, 650);
+  if (juegoEnProgreso || saliendoJuego) return;
+  saliendoJuego = true; limpiarTimersCata(); partidaFinalizada = true; carRun++;
+  const overlay = document.getElementById('fade-overlay');
+  const dur = SE.playSfxCb('sjuego', () => {
+    document.body.classList.remove('modo-juego'); document.documentElement.style.overflow = ''; document.body.style.touchAction = '';
+    document.querySelectorAll('.game-container').forEach(c => c.style.display = 'none');
+    document.querySelectorAll('.game-menu-overlay').forEach(m => m.style.display = 'flex');
+    document.getElementById('cata-skullette')?.classList.remove('visible', 'active-power');
+    SE.playMusic('menu'); cambiarPagina('sec-juegos');
+    overlay.style.transition = 'opacity 1s ease-in-out'; overlay.style.opacity = '0'; saliendoJuego = false;
+  });
+  fadeMusica(0, dur * 1000);
+  overlay.style.transition = 'opacity ' + dur + 's ease-in'; overlay.style.opacity = '1';
 }
 
 function cobrarYSalir(idJuego) {
@@ -2137,14 +2262,14 @@ function finJuegoGuardar(idJuego, scoreLogico, textoMostrar) {
         if(scoreLogico > records.catacumbas) { records.catacumbas = scoreLogico; recordRoto = true; }
         if(cataGhostsCaught >= 30) checkLogro('cata_cazafantasmas');
         if(cataGhostsCaught >= 60) checkLogro('cata_cazador_maestro');
-        if(cataSkulletteUsed) checkLogro('cata_skullette');
+        
         if(scoreLogico >= 50) checkLogro('cata_combo');
     }
     if(idJuego === 'memoria') {
         dulcesGanados = Math.max(0, scoreLogico) * 5;
         if(scoreLogico > records.memoria) { records.memoria = scoreLogico; recordRoto = true; }
         if(memRonda > 2) checkLogro('mem_primera_ronda');
-        if(memRoundPerfectAchieved) checkLogro('mem_perfecta');
+        
         if(memBestCombo >= 5) checkLogro('mem_combo');
         if(scoreLogico >= 5) checkLogro('mem_ronda5');
         if(scoreLogico >= 10) checkLogro('mem_ronda10');
@@ -2156,11 +2281,11 @@ function finJuegoGuardar(idJuego, scoreLogico, textoMostrar) {
         if(pocScore >= 75) checkLogro('poc_25');
         if(pocScore >= 100) checkLogro('poc_ingrediente'); // Nerfed requirement
         if(pocBestStreak >= 15) checkLogro('poc_sin_errores');
-        if(pocScore >= 100) checkLogro('poc_50');
+        
     }
     
     const baseWin = agregarDulces(dulcesGanados);
-    guardarDatos(); playSfx(recordRoto ? 'ataudPremio' : 'logro');
+    guardarDatos(); playSfx('nivelok');
     const menu = document.getElementById('menu-' + idJuego);
     menu.style.display = 'flex';
     const msg = document.getElementById(idJuego === 'catacumbas' ? 'cata-msg-fin' : (idJuego === 'memoria' ? 'mem-msg-fin' : 'poc-msg-fin'));
@@ -2169,14 +2294,14 @@ function finJuegoGuardar(idJuego, scoreLogico, textoMostrar) {
 
 /* 1. LÓGICA: CATACUMBAS */
 const CATA_MAX_TIME = 15, CATA_MAX_LIVES = 5, PARES_MEM = 8;
-let cataLives = CATA_MAX_LIVES, pocOrder = [];
+let cataLives = CATA_MAX_LIVES, pocOrder = [], cataMultCount = 0, cataUltimaVida = 0, pocRecipeT = 0;
 function limpiarTimersCata(){ clearInterval(currentInterval); clearTimeout(cataSpawnTimeout); clearTimeout(cataSkulletteTimeout); clearTimeout(cataPowerTimeout); }
 function renderVidasCata(){ document.getElementById('cata-lives').innerHTML = Array.from({length:CATA_MAX_LIVES},(_,i)=>`<span class="${i<cataLives?'':'off'}">❤️</span>`).join(''); }
 function startCatacumbas() {
   partidaFinalizada = false; limpiarTimersCata();
   document.getElementById('menu-catacumbas').style.display = 'none';
   cataTime = CATA_MAX_TIME; cataScore = 0; cataSpeed = 1000; cataGhostsCaught = 0;
-  cataSkulletteUsed = false; cataMultiplierActive = false; lastCataIndex = -1; cataLives = CATA_MAX_LIVES;
+  cataSkulletteUsed = false; cataMultiplierActive = false; lastCataIndex = -1; cataLives = CATA_MAX_LIVES; cataMultCount = 0; cataUltimaVida = 0;
   document.getElementById('cata-time').textContent = cataTime; document.getElementById('cata-score').textContent = cataScore;
   document.querySelectorAll('.cata-cell').forEach(c => { c.innerHTML = ''; c.className = 'cata-cell'; c.style.transform = ''; });
   document.getElementById('cata-skullette').classList.remove('visible','active-power');
@@ -2204,16 +2329,17 @@ function spawnCata() {
 function clickCata(cell) {
   if (partidaFinalizada || !cell.innerHTML) return;
   if (cell.innerHTML === '👻') {
-    playSfx('comprar'); cataGhostsCaught++;
+    playSfx(Math.random() < 0.5 ? 'fant1' : 'fant2'); cataGhostsCaught++;
     const m = cataMultiplierActive ? 2 : 1;
     cataScore += m; cataTime = Math.min(CATA_MAX_TIME, cataTime + m);
     document.getElementById('cata-score').textContent = cataScore; document.getElementById('cata-time').textContent = cataTime;
-    cell.innerHTML = ''; cell.className = 'cata-cell'; cell.style.transform = 'scale(0.8)';
+    cell.innerHTML = ''; cell.className = 'cata-cell';
+    if (cataLives === 1 && ++cataUltimaVida >= 10) checkLogro('cata_ultima_vida');
     if (cataGhostsCaught >= 30) checkLogro('cata_cazafantasmas');
     if (cataGhostsCaught >= 60) checkLogro('cata_cazador_maestro');
     if (cataScore >= 50) checkLogro('cata_combo');
   } else if (cell.innerHTML === '☠️') {
-    playSfx('error'); cataLives--; renderVidasCata();
+    playSfx('calavera'); cataLives--; renderVidasCata();
     cell.innerHTML = '💥'; cell.className = 'cata-cell';
     const gc = document.getElementById('gc-catacumbas'); gc.classList.remove('hit'); void gc.offsetWidth; gc.classList.add('hit');
     if (cataLives <= 0) { limpiarTimersCata(); finJuegoGuardar('catacumbas', cataScore, `¡Sin vidas!<br>Puntaje: ${cataScore}`); }
@@ -2234,7 +2360,7 @@ function activarSkullette() {
   const skull = document.getElementById('cata-skullette');
   if (!skull.classList.contains('visible')) return;
   skull.classList.remove('visible');
-  cataSkulletteUsed = true; cataMultiplierActive = true; playSfx('exito'); checkLogro('cata_skullette');
+  cataSkulletteUsed = true; cataMultiplierActive = true; playSfx('exito'); cataMultCount++; if (cataMultCount >= 5) checkLogro('cata_skullette');
   const x2 = document.getElementById('cata-x2-anim'); x2.classList.remove('show'); void x2.offsetWidth; x2.classList.add('show');
   clearTimeout(cataPowerTimeout);
   cataPowerTimeout = setTimeout(() => { cataMultiplierActive = false; }, 10000);
@@ -2291,18 +2417,19 @@ function flipMem(card) {
   secondCard = card; lockBoard = true;
   const cb = document.getElementById('mem-combo');
   if (firstCard.dataset.val === secondCard.dataset.val) {
-    playSfx('comprar'); paresEncontrados++; memSessionScore++; memCombo++; memBestCombo = Math.max(memBestCombo, memCombo);
+    playSfx(firstCard.classList.contains('magic-pair') ? 'ataudPremio' : 'parejaok'); paresEncontrados++; memSessionScore++; memCombo++; memBestCombo = Math.max(memBestCombo, memCombo);
     cb.textContent = memCombo;
     if (memCombo >= 2) { cb.classList.remove('combo-hot'); void cb.offsetWidth; cb.classList.add('combo-hot'); }
     if (memBestCombo >= 5) checkLogro('mem_combo');
+    if (memCombo >= 3) checkLogro('mem_perfecta');
     if (firstCard.classList.contains('magic-pair')) {
       memTime += 5; document.getElementById('mem-time').textContent = memTime;
-      mostrarToast('+5 Segundos Mágicos', 'info'); playSfx('ataudPremio');
+      
     }
     const a = firstCard, b = secondCard;
     setTimeout(() => { a.classList.add('matched'); b.classList.add('matched'); resetMem(); checkWinMem(); }, 200);
   } else {
-    playSfx('error'); memErrors++; memRoundPerfect = false; memCombo = 0; cb.textContent = '0'; cb.classList.remove('combo-hot');
+    playSfx('parejamal'); memErrors++; memRoundPerfect = false; memCombo = 0; cb.textContent = '0'; cb.classList.remove('combo-hot');
     const a = firstCard, b = secondCard;
     setTimeout(() => { a.classList.remove('flipped'); b.classList.remove('flipped'); resetMem(); }, 300);
   }
@@ -2369,9 +2496,9 @@ function renderIngredientesPociones() {
 function generarRecetaPocion() {
   if (partidaFinalizada) return;
   const n = pocTamMesa();
-  if (n !== pocIngs.length) { pocIngs = pocOrder.slice(0, n); renderIngredientesPociones(); }
+  if (n !== pocIngs.length) { pocIngs = pocOrder.slice(0, n); renderIngredientesPociones(); playSfx('exito'); }
   const len = pocScore < 15 ? 3 : 4;
-  currentRecipe = []; currentStep = 0;
+  currentRecipe = []; currentStep = 0; pocRecipeT = Date.now();
   for (let i = 0; i < len; i++) currentRecipe.push(pocIngs[Math.floor(Math.random() * pocIngs.length)]);
   renderReceta();
 }
@@ -2382,8 +2509,9 @@ function renderReceta() {
 function clickIngrediente(ing) {
   if (partidaFinalizada || pocTime <= 0) return;
   const box = document.getElementById('poc-receta-ui');
+  if (currentStep === 0 && Date.now() - pocRecipeT >= 10000) checkLogro('poc_50');
   if (ing === currentRecipe[currentStep]) {
-    playSfx('comprar'); currentStep++;
+    playSfx('gota' + (1 + Math.floor(Math.random() * 5))); currentStep++;
     if (currentStep >= currentRecipe.length) {
       pocScore++; pocTime += Math.floor(Math.random() * 2) + 2;
       pocCurrentStreak++; pocBestStreak = Math.max(pocBestStreak, pocCurrentStreak);
@@ -2391,13 +2519,13 @@ function clickIngrediente(ing) {
       document.getElementById('poc-bar').style.width = ((pocScore % 10) * 10) + '%';
       if (pocScore >= 30) checkLogro('poc_10');
       if (pocScore >= 75) checkLogro('poc_25');
-      if (pocScore >= 100) { checkLogro('poc_ingrediente'); checkLogro('poc_50'); }
+      if (pocScore >= 100) checkLogro('poc_ingrediente');
       if (pocBestStreak >= 15) checkLogro('poc_sin_errores');
-      box.classList.add('success'); playSfx('logro');
+      box.classList.add('success');
       setTimeout(generarRecetaPocion, 350);
     } else renderReceta();
   } else {
-    playSfx('error'); pocErrors++; pocCurrentStreak = 0; pocTime -= 3; document.getElementById('poc-time').textContent = pocTime;
+    playSfx('ingmal'); pocErrors++; pocCurrentStreak = 0; pocTime -= 3; document.getElementById('poc-time').textContent = pocTime;
     box.classList.add('error'); currentStep = 0; setTimeout(renderReceta, 400);
     if (pocTime <= 0) finJuegoGuardar('pociones', pocScore, `¡El caldero explotó!<br>Pociones: ${pocScore}`);
   }
@@ -2429,6 +2557,7 @@ function worEval(g, a) {
   return r;
 }
 function prepararMenuWordle(extra) {
+  if (!extra) { const d = new Date(), m = d.getHours() * 60 + d.getMinutes(); if ((m >= 753 && m <= 755) || (m >= 33 && m <= 35)) checkLogro('wor_numerologo'); }
   worSyncDia();
   const menu = document.getElementById('menu-wordle'), msg = document.getElementById('wor-msg-fin'), btn = document.getElementById('wor-start');
   menu.style.display = 'flex';
@@ -2487,20 +2616,21 @@ function worKey(k) {
 function worSubmit() {
   if (worBuf.length < 5) {
     const row = document.getElementById('wor-row-' + wordle.guesses.length);
-    row.classList.remove('shake'); void row.offsetWidth; row.classList.add('shake'); playSfx('error'); return;
+    row.classList.remove('shake'); void row.offsetWidth; row.classList.add('shake'); return;
   }
+  if (worBuf === 'GRETA') checkLogro('wor_narcisista');
   const g = worBuf; worBuf = ''; wordle.guesses.push(g); worLock = true;
   const n = wordle.guesses.length, win = (g === worAns), lose = !win && n >= 6;
   let gan = 0;
   if (win) {
     wordle.estado = 'ganado'; wordle.racha++; gan = agregarDulces(WOR_PREMIOS[n - 1]);
-    checkLogro('wor_gana'); if (n <= 2) checkLogro('wor_rapido'); if (wordle.racha >= 3) checkLogro('wor_racha');
+    checkLogro('wor_gana'); if (n <= 3) checkLogro('wor_rapido'); if (wordle.racha >= 3) checkLogro('wor_racha');
   } else if (lose) { wordle.estado = 'perdido'; wordle.racha = 0; }
-  guardarDatos(); playSfx('comprar'); worRender(n - 1);
+  guardarDatos(); worRender(n - 1);
   setTimeout(() => {
     worLock = false;
     if (win || lose) {
-      partidaFinalizada = true; playSfx(win ? 'ataudPremio' : 'error');
+      partidaFinalizada = true; playSfx(win ? 'nivelok' : 'wordfallo');
       prepararMenuWordle(win ? `🎉 ¡Adivinaste en ${n}/6!<br><span style="color:#fff;font-size:1.05rem;">Ganaste +${gan} 🍬</span>` : `💀 La palabra era <b>${worAns}</b>`);
     } else worRender();
   }, 900);
@@ -2626,15 +2756,17 @@ function startCaramelos() {
   document.getElementById('menu-caramelos').style.display = 'none';
   document.getElementById('car-nivel').textContent = prog.car;
   carNewBoard(); carLock = false; carRender();
+  if (!stats.temasCar.includes(temaActivo)) { stats.temasCar.push(temaActivo); guardarDatos(); }
+  if (Object.keys(catalogo).filter(k => catalogo[k].tipo === 'tema').every(k => stats.temasCar.includes(k))) checkLogro('car_colores');
 }
 async function carTry(a, b) {
   const run = carRun; carLock = true; carSwap(a, b); carRender(); await sleep(160);
   if (run !== carRun || partidaFinalizada) return;
   let ms = carMatches();
-  if (!ms.size) { carSwap(a, b); playSfx('error'); carRender(); await sleep(120); carLock = false; return; }
+  if (!ms.size) { carSwap(a, b); playSfx('cambioinc'); carRender(); await sleep(120); carLock = false; return; }
   carMoves--; let chain = 0;
   while (ms.size) {
-    chain++; carScore += ms.size * 10 * chain; playSfx('comprar'); carRender(ms); await sleep(230);
+    chain++; carScore += ms.size * 10 * chain; playSfx('candy' + (1 + Math.floor(Math.random() * 3))); carRender(ms); await sleep(230);
     if (run !== carRun || partidaFinalizada) return;
     ms.forEach(i => { carG[i] = -1; }); carGravity(); carRender(); await sleep(200);
     if (run !== carRun || partidaFinalizada) return;
@@ -2649,12 +2781,13 @@ async function carTry(a, b) {
 function carGanar() {
   partidaFinalizada = true; const n = prog.car;
   const gan = agregarDulces(Math.min(14, 3 + n) + Math.floor(carMoves / 4));
-  prog.car++; if (n >= 5) checkLogro('car_n5');
-  guardarDatos(); playSfx('ataudPremio'); carRender();
+  if (carMoves < 5) checkLogro('car_conspiracion');
+  prog.car++; if (n >= 5) checkLogro('car_n5'); if (prog.car >= 10) checkLogro('car_candy');
+  guardarDatos(); playSfx('nivelok'); carRender();
   setTimeout(() => prepararMenuCar(`🎉 ¡Nivel ${n} superado!<br><span style="color:#fff;font-size:1.05rem;">Ganaste +${gan} 🍬</span>`), 500);
 }
 function carPerder() {
-  partidaFinalizada = true; playSfx('error'); carRender();
+  partidaFinalizada = true; playSfx('wordfallo'); carRender();
   setTimeout(() => prepararMenuCar(`💀 Te quedaste sin movimientos<br><span style="color:#fff;font-size:1.05rem;">Hiciste ${carScore} de ${carTarget} puntos</span>`), 500);
 }
 (function() {
@@ -2681,7 +2814,7 @@ function carPerder() {
 
 /* 6. MURCIÉLAGOS EN SU CRIPTA */
 const CRI_COL = [[45,156,219],[39,174,96],[242,201,76],[26,188,156],[235,90,140],[187,107,217],[242,153,74]];
-let criData = null, criBats = new Set(), criMarks = new Set(), criLast = { i:-1, t:0, prev:'e' }, criHints = 2, criHintsUsed = 0;
+let criData = null, criBats = new Set(), criMarks = new Set(), criLast = { i:-1, t:0, prev:'e' }, criHints = 2, criHintsUsed = 0, criUsoX = false, criLimpio = false, criXTimers = [];
 function criConflicts() {
   const N = criData.N, reg = criData.reg, b = [...criBats], bad = new Set();
   for (let x = 0; x < b.length; x++) for (let y = x + 1; y < b.length; y++) {
@@ -2714,13 +2847,16 @@ function prepararMenuCripta(extra) {
 }
 function startCripta() {
   criData = criGen(criSize(prog.cri)); criBats = new Set(); criMarks = new Set(); criLast = { i:-1, t:0, prev:'e' };
+  criXTimers.forEach(clearTimeout); criXTimers = []; criUsoX = false; criLimpio = false;
   criHints = 2; criHintsUsed = 0; partidaFinalizada = false;
   document.getElementById('menu-cripta').style.display = 'none';
   criRender();
 }
 function criAfter() {
   criRender();
-  if (criBats.size === criData.N && criConflicts().size === 0) criGanar();
+  const N = criData.N;
+  if (criMarks.size === N * N) checkLogro('cri_ocupado');
+  if (criBats.size === N && criConflicts().size === 0) criGanar();
 }
 function criPista() {
   if (partidaFinalizada || criHints <= 0) return;
@@ -2728,22 +2864,35 @@ function criPista() {
   const t = criData.sol.map((c, r) => r * N + c).find(i => !criBats.has(i)); if (t === undefined) return;
   const tr = Math.floor(t / N), tc = t % N;
   [...criBats].forEach(i => { const r = Math.floor(i / N), c = i % N; if (r === tr || c === tc || reg[i] === reg[t] || (Math.abs(r - tr) <= 1 && Math.abs(c - tc) <= 1)) criBats.delete(i); });
-  criBats.add(t); criMarks.delete(t); criHints--; criHintsUsed++; playSfx('exito'); criAfter();
+  criBats.add(t); criMarks.delete(t); criHints--; criHintsUsed++; playSfx('exito');
+  criAfter();
 }
-function criLimpiar() { if (partidaFinalizada) return; criBats.clear(); criMarks.clear(); criRender(); }
+function criLimpiar() {
+  if (partidaFinalizada) return;
+  criBats.clear(); criMarks.clear(); criLimpio = true;
+  if (criHintsUsed > 0) checkLogro('cri_controlz');
+  criRender();
+}
 function criGanar() {
   partidaFinalizada = true; const n = prog.cri;
+  criXTimers.forEach(clearTimeout); criXTimers = [];
   const gan = agregarDulces(Math.min(15, 3 + n) + (criHintsUsed === 0 ? 2 : 0));
+  stats.criSinX = criUsoX ? 0 : stats.criSinX + 1; if (stats.criSinX >= 3) checkLogro('cri_alojo');
   prog.cri++; if (n >= 5) checkLogro('cri_n5'); if (criHintsUsed === 0 && n >= 3) checkLogro('cri_sinpista');
-  guardarDatos(); playSfx('ataudPremio');
+  guardarDatos(); playSfx('nivelok');
   setTimeout(() => prepararMenuCripta(`🎉 ¡Nivel ${n} resuelto!<br><span style="color:#fff;font-size:1.05rem;">Ganaste +${gan} 🍬</span>`), 700);
 }
-function criSet(i, st) { criBats.delete(i); criMarks.delete(i); if (st === 'b') criBats.add(i); else if (st === 'x') criMarks.add(i); }
+function criSet(i, st) {
+  criBats.delete(i); criMarks.delete(i);
+  if (st === 'b') criBats.add(i);
+  else if (st === 'x') { criMarks.add(i); criXTimers.push(setTimeout(() => { if (criMarks.has(i)) criUsoX = true; }, 2000)); }
+}
 document.getElementById('cri-board').addEventListener('click', e => {
   const c = e.target.closest('.cri-cell'); if (!c || partidaFinalizada) return;
   const i = +c.dataset.i, now = Date.now(), cur = criBats.has(i) ? 'b' : (criMarks.has(i) ? 'x' : 'e');
   if (criLast.i === i && now - criLast.t < 320) {          // doble clic: murciélago
-    criSet(i, criLast.prev === 'b' ? 'e' : 'b'); criLast = { i:-1, t:0, prev:'e' }; playSfx('comprar');
+    const nuevo = criLast.prev === 'b' ? 'e' : 'b'; criSet(i, nuevo); criLast = { i:-1, t:0, prev:'e' };
+    if (nuevo === 'b') playSfx('murcpuesto');
   } else {                                                 // un clic: ✕ (o quitar)
     criLast = { i, t: now, prev: cur }; criSet(i, cur === 'e' ? 'x' : 'e');
   }
