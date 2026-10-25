@@ -520,6 +520,15 @@ body.modo-juego .pagina:not(#sec-game-stage) { display: none !important; }
 .bal-name{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .bal-row input[type=range]{ width:100%; accent-color:var(--pumpkin); }
 .bal-val{ text-align:right; font-weight:800; color:var(--pumpkin); }
+
+/* ===== PANEL ADMIN ===== */
+#pa-contenido details{ border:1px var(--borde-estilo) var(--ember); border-radius:10px; padding:8px 12px; margin:8px 0; }
+#pa-contenido summary{ font-weight:800; cursor:pointer; color:var(--violet); }
+.pa-grupo{ margin:12px 0 4px; font-weight:800; font-size:.85rem; color:var(--pumpkin); }
+.pa-fila{ display:flex; align-items:center; gap:8px; margin:5px 0; font-size:.85rem; flex-wrap:wrap; }
+.pa-fila input[type=number]{ width:90px; padding:5px; border-radius:6px; border:1px solid var(--ember); background:var(--card); color:var(--ink); font-family:inherit; }
+.pa-fila select{ padding:5px; border-radius:6px; border:1px solid var(--ember); background:var(--card); color:var(--ink); font-family:inherit; max-width:60%; }
+.pa-btn{ background:var(--pumpkin); color:#fff; border:none; border-radius:8px; padding:6px 12px; font-weight:800; font-size:.8rem; cursor:pointer; font-family:inherit; }
 </style>
 </head>
 <body>
@@ -574,12 +583,21 @@ body.modo-juego .pagina:not(#sec-game-stage) { display: none !important; }
       </div>
     </div>
     <p id="modo-txt" style="color:var(--violet); font-size:0.8rem; font-weight:bold;"></p>
+    <button class="btn-accion" id="btn-paneladmin" style="display:none; width:100%; margin-bottom:8px;" onclick="abrirPanelAdmin()">🛠️ Panel Admin (cuenta de Greta)</button>
     <button class="btn-accion" id="btn-avanzada" style="display:none; width:100%; margin-bottom:8px;" onclick="abrirAvanzada()">🎚️ Configuración avanzada (balance de audio)</button>
     <button class="btn-cerrar-modal" onclick="cerrarAjustes()">Guardar</button>
   </div>
 </div>
 
 <!-- MODAL CONFIGURACIÓN AVANZADA (solo modo prueba) -->
+<div class="modal-overlay" id="modal-paneladmin">
+  <div class="modal-box" style="max-width:560px; text-align:left;">
+    <h3 style="justify-content:center; text-align:center;">🛠️ Panel Admin · cuenta de Greta</h3>
+    <p id="pa-estado" style="font-size:.8rem; opacity:.85;"></p>
+    <div id="pa-contenido"></div>
+    <button class="btn-cerrar-modal" onclick="cerrarPanelAdmin()">Cerrar</button>
+  </div>
+</div>
 <div class="modal-overlay" id="modal-avanzada">
   <div class="modal-box" style="max-width:520px; text-align:left;">
     <h3 style="justify-content:center; text-align:center;">🎚️ Balance de audio</h3>
@@ -1003,9 +1021,14 @@ if(firebaseConfig.apiKey) {
 const urlParams = new URLSearchParams(window.location.search);
 const esAdmin = urlParams.get('modo') === 'prueba';
 const rutaDB = esAdmin ? 'admin_partida' : 'greta_partida';
+if (database) database.ref(rutaDB).once('value').catch(err => {   // si Firebase rechaza la lectura (p. ej. reglas vencidas) lo mostramos en vez de quedarnos cargando
+  const l = document.getElementById('txt-cargando');
+  if (l) l.textContent = '⚠️ Sin acceso a la base de datos (' + (err.code || err.message) + '). Revisa las reglas de Firebase.';
+  console.error('[Boo] Firebase:', err);
+});
 
 if(esAdmin) document.getElementById('modo-txt').textContent = "⚠️ MODO ADMINISTRADOR ACTIVADO";
-if(esAdmin) document.getElementById('btn-avanzada').style.display = '';
+if(esAdmin) document.getElementById('btn-avanzada').style.display = ''; document.getElementById('btn-paneladmin').style.display = '';
 
 // ========================================================
 // 2. VARIABLES DE ESTADO Y DATOS
@@ -1029,6 +1052,10 @@ let wordle = { fecha:'', guesses:[], estado:'', racha:0 };
 let prog = { car:1, cri:1 };
 let tutorialVisto = false, tutorialActivo = false;
 let stats = { ajustes:0, comprados:[], temasCar:[], criSinX:0 };
+let especialesUsados = [];
+let datosCargados = false, servidorTeniaProgreso = false, resetPermitido = false, ultimoRespaldo = 0, respaldoInicialHecho = false;
+function estadoVacio() { return dulces === 0 && dulcesGastados === 0 && logros.length === 0 && carrito.length === 0 && coleccion.length <= 1 && ataudDia === 1 && !diarioVisto && codigosUsados.length === 0; }
+function cuandoCargado(fn) { if (datosCargados || !database) fn(); else setTimeout(() => cuandoCargado(fn), 500); }
 let particulaCounter = 0;
 
 // SISTEMA DE RÉCORDS (FASE 2)
@@ -1359,6 +1386,7 @@ if(database) {
       wordle = Object.assign({ fecha:'', guesses:[], estado:'', racha:0 }, data.wordle || {}); wordle.guesses = wordle.guesses || [];
       prog = Object.assign({ car:1, cri:1 }, data.prog || {});
       tutorialVisto = data.tutorialVisto === true;
+      especialesUsados = data.especialesUsados || [];
       balanceAudio = data.balanceAudio || {};
       stats = Object.assign({ ajustes:0, comprados:[], temasCar:[], criSinX:0 }, data.stats || {}); stats.comprados = stats.comprados || []; stats.temasCar = stats.temasCar || [];
       ataudDia = data.ataudDia || 1; 
@@ -1375,6 +1403,11 @@ if(database) {
       if(data.volJuegos !== undefined) masterJuegos = data.volJuegos;
     }
     
+    servidorTeniaProgreso = !estadoVacio(); datosCargados = true;
+    if (data && servidorTeniaProgreso && !respaldoInicialHecho) {   // copia de seguridad de lo que había en el servidor al abrir
+      respaldoInicialHecho = true; ultimoRespaldo = Date.now();
+      database.ref('respaldos/' + rutaDB).set({ t: Date.now(), datos: data }).catch(() => {});
+    }
     document.getElementById('vol-musica').value = masterMusica;
     document.getElementById('vol-sfx').value = masterSfx; document.getElementById('vol-juegos').value = masterJuegos;
 
@@ -1429,13 +1462,13 @@ function iniciarApp() {
 /* ===== TUTORIAL DEL FANTASMITA (primera vez) ===== */
 const TF_LINEAS = [
   "¡Buuu! 👻 ...Tranquila, Greta, soy un fantasmita buena onda. Vengo del más allá con un encargo importantísimo: darte la bienvenida a Boo! Store.",
-  "Este rincón oscuro lo armó un humano muy enamorado solo para ti. Yo solo cobro en abrazos, besos... y en caramelos, chi chi. 🍬",
-  "Los caramelos 🍬 son la moneda de este mundo. Se ganan jugando en el menú Juegos: cazar fantasmas (a mi no porfis), memoria, pociones, palabras, dulces y murciélagos. ¡Hay de todo!",
+  "Este rincón oscuro lo armó un humano muy enamorado solo para ti. Yo solo cobro en abrazos... y en caramelos, no te voy a mentir. 🍬",
+  "Los caramelos 🍬 son la moneda de este mundo. Se ganan jugando en el menú Juegos: cazar fantasmas (perdona a mis primos), memoria, pociones, palabras, dulces y murciélagos. ¡Hay de todo!",
   "Con tus caramelos te vas a la Tienda 🛍️: snacks, citas y gestos especiales de los de verdad, amuletos que mejoran tus ganancias y temas para disfrazar toda la app. Hasta yo quiero uno.",
-  "Lo que compras se guarda en tu Inventario 🛒. Cuando quieras usarlo, aprietas USAR, te sale un código y se lo muestras a tu novio. Y el tendra que cumplir muejejeje",
-  "Ese ataúd ⚰️ de la pantalla principal es tu recompensa diaria. Ábrelo cada día: aquí la lealtad se premia siempre",
+  "Lo que compras se guarda en tu Inventario 🛒. Cuando quieras usarlo, aprietas USAR, te sale un código y se lo muestras a tu novio. Sin firmar con sangre, lo prometo.",
+  "Ese ataúd ⚰️ de la pantalla principal es tu recompensa diaria. Ábrelo cada día: aquí la lealtad se premia, y los vampiros no pagan impuestos.",
   "En Códigos hay un iCoffin 🔐 donde se escriben contraseñas secretas que dan más caramelos. Las pistas aparecen en el Diario cuando haces ciertas cosas. ¡A investigar, detective!",
-  "Si ves pasar volando una calavera 💀, atrápala. Y en Nuestra Colección 🏆 están tus temas, tus amuletos y todos tus logros",
+  "Si ves pasar volando una calavera 💀, atrápala. Y en Nuestra Colección 🏆 están tus temas, tus amuletos y todos tus logros, con lo que hay que hacer para cada uno.",
   "Ah, y el 31 de octubre hay sorpresa. No te digo más porque los fantasmas también sabemos guardar secretos. 🎃 ¡Ahora sí, a divertirte!"
 ];
 let tfI = 0, tfTyping = false, tfTimer = null;
@@ -1494,8 +1527,8 @@ function balCambiar(id, v) {
   if (SE.currentMusicId === id) fadeMusica(1.0, 50);
 }
 function guardarBalance() {
-  guardarDatos();
-  if (database) { const otra = (rutaDB === 'greta_partida') ? 'admin_partida' : 'greta_partida'; database.ref(otra + '/balanceAudio').set(balanceAudio); }
+  if (!database) return;
+  ['admin_partida', 'greta_partida'].forEach(r => database.ref(r).update({ balanceAudio: balanceAudio }));
 }
 function balProbar(id, tipo) {
   if (tipo === 'm') { SE.ensureMusic(id).then(() => SE.playMusic(id)); return; }
@@ -1564,16 +1597,28 @@ function guardarDatos() {
     if (['bonobon','chifles','helado','bebida','carretilla','arcade','cine','cata','arte','pizza','masaje','postre','desayuno','enojo','amuleto-moneda','amuleto-iman','amuleto-reloj','tema-rosa','tema-sangre','tema-momia','tema-calabaza','tema-batman','tema-brujeria','tema-hacker','tema-medianoche','tema-otono'].every(id => have.has(id))) checkLogro('tienda_completa'); }
   if (dulces >= 500 && !pistasReveladas.includes('pista_fortuna')) revelarPista('pista_fortuna');
   if (dulcesGastados >= 100 && !logros.includes('comprador')) checkLogro('comprador');
-  
-  if(database) {
-    database.ref(rutaDB).set({ 
+
+  if (database && datosCargados) {
+    // Protección: jamás escribir una cuenta vacía encima de una que tenía progreso (salvo RESET explícito)
+    if (estadoVacio() && servidorTeniaProgreso && !resetPermitido) {
+      console.warn('[Boo] Guardado vacío bloqueado para proteger los datos de', rutaDB);
+      if (esAdmin) mostrarToast('⚠️ Se bloqueó un guardado vacío (protección activa)', 'info');
+      actualizarUI(); return;
+    }
+    const payload = {
       dulces: dulces, dulcesGastados: dulcesGastados,
-      coleccion: coleccion, logros: logros, carrito: carrito, codigosUsados: codigosUsados,
-      ataudDia: ataudDia, ataudTiempo: ataudTiempo, 
+      coleccion: coleccion, logros: logros, carrito: carrito, codigosUsados: codigosUsados, especialesUsados: especialesUsados,
+      ataudDia: ataudDia, ataudTiempo: ataudTiempo,
       diarioVisto: diarioVisto, pistas: pistas, pistasReveladas: pistasReveladas, temaActivo: temaActivo,
       halloweenReclamado: halloweenReclamado, records: records, bonobonComprados: bonobonComprados, wordle: wordle, prog: prog, tutorialVisto: tutorialVisto, stats: stats, balanceAudio: balanceAudio,
-      volMusica: masterMusica, volSfx: masterSfx, volJuegos: masterJuegos
-    });
+      volMusica: masterMusica, volSfx: masterSfx, volJuegos: masterJuegos,
+      ultimaEscritura: { t: Date.now(), disp: (navigator.userAgent || '').slice(0, 70) }
+    };
+    database.ref(rutaDB).update(payload);   // update: no borra campos que esta versión no conozca
+    if (!estadoVacio() && Date.now() - ultimoRespaldo > 300000) {
+      ultimoRespaldo = Date.now();
+      database.ref('respaldos/' + rutaDB).set({ t: Date.now(), datos: payload }).catch(() => {});
+    }
   }
   actualizarUI();
 }
@@ -1598,7 +1643,7 @@ function agregarDulces(base) {
 }
 
 const horaActual = new Date().getHours();
-if (horaActual >= 0 && horaActual < 4) { setTimeout(() => checkLogro('noche'), 2000); }
+if (horaActual >= 0 && horaActual < 4) { setTimeout(() => cuandoCargado(() => checkLogro('noche')), 2000); }
 
 function checkLogro(id) {
   if (!logros.includes(id)) {
@@ -1924,8 +1969,16 @@ function renderizarDiario() {
   });
 }
 
+function normCodigo(t) { return String(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '').toUpperCase(); }
+const codigosEspeciales = {
+  '11MESES':    { msg: "Once meses de amor... ¡y contando! Gracias por cada día a tu lado. 💖", recompensa: 100 },
+  'PRIMERANO':  { msg: "¡Un año entero juntos! Este fantasma ya perdió la cuenta de cuántas veces sonreíste. 🎉", recompensa: 100 },
+  'JOJOJO':     { msg: "¡Jo, jo, jo! Santa dejó esto bajo el árbol, solo para ti. 🎅", recompensa: 100 },
+  'ANONUEVOBB': { msg: "¡Feliz año nuevo, bb! Que el que viene sea aún más lindo juntos. 🎆", recompensa: 100 }
+};
+const SECRETOS_NORM = {}; Object.keys(codigosSecretos).forEach(k => { SECRETOS_NORM[normCodigo(k)] = k; });
 function canjearCodigo() {
-  const input = document.getElementById('input-codigo'); const msg = document.getElementById('msg-codigo'); const codigo = input.value.replace(/\s+/g,'').toUpperCase(); 
+  const input = document.getElementById('input-codigo'); const msg = document.getElementById('msg-codigo'); const codigo = normCodigo(input.value); 
   let msjRespuesta = ""; let colorRespuesta = "#4CAF50";
 
   switch(esAdmin ? codigo : '') {
@@ -1933,7 +1986,7 @@ function canjearCodigo() {
     case 'TICKETS': abrirAdminTickets(); msjRespuesta = "[ADMIN] Tickets abiertos."; break;
     case 'CLEANCART': carrito = []; msjRespuesta = "[ADMIN] Carrito vacío."; break;
     case 'UNLOCKTHEMES': coleccion = ['tema-default', 'tema-rosa', 'tema-sangre', 'tema-momia', 'tema-calabaza', 'tema-batman', 'tema-brujeria', 'tema-hacker', 'tema-medianoche', 'tema-otono', 'amuleto-moneda', 'amuleto-iman', 'amuleto-reloj']; msjRespuesta = "[ADMIN] Colección max."; break;
-    case 'RESET': dulces = 0; dulcesGastados = 0; coleccion = ['tema-default']; logros = []; carrito = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; pistasReveladas = []; codigosUsados = []; halloweenReclamado = false; bonobonComprados = 0; vueltasDJ = 0; wordle = {fecha:'',guesses:[],estado:'',racha:0}; stats = {ajustes:0, comprados:[], temasCar:[], criSinX:0}; tutorialVisto = false; prog = {car:1, cri:1}; records = {catacumbas:0, memoria:1, pociones:0}; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Cuenta a cero."; colorRespuesta = "var(--pumpkin)"; break;
+    case 'RESET': resetPermitido = true; dulces = 0; dulcesGastados = 0; coleccion = ['tema-default']; logros = []; carrito = []; ataudDia = 1; ataudTiempo = 0; diarioVisto = false; pistas = []; pistasReveladas = []; codigosUsados = []; halloweenReclamado = false; bonobonComprados = 0; vueltasDJ = 0; wordle = {fecha:'',guesses:[],estado:'',racha:0}; stats = {ajustes:0, comprados:[], temasCar:[], criSinX:0}; tutorialVisto = false; especialesUsados = []; prog = {car:1, cri:1}; records = {catacumbas:0, memoria:1, pociones:0}; equiparTema('tema-default'); msjRespuesta = "[ADMIN] Cuenta a cero."; colorRespuesta = "var(--pumpkin)"; break;
     case '24H': ataudTiempo = Date.now() - 86400000; msjRespuesta = "[ADMIN] Reloj adelantado."; actualizarUI(); if(document.getElementById('modal-ataud').classList.contains('activo')) renderizarGrillaAtaud(); break;
     case 'RESETCUENTA1':
         if (database) database.ref('greta_partida').set({ dulces: 0, dulcesGastados: 0, coleccion: ['tema-default'], logros: [], carrito: [], codigosUsados: [], ataudDia: 1, ataudTiempo: 0, diarioVisto: false, pistas: [], pistasReveladas: [], temaActivo: 'tema-default', halloweenReclamado: false, records: {catacumbas:0, memoria:1, pociones:0}, bonobonComprados: 0, wordle: {fecha:'',guesses:[],estado:'',racha:0}, prog: {car:1, cri:1}, stats: {ajustes:0, comprados:[], temasCar:[], criSinX:0}, tutorialVisto: false, volMusica: 0.5, volSfx: 0.5, volJuegos: 0.5, balanceAudio: balanceAudio });
@@ -1946,19 +1999,33 @@ function canjearCodigo() {
   }
 
   if(msjRespuesta !== "") {
-      msg.style.color = colorRespuesta; msg.textContent = msjRespuesta; input.value = ''; guardarDatos(); 
+      msg.style.color = colorRespuesta; msg.textContent = msjRespuesta; input.value = ''; guardarDatos(); resetPermitido = false; 
       if(codigo !== 'TICKETS') setTimeout(() => { msg.textContent = ''; }, 4000);
       return;
   }
 
-  if(codigosSecretos[codigo]) {
-      const premio = codigosSecretos[codigo];
+  const esp = codigosEspeciales[codigo];
+  if (esp) {
+      if (especialesUsados.includes(codigo)) { msg.style.color = "var(--pumpkin)"; msg.textContent = "Ya resolviste este secreto..."; playSfx('error'); }
+      else {
+          especialesUsados.push(codigo); dulces += esp.recompensa; guardarDatos(); input.value = '';
+          playSfx('cod' + (Math.floor(Math.random() * 3) + 1));
+          document.getElementById('icoffin-msg').textContent = esp.msg;
+          document.getElementById('icoffin-premio').textContent = esp.recompensa;
+          document.getElementById('modal-recompensa-icoffin').classList.add('activo');
+      }
+      setTimeout(() => { msg.textContent = ''; }, 4000);
+      return;
+  }
+  const clave = SECRETOS_NORM[codigo];
+  if(clave) {
+      const premio = codigosSecretos[clave];
       if(!pistasReveladas.includes(premio.id)) {
           msg.style.color = "var(--pumpkin)"; msg.textContent = "Aún no tienes el conocimiento para usar esto..."; playSfx('error');
-      } else if(codigosUsados.includes(codigo)) {
+      } else if(codigosUsados.includes(clave)) {
           msg.style.color = "var(--pumpkin)"; msg.textContent = "Ya resolviste este secreto..."; playSfx('error');
       } else {
-          codigosUsados.push(codigo);
+          codigosUsados.push(clave);
           if (codigosUsados.length >= 5 && !logros.includes('hacker')) checkLogro('hacker');
           if (codigo === '2211' && !logros.includes('amor')) checkLogro('amor');
           
@@ -2231,10 +2298,11 @@ function salirJuego() {
     document.querySelectorAll('.game-container').forEach(c => c.style.display = 'none');
     document.querySelectorAll('.game-menu-overlay').forEach(m => m.style.display = 'flex');
     document.getElementById('cata-skullette')?.classList.remove('visible', 'active-power');
+    SE.playMusic('menu'); fadeMusica(0, 0); setTimeout(() => fadeMusica(1.0, 1200), 50);
     cambiarPagina('sec-juegos');
     overlay.style.transition = 'opacity 1s ease-in-out'; overlay.style.opacity = '0'; saliendoJuego = false;
   });
-  SE.playMusic('menu'); fadeMusica(0, 0); setTimeout(() => fadeMusica(1.0, 1200), 50);   // la música del menú arranca con la animación
+  fadeMusica(0, 300);   // la música del juego se apaga; la del menú entra cuando termina el sonido de salida
   overlay.style.transition = 'opacity ' + Math.min(1, dur) + 's ease-in-out'; overlay.style.opacity = '1';   // negro rápido, como al entrar
 }
 
@@ -2898,6 +2966,82 @@ document.getElementById('cri-board').addEventListener('click', e => {
   }
   criAfter();
 });
+
+
+/* ===== PANEL ADMIN (solo modo prueba): edita la cuenta de Greta con .update() ===== */
+let gp = {};
+const PA_ITEMS = [['bonobon','🍬 Bonobon','snack'],['chifles','🥔 Chifles','snack'],['helado','🍦 Helado','snack'],['bebida','🧃 Bebida','snack'],['carretilla','🌭 Antojo','snack'],['arcade','Arcade Solari','cita'],['cine','Cineplanet VIP','cita'],['cata','Cata a Ciegas','cita'],['arte','Noche Arte Feo','cita'],['pizza','Pizzería Casera','cita'],['masaje','Masaje VIP','gesto'],['postre','Repostero Novato','gesto'],['desayuno','Desayuno Delivery','gesto'],['enojo','Pase Anti-Enojo','gesto']];
+function paColIds() { return Object.keys(catalogo).filter(id => id !== 'tema-default' && (catalogo[id].tipo === 'tema' || catalogo[id].tipo === 'amuleto')); }
+function paAviso(t) { mostrarToast(t, 'info'); }
+function paUpd(obj) { if (!esAdmin || !database) return; database.ref('greta_partida').update(obj).then(() => paAviso('✅ Guardado en la cuenta de Greta')).catch(e => paAviso('❌ ' + e.message)); }
+function paDulcesDelta(d) { if (!esAdmin || !database) return; database.ref('greta_partida/dulces').transaction(v => Math.max(0, (v || 0) + d)).then(() => paAviso('✅ Caramelos actualizados')); }
+if (esAdmin && database) database.ref('greta_partida').on('value', snap => { gp = snap.val() || {}; if (document.getElementById('modal-paneladmin').classList.contains('activo')) paRender(); });
+function abrirPanelAdmin() { if (!esAdmin) return; cerrarAjustes(); paRender(); document.getElementById('modal-paneladmin').classList.add('activo'); }
+function cerrarPanelAdmin() { document.getElementById('modal-paneladmin').classList.remove('activo'); }
+function paRender() {
+  const abiertos = new Set([...document.querySelectorAll('#pa-contenido details[open]')].map(d => d.dataset.k));
+  const bono = document.getElementById('pa-bono5') ? document.getElementById('pa-bono5').checked : false;
+  const lg = new Set(gp.logros || []), col = new Set(gp.coleccion || []), cu = new Set(gp.codigosUsados || []), eu = new Set(gp.especialesUsados || []);
+  const ue = gp.ultimaEscritura;
+  document.getElementById('pa-estado').innerHTML = `🍬 ${gp.dulces || 0} · 🏆 ${lg.size} logros · 🎒 ${(gp.carrito || []).length} en inventario · ⚰️ día ${gp.ataudDia || 1} · tutorial ${gp.tutorialVisto ? 'visto' : 'pendiente'}<br>Última escritura: ${ue ? 'hace ' + Math.round((Date.now() - ue.t) / 60000) + ' min · ' + ue.disp : 'sin registro'}`;
+  const det = (k, titulo, html) => `<details data-k="${k}" ${abiertos.has(k) ? 'open' : ''}><summary>${titulo}</summary>${html}</details>`;
+  const grupos = LOGRO_GRUPOS.map(g => [g[0], g[1].filter(id => catalogoLogros[id])]);
+  const usados = new Set(grupos.flatMap(g => g[1])), resto = Object.keys(catalogoLogros).filter(id => !usados.has(id)); if (resto.length) grupos.push(['✨ Otros', resto]);
+  const hLogros = `<label class="pa-fila"><input type="checkbox" id="pa-bono5" ${bono ? 'checked' : ''}> Dar también los 5 🍬 de cada logro que active</label><div class="pa-fila"><button class="pa-btn" onclick="paTodosLogros(true)">Dar todos</button><button class="pa-btn" onclick="paTodosLogros(false)">Quitar todos</button></div>` +
+    grupos.map(([n, ids]) => `<div class="pa-grupo">${n}</div>` + ids.map(id => `<label class="pa-fila"><input type="checkbox" ${lg.has(id) ? 'checked' : ''} onchange="paLogro('${id}',this.checked)"> ${catalogoLogros[id].icono} ${catalogoLogros[id].nombre}</label>`).join('')).join('');
+  const hCol = `<div class="pa-fila"><button class="pa-btn" onclick="paColeccionTodo(true)">Dar todo</button><button class="pa-btn" onclick="paColeccionTodo(false)">Quitar todo</button></div>` +
+    paColIds().map(id => `<label class="pa-fila"><input type="checkbox" ${col.has(id) ? 'checked' : ''} onchange="paColeccion('${id}',this.checked)"> ${catalogo[id].icono} ${catalogo[id].nombre}</label>`).join('');
+  const car = gp.carrito || [];
+  const hCar = `<div class="pa-fila"><select id="pa-item">${PA_ITEMS.map(i => `<option value="${i[0]}">${i[1]} (${i[2]})</option>`).join('')}</select> × <input type="number" id="pa-cant" value="1" min="1" max="20"><button class="pa-btn" onclick="paCarritoAgregar()">Agregar</button></div>` +
+    (car.length ? car.map((it, i) => `<div class="pa-fila">${it.nombre} <small>${it.usado ? '· usado ' + (it.codigo || '') : '· sin usar'}</small><button class="pa-btn" style="margin-left:auto" onclick="paCarritoQuitar(${i})">🗑</button></div>`).join('') : '<small>Inventario vacío.</small>');
+  const hDul = `<div class="pa-fila"><input type="number" id="pa-dul" value="100" min="0"><button class="pa-btn" onclick="paDulces('sumar')">Sumar</button><button class="pa-btn" onclick="paDulces('restar')">Restar</button><button class="pa-btn" onclick="paDulces('fijar')">Fijar en…</button></div>`;
+  const hAta = `<div class="pa-fila">Día actual (1–11, 11 = completado): <input type="number" id="pa-ataud" value="${gp.ataudDia || 1}" min="1" max="11"><button class="pa-btn" onclick="paAtaudDia()">Fijar</button></div><div class="pa-fila"><button class="pa-btn" onclick="paUpd({ataudTiempo:0})">⏩ Dejar listo para reclamar</button><button class="pa-btn" onclick="paUpd({ataudTiempo:Date.now()})">⏳ Reiniciar la espera</button></div>`;
+  const hCod = '<small>Marcar como usado también resuelve su pista en el Diario.</small>' + Object.keys(codigosSecretos).map(k => `<label class="pa-fila"><input type="checkbox" ${cu.has(k) ? 'checked' : ''} onchange="paCodigo('${k}',this.checked,false)"> ${k}</label>`).join('') +
+    '<div class="pa-grupo">🎁 Especiales</div>' + Object.keys(codigosEspeciales).map(k => `<label class="pa-fila"><input type="checkbox" ${eu.has(k) ? 'checked' : ''} onchange="paCodigo('${k}',this.checked,true)"> ${k}</label>`).join('');
+  const hTut = `<div class="pa-fila"><button class="pa-btn" onclick="paUpd({tutorialVisto:true})">Ya no mostrar el fantasmita</button><button class="pa-btn" onclick="paUpd({tutorialVisto:false})">Volver a mostrarlo</button></div>`;
+  const hResp = `<small>Se guarda una copia automática cada 5 minutos (y al abrir la app) mientras la cuenta tenga progreso.</small><div class="pa-fila"><button class="pa-btn" onclick="paRestaurar('greta')">Restaurar respaldo de Greta</button><button class="pa-btn" onclick="paRestaurar('mia')">Restaurar mi respaldo</button></div>`;
+  document.getElementById('pa-contenido').innerHTML = det('l', '🏆 Logros', hLogros) + det('c', '🔮 Amuletos y temas', hCol) + det('i', '🎒 Inventario (carrito)', hCar) + det('d', '🍬 Caramelos', hDul) + det('a', '⚰️ Ataúd diario', hAta) + det('k', '🔐 Códigos usados', hCod) + det('t', '👻 Tutorial del fantasmita', hTut) + det('r', '💾 Respaldos', hResp);
+}
+function paLogro(id, on) {
+  const a = new Set(gp.logros || []), nuevo = on && !a.has(id);
+  if (on) a.add(id); else a.delete(id);
+  paUpd({ logros: [...a] });
+  const b = document.getElementById('pa-bono5'); if (nuevo && b && b.checked) paDulcesDelta(5);
+}
+function paTodosLogros(on) { paUpd({ logros: on ? Object.keys(catalogoLogros) : [] }); }
+function paColeccion(id, on) {
+  const a = new Set(gp.coleccion || ['tema-default']); a.add('tema-default'); if (on) a.add(id); else a.delete(id);
+  const u = { coleccion: [...a] }; if (!on && gp.temaActivo === id) u.temaActivo = 'tema-default'; paUpd(u);
+}
+function paColeccionTodo(on) { paUpd(on ? { coleccion: ['tema-default', ...paColIds()] } : { coleccion: ['tema-default'], temaActivo: 'tema-default' }); }
+function paCarritoAgregar() {
+  const it = PA_ITEMS.find(x => x[0] === document.getElementById('pa-item').value), n = Math.max(1, Math.min(20, parseInt(document.getElementById('pa-cant').value) || 1));
+  const arr = [...(gp.carrito || [])]; for (let i = 0; i < n; i++) arr.push({ id: it[0], nombre: it[1], tipo: it[2], codigo: null, usado: false });
+  paUpd({ carrito: arr });
+}
+function paCarritoQuitar(i) { const arr = [...(gp.carrito || [])]; arr.splice(i, 1); paUpd({ carrito: arr }); }
+function paDulces(modo) {
+  const n = parseInt(document.getElementById('pa-dul').value); if (isNaN(n) || n < 0) return paAviso('Número inválido');
+  if (modo === 'fijar') paUpd({ dulces: n }); else paDulcesDelta(modo === 'sumar' ? n : -n);
+}
+function paAtaudDia() { const n = Math.max(1, Math.min(11, parseInt(document.getElementById('pa-ataud').value) || 1)); paUpd({ ataudDia: n }); }
+function paCodigo(k, on, esp) {
+  if (esp) { const a = new Set(gp.especialesUsados || []); if (on) a.add(k); else a.delete(k); return paUpd({ especialesUsados: [...a] }); }
+  const u = new Set(gp.codigosUsados || []), pi = new Set(gp.pistas || []), r = new Set(gp.pistasReveladas || []), id = codigosSecretos[k].id;
+  if (on) { u.add(k); pi.add(id); r.add(id); } else { u.delete(k); pi.delete(id); }
+  paUpd({ codigosUsados: [...u], pistas: [...pi], pistasReveladas: [...r] });
+}
+function paRestaurar(cual) {
+  if (!esAdmin || !database) return;
+  const ruta = cual === 'greta' ? 'greta_partida' : rutaDB;
+  database.ref('respaldos/' + ruta).once('value').then(snap => {
+    const r = snap.val(); if (!r || !r.datos) return paAviso('No hay respaldo guardado para esa cuenta');
+    const d = r.datos;
+    if (!confirm(`¿Restaurar ${ruta}?\nRespaldo de hace ${Math.round((Date.now() - r.t) / 60000)} min: ${d.dulces || 0} caramelos, ${(d.logros || []).length} logros, día ${d.ataudDia || 1} del ataúd.\nEsto reemplaza TODO lo que hay ahora.`)) return;
+    resetPermitido = true;
+    database.ref(ruta).set(d).then(() => { resetPermitido = false; paAviso('✅ Respaldo restaurado'); }).catch(e => { resetPermitido = false; paAviso('❌ ' + e.message); });
+  }).catch(e => paAviso('❌ ' + e.message));
+}
 
 function cambiarPagina(idPagina) {
   if (document.body.classList.contains('modo-juego') && idPagina !== 'sec-game-stage' && idPagina !== 'sec-juegos') return;
