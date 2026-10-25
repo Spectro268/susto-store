@@ -1027,8 +1027,11 @@ if (database) database.ref(rutaDB).once('value').catch(err => {   // si Firebase
   console.error('[Boo] Firebase:', err);
 });
 
-if(esAdmin) document.getElementById('modo-txt').textContent = "⚠️ MODO ADMINISTRADOR ACTIVADO";
-if(esAdmin) document.getElementById('btn-avanzada').style.display = ''; document.getElementById('btn-paneladmin').style.display = '';
+if(esAdmin) {
+  document.getElementById('modo-txt').textContent = "⚠️ MODO ADMINISTRADOR ACTIVADO";
+  document.getElementById('btn-avanzada').style.display = '';
+  document.getElementById('btn-paneladmin').style.display = '';
+}
 
 // ========================================================
 // 2. VARIABLES DE ESTADO Y DATOS
