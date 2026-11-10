@@ -4,7 +4,7 @@
   "short_name": "Boo!",
   "description": "Un pequeño rincón oscuro creado solo para ti.",
   "start_url": "/susto-store/",
-  "scope": "/",
+  "scope": "/susto-store/",
   "display": "standalone",
   "background_color": "#140505",
   "theme_color": "#140505",
